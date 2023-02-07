@@ -385,6 +385,7 @@ public class ServiceControllerServer extends IntentService {
                                                     "\n"+device.getAddress().toString()+ "\n"+new Date().toLocaleString()
                                                     +"\n"+ ПришлиДанныеОтКлиентаЗапрос
                                                     +"\n"+"GPS"
+                                                    +"\n"+ "город: "+ addressesgetGPS.get(0).getLocality()
                                                     +"\n"+ "адрес: "+ addressesgetGPS.get(0).getAddressLine(0)
                                                     +"\n"+"(корд1) "+ addressesgetGPS.get(0).getLatitude()
                                                     +"\n"+ "(корд2) "+ addressesgetGPS.get(0).getLongitude());
