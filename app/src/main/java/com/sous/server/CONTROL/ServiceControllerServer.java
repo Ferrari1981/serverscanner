@@ -103,6 +103,7 @@ public class ServiceControllerServer extends IntentService {
     }
     private MutableLiveData<String> mutableLiveDataGATTServer;
     private        LocationManager locationManager ;
+    private  List<Address> addressesgetGPS;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -329,6 +330,8 @@ public class ServiceControllerServer extends IntentService {
                                 handler.post(()->{
                                     mutableLiveDataGATTServer.setValue("SERVERGATTRUNNIG");
                                 });
+                                // TODO: 07.02.2023  создаем GPS
+                                МетодПолучениеGPS();
                                 server.connect(device,true);
                                 break;
                             case BluetoothProfile.STATE_DISCONNECTED:
@@ -374,17 +377,17 @@ public class ServiceControllerServer extends IntentService {
                                 if (value!=null) {
                                     String ПришлиДанныеОтКлиентаЗапрос=new String(value);
                                     Log.i(TAG, "Connected to GATT server  newValueПришлиДАнныеОтКлиента."+new String(value));
-
-                                    // TODO: 07.02.2023  создаем GPS
-                                    МетодПолучениеGPS();
                                     // TODO: 07.02.2023  Записываем ВБАзу Данные
                                     МетодЗаписиОтмечаногоСотрудника();
-
                                     if (value.length>0) {
                                         handler.post(()->{
                                             mutableLiveDataGATTServer.setValue("Девайс отмечен..."+"\n"+device.getName().toString()+
-                                                    "\n"+device.getAddress().toString()+ "\n"+new Date().toLocaleString()+"\n"+
-                                                     ПришлиДанныеОтКлиентаЗапрос);
+                                                    "\n"+device.getAddress().toString()+ "\n"+new Date().toLocaleString()
+                                                    +"\n"+ ПришлиДанныеОтКлиентаЗапрос
+                                                    +"\n"+"GPS"
+                                                    +"\n"+ "адрес: "+ addressesgetGPS.get(0).getAddressLine(0)
+                                                    +"\n"+"(корд1) "+ addressesgetGPS.get(0).getLatitude()
+                                                    +"\n"+ "(корд2) "+ addressesgetGPS.get(0).getLongitude());
                                         });
                                         Log.i(TAG, "SERVER#SousAvtoSuccess" + " " +new Date().toLocaleString());
                                         characteristicsServer.setValue("SERVER#SousAvtoSuccess");
@@ -437,14 +440,13 @@ public class ServiceControllerServer extends IntentService {
                 }
                 }
 
-                @SuppressLint("NewApi")
+                @SuppressLint({"NewApi", "SuspiciousIndentation"})
                 private void МетодПолучениеGPS() {
                     try{
                         handler.post(()->{
                     LocationListener locationListener = new MyLocationListener(context);
                     locationManager.requestLocationUpdates(
                             LocationManager.GPS_PROVIDER, 3000, 0.0F, locationListener);
-
                             Location lastLocation = locationManager.getLastKnownLocation(
                                     LocationManager.GPS_PROVIDER);
                             if (lastLocation != null) {
@@ -455,20 +457,24 @@ public class ServiceControllerServer extends IntentService {
                                 String cityName = null;
                                 Geocoder gcd = new Geocoder(context, Locale.getDefault());
                                 Log.i(TAG, "MyLocationListener GPS gcd "+gcd);
-                                List<Address> addresses;
                                 try {
-                                    addresses = gcd.getFromLocation(lastLocation.getLatitude(),
+                                    addressesgetGPS = gcd.getFromLocation(lastLocation.getLatitude(),
                                             lastLocation.getLongitude(), 1);
-                                    Log.i(TAG, "MyLocationListener GPS addresses "+addresses);
+                                    Log.i(TAG, "MyLocationListener GPS addressesgetGPS "+addressesgetGPS);
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
-                                if (addresses.size() > 0) {
-                                    System.out.println(addresses.get(0).getLocality());
-                                    cityName = addresses.get(0).getLocality();
+                                if (addressesgetGPS.size() > 0) {
+                                    System.out.println(addressesgetGPS.get(0).getLocality());
+                                    cityName = addressesgetGPS.get(0).getLocality();
                                     Log.i(TAG, "MyLocationListener GPS cityName "+cityName);
+
+
+
+
+
                                 }
-                                Log.i(TAG, "MyLocationListener GPS addresses "+addresses);
+                                Log.i(TAG, "MyLocationListener GPS addressesgetGPS "+addressesgetGPS);
                             }
                             Log.i(TAG, "locationListener"+ " " +locationListener);
                             }
