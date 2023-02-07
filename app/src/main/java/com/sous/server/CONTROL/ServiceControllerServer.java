@@ -24,6 +24,11 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,6 +45,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.util.concurrent.AtomicDouble;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.onesignal.OneSignal;
 
@@ -49,11 +55,13 @@ import com.sous.server.MODEL.MyFirebaseMessagingServiceServerScanners;
 import com.sous.server.MODEL.SubClassErrors;
 
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -94,6 +102,7 @@ public class ServiceControllerServer extends IntentService {
         super("ServiceControllerServer");
     }
     private MutableLiveData<String> mutableLiveDataGATTServer;
+    private        LocationManager locationManager ;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -289,6 +298,9 @@ public class ServiceControllerServer extends IntentService {
             bluetoothAdapter.enable();
             if (bluetoothAdapter!=null) {
                 if (bluetoothAdapter.isEnabled()==true) {
+                    // TODO: 07.02.2023  иницилизирем Запуск GPS
+                    locationManager = (LocationManager)
+                            getSystemService(Context.LOCATION_SERVICE);
                     handler.post(()->{
                         mutableLiveDataGATTServer.setValue("SERVERGATTRUNNIGSTARTING");
                 });
@@ -362,6 +374,12 @@ public class ServiceControllerServer extends IntentService {
                                 if (value!=null) {
                                     String ПришлиДанныеОтКлиентаЗапрос=new String(value);
                                     Log.i(TAG, "Connected to GATT server  newValueПришлиДАнныеОтКлиента."+new String(value));
+
+                                    // TODO: 07.02.2023  создаем GPS
+                                    МетодПолучениеGPS();
+                                    // TODO: 07.02.2023  Записываем ВБАзу Данные
+                                    МетодЗаписиОтмечаногоСотрудника();
+
                                     if (value.length>0) {
                                         handler.post(()->{
                                             mutableLiveDataGATTServer.setValue("Девайс отмечен..."+"\n"+device.getName().toString()+
@@ -398,6 +416,78 @@ public class ServiceControllerServer extends IntentService {
                         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                         new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                     }
+                }
+
+                private void МетодЗаписиОтмечаногоСотрудника() {
+                    try{
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    ContentValues valuesЗаписываемОшибки = new ContentValues();
+                    valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    final Object ТекущаяВерсияПрограммы = version;
+                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                    new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                }
+                }
+
+                @SuppressLint("NewApi")
+                private void МетодПолучениеGPS() {
+                    try{
+                        handler.post(()->{
+                    LocationListener locationListener = new MyLocationListener(context);
+                    locationManager.requestLocationUpdates(
+                            LocationManager.GPS_PROVIDER, 3000, 0.0F, locationListener);
+
+                            Location lastLocation = locationManager.getLastKnownLocation(
+                                    LocationManager.GPS_PROVIDER);
+                            if (lastLocation != null) {
+                                locationListener.onLocationChanged(lastLocation);
+                               while (!lastLocation.isComplete());
+                                  if (lastLocation.isComplete()){
+                                Log.i(TAG, "MyLocationListener GPS longitude "+lastLocation);
+                                String cityName = null;
+                                Geocoder gcd = new Geocoder(context, Locale.getDefault());
+                                Log.i(TAG, "MyLocationListener GPS gcd "+gcd);
+                                List<Address> addresses;
+                                try {
+                                    addresses = gcd.getFromLocation(lastLocation.getLatitude(),
+                                            lastLocation.getLongitude(), 1);
+                                    Log.i(TAG, "MyLocationListener GPS addresses "+addresses);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                if (addresses.size() > 0) {
+                                    System.out.println(addresses.get(0).getLocality());
+                                    cityName = addresses.get(0).getLocality();
+                                    Log.i(TAG, "MyLocationListener GPS cityName "+cityName);
+                                }
+                                Log.i(TAG, "MyLocationListener GPS addresses "+addresses);
+                            }
+                            Log.i(TAG, "locationListener"+ " " +locationListener);
+                            }
+                       });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    ContentValues valuesЗаписываемОшибки = new ContentValues();
+                    valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    final Object ТекущаяВерсияПрограммы = version;
+                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                    new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                }
+
                 }
 
                 @Override
