@@ -104,6 +104,7 @@ public class ServiceControllerServer extends IntentService {
     private MutableLiveData<String> mutableLiveDataGATTServer;
     private        LocationManager locationManager ;
     private  List<Address> addressesgetGPS;
+    private  Location lastLocation;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -363,6 +364,7 @@ public class ServiceControllerServer extends IntentService {
                     v2.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
                 }
 
+                @SuppressLint("NewApi")
                 @Override
                 public void onCharacteristicWriteRequest(BluetoothDevice device, int requestId, BluetoothGattCharacteristic characteristic, boolean preparedWrite,
                                                          boolean responseNeeded, int offset, byte[] value) {
@@ -383,6 +385,7 @@ public class ServiceControllerServer extends IntentService {
                                         if (value.length>0 ) {
                                             // TODO: 08.02.2023 методы после успешного получение данных от клиента
                                             МетодЗаписиОтмечаногоСотрудника();
+                                            while (!lastLocation.isComplete());
                                             if (addressesgetGPS!=null) {
                                                 mutableLiveDataGATTServer.setValue("Девайс отмечен..."+"\n"+device.getName().toString()+
                                                         "\n"+device.getAddress().toString()+ "\n"+new Date().toLocaleString()
@@ -412,7 +415,7 @@ public class ServiceControllerServer extends IntentService {
                                     server.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, offset, new Date().toLocaleString().toString().getBytes(StandardCharsets.UTF_8));
                                 }
 
-                            },1500);
+                            },1000);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -455,8 +458,8 @@ public class ServiceControllerServer extends IntentService {
                         handler.post(()->{
                     LocationListener locationListener = new MyLocationListener(context);
                     locationManager.requestLocationUpdates(
-                            LocationManager.GPS_PROVIDER, 3000, 0.0F, locationListener);
-                            Location lastLocation = locationManager.getLastKnownLocation(
+                            LocationManager.GPS_PROVIDER, 60000, 0.0F, locationListener);
+                           lastLocation = locationManager.getLastKnownLocation(
                                     LocationManager.GPS_PROVIDER);
                             if (lastLocation != null) {
                                 locationListener.onLocationChanged(lastLocation);
