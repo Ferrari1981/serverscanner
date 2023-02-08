@@ -30,7 +30,7 @@ class MyLocationListener implements LocationListener {
         String longitude = "Longitude: " + loc.getLongitude();
         /*------- To get city name from coordinates -------- */
         Log.i(TAG, "MyLocationListener GPS longitude "+longitude);
-        String cityName = null;
+      /*  String cityName = null;
         Geocoder gcd = new Geocoder(context, Locale.getDefault());
         Log.i(TAG, "MyLocationListener GPS gcd "+gcd);
         List<Address> addresses;
@@ -46,7 +46,7 @@ class MyLocationListener implements LocationListener {
                 cityName = addresses.get(0).getLocality();
                 Log.i(TAG, "MyLocationListener GPS cityName "+cityName);
             }
-        Log.i(TAG, "MyLocationListener GPS addresses "+addresses);
+        Log.i(TAG, "MyLocationListener GPS addresses "+addresses);*/
         }
 
     @Override

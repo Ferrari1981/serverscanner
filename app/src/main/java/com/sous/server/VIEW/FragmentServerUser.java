@@ -66,6 +66,7 @@ public class FragmentServerUser extends Fragment {
     private MutableLiveData<String> mutableLiveDataGATTServer;
     private  String КлючДляServerFibaseOneSingnal;
     private Long version;
+    private  ServiceControllerServer serviceControllerServer;
     @SuppressLint({"RestrictedApi", "MissingPermission"})
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class FragmentServerUser extends Fragment {
             КлючДляServerFibaseOneSingnal ="220d6edf-2b29-453e-97a8-d2aefe4a9eb0";
             PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
+            serviceControllerServer=     binderСканнерServer.getService();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -132,11 +134,11 @@ public class FragmentServerUser extends Fragment {
         super.onStart();
         try {
             // TODO: 06.12.2022
+            МетодЗапускаемПолучениеServerКлючаOndeSignalFirebase(КлючДляServerFibaseOneSingnal);
             МетодИнициализацииRecycleViewДляЗадач();
             МетодКпопкаВозвращениеBACK();
             МетодHandler();
             МетодЗапускGattServer();
-            МетодКпопкаВозвращениеBACK();
             Log.d(this.getClass().getName(), "ArrayListДанныеОтСканироваиниеДивайсов " + ArrayListДанныеФрагмент1);
         } catch (Exception e) {
             e.printStackTrace();
@@ -209,7 +211,28 @@ public class FragmentServerUser extends Fragment {
             //startActivity(discoverableIntent);
             startActivityForResult(discoverableIntent, 16);
             // TODO: 06.12.2022 запускаем GATT SERVER
-            binderСканнерServer.getService().МетодГлавныйСеврера(handler, getActivity(),bluetoothManager,mutableLiveDataGATTServer);
+            serviceControllerServer.МетодГлавныйСеврера(handler, getActivity(),bluetoothManager,mutableLiveDataGATTServer);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+    }
+    private void МетодЗапускаемПолучениеServerКлючаOndeSignalFirebase(@NonNull String КлючДляServerFibaseOneSingnal) {
+        try {
+            serviceControllerServer.МетодПолучениеServerСканеарКлюча_OndeSignal(КлючДляServerFibaseOneSingnal);
+            Log.i(this.getClass().getName(), "   создание МетодЗаполенияФрагмента1 mediatorLiveDataGATT "
+                    + mutableLiveDataGATTServer+ " КлючДляServerFibaseOneSingnal " +КлючДляServerFibaseOneSingnal);
+            //TODO
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -626,7 +649,6 @@ public class FragmentServerUser extends Fragment {
             public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
                 try {
                     Log.i(this.getClass().getName(), "   создание согласования" + myViewHolder );
-                    МетодЗапускаемПолучениеServerКлючаOndeSignalFirebase(КлючДляServerFibaseOneSingnal);
                     МетодКликGattServer(holder);
                     МетодLiveData(holder);
                        МетодАнимации(holder);
@@ -667,27 +689,6 @@ public class FragmentServerUser extends Fragment {
                 }
             }
 
-            private void МетодЗапускаемПолучениеServerКлючаOndeSignalFirebase(@NonNull String КлючДляServerFibaseOneSingnal) {
-                try {
-                    binderСканнерServer.getService().МетодПолучениеServerСканеарКлюча_OndeSignal(КлючДляServerFibaseOneSingnal);
-                    Log.i(this.getClass().getName(), "   создание МетодЗаполенияФрагмента1 mediatorLiveDataGATT "
-                            + mutableLiveDataGATTServer+ " КлючДляServerFibaseOneSingnal " +КлючДляServerFibaseOneSingnal);
-                    //TODO
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    ContentValues valuesЗаписываемОшибки = new ContentValues();
-                    valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    final Object ТекущаяВерсияПрограммы = version;
-                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                    new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                }
-            }
 
             ///todo первый метод #1
             private void МетодКликGattServer(@NonNull MyViewHolder holder) {

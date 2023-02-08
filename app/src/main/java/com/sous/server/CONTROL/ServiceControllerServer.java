@@ -414,7 +414,7 @@ public class ServiceControllerServer extends IntentService {
                                     server.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, offset, new Date().toLocaleString().toString().getBytes(StandardCharsets.UTF_8));
                                 }
 
-                            },1000);
+                            },200);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
