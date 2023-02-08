@@ -305,6 +305,8 @@ public class ServiceControllerServer extends IntentService {
                             getSystemService(Context.LOCATION_SERVICE);
                     handler.post(()->{
                         mutableLiveDataGATTServer.setValue("SERVERGATTRUNNIGSTARTING");
+                        // TODO: 07.02.2023  создаем GPS
+                        МетодПолучениеGPS();
                 });
                 }else {
                     handler.post(()->{
@@ -373,9 +375,6 @@ public class ServiceControllerServer extends IntentService {
                         BluetoothGattService services = characteristic.getService();
                         if (services!=null) {
                             BluetoothGattCharacteristic characteristicsServer = services.getCharacteristic(uuidSERVER);
-                            // TODO: 07.02.2023  создаем GPS
-                            МетодПолучениеGPS();
-
                             handler.postDelayed(()->{
                                 if(characteristicsServer!=null){
                                     if (value!=null) {
@@ -452,61 +451,7 @@ public class ServiceControllerServer extends IntentService {
                 }
                 }
 
-                @SuppressLint({"NewApi", "SuspiciousIndentation"})
-                private void МетодПолучениеGPS() {
-                    try{
-                        handler.post(()->{
-                    LocationListener locationListener = new MyLocationListener(context);
-                    locationManager.requestLocationUpdates(
-                            LocationManager.GPS_PROVIDER, 60000, 0.0F, locationListener);
-                           lastLocation = locationManager.getLastKnownLocation(
-                                    LocationManager.GPS_PROVIDER);
-                            if (lastLocation != null) {
-                                locationListener.onLocationChanged(lastLocation);
-                               while (!lastLocation.isComplete());
-                                  if (lastLocation.isComplete()){
-                                Log.i(TAG, "MyLocationListener GPS longitude "+lastLocation);
-                                String cityName = null;
-                                Geocoder gcd = new Geocoder(context, Locale.getDefault());
-                                Log.i(TAG, "MyLocationListener GPS gcd "+gcd);
-                                try {
-                                    addressesgetGPS = gcd.getFromLocation(lastLocation.getLatitude(),
-                                            lastLocation.getLongitude(), 1);
-                                    Log.i(TAG, "MyLocationListener GPS addressesgetGPS "+addressesgetGPS);
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                if (addressesgetGPS.size() > 0) {
-                                    System.out.println(addressesgetGPS.get(0).getLocality());
-                                    cityName = addressesgetGPS.get(0).getLocality();
-                                    Log.i(TAG, "MyLocationListener GPS cityName "+cityName);
 
-
-
-
-
-                                }
-                                Log.i(TAG, "MyLocationListener GPS addressesgetGPS "+addressesgetGPS);
-                            }
-                            Log.i(TAG, "locationListener"+ " " +locationListener);
-                            }
-                       });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    ContentValues valuesЗаписываемОшибки = new ContentValues();
-                    valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    final Object ТекущаяВерсияПрограммы = version;
-                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                    new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                }
-
-                }
 
                 @Override
                 public void onNotificationSent(BluetoothDevice device, int status) {
@@ -570,6 +515,61 @@ public class ServiceControllerServer extends IntentService {
             new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
+
+    @SuppressLint({"NewApi", "SuspiciousIndentation", "MissingPermission"})
+    private void МетодПолучениеGPS() {
+        try{
+            handler.post(()->{
+                LocationListener locationListener = new MyLocationListener(context);
+                locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER, 90000, 0.0F, locationListener);
+                lastLocation = locationManager.getLastKnownLocation(
+                        LocationManager.GPS_PROVIDER);
+                if (lastLocation != null) {
+                    locationListener.onLocationChanged(lastLocation);
+                    while (!lastLocation.isComplete());
+                    if (lastLocation.isComplete()){
+                        Log.i(TAG, "MyLocationListener GPS longitude "+lastLocation);
+                        String cityName = null;
+                        Geocoder gcd = new Geocoder(context, Locale.getDefault());
+                        Log.i(TAG, "MyLocationListener GPS gcd "+gcd);
+                        try {
+                            addressesgetGPS = gcd.getFromLocation(lastLocation.getLatitude(),
+                                    lastLocation.getLongitude(), 1);
+                            Log.i(TAG, "MyLocationListener GPS addressesgetGPS "+addressesgetGPS);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        if (addressesgetGPS.size() > 0) {
+                            System.out.println(addressesgetGPS.get(0).getLocality());
+                            cityName = addressesgetGPS.get(0).getLocality();
+                            Log.i(TAG, "MyLocationListener GPS cityName "+cityName);
+
+                        }
+                        Log.i(TAG, "MyLocationListener GPS addressesgetGPS "+addressesgetGPS);
+                    }
+                    Log.i(TAG, "locationListener"+ " " +locationListener);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+
+    }
+
+
+
 // TODO: 14.11.2021  ПОВТОРЫЙ ЗАПУСК ВОРК МЕНЕДЖЕР
 
     public String МетодПолучениеServerСканеарКлюча_OndeSignal(@NonNull String КлючДляFirebaseNotification) {
@@ -577,9 +577,8 @@ public class ServiceControllerServer extends IntentService {
         try {
             // TODO: 23.12.2021 ЧЕТЫРЕ ПОПЫТКИ ПОДКЛЮЧЕНИЕ В СЕВРЕРУONESIGNAL
             Observable observableПолученияКлючаОтСервераOneSignal=  Observable.interval(5, TimeUnit.SECONDS)
-                    .delay(3,TimeUnit.SECONDS)
                     .take(3,TimeUnit.MINUTES)
-                    .subscribeOn(Schedulers.single())
+                    .subscribeOn(Schedulers.newThread())
                     .doOnNext(new io.reactivex.rxjava3.functions.Consumer<Long>() {
                         @Override
                         public void accept(Long aLong) throws Throwable {

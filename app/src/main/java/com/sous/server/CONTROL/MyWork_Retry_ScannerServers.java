@@ -1,15 +1,21 @@
 package com.sous.server.CONTROL;
 
+import android.bluetooth.BluetoothManager;
 import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
+import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import androidx.work.Worker;
@@ -30,8 +36,10 @@ public class MyWork_Retry_ScannerServers extends Worker {
     private List<WorkInfo> WorkManagerScanner;
     private   ExecutorService executorServiceServerScanner =Executors.newSingleThreadExecutor();
     private ServiceControllerServer.LocalBinderСканнер binderСканнерServer;
-
+    private Handler handler;
     private Long version=0l;
+    private BluetoothManager bluetoothManager;
+    private MutableLiveData<String> mutableLiveDataGATTServer;
     // TODO: 28.09.2022
     public MyWork_Retry_ScannerServers(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -41,6 +49,8 @@ public class MyWork_Retry_ScannerServers extends Worker {
                 " @NonNull WorkerParameters workerParams) {  Контекст "+"\n"+ this.context);
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
+            bluetoothManager = (BluetoothManager) getApplicationContext().getSystemService(Context.BLUETOOTH_SERVICE);
+            mutableLiveDataGATTServer=new MutableLiveData<>();
             // TODO: 22.12.2022
             МетодБиндингаОбщая();
         } catch (Exception e) {
@@ -78,6 +88,7 @@ public class MyWork_Retry_ScannerServers extends Worker {
                         public void binderDied() {
                             Log.i(getApplicationContext().getClass().getName(), "    onServiceConnected  binderСканнерServer.isBinderAlive()"
                                     + binderСканнерServer.isBinderAlive());
+                            МетодHandler();
 
                         }
                     });
@@ -139,6 +150,9 @@ public class MyWork_Retry_ScannerServers extends Worker {
                 WorkManagerScanner = WorkManager.getInstance(getApplicationContext().getApplicationContext()).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
             Log.i(context.getClass().getName(), "СИНХРОНИЗАЦИЯ WorkManagerScanner  "+WorkManagerScanner );
 
+
+            binderСканнерServer.getService().МетодГлавныйСеврера(handler, getApplicationContext(),bluetoothManager,mutableLiveDataGATTServer);
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -154,6 +168,32 @@ public class MyWork_Retry_ScannerServers extends Worker {
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
             return Result.success();
+    }
+    void МетодHandler(){
+        handler=          new Handler(Looper.getMainLooper(),new Handler.Callback(){
+            @Override
+            public boolean handleMessage(@NonNull android.os.Message  msg) {
+                try{
+                    Bundle bundle=     msg.getData();
+
+                    Log.d(this.getClass().getName(), "msg " + msg);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    ContentValues valuesЗаписываемОшибки = new ContentValues();
+                    valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    final Object ТекущаяВерсияПрограммы = version;
+                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                    new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                }
+                return true;
+            }
+        });
     }
 }
 

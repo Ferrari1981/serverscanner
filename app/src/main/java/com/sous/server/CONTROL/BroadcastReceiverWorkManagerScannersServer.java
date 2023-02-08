@@ -36,7 +36,7 @@ public class BroadcastReceiverWorkManagerScannersServer extends BroadcastReceive
             // TODO: 01.02.2023 запуск workmanager синхронизации
             МетодИнициализацийСинхронизацияДанныхWorkManager(context);
             // TODO: 01.02.2023   повтореый запуск службы Server Scanner
-            МетодПовторныйЗапускДанныхWorkManager(context);
+            МетодRetryServiseScannerWorkManager(context);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -100,7 +100,7 @@ public class BroadcastReceiverWorkManagerScannersServer extends BroadcastReceive
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
     }
-    private void МетодПовторныйЗапускДанныхWorkManager(Context context)
+    private void МетодRetryServiseScannerWorkManager(Context context)
             throws ExecutionException, InterruptedException {
         try {
             String ИмяСлужбыСинхронизации = "WorkManager RetryServerScanners";
