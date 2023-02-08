@@ -576,7 +576,7 @@ public class ServiceControllerServer extends IntentService {
         final String[] ВозврящаетсяКлючScannerONESIGNAl = {null};
         try {
             // TODO: 23.12.2021 ЧЕТЫРЕ ПОПЫТКИ ПОДКЛЮЧЕНИЕ В СЕВРЕРУONESIGNAL
-            Observable observableПолученияКлючаОтСервераOneSignal=  Observable.interval(5, TimeUnit.SECONDS)
+            Observable observableПолученияКлючаОтСервераOneSignal=  Observable.interval(1, TimeUnit.SECONDS)
                     .take(3,TimeUnit.MINUTES)
                     .subscribeOn(Schedulers.newThread())
                     .doOnNext(new io.reactivex.rxjava3.functions.Consumer<Long>() {
@@ -608,6 +608,13 @@ public class ServiceControllerServer extends IntentService {
                             }else {
                                 return true;
                             }
+                        }
+                    })
+                    .onErrorComplete(new Predicate<Throwable>() {
+                        @Override
+                        public boolean test(Throwable throwable) throws Throwable {
+                            Log.e(context.getClass().getName(), "  doOnError МетодПолучениеНовгоКлюча_OndeSignal "  +"\n" +throwable.getMessage().toString());
+                            return false;
                         }
                     })
                     .doOnComplete(new Action() {

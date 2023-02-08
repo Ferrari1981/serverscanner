@@ -24,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,8 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
+import androidx.loader.content.AsyncTaskLoader;
+import androidx.loader.content.Loader;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -45,7 +48,7 @@ import com.sous.server.R;
 
 import org.jetbrains.annotations.NotNull;
 
-
+import java.util.Random;
 
 
 public class MainActivityNewServerScanner extends AppCompatActivity  {
@@ -62,7 +65,8 @@ public class MainActivityNewServerScanner extends AppCompatActivity  {
     private LinearLayout linearLayou;
     private  Long version;
     private MaterialTextView materialTextViewToolBar;
-    private  MutableLiveData<Binder> event;
+    private  String КлючДляServerFibaseOneSingnal="220d6edf-2b29-453e-97a8-d2aefe4a9eb0";
+    private    AsyncTaskLoader asyncTaskLoader;
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +104,65 @@ public class MainActivityNewServerScanner extends AppCompatActivity  {
             МетодРАзрешенияBlurtooTКлиент();
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
+                    Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+
+    }
+    @SuppressLint("RestrictedApi")
+    @Override
+    protected void onStart() {
+        super.onStart();
+        try {
+            ОтветныйHendlerОтСлужбы();
+            МетодПервыйЗапускПервогоФрагментаBoot();
+            МетодСобыытиеКнопокСканирования(new Intent("activity"));
+            МетодЗапускаетBroadcastReceiverWorkManagerScannersServer();
+            asyncTaskLoader=new AsyncTaskLoader(getApplicationContext()) {
+                @Nullable
+                @Override
+                public Object loadInBackground() {
+                    try {
+                    МетодБиндингаСканирование();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    ContentValues valuesЗаписываемОшибки = new ContentValues();
+                    valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    final Object ТекущаяВерсияПрограммы = version;
+                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                    new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                }
+                    return null;
+                }
+            };
+
+            asyncTaskLoader.startLoading();
+            asyncTaskLoader.forceLoad();
+            asyncTaskLoader.registerListener(new Random().nextInt(), new Loader.OnLoadCompleteListener() {
+                @Override
+                public void onLoadComplete(@NonNull Loader loader, @Nullable Object data) {
+                    Log.d(this.getClass().getName(), " binderСканнер " + binderСканнер);
+                }
+            });
+            Log.d(this.getClass().getName(), " binderСканнер " + binderСканнер);
+        } catch (Exception e) {
+            e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             ContentValues valuesЗаписываемОшибки = new ContentValues();
@@ -115,6 +178,99 @@ public class MainActivityNewServerScanner extends AppCompatActivity  {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+
+    }
+
+    private void МетодПервыйЗапускПервогоФрагментаBoot() {
+        // TODO: 24.01.2023 методы для блютусаа
+        try{
+        fragment=      new FragmentBootServer();
+        // TODO: 07.02.2023 запус самого СЕРВЕРА СКАНРРОВНИЕ..
+        МетодЗапускКлиентаИлиСервера(fragment);//todo Запускам клиента или сервер фрагмент
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+    }
+
+    private void МетодЗапускаВторогоФрагментаСканирование() {
+        try {
+            // TODO: 24.01.2023  переходят после получение binder
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            materialTextViewToolBar.setVisibility(View.VISIBLE);
+            materialTextViewToolBar.setText("Сервер");
+            // TODO: 25.01.2023  подключение после получение BINDER
+            // TODO: 07.02.2023  первый запуск сервер  ВТОРОЙ
+            if (fragment!=null) {
+                fragment.onDetach();
+                fragmentTransaction.remove(fragment);
+            }
+        fragment=      new FragmentServerUser();
+        МетодЗапускКлиентаИлиСервера(fragment);//todo Запускам клиента или сервер фрагмент
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+    }
+    private void МетодЗапускаемПолучениеServerКлючаOndeSignalFirebase(@NonNull String КлючДляServerFibaseOneSingnal) {
+        try {
+            binderСканнер.getService().МетодПолучениеServerСканеарКлюча_OndeSignal(КлючДляServerFibaseOneSingnal);
+            Log.i(this.getClass().getName(), "   создание МетодЗаполенияФрагмента1 mediatorLiveDataGATT "+КлючДляServerFibaseOneSingnal );
+            //TODO
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+    }
     public void МетодСобыытиеКнопокСканирования(@NotNull Intent intent) {
         try {
             bottomNavigationItemViewВыход.setOnClickListener(new View.OnClickListener() {
@@ -126,111 +282,6 @@ public class MainActivityNewServerScanner extends AppCompatActivity  {
                     }
                 }
             });
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-    }
-
-
-    @SuppressLint("RestrictedApi")
-    @Override
-    protected void onStart() {
-        super.onStart();
-        try {
-            event = new MutableLiveData<>();
-            event.postValue(binderСканнер);
-            LifecycleOwner lifecycleOwner =this ;
-            lifecycleOwner.getLifecycle().addObserver(new LifecycleEventObserver() {
-                @Override
-                public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
-                    source.getLifecycle().getCurrentState();
-                    event.getTargetState().name();
-                }
-            });
-            event.observe(lifecycleOwner, binderСканнер-> {
-                Log.d(this.getClass().getName(), " binderСканнер " + binderСканнер);
-                if (event.getValue()!=null) {
-                handler.postDelayed(() -> {
-                    // TODO: 24.01.2023  переходят после получение binder
-                    bottomNavigationView.setVisibility(View.VISIBLE);
-                    materialTextViewToolBar.setVisibility(View.VISIBLE);
-                    materialTextViewToolBar.setText("Сервер");
-                    // TODO: 25.01.2023  подключение после получение BINDER
-                    МетодСобыытиеКнопокСканирования(new Intent("activity"));
-
-
-
-                    // TODO: 07.02.2023  первый запуск сервер  ВТОРОЙ
-                    if (fragment!=null) {
-                        fragment.onDetach();
-                        fragmentTransaction.remove(fragment);
-                    }
-              fragment=      new FragmentServerUser();
-                    МетодЗапускКлиентаИлиСервера(fragment);//todo Запускам клиента или сервер фрагмент
-
-                }, 1000);
-            }
-            });
-            // TODO: 24.01.2023 методы для блютусаа
-            fragment=      new FragmentBootServer();
-            // TODO: 07.02.2023 запус самого СЕРВЕРА СКАНРРОВНИЕ..
-            МетодЗапускКлиентаИлиСервера(fragment);//todo Запускам клиента или сервер фрагмент
-            ОтветныйHendlerОтСлужбы();
-            МетодНастрокийBlueTools();
-            Log.d(this.getClass().getName(), " binderСканнер " + binderСканнер);
-            // TODO: 05.12.2022  метод  разрешения  blutools
-            МетодБиндингаСканирование();
-            МетодЗапускаетBroadcastReceiverWorkManagerScannersServer();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-
-    }
-
-
-    @SuppressLint("MissingPermission")
-    private void МетодНастрокийBlueTools() {
-        ///todo разрешения 1
-        try {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                    Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.BLUETOOTH,
-                    Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH_ADVERTISE,
-                    Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_PRIVILEGED,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,}, PackageManager.PERMISSION_GRANTED);
-            Intent discoverableIntent = new Intent();
-            discoverableIntent.setAction(BluetoothAdapter.ACTION_REQUEST_ENABLE);//BluetoothAdapter.ACTION_DISCOVERY_FINISHED
-            discoverableIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityForResult(discoverableIntent, 11);
-
-
-/*        Intent intentвызовВидмости=new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            intentвызовВидмости.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-           // intentвызовВидмости.putExtra("BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION",0);
-             startActivity(intentвызовВидмости);*/
-
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -374,16 +425,15 @@ public class MainActivityNewServerScanner extends AppCompatActivity  {
                             try{
                                 binderСканнер = ( ServiceControllerServer.LocalBinderСканнер) service;
                                 if(binderСканнер.isBinderAlive()){
-                                    Log.i(getApplicationContext().getClass().getName(), "    onServiceConnected  binderСогласованияbinderМатериалы.isBinderAlive()"
+                                    Log.i(getApplicationContext().getClass().getName(), "  onServiceConnected  onServiceConnected  МетодБиндингаСканирование"
                                             + binderСканнер.isBinderAlive());
+                                    МетодЗапускаемПолучениеServerКлючаOndeSignalFirebase(КлючДляServerFibaseOneSingnal);
                                     binderСканнер.linkToDeath(new IBinder.DeathRecipient() {
                                         @Override
                                         public void binderDied() {
-                                            Log.i(getApplicationContext().getClass().getName(), "    onServiceConnected  binderСогласованияbinderМатериалы.isBinderAlive()"
+                                            Log.i(getApplicationContext().getClass().getName(), "   binderDied  onServiceConnected  МетодБиндингаСканирование"
                                                     + binderСканнер.isBinderAlive());
-
-                                            event.setValue(binderСканнер);
-
+                                            МетодЗапускаВторогоФрагментаСканирование();
                                         }
                                     });
                                 }
