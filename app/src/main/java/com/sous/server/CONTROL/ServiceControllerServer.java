@@ -576,7 +576,7 @@ public class ServiceControllerServer extends IntentService {
         final String[] ВозврящаетсяКлючScannerONESIGNAl = {null};
         try {
             // TODO: 23.12.2021 ЧЕТЫРЕ ПОПЫТКИ ПОДКЛЮЧЕНИЕ В СЕВРЕРУONESIGNAL
-            Observable observableПолученияКлючаОтСервераOneSignal=  Observable.interval(1, TimeUnit.SECONDS)
+            Observable observableПолученияКлючаОтСервераOneSignal=  Observable.interval(20, TimeUnit.SECONDS)
                     .take(3,TimeUnit.MINUTES)
                     .subscribeOn(Schedulers.newThread())
                     .doOnNext(new io.reactivex.rxjava3.functions.Consumer<Long>() {
