@@ -330,8 +330,6 @@ public class ServiceControllerServer extends IntentService {
                                 handler.post(()->{
                                     mutableLiveDataGATTServer.setValue("SERVERGATTRUNNIG");
                                 });
-                                // TODO: 07.02.2023  создаем GPS
-                                МетодПолучениеGPS();
                                 server.connect(device,true);
                                 break;
                             case BluetoothProfile.STATE_DISCONNECTED:
@@ -373,39 +371,49 @@ public class ServiceControllerServer extends IntentService {
                         BluetoothGattService services = characteristic.getService();
                         if (services!=null) {
                             BluetoothGattCharacteristic characteristicsServer = services.getCharacteristic(uuidSERVER);
-                            if(characteristicsServer!=null){
-                                if (value!=null) {
-                                    String ПришлиДанныеОтКлиентаЗапрос=new String(value);
-                                    Log.i(TAG, "Connected to GATT server  newValueПришлиДАнныеОтКлиента."+new String(value));
-                                    // TODO: 07.02.2023  Записываем ВБАзу Данные
-                                    МетодЗаписиОтмечаногоСотрудника();
-                                    if (value.length>0) {
-                                        handler.post(()->{
-                                            mutableLiveDataGATTServer.setValue("Девайс отмечен..."+"\n"+device.getName().toString()+
-                                                    "\n"+device.getAddress().toString()+ "\n"+new Date().toLocaleString()
-                                                    +"\n"+ ПришлиДанныеОтКлиентаЗапрос
-                                                    +"\n"+"GPS"
-                                                    +"\n"+ "город: "+ addressesgetGPS.get(0).getLocality()
-                                                    +"\n"+ "адрес: "+ addressesgetGPS.get(0).getAddressLine(0)
-                                                    +"\n"+"(корд1) "+ addressesgetGPS.get(0).getLatitude()
-                                                    +"\n"+ "(корд2) "+ addressesgetGPS.get(0).getLongitude());
-                                        });
-                                        Log.i(TAG, "SERVER#SousAvtoSuccess" + " " +new Date().toLocaleString());
-                                        characteristicsServer.setValue("SERVER#SousAvtoSuccess");
-                                    }else{
-                                        Log.i(TAG, "SERVER#SousAvtoERROR"+ " " +new Date().toLocaleString());
-                                        characteristicsServer.setValue("SERVER#SousAvtoERROR");
+                            // TODO: 07.02.2023  создаем GPS
+                            МетодПолучениеGPS();
+
+                            handler.postDelayed(()->{
+                                if(characteristicsServer!=null){
+                                    if (value!=null) {
+                                        String ПришлиДанныеОтКлиентаЗапрос=new String(value);
+                                        Log.i(TAG, "Connected to GATT server  newValueПришлиДАнныеОтКлиента."+new String(value));
+                                        // TODO: 07.02.2023  Записываем ВБАзу Данные
+                                        if (value.length>0 ) {
+                                            // TODO: 08.02.2023 методы после успешного получение данных от клиента
+                                            МетодЗаписиОтмечаногоСотрудника();
+                                            if (addressesgetGPS!=null) {
+                                                mutableLiveDataGATTServer.setValue("Девайс отмечен..."+"\n"+device.getName().toString()+
+                                                        "\n"+device.getAddress().toString()+ "\n"+new Date().toLocaleString()
+                                                        +"\n"+ ПришлиДанныеОтКлиентаЗапрос
+                                                        +"\n"+"GPS"
+                                                        +"\n"+ "город: "+ addressesgetGPS.get(0).getLocality()
+                                                        +"\n"+ "адрес: "+ addressesgetGPS.get(0).getAddressLine(0)
+                                                        +"\n"+"(корд1) "+ addressesgetGPS.get(0).getLatitude()
+                                                        +"\n"+ "(корд2) "+ addressesgetGPS.get(0).getLongitude());
+                                            } else {
+                                                mutableLiveDataGATTServer.setValue("Девайс отмечен..."+"\n"+device.getName().toString()+
+                                                        "\n"+device.getAddress().toString()+ "\n"+new Date().toLocaleString()
+                                                        +"\n"+ ПришлиДанныеОтКлиентаЗапрос);
+                                            }
+
+                                            Log.i(TAG, "SERVER#SousAvtoSuccess" + " " +new Date().toLocaleString());
+                                            characteristicsServer.setValue("SERVER#SousAvtoSuccess");
+                                        }else{
+                                            Log.i(TAG, "SERVER#SousAvtoERROR"+ " " +new Date().toLocaleString());
+                                            characteristicsServer.setValue("SERVER#SousAvtoERROR");
+                                        }
+                                    }else {
+                                        Log.i(TAG, "SERVER#SousAvtoNULL"+ " " +new Date().toLocaleString());
+                                        characteristicsServer.setValue("SERVER#SousAvtoNULL");
                                     }
-                                }else {
-                                    Log.i(TAG, "SERVER#SousAvtoNULL"+ " " +new Date().toLocaleString());
-                                    characteristicsServer.setValue("SERVER#SousAvtoNULL");
+                                    server.notifyCharacteristicChanged(device,characteristic,true);
+                                    server.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, offset, new Date().toLocaleString().toString().getBytes(StandardCharsets.UTF_8));
                                 }
-                                server.notifyCharacteristicChanged(device,characteristic,true);
-                            }
 
+                            },1500);
                         }
-                        server.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, offset, new Date().toLocaleString().toString().getBytes(StandardCharsets.UTF_8));
-
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
