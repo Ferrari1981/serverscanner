@@ -12,6 +12,7 @@ import android.bluetooth.BluetoothGattServerCallback;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
@@ -56,14 +58,21 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
+import io.reactivex.rxjava3.functions.Supplier;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
@@ -374,7 +383,6 @@ public class ServiceControllerServer extends IntentService {
                                         // TODO: 07.02.2023  Записываем ВБАзу Данные
                                         if (value.length>0 ) {
                                             while (!lastLocation.isComplete());
-                                            LinkedHashMap<Integer ,String> linkedHashMapДляПередачиЗаписьВБАзу=new LinkedHashMap();
                                             String ДанныеСодранныеОтКлиента="Девайс отмечен..."+"\n"+device.getName().toString()+
                                                     "\n"+device.getAddress().toString()+
                                                     "\n"+new Date().toLocaleString()
@@ -386,30 +394,58 @@ public class ServiceControllerServer extends IntentService {
                                                     +"\n"+ "(корд2) "+ addressesgetGPS.get(0).getLongitude();
 
 
-
+                                            ContentValues[] contentValuesВставкаДанных=new ContentValues[6];
                                             // TODO: 08.02.2023 методы после успешного получение данных от клиента
-                                            linkedHashMapДляПередачиЗаписьВБАзу.put(1,"Девайс отмечен..."+"\n"+device.getName().toString());
-                                            linkedHashMapДляПередачиЗаписьВБАзу.put(2,device.getAddress().toString());
-                                            linkedHashMapДляПередачиЗаписьВБАзу.put(3,new Date().toLocaleString());
-                                            linkedHashMapДляПередачиЗаписьВБАзу.put(4,addressesgetGPS.get(0).getLocality());
-                                            linkedHashMapДляПередачиЗаписьВБАзу.put(5,addressesgetGPS.get(0).getAddressLine(0));
-                                            linkedHashMapДляПередачиЗаписьВБАзу.put(6,String.valueOf(addressesgetGPS.get(0).getLatitude()));
-                                            linkedHashMapДляПередачиЗаписьВБАзу.put(7,String.valueOf(addressesgetGPS.get(0).getLongitude()));
-                                            Log.i(TAG, "linkedHashMapДляПередачиЗаписьВБАзу.values() ."+linkedHashMapДляПередачиЗаписьВБАзу.values());
+                                            contentValuesВставкаДанных[0].put("operations","Девайс отмечен..."+"\n"+device.getName().toString());
+                                            contentValuesВставкаДанных[1].put("macdevice",device.getAddress().toString());
+                                            contentValuesВставкаДанных[2].put("date_update",new Date().toLocaleString());
+                                            contentValuesВставкаДанных[3].put("city",addressesgetGPS.get(0).getLocality());
+                                            contentValuesВставкаДанных[4].put("adress",addressesgetGPS.get(0).getAddressLine(0));
+                                            contentValuesВставкаДанных[5].put("gps1",String.valueOf(addressesgetGPS.get(0).getLatitude()));
+                                            contentValuesВставкаДанных[6].put("gps2",String.valueOf(addressesgetGPS.get(0).getLongitude()));
+                                            Log.i(TAG, "contentValuesВставкаДанных.length"+contentValuesВставкаДанных.length);
 
-                                            // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
-                                         Integer РезультатЗаписиДанныхПИнгаДвайсаВБАзу=             МетодЗаписиОтмечаногоСотрудникаВБАзу(linkedHashMapДляПередачиЗаписьВБАзу);
-                                            Log.i(TAG,  " РезультатЗаписиДанныхПИнгаДвайсаВБАзу "+РезультатЗаписиДанныхПИнгаДвайсаВБАзу);
+                                            Integer РезультатЗаписиДанныхПИнгаДвайсаВБАзу=0;
+                                                    Completable completableВставка=    Completable.complete().fromSupplier(new Supplier<Integer>() {
+                                                @Override
+                                                public Integer get() throws Throwable {
+                                                    // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
+                                                    Integer РезультатЗаписиДанныхПИнгаДвайсаВБАзу=             МетодЗаписиОтмечаногоСотрудникаВБАзу(contentValuesВставкаДанных);
+                                                    Log.i(TAG,  " РезультатЗаписиДанныхПИнгаДвайсаВБАзу "+РезультатЗаписиДанныхПИнгаДвайсаВБАзу+ " contentValuesВставкаДанных "+contentValuesВставкаДанных);
+                                                    return РезультатЗаписиДанныхПИнгаДвайсаВБАзу;
+                                                }
+                                            })
+                                            .doOnComplete(new Action() {
+                                                @Override
+                                                public void run() throws Throwable {
+                                                    if (РезультатЗаписиДанныхПИнгаДвайсаВБАзу>0) {
+                                                        // TODO: 09.02.2023 сам статус дляОтвета;
+                                                        mutableLiveDataGATTServer.setValue(ДанныеСодранныеОтКлиента);
+                                                    }else {
+                                                        // TODO: 09.02.2023 сам статус дляОтвета;
+                                                        mutableLiveDataGATTServer.setValue("Пинг прошел ,"+"\n"+
+                                                                "Без записи в базу !!!");
+                                                    }
 
-                                            if (РезультатЗаписиДанныхПИнгаДвайсаВБАзу>0) {
-                                                // TODO: 09.02.2023 сам статус дляОтвета;
-                                                mutableLiveDataGATTServer.setValue(ДанныеСодранныеОтКлиента);
-                                            }else {
-                                                // TODO: 09.02.2023 сам статус дляОтвета;
-                                                mutableLiveDataGATTServer.setValue("Пинг прошел ,"+"\n"+
-                                                        "Без записи в базу !!!");
-                                            }
-
+                                                }
+                                            })
+                                            .doOnError(new Consumer<Throwable>() {
+                                                @Override
+                                                public void accept(Throwable throwable) throws Throwable {
+                                                    Log.e(this.getClass().getName(), "Ошибка " + throwable+ " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                                    ContentValues valuesЗаписываемОшибки = new ContentValues();
+                                                    valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
+                                                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                                                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                                                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                                    final Object ТекущаяВерсияПрограммы = version;
+                                                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                                                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                                                    new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                                                }
+                                            });
+                                            completableВставка  .blockingSubscribe();
                                             Log.i(TAG, "SERVER#SousAvtoSuccess" + " " +new Date().toLocaleString());
                                             characteristicsServer.setValue("SERVER#SousAvtoSuccess");
                                         }else{
@@ -708,11 +744,14 @@ public class ServiceControllerServer extends IntentService {
         }
         return  0;
     }
-    public Integer МетодЗаписиОтмечаногоСотрудникаВБАзу(@NonNull LinkedHashMap linkedHashMapДанныеДляЗаписи) {
+    public Integer МетодЗаписиОтмечаногоСотрудникаВБАзу(@NonNull ContentValues[] contentValues) {
         Integer РезульататЗАписиНовогоДивайса=0;
         try{
-            Log.i(this.getClass().getName(), "запись сотрудника в базу"+ " linkedHashMapДанныеДляЗаписи) " + linkedHashMapДанныеДляЗаписи) ;
-
+            Log.i(this.getClass().getName(), "запись сотрудника в базу"+ " linkedHashMapДанныеДляЗаписи) " + contentValues) ;
+            Uri uri = Uri.parse("content://com.sous.server.providerserver/" +"scannerserversuccess" + "");
+            ContentResolver resolver = context.getContentResolver();
+            РезульататЗАписиНовогоДивайса=   resolver.bulkInsert(uri, contentValues);
+            Log.w(context.getClass().getName(), " РЕЗУЛЬТАТ insertData  РезульататЗАписиНовогоДивайса ЗНАЧЕНИЯ  " +  РезульататЗАписиНовогоДивайса.toString() );
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -727,6 +766,6 @@ public class ServiceControllerServer extends IntentService {
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-        return  0;
+        return  РезульататЗАписиНовогоДивайса;
     }
 }
