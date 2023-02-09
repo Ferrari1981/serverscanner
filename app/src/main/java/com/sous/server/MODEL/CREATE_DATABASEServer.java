@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 //этот класс создает базу данных SQLite
 public class CREATE_DATABASEServer extends SQLiteOpenHelper{ ///SQLiteOpenHelper
-     static final int VERSION =    24;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
+     static final int VERSION =    25;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
    private   Context context;
     private      SQLiteDatabase ССылкаНаСозданнуюБазу;
     private     CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
@@ -26,7 +26,7 @@ public class CREATE_DATABASEServer extends SQLiteOpenHelper{ ///SQLiteOpenHelper
     }
     ///////КОНСТРУКТОР главного класса по созданию базы данных
     public CREATE_DATABASEServer(@NotNull Context context) {/////КОНСТРУКТОР КЛАССА ПО СОЗДАНИЮ БАЗЫ ДАННЫХ
-        super(context, "DatabaseServer.db", null, VERSION ); // определяем имя базы данных  и ее версию
+        super(context, "DatabaseScannerServer.db", null, VERSION ); // определяем имя базы данных  и ее версию
         try{
             this.context =context;
             if (ССылкаНаСозданнуюБазу==null  ) {
@@ -118,9 +118,7 @@ public class CREATE_DATABASEServer extends SQLiteOpenHelper{ ///SQLiteOpenHelper
                                                     @NotNull CopyOnWriteArrayList ИменаТаблицыОтАндройда) {//BEFORE   INSERT , UPDATE , DELETE
         try{
             // TODO: 06.12.2022 удаление старых таблиц
-          /*  ССылкаНаСозданнуюБазу.execSQL("drop table  if exists tablescannerandroid ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК
-            ССылкаНаСозданнуюБазу.execSQL("drop table  if exists tablescannerpublic ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК
-            ССылкаНаСозданнуюБазу.execSQL("drop table  if exists MODIFITATION_Client ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК*/
+            ССылкаНаСозданнуюБазу.execSQL("drop table  if exists scannerandroid ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК
             // TODO: 30.11.2022 создаени таблицы ошибок
             ССылкаНаСозданнуюБазу.execSQL("drop table  if exists errordsu1 ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК
             ССылкаНаСозданнуюБазу.execSQL("Create table if not exists errordsu1 (" +
