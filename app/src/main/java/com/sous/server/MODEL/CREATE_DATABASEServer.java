@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 //этот класс создает базу данных SQLite
 public class CREATE_DATABASEServer extends SQLiteOpenHelper{ ///SQLiteOpenHelper
-     static final int VERSION =  33;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
+     static final int VERSION =  34;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
    private   Context context;
     private      SQLiteDatabase ССылкаНаСозданнуюБазу;
     private     CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
@@ -178,7 +178,7 @@ public class CREATE_DATABASEServer extends SQLiteOpenHelper{ ///SQLiteOpenHelper
                                 "  AFTER INSERT   ON " + НазваниеТаблицыДляТригера +
                                 " BEGIN " +
                                 " UPDATE "+НазваниеТаблицыДляТригера+" SET  date_update= datetime() " + "; "
-                                + " UPDATE "+НазваниеТаблицыДляТригера+" SET  uuid= (SELECT MAX(uuid) FROM  " + НазваниеТаблицыДляТригера + ")+"+1+"    ;"
+                                + " UPDATE "+НазваниеТаблицыДляТригера+" SET  current_table= (SELECT MAX(current_table) FROM  " + НазваниеТаблицыДляТригера + ")+"+1+"    ;"
                                 + " END ;");//test
                         // TODO: 03.06.2022
                         Log.d(this.getClass().getName(), " сработала ... создание тригера MODIFITATION_Client   TODO INSERT ФиналНазваниеТаблицыДляЗаполения " + ФиналНазваниеТаблицыДляЗаполения);
