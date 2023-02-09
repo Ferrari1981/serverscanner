@@ -169,17 +169,6 @@ public class CREATE_DATABASEServer extends SQLiteOpenHelper{ ///SQLiteOpenHelper
                                 + " END ;");//test
                         // TODO: 03.06.2022
                         Log.d(this.getClass().getName(), " сработала ... создание тригера MODIFITATION_Client   TODO INSERT ФиналНазваниеТаблицыДляЗаполения " + ФиналНазваниеТаблицыДляЗаполения);
-                        //TODO UPDATE
-                        ССылкаНаСозданнуюБазу.execSQL("  drop TRIGGER  if exists ScannerTableUpdate" + НазваниеТаблицыДляТригера + "");
-                        //TODO INSERT
-                        ССылкаНаСозданнуюБазу.execSQL(" CREATE TRIGGER IF NOT EXISTS ScannerTableUpdate" + НазваниеТаблицыДляТригера + "" +
-                                "  AFTER UPDATE   ON " + НазваниеТаблицыДляТригера +
-                                " BEGIN " +
-                                " UPDATE "+НазваниеТаблицыДляТригера+" SET  date_update= datetime() " + "; "
-                                + " UPDATE "+НазваниеТаблицыДляТригера+" SET  current_table= (SELECT MAX(current_table) FROM  " + НазваниеТаблицыДляТригера + ") WHERE getstatusrow =0 " + "; "
-                                + " END ;");//test
-                        Log.d(this.getClass().getName(), " сработала ... создание тригера MODIFITATION_Client   TODO UPDATE  ФиналНазваниеТаблицыДляЗаполения " + ФиналНазваниеТаблицыДляЗаполения);
-                        Log.d(this.getClass().getName(), " сработала ... создание тригера MODIFITATION_Client   TODO UPDATE  ФиналНазваниеТаблицыДляЗаполения " + ФиналНазваниеТаблицыДляЗаполения);
                     }else {
                         // TODO: 30.11.2022 Тригеры для Сканироваение
                         //TODO INSERT
@@ -189,23 +178,12 @@ public class CREATE_DATABASEServer extends SQLiteOpenHelper{ ///SQLiteOpenHelper
                                 "  AFTER INSERT   ON " + НазваниеТаблицыДляТригера +
                                 " BEGIN " +
                                 " UPDATE "+НазваниеТаблицыДляТригера+" SET  date_update= datetime() " + "; "
-                                + " UPDATE "+НазваниеТаблицыДляТригера+" SET  current_table= (SELECT MAX(current_table) FROM  " + НазваниеТаблицыДляТригера + ")+1 " + "; "
+                                + " UPDATE "+НазваниеТаблицыДляТригера+" SET  uuid= (SELECT MAX(uuid) FROM  " + НазваниеТаблицыДляТригера + ")+"+1+"    ;"
                                 + " END ;");//test
                         // TODO: 03.06.2022
                         Log.d(this.getClass().getName(), " сработала ... создание тригера MODIFITATION_Client   TODO INSERT ФиналНазваниеТаблицыДляЗаполения " + ФиналНазваниеТаблицыДляЗаполения);
-                        //TODO UPDATE
-                        ССылкаНаСозданнуюБазу.execSQL("  drop TRIGGER  if exists ScannerTableUpdate" + НазваниеТаблицыДляТригера + "");
-                        //TODO INSERT
-                        ССылкаНаСозданнуюБазу.execSQL(" CREATE TRIGGER IF NOT EXISTS ScannerTableUpdate" + НазваниеТаблицыДляТригера + "" +
-                                "  AFTER UPDATE   ON " + НазваниеТаблицыДляТригера +
-                                " BEGIN " +
-                                " UPDATE "+НазваниеТаблицыДляТригера+" SET  date_update= datetime() " + "; "
-                                + " UPDATE "+НазваниеТаблицыДляТригера+" SET  current_table= (SELECT MAX(current_table) FROM " + НазваниеТаблицыДляТригера + ")+1 " + "; "
-                                + " END ;");//test
-                        Log.d(this.getClass().getName(), " сработала ... создание тригера MODIFITATION_Client   TODO UPDATE  ФиналНазваниеТаблицыДляЗаполения " + ФиналНазваниеТаблицыДляЗаполения);
                     }
                     // TODO: 30.11.2022 Тригеры для Сканироваение
-
                 }
                 // TODO: 22.11.2022 end all triger
             });
