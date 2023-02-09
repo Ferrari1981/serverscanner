@@ -50,6 +50,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -57,6 +58,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -371,24 +373,35 @@ public class ServiceControllerServer extends IntentService {
                                         Log.i(TAG, "Connected to GATT server  newValueПришлиДАнныеОтКлиента."+new String(value));
                                         // TODO: 07.02.2023  Записываем ВБАзу Данные
                                         if (value.length>0 ) {
+                                            while (!lastLocation.isComplete());
+                                            LinkedHashMap<Integer ,String> linkedHashMapДляПередачиЗаписьВБАзу=new LinkedHashMap();
+                                            String ДанныеСодранныеОтКлиента="Девайс отмечен..."+"\n"+device.getName().toString()+
+                                                    "\n"+device.getAddress().toString()+
+                                                    "\n"+new Date().toLocaleString()
+                                                    +"\n"+ ПришлиДанныеОтКлиентаЗапрос
+                                                    +"\n"+"GPS"
+                                                    +"\n"+ "город: "+ addressesgetGPS.get(0).getLocality()
+                                                    +"\n"+ "адрес: "+ addressesgetGPS.get(0).getAddressLine(0)
+                                                    +"\n"+"(корд1) "+ addressesgetGPS.get(0).getLatitude()
+                                                    +"\n"+ "(корд2) "+ addressesgetGPS.get(0).getLongitude();
+
+
 
                                             // TODO: 08.02.2023 методы после успешного получение данных от клиента
-                                           // МетодЗаписиОтмечаногоСотрудникаВБАзу();
-                                            while (!lastLocation.isComplete());
-                                            if (addressesgetGPS!=null) {
-                                                mutableLiveDataGATTServer.setValue("Девайс отмечен..."+"\n"+device.getName().toString()+
-                                                        "\n"+device.getAddress().toString()+ "\n"+new Date().toLocaleString()
-                                                        +"\n"+ ПришлиДанныеОтКлиентаЗапрос
-                                                        +"\n"+"GPS"
-                                                        +"\n"+ "город: "+ addressesgetGPS.get(0).getLocality()
-                                                        +"\n"+ "адрес: "+ addressesgetGPS.get(0).getAddressLine(0)
-                                                        +"\n"+"(корд1) "+ addressesgetGPS.get(0).getLatitude()
-                                                        +"\n"+ "(корд2) "+ addressesgetGPS.get(0).getLongitude());
-                                            } else {
-                                                mutableLiveDataGATTServer.setValue("Девайс отмечен..."+"\n"+device.getName().toString()+
-                                                        "\n"+device.getAddress().toString()+ "\n"+new Date().toLocaleString()
-                                                        +"\n"+ ПришлиДанныеОтКлиентаЗапрос);
-                                            }
+                                            linkedHashMapДляПередачиЗаписьВБАзу.put(1,"Девайс отмечен..."+"\n"+device.getName().toString());
+                                            linkedHashMapДляПередачиЗаписьВБАзу.put(2,device.getAddress().toString());
+                                            linkedHashMapДляПередачиЗаписьВБАзу.put(3,new Date().toLocaleString());
+                                            linkedHashMapДляПередачиЗаписьВБАзу.put(4,addressesgetGPS.get(0).getLocality());
+                                            linkedHashMapДляПередачиЗаписьВБАзу.put(5,addressesgetGPS.get(0).getAddressLine(0));
+                                            linkedHashMapДляПередачиЗаписьВБАзу.put(6,String.valueOf(addressesgetGPS.get(0).getLatitude()));
+                                            linkedHashMapДляПередачиЗаписьВБАзу.put(7,String.valueOf(addressesgetGPS.get(0).getLongitude()));
+                                            Log.i(TAG, "linkedHashMapДляПередачиЗаписьВБАзу.values() ."+linkedHashMapДляПередачиЗаписьВБАзу.values());
+
+                                            // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
+                                             МетодЗаписиОтмечаногоСотрудникаВБАзу(linkedHashMapДляПередачиЗаписьВБАзу);
+
+                                            // TODO: 09.02.2023 сам статус дляОтвета;
+                                                mutableLiveDataGATTServer.setValue(ДанныеСодранныеОтКлиента);
 
                                             Log.i(TAG, "SERVER#SousAvtoSuccess" + " " +new Date().toLocaleString());
                                             characteristicsServer.setValue("SERVER#SousAvtoSuccess");
@@ -671,6 +684,27 @@ public class ServiceControllerServer extends IntentService {
         Integer РезульататЗАписиНовогоДивайса=0;
         try{
           Log.i(appContext.getClass().getName(), "запись сотрудника в базу"+ " " );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+        return  0;
+    }
+    public Integer МетодЗаписиОтмечаногоСотрудникаВБАзу(@NonNull LinkedHashMap linkedHashMapДанныеДляЗаписи) {
+        Integer РезульататЗАписиНовогоДивайса=0;
+        try{
+            Log.i(this.getClass().getName(), "запись сотрудника в базу"+ " linkedHashMapДанныеДляЗаписи) " + linkedHashMapДанныеДляЗаписи) ;
 
         } catch (Exception e) {
             e.printStackTrace();
