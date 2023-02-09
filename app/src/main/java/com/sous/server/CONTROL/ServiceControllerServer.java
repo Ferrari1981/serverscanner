@@ -398,10 +398,17 @@ public class ServiceControllerServer extends IntentService {
                                             Log.i(TAG, "linkedHashMapДляПередачиЗаписьВБАзу.values() ."+linkedHashMapДляПередачиЗаписьВБАзу.values());
 
                                             // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
-                                             МетодЗаписиОтмечаногоСотрудникаВБАзу(linkedHashMapДляПередачиЗаписьВБАзу);
+                                         Integer РезультатЗаписиДанныхПИнгаДвайсаВБАзу=             МетодЗаписиОтмечаногоСотрудникаВБАзу(linkedHashMapДляПередачиЗаписьВБАзу);
+                                            Log.i(TAG,  " РезультатЗаписиДанныхПИнгаДвайсаВБАзу "+РезультатЗаписиДанныхПИнгаДвайсаВБАзу);
 
-                                            // TODO: 09.02.2023 сам статус дляОтвета;
+                                            if (РезультатЗаписиДанныхПИнгаДвайсаВБАзу>0) {
+                                                // TODO: 09.02.2023 сам статус дляОтвета;
                                                 mutableLiveDataGATTServer.setValue(ДанныеСодранныеОтКлиента);
+                                            }else {
+                                                // TODO: 09.02.2023 сам статус дляОтвета;
+                                                mutableLiveDataGATTServer.setValue("Пинг прошел ,"+"\n"+
+                                                        "Без записи в базу !!!");
+                                            }
 
                                             Log.i(TAG, "SERVER#SousAvtoSuccess" + " " +new Date().toLocaleString());
                                             characteristicsServer.setValue("SERVER#SousAvtoSuccess");
