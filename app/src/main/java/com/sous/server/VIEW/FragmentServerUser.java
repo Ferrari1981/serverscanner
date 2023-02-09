@@ -727,7 +727,7 @@ public class FragmentServerUser extends Fragment {
                                         handler.post(()->{
                                             holder.materialButtonСервер.startAnimation(animationServer);
                                             holder.materialButtonСервер.setText("Работает..."
-                                                    + "\n"+"ping: " +linkedКолПодкСерверу.size());
+                                                    + "\n"+"пинг: " +linkedКолПодкСерверу.size());
                                             Log.i(this.getClass().getName(), "  Работает... на сервере ответ КЛИЕНТУ  " +"\n"+"пинги: " +linkedКолПодкСерверу.size() );
                                         });
                                         break;
