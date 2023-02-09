@@ -755,7 +755,9 @@ public class FragmentServerUser extends Fragment {
                                             Vibrator v2 = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
                                             v2.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
                                             handler.postDelayed(()-> {
-                                                holder.materialButtonСервер.setText("Работает....");
+                                                holder.materialButtonСервер.setText("Работает..."
+                                                        + "\n"
+                                                        + "\n"+"пинг: " +linkedКолПодкСерверу.size());
                                             },5000);
                                         });
                                         break;

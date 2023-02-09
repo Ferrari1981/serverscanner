@@ -407,7 +407,9 @@ public class ServiceControllerServer extends IntentService {
                                             contentValuesВставкаДанных[0].put("gps1",String.valueOf(addressesgetGPS.get(0).getLatitude()));
                                             contentValuesВставкаДанных[0].put("gps2",String.valueOf(addressesgetGPS.get(0).getLongitude()));
                                             contentValuesВставкаДанных[0].put("namedevice",device.getName().toString());
-                                           // contentValuesВставкаДанных[0].put("uuid",new Random().nextInt(6560));
+                                            contentValuesВставкаДанных[0].put("current_table",new Random().nextInt(656000));
+                                            contentValuesВставкаДанных[0].put("uuid",new Random().nextInt(656000));
+                                            contentValuesВставкаДанных[0].put("date_update",new Date().toLocaleString());
                                             Log.i(TAG, "contentValuesВставкаДанных.length"+contentValuesВставкаДанных.length);
 
 
