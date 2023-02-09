@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 //этот класс создает базу данных SQLite
 public class CREATE_DATABASEServer extends SQLiteOpenHelper{ ///SQLiteOpenHelper
-     static final int VERSION =    25;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
+     static final int VERSION =    26;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
    private   Context context;
     private      SQLiteDatabase ССылкаНаСозданнуюБазу;
     private     CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
@@ -144,7 +144,7 @@ public class CREATE_DATABASEServer extends SQLiteOpenHelper{ ///SQLiteOpenHelper
                                 " macdevice TEXT  ," +
                                 " gps1  NUMERIC ," +
                                 " gps2  NUMERIC ," +
-                                " getstatusrow INTEGER  ," +
+                                " getstatusrow INTEGER  DEFAULT 0 ," +
                                 " adress TEXT ," +
                                 " city TEXT ," +
                                 " date_update NUMERIC  ," +
