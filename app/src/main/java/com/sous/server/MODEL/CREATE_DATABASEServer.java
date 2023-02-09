@@ -117,6 +117,9 @@ public class CREATE_DATABASEServer extends SQLiteOpenHelper{ ///SQLiteOpenHelper
     private void МетодСозданиеТаблицДляСканирования(@NotNull SQLiteDatabase ССылкаНаСозданнуюБазу,
                                                     @NotNull CopyOnWriteArrayList ИменаТаблицыОтАндройда) {//BEFORE   INSERT , UPDATE , DELETE
         try{
+
+
+
             // TODO: 06.12.2022 удаление старых таблиц
             ССылкаНаСозданнуюБазу.execSQL("drop table  if exists scannerandroid ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК
             // TODO: 30.11.2022 создаени таблицы ошибок
