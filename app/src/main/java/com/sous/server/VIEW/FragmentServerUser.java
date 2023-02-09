@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.function.Consumer;
 
 
 public class FragmentServerUser extends Fragment {
@@ -749,7 +750,20 @@ public class FragmentServerUser extends Fragment {
                                         // TODO: 09.02.2023  Успешое подклоючение
                                         Log.i(this.getClass().getName(), "   Успешный ПИНГ на сервере ответ КЛИЕНТУ  " + mutableLiveDataGATTServer.getValue().toString());
                                         holder.materialButtonСервер.startAnimation(animationServer);
-                                        linkedКолПодкСерверу.offer(mutableLiveDataGATTServer.getValue());
+
+                                        // TODO: 09.02.2023 пинг
+                                        linkedКолПодкСерверу.spliterator().forEachRemaining(new Consumer<String>() {
+                                            @Override
+                                            public void accept(String s) {
+                                                if (linkedКолПодкСерверу.contains(s)==true) {
+                                                    linkedКолПодкСерверу.remove(s);
+                                                }
+                                            }
+                                        });
+
+                                            linkedКолПодкСерверу.offer(mutableLiveDataGATTServer.getValue());
+
+
                                         handler.post(()->{
                                             holder.materialButtonСервер.setText(mutableLiveDataGATTServer.getValue().toString());
                                             Vibrator v2 = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
