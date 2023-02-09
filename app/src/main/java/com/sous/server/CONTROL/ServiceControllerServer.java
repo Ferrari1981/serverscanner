@@ -394,15 +394,24 @@ public class ServiceControllerServer extends IntentService {
                                                     +"\n"+ "(корд2) "+ addressesgetGPS.get(0).getLongitude();
 
 
-                                            ContentValues[] contentValuesВставкаДанных=new ContentValues[6];
+                                            ContentValues[] contentValuesВставкаДанных=new ContentValues[8];
                                             // TODO: 08.02.2023 методы после успешного получение данных от клиента
-                                            contentValuesВставкаДанных[0].put("operations","Девайс отмечен..."+"\n"+device.getName().toString());
+                                            contentValuesВставкаДанных[0]=new ContentValues();
+                                            contentValuesВставкаДанных[0].put("operations","Девайс отмечен");
+                                            contentValuesВставкаДанных[1]=new ContentValues();
                                             contentValuesВставкаДанных[1].put("macdevice",device.getAddress().toString());
+                                            contentValuesВставкаДанных[2]=new ContentValues();
                                             contentValuesВставкаДанных[2].put("date_update",new Date().toLocaleString());
+                                            contentValuesВставкаДанных[3]=new ContentValues();
                                             contentValuesВставкаДанных[3].put("city",addressesgetGPS.get(0).getLocality());
+                                            contentValuesВставкаДанных[4]=new ContentValues();
                                             contentValuesВставкаДанных[4].put("adress",addressesgetGPS.get(0).getAddressLine(0));
+                                            contentValuesВставкаДанных[5]=new ContentValues();
                                             contentValuesВставкаДанных[5].put("gps1",String.valueOf(addressesgetGPS.get(0).getLatitude()));
+                                            contentValuesВставкаДанных[6]=new ContentValues();
                                             contentValuesВставкаДанных[6].put("gps2",String.valueOf(addressesgetGPS.get(0).getLongitude()));
+                                            contentValuesВставкаДанных[7]=new ContentValues();
+                                            contentValuesВставкаДанных[7].put("namedevice",device.getName().toString());
                                             Log.i(TAG, "contentValuesВставкаДанных.length"+contentValuesВставкаДанных.length);
 
                                             Integer РезультатЗаписиДанныхПИнгаДвайсаВБАзу=0;

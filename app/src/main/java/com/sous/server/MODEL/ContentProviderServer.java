@@ -35,8 +35,7 @@ public class ContentProviderServer extends android.content.ContentProvider {
         try{
             ИменаТаблицыОтАндройда=new CopyOnWriteArrayList<>();
             ИменаТаблицыОтАндройда.add("errordsu1");
-            ИменаТаблицыОтАндройда.add("tablescannerandroid");
-            ИменаТаблицыОтАндройда.add("tablescannerpublic");
+            ИменаТаблицыОтАндройда.add("scannerserversuccess");
             Log.d(this.getClass().getName(),  " ContentProviderServer" +uriMatcherДЛяПровайдераКонтентБазаДанных );
             Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда "+ИменаТаблицыОтАндройда );
             uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(ИменаТаблицыОтАндройда.size());
@@ -48,8 +47,6 @@ public class ContentProviderServer extends android.content.ContentProvider {
                     ТекущаяСтрокаПриДОбавлениииURL++;
                 }
             });
-            PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
-            version = pInfo.getLongVersionCode();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -73,6 +70,8 @@ public class ContentProviderServer extends android.content.ContentProvider {
                 Create_Database_СамаБАзаSQLite=new CREATE_DATABASEServer(getContext()).getССылкаНаСозданнуюБазу();
                 Log.w(this.getClass().getName(), "Create_Database_СамаБАзаSQLite " + Create_Database_СамаБАзаSQLite + " getContext()) " +getContext());
             }
+            PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
+            version = pInfo.getLongVersionCode();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -124,10 +123,7 @@ public class ContentProviderServer extends android.content.ContentProvider {
                     table = "errordsu1";
                     break;
                 case 1:
-                    table = "tablescannerandroid";
-                    break;
-                case 2:
-                    table = "tablescannerpublic";
+                    table = "scannerserversuccess";
                     break;
                 default:
                     table=    Optional.ofNullable(uri).map(Emmeter->Emmeter.toString().replace("content://com.dsy.dsu.providerdatabase/","")).get();
@@ -136,6 +132,8 @@ public class ContentProviderServer extends android.content.ContentProvider {
                     break;
             }
             Log.d(this.getClass().getName(), " table"+ table);
+            PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
+            version = pInfo.getLongVersionCode();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -218,6 +216,8 @@ public class ContentProviderServer extends android.content.ContentProvider {
                                     .blockingSubscribe();
                         }
                     }).blockingSubscribe();
+            PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
+            version = pInfo.getLongVersionCode();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
