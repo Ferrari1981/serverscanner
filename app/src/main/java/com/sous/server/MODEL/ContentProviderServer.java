@@ -109,7 +109,45 @@ public class ContentProviderServer extends android.content.ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
-        return null;
+
+        Integer  ОтветВставкиДанных = null;
+        try {
+            if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
+                Create_Database_СамаБАзаSQLite.beginTransaction();
+            }
+            Log.d(this.getClass().getName(), " uri"+uri );
+            // TODO: 14.10.2022 метод определения текущней таблицы
+            String table = МетодОпределяемТаблицу(uri);
+
+            Long   РезультатВставкиДанныхСканирование  = Create_Database_СамаБАзаSQLite.insertOrThrow(table, null, contentValues);
+            // TODO: 30.10.2021
+            Log.w(getContext().getClass().getName(), " РезультатВставкиДанных  " + РезультатВставкиДанныхСканирование);/////
+            if (РезультатВставкиДанныхСканирование> 0) {
+                if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                    Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
+                    // TODO: 22.09.2022 увеличивает версию данных
+                }
+            }
+            if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                Create_Database_СамаБАзаSQLite.endTransaction();
+            }
+            PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
+            version = pInfo.getLongVersionCode();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки=new ContentValues();
+            valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы =version;
+            Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+        return uri;
     }
 
 
@@ -155,7 +193,7 @@ public class ContentProviderServer extends android.content.ContentProvider {
     @Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
         // TODO: Implement this to handle requests to insert a new row.
-        Integer  ОтветВставкиДанных = null;
+        final Integer[] ОтветВставкиДанных = {0};
         try {
             if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
                 Create_Database_СамаБАзаSQLite.beginTransaction();
@@ -178,6 +216,7 @@ public class ContentProviderServer extends android.content.ContentProvider {
                                             Long   РезультатВставкиДанныхСканирование  = Create_Database_СамаБАзаSQLite.insertOrThrow(table, null, contentValues);
                                             // TODO: 30.10.2021
                                             Log.w(getContext().getClass().getName(), " РезультатВставкиДанных  " + РезультатВставкиДанныхСканирование);/////
+                                            ОтветВставкиДанных[0] =РезультатВставкиДанныхСканирование.intValue();
                                             if (РезультатВставкиДанныхСканирование> 0) {
                                                 if (Create_Database_СамаБАзаSQLite.inTransaction()) {
                                                     Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
@@ -232,7 +271,7 @@ public class ContentProviderServer extends android.content.ContentProvider {
             valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-        return ОтветВставкиДанных;
+        return ОтветВставкиДанных[0];
     }
 
 

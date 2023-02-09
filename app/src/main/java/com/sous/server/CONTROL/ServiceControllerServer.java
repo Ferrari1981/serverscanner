@@ -56,6 +56,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -376,6 +377,7 @@ public class ServiceControllerServer extends IntentService {
                         if (services!=null) {
                             BluetoothGattCharacteristic characteristicsServer = services.getCharacteristic(uuidSERVER);
                             handler.postDelayed(()->{
+                                final Integer[] РезультатЗаписиДанныхПИнгаДвайсаВБАзу = {0};
                                 if(characteristicsServer!=null){
                                     if (value!=null) {
                                         String ПришлиДанныеОтКлиентаЗапрос=new String(value);
@@ -394,40 +396,36 @@ public class ServiceControllerServer extends IntentService {
                                                     +"\n"+ "(корд2) "+ addressesgetGPS.get(0).getLongitude();
 
 
-                                            ContentValues[] contentValuesВставкаДанных=new ContentValues[8];
+                                            ContentValues[] contentValuesВставкаДанных=new ContentValues[1];
                                             // TODO: 08.02.2023 методы после успешного получение данных от клиента
                                             contentValuesВставкаДанных[0]=new ContentValues();
                                             contentValuesВставкаДанных[0].put("operations","Девайс отмечен");
-                                            contentValuesВставкаДанных[1]=new ContentValues();
-                                            contentValuesВставкаДанных[1].put("macdevice",device.getAddress().toString());
-                                            contentValuesВставкаДанных[2]=new ContentValues();
-                                            contentValuesВставкаДанных[2].put("date_update",new Date().toLocaleString());
-                                            contentValuesВставкаДанных[3]=new ContentValues();
-                                            contentValuesВставкаДанных[3].put("city",addressesgetGPS.get(0).getLocality());
-                                            contentValuesВставкаДанных[4]=new ContentValues();
-                                            contentValuesВставкаДанных[4].put("adress",addressesgetGPS.get(0).getAddressLine(0));
-                                            contentValuesВставкаДанных[5]=new ContentValues();
-                                            contentValuesВставкаДанных[5].put("gps1",String.valueOf(addressesgetGPS.get(0).getLatitude()));
-                                            contentValuesВставкаДанных[6]=new ContentValues();
-                                            contentValuesВставкаДанных[6].put("gps2",String.valueOf(addressesgetGPS.get(0).getLongitude()));
-                                            contentValuesВставкаДанных[7]=new ContentValues();
-                                            contentValuesВставкаДанных[7].put("namedevice",device.getName().toString());
+                                            contentValuesВставкаДанных[0].put("macdevice",device.getAddress().toString());
+                                            contentValuesВставкаДанных[0].put("date_update",new Date().toLocaleString());
+                                            contentValuesВставкаДанных[0].put("city",addressesgetGPS.get(0).getLocality());
+                                            contentValuesВставкаДанных[0].put("adress",addressesgetGPS.get(0).getAddressLine(0));
+                                            contentValuesВставкаДанных[0].put("gps1",String.valueOf(addressesgetGPS.get(0).getLatitude()));
+                                            contentValuesВставкаДанных[0].put("gps2",String.valueOf(addressesgetGPS.get(0).getLongitude()));
+                                            contentValuesВставкаДанных[0].put("namedevice",device.getName().toString());
+                                           // contentValuesВставкаДанных[0].put("uuid",new Random().nextInt(6560));
                                             Log.i(TAG, "contentValuesВставкаДанных.length"+contentValuesВставкаДанных.length);
 
-                                            Integer РезультатЗаписиДанныхПИнгаДвайсаВБАзу=0;
-                                                    Completable completableВставка=    Completable.complete().fromSupplier(new Supplier<Integer>() {
+
+                                                    Completable completableВставка=    Completable.complete()
+                                                            .subscribeOn(Schedulers.io())
+                                                            .fromSupplier(new Supplier<Integer>() {
                                                 @Override
                                                 public Integer get() throws Throwable {
                                                     // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
-                                                    Integer РезультатЗаписиДанныхПИнгаДвайсаВБАзу=             МетодЗаписиОтмечаногоСотрудникаВБАзу(contentValuesВставкаДанных);
-                                                    Log.i(TAG,  " РезультатЗаписиДанныхПИнгаДвайсаВБАзу "+РезультатЗаписиДанныхПИнгаДвайсаВБАзу+ " contentValuesВставкаДанных "+contentValuesВставкаДанных);
-                                                    return РезультатЗаписиДанныхПИнгаДвайсаВБАзу;
+                                                     РезультатЗаписиДанныхПИнгаДвайсаВБАзу[0] =             МетодЗаписиОтмечаногоСотрудникаВБАзу(contentValuesВставкаДанных);
+                                                    Log.i(TAG,  " РезультатЗаписиДанныхПИнгаДвайсаВБАзу "+ РезультатЗаписиДанныхПИнгаДвайсаВБАзу[0] + " contentValuesВставкаДанных "+contentValuesВставкаДанных);
+                                                    return РезультатЗаписиДанныхПИнгаДвайсаВБАзу[0];
                                                 }
                                             })
                                             .doOnComplete(new Action() {
                                                 @Override
                                                 public void run() throws Throwable {
-                                                    if (РезультатЗаписиДанныхПИнгаДвайсаВБАзу>0) {
+                                                    if (РезультатЗаписиДанныхПИнгаДвайсаВБАзу[0] >0) {
                                                         // TODO: 09.02.2023 сам статус дляОтвета;
                                                         mutableLiveDataGATTServer.setValue(ДанныеСодранныеОтКлиента);
                                                     }else {
@@ -469,7 +467,7 @@ public class ServiceControllerServer extends IntentService {
                                     server.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, offset, new Date().toLocaleString().toString().getBytes(StandardCharsets.UTF_8));
                                 }
 
-                            },200);
+                            },500);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
