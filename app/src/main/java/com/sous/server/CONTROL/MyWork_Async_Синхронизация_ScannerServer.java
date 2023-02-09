@@ -139,7 +139,7 @@ public class MyWork_Async_Синхронизация_ScannerServer extends Worke
     public Result doWork() {
         try {
                 WorkManagerScanner = WorkManager.getInstance(getApplicationContext().getApplicationContext()).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
-            Log.i(context.getClass().getName(), "СИНХРОНИЗАЦИЯ WorkManagerScanner  "+WorkManagerScanner );
+            Log.i(context.getClass().getName(), "СИНХРОНИЗАЦИЯ WorkManagerScanner  SERVER  "+WorkManagerScanner );
 
         } catch (Exception e) {
             e.printStackTrace();

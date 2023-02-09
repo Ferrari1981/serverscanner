@@ -45,9 +45,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-
-
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class FragmentServerUser extends Fragment {
@@ -64,6 +62,7 @@ public class FragmentServerUser extends Fragment {
     private ServiceControllerServer.LocalBinderСканнер binderСканнерServer;
     private BluetoothManager bluetoothManager;
     private MutableLiveData<String> mutableLiveDataGATTServer;
+    private LinkedBlockingQueue<String> linkedКолПодкСерверу;
 
     private Long version;
     private  ServiceControllerServer serviceControllerServer;
@@ -87,6 +86,7 @@ public class FragmentServerUser extends Fragment {
             PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
             serviceControllerServer=     binderСканнерServer.getService();
+            linkedКолПодкСерверу=new LinkedBlockingQueue();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -715,31 +715,40 @@ public class FragmentServerUser extends Fragment {
                         public void onChanged(String ОтветОтСерврера) {
                             if (mutableLiveDataGATTServer.getValue()!=null) {
                                 Log.i(this.getClass().getName(), "   создание МетодЗаполенияФрагмента1 mutableLiveDataGATTServer " + mutableLiveDataGATTServer);
-                                holder.materialButtonСервер.startAnimation(animationServer);
                                 // TODO: 24.01.2023  показываем поозователю Статуса
                                 switch (mutableLiveDataGATTServer.getValue().toString()){
                                     case "SERVERGATTRUNNIG" :
                                         handler.post(()->{
                                            holder.materialButtonСервер.setText("Коннект...");
+                                            Log.i(this.getClass().getName(), "  Коннект... на сервере ответ КЛИЕНТУ  " );
                                         });
                                         break;
                                     case "SERVERGATTRUNNIGSTARTING" :
                                         handler.post(()->{
-                                            holder.materialButtonСервер.setText("Работает...");
+                                            holder.materialButtonСервер.startAnimation(animationServer);
+                                            holder.materialButtonСервер.setText("Работает..."
+                                                    + "\n"+"ping: " +linkedКолПодкСерверу.size());
+                                            Log.i(this.getClass().getName(), "  Работает... на сервере ответ КЛИЕНТУ  " +"\n"+"пинги: " +linkedКолПодкСерверу.size() );
                                         });
                                         break;
                                     case "SERVERGATTRUNNIGERRORS" :
                                         handler.post(()->{
-                                            holder.materialButtonСервер.setText("Не работает...");
+                                            holder.materialButtonСервер.setText("Не работает");
+                                            Log.i(this.getClass().getName(), "   Не работает на сервере ответ КЛИЕНТУ  " );
                                         });
                                         break;
                                     case "SERVERGATTRUNNIGReBOOT" :
                                         handler.post(()->{
                                             holder.materialButtonСервер.setText("Перезапуск...");
+                                            Log.i(this.getClass().getName(), "   Перезапуск на сервере ответ КЛИЕНТУ  " );
                                         });
                                         break;
 
                                     default:
+                                        // TODO: 09.02.2023  Успешое подклоючение
+                                        Log.i(this.getClass().getName(), "   Успешный ПИНГ на сервере ответ КЛИЕНТУ  " + mutableLiveDataGATTServer.getValue().toString());
+                                        holder.materialButtonСервер.startAnimation(animationServer);
+                                        linkedКолПодкСерверу.offer(mutableLiveDataGATTServer.getValue());
                                         handler.post(()->{
                                             holder.materialButtonСервер.setText(mutableLiveDataGATTServer.getValue().toString());
                                             Vibrator v2 = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
