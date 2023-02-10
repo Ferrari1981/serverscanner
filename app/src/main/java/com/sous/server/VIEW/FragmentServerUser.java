@@ -43,10 +43,12 @@ import com.sous.server.R;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 
 public class FragmentServerUser extends Fragment {
@@ -63,7 +65,7 @@ public class FragmentServerUser extends Fragment {
     private ServiceControllerServer.LocalBinderСканнер binderСканнерServer;
     private BluetoothManager bluetoothManager;
     private MutableLiveData<String> mutableLiveDataGATTServer;
-    private LinkedBlockingQueue<String> linkedКолПодкСерверу;
+    private List<String> linkedКолПодкСерверу;
 
     private Long version;
     private  ServiceControllerServer serviceControllerServer;
@@ -87,7 +89,7 @@ public class FragmentServerUser extends Fragment {
             PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
             serviceControllerServer=     binderСканнерServer.getService();
-            linkedКолПодкСерверу=new LinkedBlockingQueue();
+            linkedКолПодкСерверу=new LinkedList<>();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -752,17 +754,9 @@ public class FragmentServerUser extends Fragment {
                                         holder.materialButtonСервер.startAnimation(animationServer);
 
                                         // TODO: 09.02.2023 пинг
-                                        linkedКолПодкСерверу.spliterator().forEachRemaining(new Consumer<String>() {
-                                            @Override
-                                            public void accept(String s) {
-                                                if (linkedКолПодкСерверу.contains(s)==true) {
-                                                    linkedКолПодкСерверу.remove(s);
-                                                }
-                                            }
-                                        });
-
-                                            linkedКолПодкСерверу.offer(mutableLiveDataGATTServer.getValue());
-
+                                            linkedКолПодкСерверу.add(mutableLiveDataGATTServer.getValue());
+                                          linkedКолПодкСерверу=  linkedКолПодкСерверу.stream().distinct().collect(Collectors.toList());
+                                        Log.i(this.getClass().getName(), "   linkedКолПодкСерверу  " +linkedКолПодкСерверу);
 
                                         handler.post(()->{
                                             holder.materialButtonСервер.setText(mutableLiveDataGATTServer.getValue().toString());
