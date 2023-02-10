@@ -38,6 +38,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.base.CharMatcher;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.onesignal.OneSignal;
 
@@ -400,6 +401,8 @@ public class ServiceControllerServer extends IntentService {
                                             // TODO: 08.02.2023 методы после успешного получение данных от клиента
                                             contentValuesВставкаДанных[0]=new ContentValues();
                                             contentValuesВставкаДанных[0].put("operations","Девайс отмечен");
+                                            ПришлиДанныеОтКлиентаЗапрос=ПришлиДанныеОтКлиентаЗапрос.replaceAll("действие:","");
+                                            contentValuesВставкаДанных[0].put("completedwork",ПришлиДанныеОтКлиентаЗапрос);
                                             contentValuesВставкаДанных[0].put("macdevice",device.getAddress().toString());
                                             contentValuesВставкаДанных[0].put("date_update",new Date().toLocaleString());
                                             contentValuesВставкаДанных[0].put("city",addressesgetGPS.get(0).getLocality());
@@ -407,8 +410,10 @@ public class ServiceControllerServer extends IntentService {
                                             contentValuesВставкаДанных[0].put("gps1",String.valueOf(addressesgetGPS.get(0).getLatitude()));
                                             contentValuesВставкаДанных[0].put("gps2",String.valueOf(addressesgetGPS.get(0).getLongitude()));
                                             contentValuesВставкаДанных[0].put("namedevice",device.getName().toString());
-                                            contentValuesВставкаДанных[0].put("current_table",new Random().nextInt(656000));
-                                            contentValuesВставкаДанных[0].put("uuid",new Random().nextInt(656000));
+                                            String current_table = МетодГенерацииUUID();
+                                            contentValuesВставкаДанных[0].put("current_table",current_table);
+                                            String uuid = МетодГенерацииUUID();
+                                            contentValuesВставкаДанных[0].put("uuid",uuid);
                                             contentValuesВставкаДанных[0].put("date_update",new Date().toLocaleString());
                                             Log.i(TAG, "contentValuesВставкаДанных.length"+contentValuesВставкаДанных.length);
 
@@ -485,6 +490,14 @@ public class ServiceControllerServer extends IntentService {
                         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                         new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                     }
+                }
+
+                @NonNull
+                private String МетодГенерацииUUID() {
+                    String uuid=    UUID.randomUUID().toString().replace("-","").substring(0,20);
+                    uuid=uuid.replaceAll("[a-zA-Z]","");
+                    //uuid= CharMatcher.any().replaceFrom("[A-Za-z0-9]", "");
+                    return uuid;
                 }
 
                 @Override
