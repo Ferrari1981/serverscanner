@@ -346,7 +346,9 @@ public class MainActivityNewServerScanner extends AppCompatActivity  {
                     Manifest.permission.BLUETOOTH_CONNECT,
                     Manifest.permission.BLUETOOTH_PRIVILEGED,
                     Manifest.permission.BLUETOOTH_ADVERTISE,
-                    Manifest.permission.BLUETOOTH_ADMIN
+                    Manifest.permission.BLUETOOTH_ADMIN,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
             };
             String[] PERMISSIONS_LOCATION = {
                     Manifest.permission.ACCESS_FINE_LOCATION,
@@ -356,7 +358,9 @@ public class MainActivityNewServerScanner extends AppCompatActivity  {
                     Manifest.permission.BLUETOOTH_CONNECT,
                     Manifest.permission.BLUETOOTH_PRIVILEGED,
                     Manifest.permission.BLUETOOTH_ADVERTISE,
-                    Manifest.permission.BLUETOOTH_ADMIN
+                    Manifest.permission.BLUETOOTH_ADMIN,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
             };
             int permission1 = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
             int permission2 = ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN);

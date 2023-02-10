@@ -778,8 +778,12 @@ public class ServiceControllerServer extends IntentService {
         Integer РезульататЗАписиНовогоДивайса=0;
         try{
             Log.i(this.getClass().getName(), "запись сотрудника в базу"+ " linkedHashMapДанныеДляЗаписи) " + contentValues) ;
-            Uri uri = Uri.parse("content://com.sous.server.providerserver/" +"scannerserversuccess" + "");
+            String provider = "com.sous.server.providerserver";
+            Uri uri = Uri.parse("content://"+provider+"/" +"scannerserversuccess" + "");
             ContentResolver resolver = context.getContentResolver();
+            grantUriPermission(provider, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            grantUriPermission(provider, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            grantUriPermission(provider, uri, Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             РезульататЗАписиНовогоДивайса=   resolver.bulkInsert(uri, contentValues);
             Log.w(context.getClass().getName(), " РЕЗУЛЬТАТ insertData  РезульататЗАписиНовогоДивайса ЗНАЧЕНИЯ  " +  РезульататЗАписиНовогоДивайса.toString() );
         } catch (Exception e) {
@@ -804,8 +808,12 @@ public class ServiceControllerServer extends IntentService {
         Integer   ВерсияДАнных = 0;
         try{
             Log.i(this.getClass().getName(), "запись сотрудника в базу"+ " linkedHashMapДанныеДляЗаписи) " + СамЗапрос) ;
-            Uri uri = Uri.parse("content://com.sous.server.providerserver/" +"scannerserversuccess" + "");
+            String provider = "com.sous.server.providerserver";
+            Uri uri = Uri.parse("content://"+provider+"/" +"scannerserversuccess" + "");
             ContentResolver resolver = context.getContentResolver();
+            grantUriPermission(provider, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            grantUriPermission(provider, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            grantUriPermission(provider, uri, Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
              Cursor cursorПолучаемДЛяСевреа=   resolver.query(uri,new String[]{СамЗапрос},null,null,null,null);
             cursorПолучаемДЛяСевреа.moveToFirst();
              if (cursorПолучаемДЛяСевреа.getCount()>0){
