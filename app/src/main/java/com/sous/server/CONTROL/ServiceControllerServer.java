@@ -379,113 +379,113 @@ public class ServiceControllerServer extends IntentService {
                         BluetoothGattService services = characteristic.getService();
                         if (services!=null) {
                             BluetoothGattCharacteristic characteristicsServer = services.getCharacteristic(uuidSERVER);
-                            handler.postDelayed(()->{
-                                final Integer[] РезультатЗаписиДанныхПИнгаДвайсаВБАзу = {0};
-                                if(characteristicsServer!=null){
-                                    if (value!=null) {
-                                        String ПришлиДанныеОтКлиентаЗапрос=new String(value);
-                                        Log.i(TAG, "Connected to GATT server  newValueПришлиДАнныеОтКлиента."+new String(value));
-                                        // TODO: 07.02.2023  Записываем ВБАзу Данные
-                                        if (value.length>0 ) {
-                                            while (!lastLocation.isComplete());
-                                            String ДанныеСодранныеОтКлиента="Девайс отмечен..."+"\n"+device.getName().toString()+
-                                                    "\n"+device.getAddress().toString()+
-                                                    "\n"+new Date().toLocaleString()
-                                                    +"\n"+ ПришлиДанныеОтКлиентаЗапрос
-                                                    +"\n"+"GPS"
-                                                    +"\n"+ "город: "+ addressesgetGPS.get(0).getLocality()
-                                                    +"\n"+ "адрес: "+ addressesgetGPS.get(0).getAddressLine(0)
-                                                    +"\n"+"(корд1) "+ addressesgetGPS.get(0).getLatitude()
-                                                    +"\n"+ "(корд2) "+ addressesgetGPS.get(0).getLongitude();
+                            final Integer[] РезультатЗаписиДанныхПИнгаДвайсаВБАзу = {0};
+                            if (characteristicsServer != null) {
+                                if (value != null) {
+                                    String ПришлиДанныеОтКлиентаЗапрос = new String(value);
+                                    Log.i(TAG, "Connected to GATT server  newValueПришлиДАнныеОтКлиента." + new String(value));
+                                    // TODO: 07.02.2023  Записываем ВБАзу Данные
+                                    if (value.length > 0) {
+                                        while (!lastLocation.isComplete()) ;
+                                        String ДанныеСодранныеОтКлиента = "Девайс отмечен..." + "\n" + device.getName().toString() +
+                                                "\n" + device.getAddress().toString() +
+                                                "\n" + new Date().toLocaleString()
+                                                + "\n" + ПришлиДанныеОтКлиентаЗапрос
+                                                + "\n" + "GPS"
+                                                + "\n" + "город: " + addressesgetGPS.get(0).getLocality()
+                                                + "\n" + "адрес: " + addressesgetGPS.get(0).getAddressLine(0)
+                                                + "\n" + "(корд1) " + addressesgetGPS.get(0).getLatitude()
+                                                + "\n" + "(корд2) " + addressesgetGPS.get(0).getLongitude();
 
 
-                                            ContentValues[] contentValuesВставкаДанных=new ContentValues[1];
-                                            // TODO: 08.02.2023 методы после успешного получение данных от клиента
-                                            contentValuesВставкаДанных[0]=new ContentValues();
-                                            contentValuesВставкаДанных[0].put("operations","Девайс отмечен");
-                                            ПришлиДанныеОтКлиентаЗапрос=ПришлиДанныеОтКлиентаЗапрос.replaceAll("действие:","");
-                                            contentValuesВставкаДанных[0].put("completedwork",ПришлиДанныеОтКлиентаЗапрос);
-                                            contentValuesВставкаДанных[0].put("macdevice",device.getAddress().toString());
-                                            contentValuesВставкаДанных[0].put("date_update",new Date().toLocaleString());
-                                            contentValuesВставкаДанных[0].put("city",addressesgetGPS.get(0).getLocality());
-                                            contentValuesВставкаДанных[0].put("adress",addressesgetGPS.get(0).getAddressLine(0));
-                                            contentValuesВставкаДанных[0].put("gps1",String.valueOf(addressesgetGPS.get(0).getLatitude()));
-                                            contentValuesВставкаДанных[0].put("gps2",String.valueOf(addressesgetGPS.get(0).getLongitude()));
-                                            contentValuesВставкаДанных[0].put("namedevice",device.getName().toString());
-                                            // TODO: 10.02.2023 версия данных
-                                            Integer current_table = МетодПоискДАнныхПоБазе("SELECT MAX ( current_table  ) AS MAX_R  FROM scannerserversuccess ");
-                                            contentValuesВставкаДанных[0].put("current_table",current_table);
-                                            String uuid = МетодГенерацииUUID();
-                                            contentValuesВставкаДанных[0].put("uuid",uuid);
-                                            contentValuesВставкаДанных[0].put("date_update",new Date().toLocaleString());
-                                            Log.i(TAG, "contentValuesВставкаДанных.length"+contentValuesВставкаДанных.length);
+                                        ContentValues[] contentValuesВставкаДанных = new ContentValues[1];
+                                        // TODO: 08.02.2023 методы после успешного получение данных от клиента
+                                        contentValuesВставкаДанных[0] = new ContentValues();
+                                        contentValuesВставкаДанных[0].put("operations", "Девайс отмечен");
+                                        ПришлиДанныеОтКлиентаЗапрос = ПришлиДанныеОтКлиентаЗапрос.replaceAll("действие:", "");
+                                        contentValuesВставкаДанных[0].put("completedwork", ПришлиДанныеОтКлиентаЗапрос);
+                                        contentValuesВставкаДанных[0].put("macdevice", device.getAddress().toString());
+                                        contentValuesВставкаДанных[0].put("date_update", new Date().toLocaleString());
+                                        contentValuesВставкаДанных[0].put("city", addressesgetGPS.get(0).getLocality());
+                                        contentValuesВставкаДанных[0].put("adress", addressesgetGPS.get(0).getAddressLine(0));
+                                        contentValuesВставкаДанных[0].put("gps1", String.valueOf(addressesgetGPS.get(0).getLatitude()));
+                                        contentValuesВставкаДанных[0].put("gps2", String.valueOf(addressesgetGPS.get(0).getLongitude()));
+                                        contentValuesВставкаДанных[0].put("namedevice", device.getName().toString());
+                                        // TODO: 10.02.2023 версия данных
+                                        Integer current_table = МетодПоискДАнныхПоБазе("SELECT MAX ( current_table  ) AS MAX_R  FROM scannerserversuccess ");
+                                        contentValuesВставкаДанных[0].put("current_table", current_table);
+                                        String uuid = МетодГенерацииUUID();
+                                        contentValuesВставкаДанных[0].put("uuid", uuid);
+                                        contentValuesВставкаДанных[0].put("date_update", new Date().toLocaleString());
+                                        Log.i(TAG, "contentValuesВставкаДанных.length" + contentValuesВставкаДанных.length);
 
 
-                                                    Completable completableВставка=    Completable.complete()
-                                                            .subscribeOn(Schedulers.io())
-                                                            .fromSupplier(new Supplier<Integer>() {
-                                                @Override
-                                                public Integer get() throws Throwable {
-                                                    // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
-                                                     РезультатЗаписиДанныхПИнгаДвайсаВБАзу[0] =             МетодЗаписиОтмечаногоСотрудникаВБАзу(contentValuesВставкаДанных);
-                                                    Log.i(TAG,  " РезультатЗаписиДанныхПИнгаДвайсаВБАзу "+ РезультатЗаписиДанныхПИнгаДвайсаВБАзу[0] + " contentValuesВставкаДанных "+contentValuesВставкаДанных);
-                                                    return РезультатЗаписиДанныхПИнгаДвайсаВБАзу[0];
-                                                }
-                                            })
-                                            .doOnComplete(new Action() {
-                                                @Override
-                                                public void run() throws Throwable {
-                                                    if (РезультатЗаписиДанныхПИнгаДвайсаВБАзу[0] >0) {
-                                                        // TODO: 09.02.2023 сам статус дляОтвета;
-                                                        mutableLiveDataGATTServer.setValue(ДанныеСодранныеОтКлиента);
-                                                        characteristicsServer.setValue("SERVER#SousAvtoSuccess");
-                                                    }else {
-                                                        // TODO: 09.02.2023 сам статус дляОтвета;
-                                                        mutableLiveDataGATTServer.setValue("Пинг прошел ,"+"\n"+
-                                                                "Без записи в базу !!!");
-                                                        characteristicsServer.setValue("SERVER#SousAvtoERROR");
+                                        Completable completableВставка = Completable.complete()
+                                                .subscribeOn(Schedulers.io())
+                                                .fromSupplier(new Supplier<Integer>() {
+                                                    @Override
+                                                    public Integer get() throws Throwable {
+                                                        // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
+                                                        РезультатЗаписиДанныхПИнгаДвайсаВБАзу[0] = МетодЗаписиОтмечаногоСотрудникаВБАзу(contentValuesВставкаДанных);
+                                                        Log.i(TAG, " РезультатЗаписиДанныхПИнгаДвайсаВБАзу " + РезультатЗаписиДанныхПИнгаДвайсаВБАзу[0] + " contentValuesВставкаДанных " + contentValuesВставкаДанных);
+                                                        return РезультатЗаписиДанныхПИнгаДвайсаВБАзу[0];
                                                     }
-
-                                                }
-                                            })
-                                            .doOnError(new Consumer<Throwable>() {
-                                                @Override
-                                                public void accept(Throwable throwable) throws Throwable {
-                                                    Log.e(this.getClass().getName(), "Ошибка " + throwable+ " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                                    ContentValues valuesЗаписываемОшибки = new ContentValues();
-                                                    valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
-                                                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                                                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                                                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                                    final Object ТекущаяВерсияПрограммы = version;
-                                                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                                                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                                                    new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                                                }
-                                            });
-                                            completableВставка  .blockingSubscribe();
-                                            Log.i(TAG, "SERVER#SousAvtoSuccess" + " " +new Date().toLocaleString());
-                                        }else{
-                                            Log.i(TAG, "SERVER#SousAvtoERROR"+ " " +new Date().toLocaleString());
-                                            characteristicsServer.setValue("SERVER#SousAvtoERROR");
-                                        }
-                                    }else {
-                                        Log.i(TAG, "SERVER#SousAvtoNULL"+ " " +new Date().toLocaleString());
-                                        characteristicsServer.setValue("SERVER#SousAvtoNULL");
+                                                })
+                                                .doOnComplete(new Action() {
+                                                    @Override
+                                                    public void run() throws Throwable {
+                                                        if (РезультатЗаписиДанныхПИнгаДвайсаВБАзу[0] > 0) {
+                                                            // TODO: 09.02.2023 сам статус дляОтвета;
+                                                            handler.post(()->{
+                                                                mutableLiveDataGATTServer.setValue(ДанныеСодранныеОтКлиента);
+                                                                characteristicsServer.setValue("SERVER#SousAvtoSuccess");
+                                                            });
+                                                        } else {
+                                                            // TODO: 09.02.2023 сам статус дляОтвета;
+                                                            handler.post(()->{
+                                                                mutableLiveDataGATTServer.setValue("Пинг прошел ," + "\n" +
+                                                                        "Без записи в базу !!!");
+                                                                characteristicsServer.setValue("SERVER#SousAvtoERROR");
+                                                            });
+                                                        }
+                                                    }
+                                                })
+                                                .doOnError(new Consumer<Throwable>() {
+                                                    @Override
+                                                    public void accept(Throwable throwable) throws Throwable {
+                                                        Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                                        ContentValues valuesЗаписываемОшибки = new ContentValues();
+                                                        valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
+                                                        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                                                        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                                                        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                                        final Object ТекущаяВерсияПрограммы = version;
+                                                        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                                                        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                                                        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                                                    }
+                                                });
+                                        completableВставка.blockingSubscribe();
+                                        Log.i(TAG, "SERVER#SousAvtoSuccess" + " " + new Date().toLocaleString());
+                                    } else {
+                                        Log.i(TAG, "SERVER#SousAvtoERROR" + " " + new Date().toLocaleString());
+                                        characteristicsServer.setValue("SERVER#SousAvtoERROR");
                                     }
-                                    server.notifyCharacteristicChanged(device,characteristic,true);
-                                    server.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, offset, new Date().toLocaleString().toString().getBytes(StandardCharsets.UTF_8));
-                                    server.cancelConnection(device);
-                                   /// server.close();
+                                } else {
+                                    Log.i(TAG, "SERVER#SousAvtoNULL" + " " + new Date().toLocaleString());
+                                    characteristicsServer.setValue("SERVER#SousAvtoNULL");
                                 }
-
-                            },1000);
+                                server.notifyCharacteristicChanged(device, characteristic, true);
+                                server.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, offset, new Date().toLocaleString().toString().getBytes(StandardCharsets.UTF_8));
+                                server.cancelConnection(device);
+                                /// server.close();
+                            }
                         }
                     } catch (Exception e) {
+                        e.printStackTrace();
                         server.cancelConnection(device);
                         server.close();
-                        e.printStackTrace();
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
                         ContentValues valuesЗаписываемОшибки = new ContentValues();
