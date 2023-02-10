@@ -811,9 +811,8 @@ public class ServiceControllerServer extends IntentService {
             String provider = "com.sous.server.providerserver";
             Uri uri = Uri.parse("content://"+provider+"/" +"scannerserversuccess" + "");
             ContentResolver resolver = context.getContentResolver();
-            grantUriPermission(provider, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            grantUriPermission(provider, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            grantUriPermission(provider, uri, Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            resolver.takePersistableUriPermission(uri,Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            resolver.takePersistableUriPermission(uri,Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
              Cursor cursorПолучаемДЛяСевреа=   resolver.query(uri,new String[]{СамЗапрос},null,null,null,null);
             cursorПолучаемДЛяСевреа.moveToFirst();
              if (cursorПолучаемДЛяСевреа.getCount()>0){
