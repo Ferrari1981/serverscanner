@@ -17,6 +17,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
@@ -410,7 +411,8 @@ public class ServiceControllerServer extends IntentService {
                                             contentValuesВставкаДанных[0].put("gps1",String.valueOf(addressesgetGPS.get(0).getLatitude()));
                                             contentValuesВставкаДанных[0].put("gps2",String.valueOf(addressesgetGPS.get(0).getLongitude()));
                                             contentValuesВставкаДанных[0].put("namedevice",device.getName().toString());
-                                            String current_table = МетодГенерацииUUID();
+                                            // TODO: 10.02.2023 версия данных
+                                            Integer current_table = МетодПоискДАнныхПоБазе("SELECT MAX ( current_table  ) AS MAX_R  FROM scannerserversuccess ");
                                             contentValuesВставкаДанных[0].put("current_table",current_table);
                                             String uuid = МетодГенерацииUUID();
                                             contentValuesВставкаДанных[0].put("uuid",uuid);
@@ -435,10 +437,12 @@ public class ServiceControllerServer extends IntentService {
                                                     if (РезультатЗаписиДанныхПИнгаДвайсаВБАзу[0] >0) {
                                                         // TODO: 09.02.2023 сам статус дляОтвета;
                                                         mutableLiveDataGATTServer.setValue(ДанныеСодранныеОтКлиента);
+                                                        characteristicsServer.setValue("SERVER#SousAvtoSuccess");
                                                     }else {
                                                         // TODO: 09.02.2023 сам статус дляОтвета;
                                                         mutableLiveDataGATTServer.setValue("Пинг прошел ,"+"\n"+
                                                                 "Без записи в базу !!!");
+                                                        characteristicsServer.setValue("SERVER#SousAvtoERROR");
                                                     }
 
                                                 }
@@ -461,7 +465,6 @@ public class ServiceControllerServer extends IntentService {
                                             });
                                             completableВставка  .blockingSubscribe();
                                             Log.i(TAG, "SERVER#SousAvtoSuccess" + " " +new Date().toLocaleString());
-                                            characteristicsServer.setValue("SERVER#SousAvtoSuccess");
                                         }else{
                                             Log.i(TAG, "SERVER#SousAvtoERROR"+ " " +new Date().toLocaleString());
                                             characteristicsServer.setValue("SERVER#SousAvtoERROR");
@@ -789,5 +792,38 @@ public class ServiceControllerServer extends IntentService {
             new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
         return  РезульататЗАписиНовогоДивайса;
+    }
+
+    // TODO: 10.02.2023 МЕТОД ВЫБОР ДАННЫХ
+    public Integer МетодПоискДАнныхПоБазе(@NonNull String СамЗапрос) {
+        Integer   ВерсияДАнных = 0;
+        try{
+            Log.i(this.getClass().getName(), "запись сотрудника в базу"+ " linkedHashMapДанныеДляЗаписи) " + СамЗапрос) ;
+            Uri uri = Uri.parse("content://com.sous.server.providerserver/" +"scannerserversuccess" + "");
+            ContentResolver resolver = context.getContentResolver();
+             Cursor cursorПолучаемДЛяСевреа=   resolver.query(uri,new String[]{СамЗапрос},null,null,null,null);
+            cursorПолучаемДЛяСевреа.moveToFirst();
+             if (cursorПолучаемДЛяСевреа.getCount()>0){
+                 ВерсияДАнных=      cursorПолучаемДЛяСевреа.getInt(0);
+                 Log.i(this.getClass().getName(), "ВерсияДАнных"+ ВерсияДАнных) ;
+                 ВерсияДАнных++;
+             }
+            Log.w(context.getClass().getName(), " РЕЗУЛЬТАТ insertData  cursorПолучаемДЛяСевреа  " +  cursorПолучаемДЛяСевреа.toString() );
+            cursorПолучаемДЛяСевреа.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+        return  ВерсияДАнных;
     }
 }

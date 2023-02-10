@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 //этот класс создает базу данных SQLite
 public class CREATE_DATABASEServer extends SQLiteOpenHelper{ ///SQLiteOpenHelper
-     static final int VERSION = 40;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
+     static final int VERSION =47;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
    private   Context context;
     private      SQLiteDatabase ССылкаНаСозданнуюБазу;
     private     CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
@@ -154,8 +154,18 @@ public class CREATE_DATABASEServer extends SQLiteOpenHelper{ ///SQLiteOpenHelper
                                 " date_update NUMERIC   ," +
                                 " uuid NUMERIC UNIQUE DEFAULT 0  ,"+
                                 " version  NUMERIC ," +
-                                " current_table NUMERIC UNIQUE DEFAULT 0 )");
+                                " current_table   NUMERIC UNIQUE DEFAULT 0 )");
                         Log.d(this.getClass().getName(), " сработала ...  создание таблицы   НазваниеТаблицыДляТригера   "+НазваниеТаблицыДляТригера );
+                        //TODO INSERT
+                   /*     ССылкаНаСозданнуюБазу.execSQL("drop TRIGGER  if exists   ScannerTableINSERT ");//test
+                        ССылкаНаСозданнуюБазу.execSQL(" CREATE TRIGGER IF NOT EXISTS ScannerTableINSERT" + НазваниеТаблицыДляТригера + "" +
+                                "  AFTER INSERT   ON " + НазваниеТаблицыДляТригера +
+                                " BEGIN " +
+                                 " UPDATE "+НазваниеТаблицыДляТригера+" SET  current_table= (SELECT MAX(current_table)+1 FROM  " + НазваниеТаблицыДляТригера + ")" +
+                                " WHERE  current_table  in( SELECT current_table  FROM "+НазваниеТаблицыДляТригера+" ORDER BY current_table DESC LIMIT 1)  " + "; "
+                                + " END ;");//test*/
+                        // TODO: 03.06.2022
+                        Log.d(this.getClass().getName(), " сработала ...  создание таблицы   NOT EXISTS ScannerTableINSERT   "+НазваниеТаблицыДляТригера );
                         //TODO INSERT
                     }else {
                         // TODO: 30.11.2022 Тригеры для Сканироваение

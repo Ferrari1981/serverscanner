@@ -23,8 +23,7 @@ public class SubClassErrors {
        //     Uri uri = Uri.parse("content://dsu1.scanner.myapplication.contentproviderfordatabasescanner/" +"errordsu1" + "");
             ContentResolver resolver = context.getContentResolver();
         Uri    insertData=   resolver.insert(uri, contentValuesДляЗаписиОшибки);
-        Integer РезультатВставки= Optional.ofNullable(insertData.toString().replaceAll("content://","")).map(Integer::new).orElse(0);
-            Log.w(context.getClass().getName(), " РЕЗУЛЬТАТ РезультатВставки ОШИБКА " +  РезультатВставки );
+            Log.w(context.getClass().getName(), " РЕЗУЛЬТАТ РезультатВставки ОШИБКА " +  insertData );
         } catch (Exception e) {
             e.printStackTrace();
             Log.e( context.getClass().getName(), "SubClassErrors ДЛЯ SCANNER error " + e +
