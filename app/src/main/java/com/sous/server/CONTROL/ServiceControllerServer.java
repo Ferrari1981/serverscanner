@@ -341,6 +341,7 @@ public class ServiceControllerServer extends IntentService {
                             case BluetoothProfile.STATE_DISCONNECTED:
                                 Log.i(TAG, "Connected to GATT server. BluetoothProfile.STATE_CONNECTING ");
                                 server.cancelConnection(device);
+                              //  server.close();
                                 break;
                         }
 
@@ -475,11 +476,15 @@ public class ServiceControllerServer extends IntentService {
                                     }
                                     server.notifyCharacteristicChanged(device,characteristic,true);
                                     server.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, offset, new Date().toLocaleString().toString().getBytes(StandardCharsets.UTF_8));
+                                    server.cancelConnection(device);
+                                   /// server.close();
                                 }
 
-                            },500);
+                            },1000);
                         }
                     } catch (Exception e) {
+                        server.cancelConnection(device);
+                        server.close();
                         e.printStackTrace();
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
