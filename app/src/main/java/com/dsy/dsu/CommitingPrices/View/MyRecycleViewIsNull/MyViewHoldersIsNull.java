@@ -1,4 +1,4 @@
-package com.dsy.dsu.CommitingPrices.View.MyRecycleView;
+package com.dsy.dsu.CommitingPrices.View.MyRecycleViewIsNull;
 
 import android.content.Context;
 import android.util.Log;

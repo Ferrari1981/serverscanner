@@ -1,5 +1,6 @@
 package com.dsy.dsu.CommitingPrices.View.MyRecycleView;// TODO: 27.12.2023 Recyreview is null
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dsy.dsu.CommitingPrices.Model.BiccessLogicaFragmentCommitPrices.InizializayRecyreViews;
 import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreView;
+import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreViewNesteds;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -17,6 +20,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.CompletableObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 // TODO: 09.11.2023 ВТОРОЯ Rereview
 public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders> {
@@ -45,14 +52,48 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
 
 }
 
-
+    @SuppressLint("RecyclerView")
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolders holder, @NonNull int position, @NonNull List<Object> payloads) {
+    public void onBindViewHolder(@NonNull MyViewHolders holder,  @NonNull int position, @NonNull List<Object> payloads) {
         try {
-            // TODO: 02.03.2022
-            ComponentsForRecyreView componentsForRecyreView=  new ComponentsForRecyreView(holder,context,position);
+            // TODO: 02.03.2022 Запускаем Обработку Parent Конмоненты
+            Completable.complete().subscribe(new CompletableObserver() {
+                @Override
+                public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                    // TODO: 02.03.2022 Запускаем Обработку Parent Конмоненты
+                    ComponentsForRecyreView componentsForRecyreView=  new ComponentsForRecyreView(holder,context,position);
+                    componentsForRecyreView.getCardviewmatireacommitpay();
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"jsonNode "
+                            + jsonNodeParent + " position " +position);
+                }
 
-            componentsForRecyreView.getCardviewmatireacommitpay();
+                @Override
+                public void onComplete() {
+                    // TODO: 02.03.2022 Запускаем Обработку Childen Конмоненты
+                    RecyclerView recycleview_comminingppricesNesteds=holder.itemView.findViewById(R.id.recycleview_nesters_comminingpprices);
+
+
+                    ComponentsForRecyreViewNesteds componentsForRecyreViewNesteds=
+                            new ComponentsForRecyreViewNesteds(holder,context,position,recycleview_comminingppricesNesteds);
+                    componentsForRecyreViewNesteds.getCardviewmatireacommitpay();
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"jsonNode "
+                            + jsonNodeParent + " position " +position);
+                }
+
+                @Override
+                public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
+            });
+
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

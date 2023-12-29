@@ -9,8 +9,8 @@ import android.widget.ProgressBar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyRecycleViewIsAdapters;
-import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyRecycleViewIsAdaptersNested;
-import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyRecycleViewIsNullAdapters;
+import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyRecycleViewIsAdaptersNested;
+import com.dsy.dsu.CommitingPrices.View.MyRecycleViewIsNull.MyRecycleViewIsNullAdapters;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

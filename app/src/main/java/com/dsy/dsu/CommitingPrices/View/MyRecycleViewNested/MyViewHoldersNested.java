@@ -1,4 +1,4 @@
-package com.dsy.dsu.CommitingPrices.View.MyRecycleView;
+package com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreView;
 import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreViewNesteds;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -28,10 +27,12 @@ public class MyViewHoldersNested extends RecyclerView.ViewHolder {// TODO: 28.02
     private MaterialButton КнопкаСогласованиеОтказ,КнопкаУспешноеСогласования;
     private TableLayout tableLayoutcommitpayfiles,tableLayoutcommitpay;
     private ProgressBar progressbarfilepay;
-    private Context context;
-    private View itemView;
-    private  JsonNode jsonNode;
-    private  int getAbsoluteAdapterPosition;
+
+
+    public Context context;
+    public View itemView;
+    public  JsonNode jsonNode;
+    public  int getAbsoluteAdapterPosition;
 
     // TODO: 02.03.2022
     public MyViewHoldersNested(@NonNull View itemView,
@@ -46,9 +47,6 @@ public class MyViewHoldersNested extends RecyclerView.ViewHolder {// TODO: 28.02
             this.getAbsoluteAdapterPosition=getAbsoluteAdapterPosition;
 
             // TODO: 02.03.2022
-            ComponentsForRecyreViewNesteds componentsForRecyreView=
-                    new ComponentsForRecyreViewNesteds(itemView,context,jsonNode,getAbsoluteAdapterPosition);
-
             Log.d(this.getClass().getName(),"\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
