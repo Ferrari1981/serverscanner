@@ -10,20 +10,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.CommitingPrices.Model.BiccessLogicaFragmentCommitPrices.InizializayRecyreViews;
 import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreView;
-import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreViewNesteds;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.CompletableObserver;
-import io.reactivex.rxjava3.disposables.Disposable;
 
 // TODO: 09.11.2023 ВТОРОЯ Rereview
 public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders> {
@@ -31,11 +26,18 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
     public JsonNode jsonNodeParent;
     private Context context;
     private MyViewHolders viewHolders;
-    public MyRecycleViewIsAdapters(@NotNull JsonNode jsonNodeParent, @NotNull Context context) {
+
+    private ObjectMapper objectMapper;
+
+    private Integer getHiltPublicId;
+
+    public MyRecycleViewIsAdapters(@NotNull JsonNode jsonNodeParent, @NotNull Context context,@NotNull ObjectMapper objectMapper,@NotNull Integer getHiltPublicId ) {
         // super();
         try{
         this.jsonNodeParent = jsonNodeParent;
         this.context = context;
+        this.objectMapper = objectMapper;
+        this.getHiltPublicId = getHiltPublicId;
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -55,51 +57,28 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
     @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolders holder,  @NonNull int position, @NonNull List<Object> payloads) {
-        try {
-            // TODO: 02.03.2022 Запускаем Обработку Parent Конмоненты
-            Completable.complete().subscribe(new CompletableObserver() {
-                @Override
-                public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                    // TODO: 02.03.2022 Запускаем Обработку Parent Конмоненты
-                    ComponentsForRecyreView componentsForRecyreView=  new ComponentsForRecyreView(holder,context,position);
-                    componentsForRecyreView.getCardviewmatireacommitpay();
-                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"jsonNode "
-                            + jsonNodeParent + " position " +position);
-                }
+        try {///Данные
 
-                @Override
-                public void onComplete() {
-                    // TODO: 02.03.2022 Запускаем Обработку Childen Конмоненты
-                    RecyclerView recycleview_comminingppricesNesteds=holder.itemView.findViewById(R.id.recycleview_nesters_comminingpprices);
+            // TODO: 29.12.2023  получаем Single Row
+            JsonNode jsonNodeSingleRow = getRowJsonNode(position);
 
-
-                    ComponentsForRecyreViewNesteds componentsForRecyreViewNesteds=
-                            new ComponentsForRecyreViewNesteds(holder,context,position,recycleview_comminingppricesNesteds);
-                    componentsForRecyreViewNesteds.getCardviewmatireacommitpay();
-                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"jsonNode "
-                            + jsonNodeParent + " position " +position);
-                }
-
-                @Override
-                public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                    e.printStackTrace();
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                }
-            });
+            holder.jsonNode=jsonNodeSingleRow;
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"jsonNode "
                     + jsonNodeParent + " position " +position);
+
+// TODO: 09.01.2024 Созданные данные
+            super.onBindViewHolder(holder, position, payloads);
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"jsonNode "
+                    + jsonNodeParent + " position " +position);
             // TODO: 30.03.2022
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -107,7 +86,7 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
             new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        super.onBindViewHolder(holder, position, payloads);
+
     }
 
 
@@ -194,20 +173,14 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
             // TODO: 28.12.2023 получаем позицию в recyreview
             int  getPostionViewHolder=  getPostions();
 
-
-            // TODO: 29.12.2023  получаем Single Row
-            JsonNode jsonNodeSingleRow = getRowJsonNode(getPostionViewHolder);
-
-
             // TODO: 22.03.2022
-            viewHolders = new MyViewHolders(viewComminigPrices,context,jsonNodeSingleRow,getPostionViewHolder);
+            viewHolders = new MyViewHolders(viewComminigPrices,context,getPostionViewHolder);
             // TODO: 27.12.2023
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + "   viewComminigPrices" + viewComminigPrices
-                    + " getPostionViewHolder " +getPostionViewHolder  + "  jsonNodeParent.size() " +jsonNodeParent.size() +
-                    " jsonNodeSingleRow " +jsonNodeSingleRow);
+                    + " getPostionViewHolder " +getPostionViewHolder  + "  jsonNodeParent.size() " +jsonNodeParent.size() );
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -218,6 +191,36 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
         }
         return viewHolders;
 
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolders holder, int position) {
+        try{
+        // TODO: 27.12.2023
+
+            // TODO: 02.03.2022 Запускаем Обработку Parent Конмоненты
+            ComponentsForRecyreView componentsForRecyreView=  new ComponentsForRecyreView(holder,context,position,objectMapper,getHiltPublicId);
+
+            // TODO: 29.12.2023 Кнопка Стрелочка которая показывает и скрывает Дочериний recyreview
+            componentsForRecyreView.getArrow_nested_receriview();
+
+            // TODO: 29.12.2023 название ЦФО
+            componentsForRecyreView.getmTV_commitingprices_value();
+
+
+
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"  jsonNodeParent.size() " +jsonNodeParent.size() );
+
+            // TODO: 09.01.2024 Созданные данные
+        } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
     }
 
 
@@ -263,23 +266,6 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
         return  getPostionViewHolder;
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull MyViewHolders holder, int position) {
-        try {
-
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " position " +position);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
     @Override
     public long getItemId(int position) {
@@ -302,9 +288,6 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
         if (jsonNodeParent!=null && jsonNodeParent.size()>0) {
             КоличесвоСтрок = jsonNodeParent.size();
             Log.d(this.getClass().getName(), "jsonNode.size() " + jsonNodeParent.size() + " КоличесвоСтрок " +КоличесвоСтрок);
-        } else {
-            КоличесвоСтрок=1;
-            Log.d(this.getClass().getName(), "jsonNode.size() " + jsonNodeParent.size() + " холостой ход КоличесвоСтрок " +КоличесвоСтрок);
         }
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

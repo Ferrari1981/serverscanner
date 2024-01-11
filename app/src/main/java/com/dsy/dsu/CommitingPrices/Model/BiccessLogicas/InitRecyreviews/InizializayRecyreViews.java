@@ -1,15 +1,14 @@
-package com.dsy.dsu.CommitingPrices.Model.BiccessLogicaFragmentCommitPrices;
+package com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.DizaynRecyreView.LeftDividerItemDecorator;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
 
@@ -27,12 +26,23 @@ public class InizializayRecyreViews {
     public void startInitRecyreview() {
         try {
             animationДляСогласования= AnimationUtils.loadAnimation(context, R.anim.slide_in_row);//R.anim.layout_animal_commit
+
+
+
+
+
+
+
+
+
+/*
             DividerItemDecoration itemDecoration =
-                    new DividerItemDecoration(recycleview_comminingpprices.getContext(), DividerItemDecoration.HORIZONTAL);
-            GradientDrawable drawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, new int[]{0xfff7f7f7, 0xfff7f7f7});
-            drawable.setSize(1,1);
-            itemDecoration.setDrawable(drawable);
-            recycleview_comminingpprices.addItemDecoration(itemDecoration);
+                    new DividerItemDecoration(recycleview_comminingpprices.getContext(), DividerItemDecoration.HORIZONTAL);*/
+
+
+
+
+            recycleview_comminingpprices.addItemDecoration(new LeftDividerItemDecorator(context));
             LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context);
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recycleview_comminingpprices.setLayoutManager(linearLayoutManager);

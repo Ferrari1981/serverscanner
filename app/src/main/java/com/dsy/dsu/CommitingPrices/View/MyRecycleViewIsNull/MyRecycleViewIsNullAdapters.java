@@ -223,9 +223,6 @@ public  class MyRecycleViewIsNullAdapters extends RecyclerView.Adapter<MyViewHol
         if (arrayListIsNull1cData.size()>0) {
             КоличесвоСтрок = arrayListIsNull1cData.size();
             Log.d(this.getClass().getName(), "arrayListIsNull1cData.size() " + arrayListIsNull1cData.size() + " КоличесвоСтрок " +КоличесвоСтрок);
-        } else {
-            КоличесвоСтрок=1;
-            Log.d(this.getClass().getName(), "arrayListIsNull1cData.size() " + arrayListIsNull1cData.size() + " холостой ход КоличесвоСтрок " +КоличесвоСтрок);
         }
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

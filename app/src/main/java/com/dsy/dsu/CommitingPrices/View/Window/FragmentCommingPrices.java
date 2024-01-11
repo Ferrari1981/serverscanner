@@ -1,5 +1,6 @@
 package com.dsy.dsu.CommitingPrices.View.Window;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,13 +16,17 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.CommitingPrices.Model.BiccessLogicaFragmentCommitPrices.BiznesLogicainnerFragment;
-import com.dsy.dsu.CommitingPrices.Model.BiccessLogicaFragmentCommitPrices.InizializayRecyreViews;
+import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.BLFragmentCommintingPrices;
+import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.EventsBackAndAsyncAndSearchCommintPrices;
+import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews.InizializayRecyreViews;
 import com.dsy.dsu.CommitingPrices.ViewModel.ModelComminingPrisesByte;
 import com.dsy.dsu.CommitingPrices.ViewModel.ModelComminingPrisesString;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 
 import javax.inject.Inject;
 
@@ -32,6 +37,9 @@ public class FragmentCommingPrices extends Fragment {
 
     @Inject
     ObjectMapper getHiltJaksonObjectMapper;
+
+    @Inject
+    Integer getHiltPublicId;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private LifecycleOwner lifecycleOwner;
@@ -43,8 +51,17 @@ public class FragmentCommingPrices extends Fragment {
     private  ModelComminingPrisesString modelComminingPrisesString;
     private  ModelComminingPrisesByte modelComminingPrisesByte;
 
+    private androidx.appcompat.widget.SearchView searchview_commintingprices;
 
-    private   BiznesLogicainnerFragment biznesLogicainnerFragment;
+
+
+
+
+    private BottomNavigationView bottomnavigationw_commintingprices;
+    private BottomNavigationItemView bottomNavigationBack;
+    private BottomNavigationItemView bottomNavigationAsync;
+    private BottomNavigationItemView bottomNavigationSearch;
+    private     EventsBackAndAsyncAndSearchCommintPrices eventsBackAndAsyncAndSearchCommintPrices;
 
     public FragmentCommingPrices() {
         // Required empty public constructor
@@ -63,6 +80,7 @@ public class FragmentCommingPrices extends Fragment {
 
            modelComminingPrisesString =((MainActivityCommitingPrices)getActivity()).modelComminingPrisesString;
            modelComminingPrisesByte =((MainActivityCommitingPrices)getActivity()).modelComminingPrisesByte;
+
 
             Bundle data=      getArguments();
             fragmentManager = getActivity(). getSupportFragmentManager();
@@ -108,30 +126,65 @@ public class FragmentCommingPrices extends Fragment {
 
 
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         try{
             recycleview_comminingpprices = view.findViewById(R.id.recycleview_comminingpprices);
             prograessbar_commintingprices= view.findViewById(R.id.prograessbar_commintingprices);
+            searchview_commintingprices=   view.findViewById(R.id.searchview_commintingprices);
+
+
+            bottomnavigationw_commintingprices = view.findViewById(R.id.bottomnavigationw_commintingprices);
+            bottomnavigationw_commintingprices.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED);
+            bottomNavigationBack = bottomnavigationw_commintingprices.findViewById(R.id.bottomNavigationBack);
+            bottomNavigationBack.setTitle("Выйти");
+            bottomNavigationAsync = bottomnavigationw_commintingprices.findViewById(R.id.bottomNavigationAsync);
+            bottomNavigationAsync.setTitle("Обновить");
+            bottomNavigationSearch = bottomnavigationw_commintingprices.findViewById(R.id.bottomNavigationSearch);
+            bottomNavigationSearch.setTitle("Поиск");
+
+
+            // TODO: 30.12.2023 код бизнес логики ддля Трех кнопок снизу ВЫход , СИнхрозауия, Посик
+          eventsBackAndAsyncAndSearchCommintPrices= new EventsBackAndAsyncAndSearchCommintPrices(getContext(),bottomnavigationw_commintingprices,
+                            bottomNavigationBack,bottomNavigationAsync,bottomNavigationSearch );
+
+// TODO: 30.12.2023 запускаем первоночальную оценку количество записей
+            eventsBackAndAsyncAndSearchCommintPrices.new EventsAsync().eventsSearchsetNumber(null);
+
+
+            // TODO: 30.12.2023 инициализируем посик SearchView
+            eventsBackAndAsyncAndSearchCommintPrices.new EventsSearch().eventsSearch(bottomNavigationSearch,  searchview_commintingprices);
+
+
+
+            // TODO: 30.12.2023  кнопка back обратно на все приложения faceApp
+            eventsBackAndAsyncAndSearchCommintPrices.new EventsBack().eventsBack( );
 
 
             // TODO: 28.12.2023  запускаем класс бизнес логики для Фрагметна Commint Prices
-            biznesLogicainnerFragment=new BiznesLogicainnerFragment(getActivity(),getContext()
+            BLFragmentCommintingPrices BLFragmentCommintingPrices =new BLFragmentCommintingPrices(getActivity(),getContext()
                     ,getHiltJaksonObjectMapper,modelComminingPrisesString,
                     modelComminingPrisesByte ,recycleview_comminingpprices
-                    ,prograessbar_commintingprices,lifecycleOwner );
+                    ,prograessbar_commintingprices,lifecycleOwner ,searchview_commintingprices,
+                      eventsBackAndAsyncAndSearchCommintPrices,getHiltPublicId);
 
 
               // TODO: 27.12.2023  начинаем запуск is null
-            biznesLogicainnerFragment.startIsNullRecyreView( );
+            BLFragmentCommintingPrices.startIsNullRecyreView( );
 
             // TODO: 28.12.2023 инизилащитция recyreview
 
              new InizializayRecyreViews(recycleview_comminingpprices,getContext()).startInitRecyreview();
 
          // TODO: 26.12.2023 запускаем получение данных при NULL
-            biznesLogicainnerFragment.getmodelByte();
+            BLFragmentCommintingPrices.getmodelByte( );
+
+
+            // TODO: 30.12.2023  иницилизиуем кнопку запуска ASyncсинхрониазции
+            eventsBackAndAsyncAndSearchCommintPrices.new EventsAsync( ).eventsAsync(BLFragmentCommintingPrices,prograessbar_commintingprices);
+
 
             Log.d(this.getClass().getName(),"\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -148,6 +201,8 @@ public class FragmentCommingPrices extends Fragment {
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
     }
+
+
 
 
     @Override
@@ -175,4 +230,23 @@ public class FragmentCommingPrices extends Fragment {
     // TODO: 26.12.2023  бизнес логика самого Фрагмента CommintPrices
 
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        try{
+
+            Log.d(this.getClass().getName(),"\n"
+                + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                " recycleview_comminingpprices " +recycleview_comminingpprices);
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+        // TODO: 09.01.202
+    }
 }

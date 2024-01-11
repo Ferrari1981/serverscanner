@@ -10,9 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreViewNesteds;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
@@ -31,26 +31,24 @@ public class MyViewHoldersNested extends RecyclerView.ViewHolder {// TODO: 28.02
 
     public Context context;
     public View itemView;
-    public  JsonNode jsonNode;
+    public JsonNode ArrayNode;
     public  int getAbsoluteAdapterPosition;
 
     // TODO: 02.03.2022
     public MyViewHoldersNested(@NonNull View itemView,
                                @NotNull Context context,
-                               @NotNull JsonNode jsonNode,
                                @NotNull int getAbsoluteAdapterPosition) {
         super(itemView);
         try{
             this.itemView=itemView;
             this.context=context;
-            this.jsonNode=jsonNode;
             this.getAbsoluteAdapterPosition=getAbsoluteAdapterPosition;
 
             // TODO: 02.03.2022
             Log.d(this.getClass().getName(),"\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+ " jsonNode " +jsonNode);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+ " ArrayNode " +ArrayNode);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

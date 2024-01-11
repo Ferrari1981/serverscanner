@@ -20,6 +20,8 @@ import com.dsy.dsu.CommitingPrices.ViewModel.ModelFactoryByte;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
@@ -33,6 +35,9 @@ public class MainActivityCommitingPrices extends AppCompatActivity {
  protected    ModelComminingPrisesString modelComminingPrisesString;
 
     protected  ModelComminingPrisesByte modelComminingPrisesByte;
+
+    @Inject
+    Integer getHiltPublicId;
 
 
     @Override
@@ -52,9 +57,9 @@ public class MainActivityCommitingPrices extends AppCompatActivity {
 
 
             // TODO: 25.12.2023 код создание две Фабрики VieModel
-            modelComminingPrisesString = new ViewModelProvider(this,  new ModelFactory(5l,this)).get(ModelComminingPrisesString.class );
+            modelComminingPrisesString = new ViewModelProvider(this,  new ModelFactory(getHiltPublicId,this)).get(ModelComminingPrisesString.class );
 
-            modelComminingPrisesByte = new ViewModelProvider(this,  new ModelFactoryByte(5l,this)).get(ModelComminingPrisesByte.class );
+            modelComminingPrisesByte = new ViewModelProvider(this,  new ModelFactoryByte(getHiltPublicId,this)).get(ModelComminingPrisesByte.class );
 
 
 

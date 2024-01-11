@@ -1,197 +1,488 @@
 package com.dsy.dsu.CommitingPrices.View.Window;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
-import android.widget.ProgressBar;
-import android.widget.TableLayout;
-import android.widget.TextView;
+import android.view.animation.Animation;
+import android.widget.Toast;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHolders;
+import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.CommintPricesSendJsonTo1C;
+import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.ProcceroingResultatOtveta1CPost;
+import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.StartSendJsonToCOmmintPrices;
+import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyRecycleViewIsAdaptersNested;
+import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyViewHoldersNested;
+import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.R;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textview.MaterialTextView;
+import com.jakewharton.rxbinding4.view.RxView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.functions.Predicate;
+import kotlin.Unit;
+
 public class ComponentsForRecyreViewNesteds {
 
-    private MyViewHolders holder;
+    private MyViewHoldersNested holder;
     private Context context;
-
     private  int getAbsoluteAdapterPosition;
 
+    private  MaterialCardView cardview_commingprices_neasted;
 
-    private TextView textView1, textView2, textView3, textView4, textView5Намеклатура, textorganizationvalue, textvalueSUM;
-    private      TextView textViewКонтрагент,textViewЦФО,textViewДДС,textViewНамелклатура;
-    private MaterialCardView cardviewmatireacommitpay;
-    private MaterialButton kнопкаСогласованиеОтказ,kнопкаУспешноеСогласования;
-    private TableLayout tableLayoutcommitpayfiles,tableLayoutcommitpay;
-    private ProgressBar progressbarfilepay;
+    // TODO: 30.12.2023 компоненты для запоелния
+    private MaterialTextView mTV_commitingprices_count;
 
-    RecyclerView recycleview_comminingppricesNested;
+    private     MaterialButton arrow_nested_receriview;
+
+    private     MaterialTextView mTV_Nomenklatura,mTV_StatyaDDS_value
+            ,mTV_EdIzm_value,mTV_Data_value,
+            mTV_Kolichestvo_value,mTV_CFORaskhoda_value;
 
 
+    private Animation animation;
 
-    public ComponentsForRecyreViewNesteds(@NotNull MyViewHolders holder,
+    private ObjectMapper objectMapper;
+
+    private Integer getHiltPublicId;
+
+    private MyRecycleViewIsAdaptersNested myRecycleViewIsAdaptersNested;
+    private ArrayNode ArrayNodeNested;
+
+    public ComponentsForRecyreViewNesteds(@NotNull MyViewHoldersNested holder,
                                           @NotNull  Context context,
                                           @NotNull int getAbsoluteAdapterPosition,
-                                          @NotNull RecyclerView recycleview_comminingppricesNested) {
+                                          @NotNull MaterialCardView cardview_commingprices_neasted,
+                                          @NotNull Animation animation,
+                                          @NotNull ObjectMapper objectMapper,
+                                          @NotNull Integer getHiltPublicId,
+                                          @NotNull MyRecycleViewIsAdaptersNested myRecycleViewIsAdaptersNested,
+                                          @NotNull ArrayNode ArrayNodeNested) {
         this.holder = holder;
         this.context = context;
         this.getAbsoluteAdapterPosition = getAbsoluteAdapterPosition;
-        this.recycleview_comminingppricesNested = recycleview_comminingppricesNested;
+        this.cardview_commingprices_neasted = cardview_commingprices_neasted;
+        this.animation = animation;
+        this.objectMapper = objectMapper;
+        this.getHiltPublicId = getHiltPublicId;
+        this.myRecycleViewIsAdaptersNested = myRecycleViewIsAdaptersNested;
+        this.ArrayNodeNested = ArrayNodeNested;
     }
 
-    public TextView getTextView1() {
-        return textView1;
-    }
 
-    public void setTextView1(TextView textView1) {
-        this.textView1 = textView1;
-    }
 
-    public TextView getTextView2() {
-        return textView2;
-    }
 
-    public void setTextView2(TextView textView2) {
-        this.textView2 = textView2;
-    }
+    public MaterialTextView getmTV_commitingprices_count() {
+  try{
+      mTV_commitingprices_count=    holder.itemView.findViewById(R.id.mTV_commitingprices_count) ;
+      JsonNode jsonNode=    holder.ArrayNode.deepCopy();
+      TextNode textNodeCena=( TextNode)   jsonNode.findValue("Cena").deepCopy();
+      String cena=  textNodeCena.asText().trim();
+      if (! cena.isEmpty()) {
+          mTV_commitingprices_count.setText(cena+" (руб)");
+          mTV_commitingprices_count.startAnimation(animation);
+      }
 
-    public TextView getTextView3() {
-        return textView3;
-    }
 
-    public void setTextView3(TextView textView3) {
-        this.textView3 = textView3;
-    }
-
-    public TextView getTextView4() {
-        return textView4;
-    }
-
-    public void setTextView4(TextView textView4) {
-        this.textView4 = textView4;
-    }
-
-    public TextView getTextView5Намеклатура() {
-        return textView5Намеклатура;
-    }
-
-    public void setTextView5Намеклатура(TextView textView5Намеклатура) {
-        this.textView5Намеклатура = textView5Намеклатура;
-    }
-
-    public TextView getTextorganizationvalue() {
-        return textorganizationvalue;
-    }
-
-    public void setTextorganizationvalue(TextView textorganizationvalue) {
-        this.textorganizationvalue = textorganizationvalue;
-    }
-
-    public TextView getTextvalueSUM() {
-        return textvalueSUM;
-    }
-
-    public void setTextvalueSUM(TextView textvalueSUM) {
-        this.textvalueSUM = textvalueSUM;
-    }
-
-    public TextView getTextViewКонтрагент() {
-        return textViewКонтрагент;
-    }
-
-    public void setTextViewКонтрагент(TextView textViewКонтрагент) {
-        this.textViewКонтрагент = textViewКонтрагент;
-    }
-
-    public TextView getTextViewЦФО() {
-        return textViewЦФО;
-    }
-
-    public void setTextViewЦФО(TextView textViewЦФО) {
-        this.textViewЦФО = textViewЦФО;
-    }
-
-    public TextView getTextViewДДС() {
-        return textViewДДС;
-    }
-
-    public void setTextViewДДС(TextView textViewДДС) {
-        this.textViewДДС = textViewДДС;
-    }
-
-    public TextView getTextViewНамелклатура() {
-        return textViewНамелклатура;
-    }
-
-    public void setTextViewНамелклатура(TextView textViewНамелклатура) {
-        this.textViewНамелклатура = textViewНамелклатура;
-    }
-
-    public MaterialCardView getCardviewmatireacommitpay() {
-
-        Log.d(this.getClass().getName(), "\n"
+      Log.d(this.getClass().getName(), "\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                +" holder.jsonNode " +  holder.jsonNode +  " holder.itemView  " +  holder.itemView);
-        return cardviewmatireacommitpay;
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
 
-    public void setCardviewmatireacommitpay(MaterialCardView cardviewmatireacommitpay) {
-        this.cardviewmatireacommitpay = cardviewmatireacommitpay;
+        return mTV_commitingprices_count;
     }
 
-    public MaterialButton getKнопкаСогласованиеОтказ() {
-        return kнопкаСогласованиеОтказ;
+    public MaterialButton getArrow_nested_receriview() {
+        try{
+            arrow_nested_receriview=    holder.itemView.findViewById(R.id.arrow_nested_receriview) ;
+
+            RxView.clicks(  arrow_nested_receriview)
+                    .throttleFirst(2, TimeUnit.SECONDS)
+                    .filter(s -> !s.toString().isEmpty())
+                    .map(new Function<Unit, MaterialButton>() {
+                        @Override
+                        public MaterialButton apply(Unit unit) throws Throwable {
+
+                            // TODO: 30.12.2023 вибрация
+                            Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                            v2.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                            return    arrow_nested_receriview;
+                        }
+                    })
+                    .doOnError(new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Throwable {
+                            throwable.printStackTrace();
+                            Log.e(context.getClass().getName(),
+                                    "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+                    })
+                    .onErrorComplete(new Predicate<Throwable>() {
+                        @Override
+                        public boolean test(Throwable throwable) throws Throwable {
+                            throwable.printStackTrace();
+                            Log.e(context.getClass().getName(),
+                                    "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            return false;
+                        }
+                    })
+                    .subscribe( MaterialButtonNested-> {
+                        ///todo revboot
+                            Handler handler=     arrow_nested_receriview.getHandler();
+                            handler.postDelayed(()->{
+                                // TODO: 11.01.2024
+                                try{
+                                    // TODO: 10.01.2024  запускаем Генерацию JSON  согласование 1с
+                                    Bundle bundleДанныеДляPost=(Bundle)          cardview_commingprices_neasted.getTag();
+
+                                    StartSendJsonToCOmmintPrices startSendJsonToCOmmintPrices=new StartSendJsonToCOmmintPrices(context,objectMapper,getHiltPublicId);
+                                    byte[] ByteFor1CCommintPrices=   startSendJsonToCOmmintPrices.startSendJson1c(bundleДанныеДляPost);
+
+
+                                    if (ByteFor1CCommintPrices!=null) {
+
+
+                                        // TODO: 10.01.2024  Отправляем Сгенерированый JSON
+                                        String UUID=   bundleДанныеДляPost.getString("UUID").trim();
+                                        CommintPricesSendJsonTo1C generatorJsonForPostComminhgPrices=new CommintPricesSendJsonTo1C();
+
+
+
+
+                           /*     // TODO: 10.01.2024 DEBUG
+
+                                StringBuffer  BufferOt1cCommintPricePost=   generatorJsonForPostComminhgPrices.SendJsonForPostComminhgPrices(context,
+                                        ByteFor1CCommintPrices,getHiltPublicId,"http://192.168.99.101/dds_copy/hs/jsonto1ccena/listofdocuments", UUID);*/
+
+                                        // TODO: 10.01.2024 RELUS
+
+                                        StringBuffer  BufferOt1cCommintPricePost=   generatorJsonForPostComminhgPrices.SendJsonForPostComminhgPrices(context,
+                                                ByteFor1CCommintPrices,getHiltPublicId,"http://uat.dsu1.ru:55080/dds/hs/jsonto1ccena/listofdocuments", UUID);
+
+
+
+
+
+                                        // TODO: 10.01.2024 Скрываем Текущий Платеж По Которому был Клик http://192.168.254.218/dds_copy/hs/jsonto1ccena/listofdocuments
+
+
+
+
+                                        // TODO: 11.01.2024 терперь третьй вариант пользователюю  прячем указвнный текущий Плитку с соглдосваниием
+                                        ProcceroingResultatOtveta1CPost procceroingResultatOtveta1CPost=new ProcceroingResultatOtveta1CPost(context);
+
+                                        procceroingResultatOtveta1CPost.startingResultatOtveta1CPost(  BufferOt1cCommintPricePost,
+                                                mTV_commitingprices_count,
+                                                myRecycleViewIsAdaptersNested,
+                                                getAbsoluteAdapterPosition
+                                                ,cardview_commingprices_neasted,ArrayNodeNested);
+
+
+                                        Log.d(this.getClass().getName(),"\n"
+                                                + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                                +  " MaterialButtonNested " +MaterialButtonNested
+                                                + " BufferOt1cCommintPricePost " +BufferOt1cCommintPricePost);
+
+
+                                    }else {
+
+                                        Toast.makeText(context, "Не прошла операция !!!"
+                                                +"\n"+mTV_commitingprices_count.getText().toString(), Toast.LENGTH_LONG).show();
+                                    }
+
+                          /*  Toast.makeText(context, "Не прошла операция !!!"
+                                    +"\n"+mTV_commitingprices_count.getText().toString(), Toast.LENGTH_LONG).show();*/
+
+
+                                    Log.d(this.getClass().getName(),"\n"
+                                            + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                            +  " MaterialButtonNested " +MaterialButtonNested
+                                            + " bundleДанныеДляPost " +bundleДанныеДляPost);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                }
+
+                            },100);
+
+
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+
+                    });
+
+            Log.d(this.getClass().getName(), "\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return arrow_nested_receriview;
     }
 
-    public void setKнопкаСогласованиеОтказ(MaterialButton kнопкаСогласованиеОтказ) {
-        this.kнопкаСогласованиеОтказ = kнопкаСогласованиеОтказ;
+
+
+
+
+
+
+    public MaterialTextView getmTV_Nomenklatura() {
+        try{
+            mTV_Nomenklatura=    holder.itemView.findViewById(R.id.mTV_Nomenklatura) ;
+            JsonNode jsonNode=    holder.ArrayNode.deepCopy();
+            TextNode textNodeNomenklatura=( TextNode)   jsonNode.findValue("Nomenklatura").deepCopy();
+            // TODO: 30.12.2023  
+            if ( !textNodeNomenklatura.asText().isEmpty()) {
+                // TODO: 30.12.2023  set
+                mTV_Nomenklatura.setText(textNodeNomenklatura.asText().trim());
+            }
+            Log.d(this.getClass().getName(), "\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return mTV_Nomenklatura;
     }
 
-    public MaterialButton getKнопкаУспешноеСогласования() {
-        return kнопкаУспешноеСогласования;
+    public MaterialTextView getmTV_StatyaDDS_value() {
+        try{
+            mTV_StatyaDDS_value=    holder.itemView.findViewById(R.id.mTV_StatyaDDS_value) ;
+            JsonNode jsonNode=    holder.ArrayNode.deepCopy();
+            TextNode textNodeStatyaDDS=( TextNode)   jsonNode.findValue("StatyaDDS").deepCopy();
+                // TODO: 30.12.2023  
+            if (!textNodeStatyaDDS.asText().isEmpty()) {
+                // TODO: 30.12.2023 set
+                mTV_StatyaDDS_value.setText(textNodeStatyaDDS.asText().trim());
+            }
+          
+
+            Log.d(this.getClass().getName(), "\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return mTV_StatyaDDS_value;
     }
 
-    public void setKнопкаУспешноеСогласования(MaterialButton kнопкаУспешноеСогласования) {
-        this.kнопкаУспешноеСогласования = kнопкаУспешноеСогласования;
+    public MaterialTextView getmTV_EdIzm_value() {
+        try{
+            mTV_EdIzm_value=    holder.itemView.findViewById(R.id.mTV_EdIzm_value) ;
+            JsonNode jsonNode=    holder.ArrayNode.deepCopy();
+            TextNode textNodeEdIzm=( TextNode)   jsonNode.findValue("EdIzm").deepCopy();
+            // TODO: 30.12.2023  
+            if ( !textNodeEdIzm.asText().isEmpty()) {
+                // TODO: 30.12.2023  set
+                mTV_EdIzm_value.setText(textNodeEdIzm.asText().trim());
+            }
+          
+
+            Log.d(this.getClass().getName(), "\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return mTV_EdIzm_value;
     }
 
-    public TableLayout getTableLayoutcommitpayfiles() {
-        return tableLayoutcommitpayfiles;
+
+
+    public MaterialTextView getmTV_Data_value() {
+        try{
+            mTV_Data_value=    holder.itemView.findViewById(R.id.mTV_Data_value) ;
+            JsonNode jsonNode=    holder.ArrayNode.deepCopy();
+            TextNode textNodeData=( TextNode)   jsonNode.findValue("Data").deepCopy();
+            if ( !textNodeData.asText().isEmpty()) {
+                String data=  textNodeData.asText().trim();
+            Date датаEdIzm =
+                    new  SimpleDateFormat("dd.MM.yyyy HH:mm:ss", new Locale("ru")).parse(data);//TODO "2023-08-01 19:00:59.781"
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss",new Locale("ru"));
+            LocalDate dateTime = LocalDate.parse(textNodeData.asText().trim(), formatter);
+
+         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd.MM.yyyy");
+            String ДатаEdIzm=simpleDateFormat.format(датаEdIzm);
+            // TODO: 30.12.2023  
+
+                // TODO: 30.12.2023 set
+                mTV_Data_value.setText(ДатаEdIzm);
+            }
+
+            Log.d(this.getClass().getName(), "\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return mTV_Data_value;
     }
 
-    public void setTableLayoutcommitpayfiles(TableLayout tableLayoutcommitpayfiles) {
-        this.tableLayoutcommitpayfiles = tableLayoutcommitpayfiles;
+    public MaterialTextView getmTV_Kolichestvo_value() {
+        try{
+            mTV_Kolichestvo_value=    holder.itemView.findViewById(R.id.mTV_Kolichestvo_value) ;
+            JsonNode jsonNode=    holder.ArrayNode.deepCopy();
+            TextNode textNodeKolichestvo=( TextNode)   jsonNode.findValue("Kolichestvo").deepCopy();
+
+            if ( !textNodeKolichestvo.asText().isEmpty()) {
+                // TODO: 30.12.2023 set
+                mTV_Kolichestvo_value.setText(textNodeKolichestvo.asText().trim());
+            }
+            Log.d(this.getClass().getName(), "\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return mTV_Kolichestvo_value;
     }
 
-    public TableLayout getTableLayoutcommitpay() {
-        return tableLayoutcommitpay;
+    public MaterialTextView getmTV_CFORaskhoda_value() {
+        try{
+            mTV_CFORaskhoda_value=    holder.itemView.findViewById(R.id.mTV_CFORaskhoda_value) ;
+            JsonNode jsonNode=    holder.ArrayNode.deepCopy();
+            TextNode textNodeCFORaskhoda=( TextNode)   jsonNode.findValue("CFORaskhoda").deepCopy();
+            // TODO: 30.12.2023
+            if (! textNodeCFORaskhoda.asText().isEmpty()) {
+                mTV_CFORaskhoda_value.setText(textNodeCFORaskhoda.asText().trim());
+            }
+
+            Log.d(this.getClass().getName(), "\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return mTV_CFORaskhoda_value;
     }
 
-    public void setTableLayoutcommitpay(TableLayout tableLayoutcommitpay) {
-        this.tableLayoutcommitpay = tableLayoutcommitpay;
+
+    public MaterialCardView setagMaterialCardViewNestad() {
+
+        try{
+            JsonNode jsonNode=    holder.ArrayNode.deepCopy();
+            TextNode textNodeUUID=( TextNode)   jsonNode.findValue("UUID").deepCopy();
+            TextNode textNodeCena=( TextNode)   jsonNode.findValue("Cena").deepCopy();
+            if(!textNodeUUID.asText().isEmpty()){
+                String  UUID= textNodeUUID.asText();
+                Long  UUIDlong= textNodeUUID.asLong();
+                // TODO: 10.01.2024 цена
+                String  Цена= textNodeCena.asText();
+
+                Bundle bundleuuid=new Bundle();
+                bundleuuid.putString("UUID",UUID);
+                bundleuuid.putString("Цена",Цена);
+                bundleuuid.putLong("UUIDlong",UUIDlong);
+                // TODO: 30.12.2023 uuid get
+                cardview_commingprices_neasted.setTag(bundleuuid);
+            }
+            cardview_commingprices_neasted.forceLayout();
+
+            Log.d(this.getClass().getName(), "\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+        return cardview_commingprices_neasted;
     }
 
-    public ProgressBar getProgressbarfilepay() {
-        return progressbarfilepay;
-    }
 
-    public void setProgressbarfilepay(ProgressBar progressbarfilepay) {
-        this.progressbarfilepay = progressbarfilepay;
-    }
-
-    public RecyclerView getRecycleview_comminingppricesNested() {
-        return recycleview_comminingppricesNested;
-    }
-
-    public void setRecycleview_comminingppricesNested(RecyclerView recycleview_comminingppricesNested) {
-        this.recycleview_comminingppricesNested = recycleview_comminingppricesNested;
-    }
 
 
 

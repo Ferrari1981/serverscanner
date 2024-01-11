@@ -1,4 +1,4 @@
-package com.dsy.dsu.CommitingPrices.Model.BiccessLogicaFragmentCommitPrices;
+package com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
@@ -7,9 +7,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.DizaynRecyreView.LeftDividerItemDecoratorNested;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
 
@@ -27,15 +28,19 @@ public class InizializayRecyreViewsNested {
     public void startInitRecyreview() {
         try {
             animationДляСогласования= AnimationUtils.loadAnimation(context, R.anim.slide_in_row);//R.anim.layout_animal_commit
-            DividerItemDecoration itemDecoration =
+        /*    DividerItemDecoration itemDecoration =
                     new DividerItemDecoration(recycleview_comminingppricesNesteds.getContext(), DividerItemDecoration.HORIZONTAL);
             GradientDrawable drawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, new int[]{0xfff7f7f7, 0xfff7f7f7});
-            drawable.setSize(1,1);
-            itemDecoration.setDrawable(drawable);
-            recycleview_comminingppricesNesteds.addItemDecoration(itemDecoration);
-            LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context);
-            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            recycleview_comminingppricesNesteds.setLayoutManager(linearLayoutManager);
+            drawable.setSize(1,1);*/
+
+            recycleview_comminingppricesNesteds.addItemDecoration(new LeftDividerItemDecoratorNested(context));
+              GridLayoutManager   layoutManager = new GridLayoutManager(context, 1,GridLayoutManager.VERTICAL,false);
+            layoutManager.setSpanSizeLookup(new GridLayoutManager.DefaultSpanSizeLookup());
+
+           // LinearLayoutManager  layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
+            layoutManager.setItemPrefetchEnabled(true);
+            layoutManager.setSmoothScrollbarEnabled(true);
+            recycleview_comminingppricesNesteds.setLayoutManager( layoutManager);
             recycleview_comminingppricesNesteds.startAnimation(animationДляСогласования);
             recycleview_comminingppricesNesteds.requestLayout();
             recycleview_comminingppricesNesteds.refreshDrawableState();

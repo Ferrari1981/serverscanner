@@ -1,4 +1,4 @@
-package com.dsy.dsu.CommitingPrices.Model.BiccessLogicaFragmentCommitPrices;
+package com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.LiveData;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,8 +8,10 @@ import android.widget.ProgressBar;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.ByteGenetarorJsonNode;
+import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.EventsBackAndAsyncAndSearchCommintPrices;
+import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews.InizializayRecyreViews;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyRecycleViewIsAdapters;
-import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyRecycleViewIsAdaptersNested;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewIsNull.MyRecycleViewIsNullAdapters;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -25,28 +27,32 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 
-public class CallBacksLiveDataNested {
+public class CallBacksLiveData {
 
  private Context context;
-    private MyRecycleViewIsNullAdapters myRecycleViewIsNullAdapters;
     private ProgressBar prograessbar_commintingprices ;
-
     private RecyclerView recycleview_comminingpprices;
 
-    private RecyclerView recycleview_comminingppricesNesteds;
+    private  MyRecycleViewIsNullAdapters myRecycleViewIsNullAdapters;
     private  MyRecycleViewIsAdapters myRecycleViewIsAdapters;
-    private MyRecycleViewIsAdaptersNested myRecycleViewIsAdaptersNested;
     private  ObjectMapper objectMapper;
+    private EventsBackAndAsyncAndSearchCommintPrices eventsBackAndAsyncAndSearchCommintPrices;
 
-    public CallBacksLiveDataNested(@NotNull  Context context,
-                                   @NotNull   ProgressBar prograessbar_commintingprices,
-                                   @NotNull   RecyclerView  recycleview_comminingpprices,
-                                   @NotNull ObjectMapper objectMapper) {
+    private Integer getHiltPublicId;
+    public CallBacksLiveData( @NotNull  Context context,
+                              @NotNull   ProgressBar prograessbar_commintingprices,
+                              @NotNull   RecyclerView  recycleview_comminingpprices,
+                              @NotNull MyRecycleViewIsNullAdapters myRecycleViewIsNullAdapters,
+                              @NotNull ObjectMapper objectMapper,
+                              @NotNull      EventsBackAndAsyncAndSearchCommintPrices eventsBackAndAsyncAndSearchCommintPrices,
+                              @NotNull Integer getHiltPublicId) {
         this.context = context;
         this.prograessbar_commintingprices = prograessbar_commintingprices;
         this.recycleview_comminingpprices = recycleview_comminingpprices;
-        this.recycleview_comminingppricesNesteds = recycleview_comminingppricesNesteds;
+        this.myRecycleViewIsNullAdapters = myRecycleViewIsNullAdapters;
         this.objectMapper = objectMapper;
+        this.eventsBackAndAsyncAndSearchCommintPrices = eventsBackAndAsyncAndSearchCommintPrices;
+        this.getHiltPublicId = getHiltPublicId;
     }
 
     public  void callbackLiveData(Bundle bundle) {
@@ -66,13 +72,31 @@ public class CallBacksLiveDataNested {
 
                     JsonNode     jsonNode1сСогласованиеЦен=    new ByteGenetarorJsonNode().genetarorJsonnode(context,objectMapper,getbyteComminhgPrices);
 
-                    // TODO: 28.12.2023 Запускам настрощий recyreview при получение ииз байт обьект JsonNode
-                    startGetRecyreView( jsonNode1сСогласованиеЦен );
+                    if (jsonNode1сСогласованиеЦен.isArray()&& jsonNode1сСогласованиеЦен.size()>0) {
+                        // TODO: 28.12.2023 Запускам настрощий recyreview при получение ииз байт обьект JsonNode
+                     startGetRecyreView( jsonNode1сСогласованиеЦен );
 
-                    // TODO: 28.12.2023 инизилащитция recyreview
+                        // TODO: 28.12.2023 инизилащитция recyreview
 
-                    new InizializayRecyreViews(recycleview_comminingpprices,context).startInitRecyreview();
+                        new InizializayRecyreViews(recycleview_comminingpprices,context).startInitRecyreview();
 
+
+// TODO: 30.12.2023 запускаем первоночальную оценку количество записей
+                        eventsBackAndAsyncAndSearchCommintPrices.new EventsAsync().eventsSearchsetNumber(jsonNode1сСогласованиеЦен);
+
+
+
+
+                        // TODO: 26.12.2023 На текущего пользователя нет данных  !!!!!
+                    } else {
+                        // TODO: 26.12.2023 На текущего пользователя нет данных  !!!!!
+                        completeIsNullRecyreView();
+
+                        Log.d(this.getClass().getName(),"\n"
+                                + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+ " getbyteComminhgPrices " + getbyteComminhgPrices);
+                    }
 
 
                     Log.d(this.getClass().getName(),"\n"
@@ -123,6 +147,9 @@ public class CallBacksLiveDataNested {
                 RecyclerView.Adapter recyclerViewAdapter=         recycleview_comminingpprices.getAdapter();
                 recycleview_comminingpprices.swapAdapter(recyclerViewAdapter,true);
                 recycleview_comminingpprices.getAdapter().notifyDataSetChanged();
+
+                // TODO: 09.01.2024
+                recyreViewReboot();
             }
 
             Log.d(this.getClass().getName(), "\n" + " class " +
@@ -172,10 +199,12 @@ public class CallBacksLiveDataNested {
     public void startGetRecyreView( JsonNode     jsonNode1сСогласованиеЦен ) {
         try {
             if (myRecycleViewIsAdapters==null) {
-                myRecycleViewIsAdapters = new MyRecycleViewIsAdapters(jsonNode1сСогласованиеЦен, context  );
+                myRecycleViewIsAdapters = new MyRecycleViewIsAdapters(jsonNode1сСогласованиеЦен, context,objectMapper ,getHiltPublicId );
                 myRecycleViewIsAdapters.notifyDataSetChanged();
                 recycleview_comminingpprices.setAdapter(myRecycleViewIsAdapters);
                 recycleview_comminingpprices.getAdapter().notifyDataSetChanged();
+                // TODO: 09.01.2024
+                recyreViewReboot();
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -196,10 +225,10 @@ public class CallBacksLiveDataNested {
         }
     }
 
-
-
-
-
+    private void recyreViewReboot() {
+        recycleview_comminingpprices.requestLayout();
+        recycleview_comminingpprices.refreshDrawableState();
+    }
 
 
     public void completeRecyreView(@NotNull  JsonNode     jsonNode1сСогласованиеЦен) {
@@ -210,6 +239,9 @@ public class CallBacksLiveDataNested {
                 RecyclerView.Adapter recyclerViewAdapter=         recycleview_comminingpprices.getAdapter();
                 recycleview_comminingpprices.swapAdapter(recyclerViewAdapter,true);
                 recycleview_comminingpprices.getAdapter().notifyDataSetChanged();
+
+                // TODO: 09.01.2024
+                recyreViewReboot();
             }
 
             Log.d(this.getClass().getName(), "\n" + " class " +

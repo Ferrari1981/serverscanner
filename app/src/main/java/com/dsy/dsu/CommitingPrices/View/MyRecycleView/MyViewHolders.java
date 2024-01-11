@@ -27,6 +27,7 @@ public class MyViewHolders extends RecyclerView.ViewHolder {// TODO: 28.02.2022 
     private MaterialButton КнопкаСогласованиеОтказ,КнопкаУспешноеСогласования;
     private TableLayout tableLayoutcommitpayfiles,tableLayoutcommitpay;
     private ProgressBar progressbarfilepay;
+
     public Context context;
     public View itemView;
     public   JsonNode jsonNode;
@@ -35,13 +36,11 @@ public class MyViewHolders extends RecyclerView.ViewHolder {// TODO: 28.02.2022 
     // TODO: 02.03.2022
     public MyViewHolders(@NonNull View itemView,
                          @NotNull Context context,
-                         @NotNull JsonNode jsonNode,
                          @NotNull int getAbsoluteAdapterPosition) {
         super(itemView);
         try{
             this.itemView=itemView;
             this.context=context;
-            this.jsonNode=jsonNode;
             this.getAbsoluteAdapterPosition=getAbsoluteAdapterPosition;
             Log.d(this.getClass().getName(),"\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

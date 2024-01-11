@@ -5,30 +5,76 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHolders;
+import com.dsy.dsu.CommitingPrices.Model.NestedDataGetAll.GetArrayNodeForNestedChildern;
+import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreViewNesteds;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Hilt.Jakson.HiltInterfaceJakson;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.google.android.material.card.MaterialCardView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-// TODO: 09.11.2023 ВТОРОЯ Rereview
-public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewHolders> {
+import javax.inject.Inject;
 
-    public JsonNode jsonNode;
-    private Context context;
-    private MyViewHolders viewHolders;
-    public MyRecycleViewIsAdaptersNested(@NotNull JsonNode jsonNode, @NotNull Context context) {
+import dagger.hilt.EntryPoints;
+
+// TODO: 09.11.2023 ВТОРОЯ Rereview
+
+public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewHoldersNested> {
+
+    public Context context;
+    public View itemView;
+    public  ArrayNode ArrayNodeNested;
+    public  int getAbsoluteAdapterPosition;
+    private MyViewHoldersNested viewHoldersNested;
+
+    private Animation animation;
+
+    private ObjectMapper objectMapper;
+
+    private Integer getHiltPublicId;
+
+
+    public MyRecycleViewIsAdaptersNested(@NonNull View itemView,
+                                         @NotNull Context context,
+                                         @NotNull JsonNode jsonNode,
+                                         @NotNull int getAbsoluteAdapterPosition,
+                                         @NotNull ObjectMapper objectMapper,
+                                         @NotNull Integer getHiltPublicId) {
         // super();
         try{
-        this.jsonNode = jsonNode;
-        this.context = context;
+            this.itemView=itemView;
+            this.context=context;
+            this.getAbsoluteAdapterPosition=getAbsoluteAdapterPosition;
+            this.objectMapper=objectMapper;
+            this.getHiltPublicId=getHiltPublicId;
+
+            animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_row8);
+
+            // TODO: 09.01.2024  класс получаем все дочерние элементы ArrayNoide
+            GetArrayNodeForNestedChildern getArrayNodeForNestedChildern=new GetArrayNodeForNestedChildern(context,  jsonNode );
+
+            ArrayNodeNested=   getArrayNodeForNestedChildern.arrayNodeNested();
+
+
+
+            // TODO: 02.03.2022
+            Log.d(this.getClass().getName(),"\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+ "  ArrayNodeNested " + ArrayNodeNested.size());
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -47,12 +93,20 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
 
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolders holder, @NonNull int position, @NonNull List<Object> payloads) {
+    public void onBindViewHolder(@NonNull MyViewHoldersNested holder, @NonNull int position, @NonNull List<Object> payloads) {
         try {
+
+            // TODO: 28.12.2023 получаем позицию в recyreview
+
+            holder.ArrayNode=ArrayNodeNested.get(position);
+
+
+            super.onBindViewHolder(holder, position, payloads);
+
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"jsonNode "
-                    + jsonNode + " position " +position);
+                    + ArrayNodeNested+ " position " +position);
             // TODO: 30.03.2022
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,7 +115,7 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        super.onBindViewHolder(holder, position, payloads);
+
     }
 
 
@@ -76,25 +130,25 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
     }
 
     @Override
-    public void onViewRecycled(@NonNull MyViewHolders holder) {
+    public void onViewRecycled(@NonNull MyViewHoldersNested holder) {
         super.onViewRecycled(holder);
     }
 
     @Override
-    public boolean onFailedToRecycleView(@NonNull MyViewHolders holder) {
+    public boolean onFailedToRecycleView(@NonNull MyViewHoldersNested holder) {
         // TODO: 03.11.2023 Parent
         return super.onFailedToRecycleView(holder);
 
     }
 
     @Override
-    public void onViewAttachedToWindow(@NonNull MyViewHolders holder) {
+    public void onViewAttachedToWindow(@NonNull MyViewHoldersNested holder) {
         super.onViewAttachedToWindow(holder);
 
     }
 
     @Override
-    public void onViewDetachedFromWindow(@NonNull MyViewHolders holder) {
+    public void onViewDetachedFromWindow(@NonNull MyViewHoldersNested holder) {
         super.onViewDetachedFromWindow(holder);
     }
 
@@ -134,13 +188,15 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
 
     @NonNull
     @Override
-    public MyViewHolders onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHoldersNested onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View viewComminigPrices = null;
         try {
 
-            if (jsonNode.size()>0) {
+            if (ArrayNodeNested.size()>0) {
+       /*         viewComminigPrices = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.simple_for_commintgprices1, parent, false);*/
                 viewComminigPrices = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.simple_for_commintgprices1, parent, false);
+                        .inflate(R.layout.simple_for_complitingprices_grid1, parent, false);
             } else {
                 viewComminigPrices = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.simple_for_dont_commingprices, parent, false);
@@ -148,13 +204,13 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             // TODO: 28.12.2023 получаем позицию в recyreview
             int  getPostionViewHolder=  getPostions();
             // TODO: 22.03.2022
-            viewHolders = new MyViewHolders(viewComminigPrices,context,jsonNode,getPostionViewHolder);
+            viewHoldersNested = new MyViewHoldersNested(viewComminigPrices,context,getPostionViewHolder);
             // TODO: 27.12.2023
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + "   viewComminigPrices" + viewComminigPrices
-                    + " getPostionViewHolder " +getPostionViewHolder  + "  jsonNode.size() " +jsonNode.size());
+                    + " getPostionViewHolder " +getPostionViewHolder  + " ArrayNodeNested.size() " +ArrayNodeNested.size());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,15 +219,15 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return viewHolders;
+        return viewHoldersNested;
 
     }
 
     private int getPostions() {
         int getPostionViewHolder = 0;
         try{
-        if (viewHolders!=null) {
-            getPostionViewHolder=   viewHolders.getAbsoluteAdapterPosition();
+        if (viewHoldersNested!=null) {
+            getPostionViewHolder=   viewHoldersNested.getAbsoluteAdapterPosition();
         }
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -189,8 +245,46 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolders holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHoldersNested holder, int position) {
         try {
+            MaterialCardView materialCardView=holder.itemView.findViewById(R.id.cardview_commingprices_neasted);
+
+            ComponentsForRecyreViewNesteds componentsForRecyreViewNesteds=
+                    new ComponentsForRecyreViewNesteds(holder,context,
+                            position,materialCardView,animation,objectMapper,getHiltPublicId,  this,ArrayNodeNested);
+
+// TODO: 30.12.2023  запуск метода Сверху Сумма согласования цены
+            componentsForRecyreViewNesteds.getmTV_commitingprices_count();
+
+            // TODO: 30.12.2023 кнопка подтверждения  согласования цены указонной
+            componentsForRecyreViewNesteds.getArrow_nested_receriview();
+
+            // TODO: 30.12.2023 кнопка Номелклатура
+            componentsForRecyreViewNesteds.getmTV_Nomenklatura();
+
+            // TODO: 30.12.2023 кнопка ДДС
+            componentsForRecyreViewNesteds.getmTV_StatyaDDS_value();
+
+            // TODO: 30.12.2023 кнопка Единица измериния
+            componentsForRecyreViewNesteds.getmTV_EdIzm_value();
+
+            // TODO: 30.12.2023 кнопка Дата
+            componentsForRecyreViewNesteds.getmTV_Data_value();
+
+            // TODO: 30.12.2023 кнопка Количество
+            componentsForRecyreViewNesteds.getmTV_Kolichestvo_value();
+
+            // TODO: 30.12.2023 кнопка ЦФО Расчет
+            componentsForRecyreViewNesteds.getmTV_CFORaskhoda_value();
+
+
+            // TODO: 30.12.2023  rebbot Sxreen Recyreview
+            componentsForRecyreViewNesteds.setagMaterialCardViewNestad();
+
+            Log.d(this.getClass().getName(), "\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -224,18 +318,15 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
         // TODO: 02.03.2022
         int КоличесвоСтрок = 0;
         try{
-        if (jsonNode!=null && jsonNode.size()>0) {
-            КоличесвоСтрок = jsonNode.size();
-            Log.d(this.getClass().getName(), "jsonNode.size() " + jsonNode.size() + " КоличесвоСтрок " +КоличесвоСтрок);
-        } else {
-            КоличесвоСтрок=1;
-            Log.d(this.getClass().getName(), "jsonNode.size() " + jsonNode.size() + " холостой ход КоличесвоСтрок " +КоличесвоСтрок);
+        if (ArrayNodeNested!=null && ArrayNodeNested.size()>0) {
+           КоличесвоСтрок = ArrayNodeNested.size();
+            Log.d(this.getClass().getName(), "jsonNodeNested.size() " + ArrayNodeNested.size() + " КоличесвоСтрок " +КоличесвоСтрок);
         }
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+
-                " jsonNode.size() " + jsonNode.size());
+                " ArrayNodeNested.size() " + ArrayNodeNested.size());
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

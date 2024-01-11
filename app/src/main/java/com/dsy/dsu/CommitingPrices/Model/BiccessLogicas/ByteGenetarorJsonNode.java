@@ -1,4 +1,4 @@
-package com.dsy.dsu.CommitingPrices.Model.BiccessLogicaFragmentCommitPrices;
+package com.dsy.dsu.CommitingPrices.Model.BiccessLogicas;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.jetbrains.annotations.NotNull;
 
-import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
