@@ -103,58 +103,71 @@ public class DashboardGRANTorREVOKE implements InGRANTs {
         // TODO: 11.01.2024
         try{
 
-            if(getGrantRemote==7){
-                КнопкаПоступлениеМатериалов.setVisibility(View.GONE);
-                        КнопкаТабель.setVisibility(View.GONE);
-                КнопкаЗаявкаНаТранспорт.setVisibility(View.GONE);
+            
+            switch (getGrantRemote){
+                // TODO: 11.01.2024  Согласование 6 7 режим только
+                case 6:
+                case 7:
+                    // TODO: 11.01.2024  
+
+                    КнопкаПоступлениеМатериалов.setVisibility(View.GONE);
+                    КнопкаТабель.setVisibility(View.GONE);
+                    КнопкаЗаявкаНаТранспорт.setVisibility(View.GONE);
 
 
-                КнопкаПоступлениеМатериалов.requestLayout();
-                КнопкаТабель.requestLayout();
-                КнопкаЗаявкаНаТранспорт.requestLayout();
+                    КнопкаПоступлениеМатериалов.requestLayout();
+                    КнопкаТабель.requestLayout();
+                    КнопкаЗаявкаНаТранспорт.requestLayout();
 
-                КнопкаПоступлениеМатериалов.refreshDrawableState();
-                КнопкаТабель.refreshDrawableState();
-                КнопкаЗаявкаНаТранспорт.refreshDrawableState();
+                    КнопкаПоступлениеМатериалов.refreshDrawableState();
+                    КнопкаТабель.refreshDrawableState();
+                    КнопкаЗаявкаНаТранспорт.refreshDrawableState();
 
-                // TODO: 11.01.2024
+                    // TODO: 11.01.2024
 
-                КнопкаСогласование.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        КнопкаСогласование.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    КнопкаСогласование.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            КнопкаСогласование.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                        КнопкаСогласование.setHeight( 300);
-                        КнопкаСогласование.requestLayout();
-                        КнопкаСогласование.forceLayout();
-                        КнопкаСогласование.refreshDrawableState();
-                    }
-                });
+                            КнопкаСогласование.setHeight( 300);
+                            КнопкаСогласование.requestLayout();
+                            КнопкаСогласование.forceLayout();
+                            КнопкаСогласование.refreshDrawableState();
+                        }
+                    });
 
-                КнопкаСогласЦен.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        КнопкаСогласЦен.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    КнопкаСогласЦен.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            КнопкаСогласЦен.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                        КнопкаСогласЦен.setHeight( 300);
-                        КнопкаСогласЦен.requestLayout();
-                        КнопкаСогласЦен.forceLayout();
-                        КнопкаСогласЦен.refreshDrawableState();
-                    }
-                });
-
-
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " ПРАВА getGrantRemote " +getGrantRemote);
+                            КнопкаСогласЦен.setHeight( 300);
+                            КнопкаСогласЦен.requestLayout();
+                            КнопкаСогласЦен.forceLayout();
+                            КнопкаСогласЦен.refreshDrawableState();
+                        }
+                    });
 
 
-            }else {
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " ПРАВА getGrantRemote " +getGrantRemote);
+                break;
 
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " ПРАВА getGrantRemote " +getGrantRemote);
+                // TODO: 11.01.2024  режим 2  табель 
+                default:
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " ПРАВА getGrantRemote " +getGrantRemote);
+                    break;
+                
+                
             }
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " ПРАВА getGrantRemote " +getGrantRemote);
 
 
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
