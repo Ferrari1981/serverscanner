@@ -45,6 +45,31 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
        <!-- //todo НАчало сторочек с самими данными-->
         <TableRow android:id="@+id/tableRowpay1"
             android:layout_width="match_parent"
@@ -101,6 +126,19 @@
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:visibility="visible" />
+
+
+
+
+
+
+
+
+
+
+
+
+
             </RelativeLayout>
         </TableRow>
         <!-- //todo КОНЕЦ  сторочек с самими данными-->
