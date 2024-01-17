@@ -8,6 +8,8 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -28,19 +30,23 @@ class AdapterSerachViewPay{
     Activity activity;
     MyRecycleViewAdapterPay  myRecycleViewAdapter;
     RecyclerView recyclerViewСогласование1С;
-    public AdapterSerachViewPay(@NotNull SearchView searchview_commitpay,
+
+    public AdapterSerachViewPay(@NotNull
+                                androidx.appcompat.widget.SearchView searchview_commitpay,
                                 @NotNull  Context context,
                                 @NotNull JsonNode jsonNode1сСогласованияAllRows,
                                 @NonNull Activity activity,
                                 @NonNull MyRecycleViewAdapterPay  myRecycleViewAdapter,
-                                @NonNull RecyclerView recyclerViewСогласование1С) {
+                                @NonNull RecyclerView recyclerViewСогласование1С,
+                                @NonNull Bl_CommintigPay bl_commintigPay) {
         this.searchview_commitpay = searchview_commitpay;
         this.context = context;
         this.jsonNode1сСогласованияAllRows = jsonNode1сСогласованияAllRows;
         this.activity = activity;
         this.recyclerViewСогласование1С = recyclerViewСогласование1С;
         this.myRecycleViewAdapter = myRecycleViewAdapter;
-          bl_commintigPay=new Bl_CommintigPay(context );
+        this.bl_commintigPay = bl_commintigPay;
+
     }
 
 
@@ -57,10 +63,12 @@ class AdapterSerachViewPay{
                         }else {
                             ((androidx.appcompat.widget.SearchView) v).setQueryHint(null);
 
-                            bl_commintigPay.методRebootDisaynRecyreViewonStopOrAsync(jsonNode1сСогласованияAllRows,myRecycleViewAdapter,recyclerViewСогласование1С);
-
-                            // TODO: 24.11.2023
+                         // TODO: 24.11.2023
                             bl_commintigPay.  методЗакрываемКлавитатуру( searchview_commitpay,activity);
+
+                           // bl_commintigPay.методRebootDisaynRecyreViewFromSearchView(jsonNode1сСогласованияAllRows );
+
+
                         }
                         // TODO: 26.12.2022  конец основгого кода
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -87,13 +95,13 @@ class AdapterSerachViewPay{
                             Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                             v2.vibrate(VibrationEffect.createOneShot(60, VibrationEffect.EFFECT_HEAVY_CLICK));
 
-                           RunningSearchView runningSearchView=
-                                   new  RunningSearchView( jsonNode1сСогласованияAllRows,query,context,searchview_commitpay
-                                           ,myRecycleViewAdapter,recyclerViewСогласование1С);
+                           SearchViewPayCommiting searchViewPayCommiting =
+                                   new SearchViewPayCommiting( jsonNode1сСогласованияAllRows,query,context,searchview_commitpay
+                                           ,myRecycleViewAdapter,recyclerViewСогласование1С,bl_commintigPay);
 
-                            runningSearchView.   registerBroadCastRexiver ( );
+                            searchViewPayCommiting.   registerBroadCastRexiver ( );
 
-                            runningSearchView.startrunningSearchView();
+                            searchViewPayCommiting.startrunningSearchView();
 
                             // TODO: 26.12.2022  конец основгого кода
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -126,6 +134,10 @@ class AdapterSerachViewPay{
                                 return true;
                             }else {
                                 // TODO: 26.12.2022  конец основгого кода
+                              bl_commintigPay.методRebootDisaynRecyreViewFromSearchView(jsonNode1сСогласованияAllRows );
+
+                                bl_commintigPay.  методЗакрываемКлавитатуру( searchview_commitpay,activity);
+
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +

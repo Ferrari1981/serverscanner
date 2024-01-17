@@ -1,4 +1,4 @@
-package com.dsy.dsu.PaysCommings.View.RecyreView;
+package com.dsy.dsu.PaysCommings.View.RecyreViewNested;
 
 import android.content.Context;
 import android.util.Log;
@@ -18,7 +18,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 // TODO: 15.03.2022  перенесееный код
 // TODO: 28.02.2022 начало  MyViewHolderДляЧата
-public class MyViewHolderPay extends RecyclerView.ViewHolder {// TODO: 28.02.2022 начало  MyViewHolderДляЧата
+public class MyViewHolderPayNested extends RecyclerView.ViewHolder {// TODO: 28.02.2022 начало  MyViewHolderДляЧата
     // TODO: 28.02.2022
     public MaterialTextView tx_sum, tx_nomer, tx_zfo,
             tx_kontragent, tx_statiy,
@@ -40,9 +40,9 @@ public class MyViewHolderPay extends RecyclerView.ViewHolder {// TODO: 28.02.202
 
 
     // TODO: 02.03.2022
-    public MyViewHolderPay(@NonNull View itemView,
-                           @NonNull Context context,
-                           @NonNull JsonNode jsonNode1сСогласованияAllRows ) {
+    public MyViewHolderPayNested(@NonNull View itemView,
+                                 @NonNull Context context,
+                                 @NonNull JsonNode jsonNode1сСогласованияAllRows ) {
         super(itemView);
         try{
             this.context=context;

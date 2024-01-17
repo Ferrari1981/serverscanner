@@ -5,14 +5,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.ProgressBar;
@@ -21,13 +18,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.loader.content.AsyncTaskLoader;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.BusinessLogicAll.Class_Get_Json_1C;
+import com.dsy.dsu.PaysCommings.Model.LeftDividerItemDecoratorCommitPay;
 import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterPay;
 import com.dsy.dsu.PaysCommings.View.RecyreViewIsNull.MyRecycleViewIsNullAdapterPay;
 import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
@@ -42,12 +42,14 @@ import com.jakewharton.rxbinding4.view.RxView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
 import kotlin.Unit;
@@ -56,14 +58,91 @@ import kotlin.Unit;
 
  
 public class Bl_CommintigPay {
+    Activity activity;
+    View viewCore;
+    Integer ПубличныйidPay;
+    ObjectMapper objectMapper;
+    LifecycleOwner lifecycleOwner;
     Context context;
+    ProgressBar progressBarCommitPay;
+    RecyclerView recyclerViewСогласование1С;
+    MyRecycleViewIsNullAdapterPay myRecycleViewIsNullAdapter;
+    Animation animation;
+    TextView textViewТекущаяЗадача;
+      JsonNode jsonNode1сСогласованияRow;
 
-    public    Bl_CommintigPay(Context context   ) {
+      BottomNavigationView bottomNavigationViewParentCommitingPay;
+
+     BottomNavigationItemView bottomNavigationBackCommitingPay;
+
+      BottomNavigationItemView bottomNavigationAsyncCommitingPay;
+     BottomNavigationItemView bottomNavigationSearchCommitingPay;
+    MyRecycleViewAdapterPay myRecycleViewAdapter;
+
+    MutableLiveData<Intent> jsonNodeMutableLiveDataPayCommintg;
+    androidx.appcompat.widget.SearchView searchview_commitpay;
+    public    Bl_CommintigPay(@NonNull  Activity activity,
+                              @NonNull  Context context ,
+                              @NotNull View viewCore,
+                              @NonNull ObjectMapper objectMapper,
+                              @NonNull Integer ПубличныйidPay,
+                              @NonNull LifecycleOwner lifecycleOwner,
+                              @NonNull RecyclerView recyclerViewСогласование1С,
+                              @NonNull     MyRecycleViewIsNullAdapterPay myRecycleViewIsNullAdapter,
+                              @NonNull Animation animation,
+                              @NonNull TextView textViewТекущаяЗадача,
+                              @NonNull JsonNode jsonNode1сСогласованияRow,
+
+                              @NonNull BottomNavigationView bottomNavigationViewParentCommitingPay,
+                              @NonNull BottomNavigationItemView bottomNavigationBackCommitingPay,
+                              @NonNull BottomNavigationItemView bottomNavigationAsyncCommitingPay,
+                              @NonNull BottomNavigationItemView bottomNavigationSearchCommitingPay,
+
+                              @NonNull MyRecycleViewAdapterPay myRecycleViewAdapter,
+                             @NonNull MutableLiveData<Intent> jsonNodeMutableLiveDataPayCommintg,
+                              @NonNull androidx.appcompat.widget.SearchView searchview_commitpay) {
+        try{
+        this.activity = activity;
+        this.viewCore = viewCore;
+        this.objectMapper = objectMapper;
+        this.ПубличныйidPay = ПубличныйidPay;
+        this.lifecycleOwner = lifecycleOwner;
         this.context = context;
-        Log.d(context.getClass().getName(), "\n"
+        this.recyclerViewСогласование1С = recyclerViewСогласование1С;
+        this.myRecycleViewIsNullAdapter = myRecycleViewIsNullAdapter;
+        this.animation = animation;
+        this.textViewТекущаяЗадача = textViewТекущаяЗадача;
+        this.jsonNode1сСогласованияRow = jsonNode1сСогласованияRow;
+
+        this.bottomNavigationViewParentCommitingPay = bottomNavigationViewParentCommitingPay;
+        this.bottomNavigationBackCommitingPay = bottomNavigationBackCommitingPay;
+
+        this.bottomNavigationAsyncCommitingPay = bottomNavigationAsyncCommitingPay;
+        this.bottomNavigationSearchCommitingPay = bottomNavigationSearchCommitingPay;
+
+        this.myRecycleViewAdapter = myRecycleViewAdapter;
+        this.jsonNodeMutableLiveDataPayCommintg = jsonNodeMutableLiveDataPayCommintg;
+        this.searchview_commitpay = searchview_commitpay;
+
+            // TODO: 15.01.2024 init...
+
+        progressBarCommitPay = viewCore.findViewById(R.id.prograessbarcommitpaydown); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
+        Log.d(activity.getClass().getName(), "\n"
                 + " время: " + new Date()+"\n+" +
                 " Класс в процессе... " +  this.getClass().getName()+"\n"+
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                " recyclerViewСогласование1С " +recyclerViewСогласование1С);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        // TODO: 01.09.2021 метод вызова
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
     }
 
 
@@ -184,31 +263,56 @@ public class Bl_CommintigPay {
 
     // TODO: 02.03.2022 выход
 
-    public void МетодКпопкаВозвращениеНазадИзСогласованиии(@NonNull BottomNavigationItemView bottomNavigationBack)
+    public void eventBackCommmitPays( )
             throws ExecutionException, InterruptedException {
         try {
-            Log.d(this.getClass().getName(), "  выходим из задания МетодКпопкаВозвращениеНазадИзСогласованиии" );
-            bottomNavigationBack.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Handler handler=    v.getHandler();
-                    handler.post(()->{
-                        Intent Интент_BackВозвращаемАктивти = new Intent();
-                        Bundle data1C = new Bundle();
-                        Интент_BackВозвращаемАктивти.putExtras(data1C);
-                        Интент_BackВозвращаемАктивти.setClass(context, MainActivity_Dashboard.class); // Т
-                        Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        Log.d(this.getClass().getName(), "  выходим из задания МетодКпопкаВозвращениеНазадИзСогласованиии" );
-                      context.  startActivity( Интент_BackВозвращаемАктивти);
 
-                        // TODO: 17.04.2023 LOG
-                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            RxView.clicks(  bottomNavigationBackCommitingPay)
+                    .throttleFirst(1, TimeUnit.SECONDS)
+                    .filter(s -> !s.toString().isEmpty())
+                    .map(new Function<Unit, Object>() {
+                        @Override
+                        public Object apply(Unit unit) throws Throwable {
+                            // TODO: 30.12.2023
+                            Log.d(this.getClass().getName(), "\n" + " class "
+                                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                            progressBarCommitPay.setVisibility(View.VISIBLE);
+                            return    bottomNavigationBackCommitingPay;
+                        }
+                    })
+                    .doOnError(new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Throwable {
+                            throwable.printStackTrace();
+                            Log.e(context.getClass().getName(),
+                                    "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+                    })
+                    .onErrorComplete(new Predicate<Throwable>() {
+                        @Override
+                        public boolean test(Throwable throwable) throws Throwable {
+                            throwable.printStackTrace();
+                            Log.e(context.getClass().getName(),
+                                    "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            return false;
+                        }
+                    })
+                    .subscribe( getbottomNavigationSearch-> {
+                        ///todo revboot
+                        try{
 
-                    });
 
-
+                            subcriBackFromCommitPay();
 
 
 
@@ -231,8 +335,23 @@ public class Bl_CommintigPay {
 
 
 
-                }
-            });
+
+
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    + " getbottomNavigationSearch " +getbottomNavigationSearch );
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            ///
+                        }
+
+                    });
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -241,21 +360,38 @@ public class Bl_CommintigPay {
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
+
+    private void subcriBackFromCommitPay() {
+        try{
+        Intent Интент_BackВозвращаемАктивти = new Intent();
+        Bundle data1C = new Bundle();
+        Интент_BackВозвращаемАктивти.putExtras(data1C);
+        Интент_BackВозвращаемАктивти.setClass(context, MainActivity_Dashboard.class); // Т
+        Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Log.d(this.getClass().getName(), "  выходим из задания МетодКпопкаВозвращениеНазадИзСогласованиии" );
+        context.  startActivity( Интент_BackВозвращаемАктивти);
+
+
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+    }
+
+
     // TODO: 02.03.2022  принудительный обмен с 1с
-    public void МетодКпопкаПринидительноОбмена(@NonNull BottomNavigationItemView bottomNavigationAsync,
-                                               @NonNull JsonNode jsonNode1сСогласованияAllRows,
-                                               @NonNull AsyncTaskLoader <JsonNode> asyncTaskLoader,
-                                               @NonNull ProgressBar progressBarCommitPay,
-                                               @NonNull ObjectMapper objectMapper,
-                                               @NonNull Integer ПубличныйidPay,
-                                               @NonNull MyRecycleViewAdapterPay myRecycleViewAdapter,
-                                               @NonNull RecyclerView recyclerViewСогласование1С,
-                                               @NonNull  MyRecycleViewIsNullAdapterPay myRecycleViewIsNullAdapter)
+    public void eVentsAsycBottunCommintgPay( )
             throws ExecutionException, InterruptedException {
         try {
             // TODO: 02.03.2022
             Log.d(this.getClass().getName(), "  принудительный обмен  МетодКпопкаВозвращениеНазадИзСогласованиии" );
-            RxView.clicks(  bottomNavigationAsync)
+            RxView.clicks(  bottomNavigationAsyncCommitingPay)
                     .throttleFirst(2, TimeUnit.SECONDS)
                     .filter(s -> !s.toString().isEmpty())
                     .map(new Function<Unit, Object>() {
@@ -264,7 +400,8 @@ public class Bl_CommintigPay {
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-                            return    bottomNavigationAsync;
+                            progressBarCommitPay.setVisibility(View.VISIBLE);
+                            return    bottomNavigationAsyncCommitingPay;
                         }
                     })
                     .doOnError(new io.reactivex.rxjava3.functions.Consumer<Throwable>() {
@@ -295,21 +432,12 @@ public class Bl_CommintigPay {
                     .subscribe( GetAsyncCommitPays-> {
                         ///todo revboot
 
-                        // TODO: 08.11.2023
-                        metodEndingRecyreViewElseData1C(jsonNode1сСогласованияAllRows,myRecycleViewAdapter,recyclerViewСогласование1С,myRecycleViewIsNullAdapter);
-                        //onResume();
-
-                       МетодISNUllПолучениеДанныхОт1сДляСогласования(asyncTaskLoader,progressBarCommitPay,
-                               objectMapper,ПубличныйidPay,
-                               myRecycleViewAdapter,
-                               recyclerViewСогласование1С,
-                               myRecycleViewIsNullAdapter);
+                        metodSecondGetDataOt1cCommitPay( );
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                + " jsonNode1сСогласованияAllRows " +jsonNode1сСогласованияAllRows);
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -328,20 +456,13 @@ public class Bl_CommintigPay {
     }
 
 
-    public void МетодКликПоПоиску(@NonNull BottomNavigationItemView bottomNavigationSearch,
-                                  @NonNull JsonNode jsonNode1сСогласованияAllRows,
-                                  @NonNull androidx.appcompat.widget.SearchView searchview_commitpay,
-                                  @NonNull RecyclerView recyclerViewСогласование1С,
-                                  @NonNull RelativeLayout relativeLayout_recyreview,
-                                  @NonNull Animation animation1,
-                                  @NonNull Activity activity,
-                                  @NonNull MyRecycleViewAdapterPay myRecycleViewAdapter)
+    public void eVentSearchViewCommingPay(@NonNull JsonNode jsonNode1сСогласованияAllRows)
             throws ExecutionException, InterruptedException {
         // TODO: 02.03.2022
         try {
 
 
-            RxView.clicks(  bottomNavigationSearch)
+            RxView.clicks(  bottomNavigationSearchCommitingPay)
                     .throttleFirst(1,TimeUnit.SECONDS)
                     .filter(s -> !s.toString().isEmpty())
                     .map(new Function<Unit, Object>() {
@@ -350,7 +471,7 @@ public class Bl_CommintigPay {
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-                            return    bottomNavigationSearch;
+                            return    bottomNavigationSearchCommitingPay;
                         }
                     })
                     .doOnError(new io.reactivex.rxjava3.functions.Consumer<Throwable>() {
@@ -378,53 +499,16 @@ public class Bl_CommintigPay {
                             return false;
                         }
                     })
-                    .subscribe( GetNameSingleNewFile1c-> {
+                    .subscribe( GetbottomNavigationSearchCommitingPay-> {
 
-                        if (jsonNode1сСогласованияAllRows!=null) {
-                            if (searchview_commitpay.getVisibility()==View.VISIBLE) {
-                                searchview_commitpay.setVisibility(View.GONE);
-                                searchview_commitpay.setEnabled(false);
-                                ViewGroup.LayoutParams params= searchview_commitpay.getLayoutParams();
-                                params.height=0;
-                                searchview_commitpay.setLayoutParams(params);
-
-                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                            }else {
-                                searchview_commitpay.setVisibility(View.VISIBLE);
-                                searchview_commitpay.setEnabled(true);
-                                ViewGroup.LayoutParams params= searchview_commitpay.getLayoutParams();
-                                params.height=80;
-                                searchview_commitpay.setLayoutParams(params);
-
-                                // TODO: 21.11.2023 Enadble Filter
-
-                              new AdapterSerachViewPay(searchview_commitpay,context,jsonNode1сСогласованияAllRows,activity,
-                                      myRecycleViewAdapter,recyclerViewСогласование1С).setAdapterSerachViewPay();
-
-                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                            }
-
-                            searchview_commitpay.startAnimation(animation1);
-                            searchview_commitpay.requestLayout();
-                            searchview_commitpay.refreshDrawableState();
-
-                            recyclerViewСогласование1С.requestLayout();
-                            recyclerViewСогласование1С.refreshDrawableState();
-
-                            relativeLayout_recyreview.requestLayout();
-                            relativeLayout_recyreview.refreshDrawableState();
-
-
-                        }
+                        // TODO: 16.01.2024
+                        subcSerchViewPay(jsonNode1сСогласованияAllRows);
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " bottomNavigationSearch " +bottomNavigationSearch );
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                + "\n"+ " GetbottomNavigationSearchCommitingPay " +GetbottomNavigationSearchCommitingPay );
 
                     });
             // TODO: 09.03.2022
@@ -437,23 +521,69 @@ public class Bl_CommintigPay {
         }
     }
 
+    private void subcSerchViewPay(@NonNull JsonNode jsonNode1сСогласованияAllRows) {
+        try{
+        if (jsonNode1сСогласованияAllRows !=null) {
+            if (searchview_commitpay.getVisibility()==View.VISIBLE) {
+                searchview_commitpay.setVisibility(View.GONE);
+                searchview_commitpay.setEnabled(false);
+                ViewGroup.LayoutParams params= searchview_commitpay.getLayoutParams();
+                params.height=0;
+                searchview_commitpay.setLayoutParams(params);
 
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            }else {
+                searchview_commitpay.setVisibility(View.VISIBLE);
+                searchview_commitpay.setEnabled(true);
+                ViewGroup.LayoutParams params= searchview_commitpay.getLayoutParams();
+                params.height=80;
+                searchview_commitpay.setLayoutParams(params);
+
+                // TODO: 21.11.2023 Enadble Filter
+
+
+
+              new AdapterSerachViewPay(searchview_commitpay,context, jsonNode1сСогласованияAllRows,activity,
+                      myRecycleViewAdapter,recyclerViewСогласование1С,this).setAdapterSerachViewPay();
+
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            }
+
+            searchview_commitpay.startAnimation(animation);
+            searchview_commitpay.requestLayout();
+            searchview_commitpay.refreshDrawableState();
+
+            recyclerViewСогласование1С.requestLayout();
+            recyclerViewСогласование1С.refreshDrawableState();
+
+
+        }
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "jsonNode1сСогласованияAllRows " + jsonNode1сСогласованияAllRows);
+        // TODO: 09.03.2022
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+    }
 
 
     // TODO: 04.03.2022 прозвомжность Заполения RecycleView
-  public   void МетодЗаполенияRecycleViewДляЗадач(@NonNull MyRecycleViewAdapterPay myRecycleViewAdapter,
-                                           @NonNull JsonNode jsonNode1сСогласованияAllRows,
-                                           @NonNull RecyclerView recyclerViewСогласование1С,
-                                           @NonNull   AsyncTaskLoader <JsonNode> asyncTaskLoader,
-                                          @NonNull   Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
-                                          @NotNull Animation animation1,
-                                                  @NonNull Integer ПубличныйidPay,
-                                                  @NonNull ObjectMapper objectMapper,
-                                                  @NonNull   BottomNavigationView bottomNavigationViewParent) {
+  public   void InitMyAdapterRecyreViewWorker(@NonNull JsonNode jsonNode1сСогласованияAllRows,
+                                              @NonNull   Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C) {
         try {
             if (myRecycleViewAdapter==null) {
-                myRecycleViewAdapter = new MyRecycleViewAdapterPay(jsonNode1сСогласованияAllRows,context,
-                        asyncTaskLoader,binderСогласования1C,animation1,ПубличныйidPay,objectMapper,bottomNavigationViewParent);
+                myRecycleViewAdapter = new MyRecycleViewAdapterPay(jsonNode1сСогласованияAllRows,context
+                        ,binderСогласования1C,animation,ПубличныйidPay,objectMapper,bottomNavigationViewParentCommitingPay);
                 myRecycleViewAdapter.notifyDataSetChanged();
                 recyclerViewСогласование1С.setAdapter(myRecycleViewAdapter);
                 recyclerViewСогласование1С.getAdapter().notifyDataSetChanged();
@@ -472,22 +602,18 @@ public class Bl_CommintigPay {
         }
     }
 
-  public   void МетодЗаполенияRecycleViewIsNUllДляЗадач(@NonNull MyRecycleViewIsNullAdapterPay myRecycleViewIsNullAdapter,
-                                                 @NonNull   AsyncTaskLoader <JsonNode> asyncTaskLoader,
-                                                 @NonNull RecyclerView recyclerViewСогласование1С) {
+  public   void InitMyAdapterRecyreViewIsNull( ) {
         try {
-            if (myRecycleViewIsNullAdapter==null) {
-                ArrayList<String> arrayListIsNull1cData=new ArrayList<>();
-                arrayListIsNull1cData.add("IsNull1cPayCommit");
-                myRecycleViewIsNullAdapter = new MyRecycleViewIsNullAdapterPay(arrayListIsNull1cData,context,asyncTaskLoader );
+                ArrayList<Boolean> arrayListIsNull1cData=new ArrayList<>();
+                arrayListIsNull1cData.add(true);
+                myRecycleViewIsNullAdapter = new MyRecycleViewIsNullAdapterPay(arrayListIsNull1cData,activity  );
                 myRecycleViewIsNullAdapter.notifyDataSetChanged();
                 recyclerViewСогласование1С.setAdapter(myRecycleViewIsNullAdapter);
                 recyclerViewСогласование1С.getAdapter().notifyDataSetChanged();
-            }
+
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"asyncTaskLoader  "
-                    + asyncTaskLoader);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"asyncTaskLoader  ");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -500,23 +626,30 @@ public class Bl_CommintigPay {
 
 
     // TODO: 04.03.2022 прозвомжность инициализации RecycleView
-    public void МетодИнициализацииRecycleViewДляЗадач(@NonNull Context context,
-                                                      @NonNull RecyclerView recyclerViewСогласование1С,
-                                                      @NonNull Animation animation) {
+    public void InitRecyreReview( ) {
         try {
+
+
+
+            recyclerViewСогласование1С.addItemDecoration(new LeftDividerItemDecoratorCommitPay(context));
+            GridLayoutManager layoutManager = new GridLayoutManager(context, 1,GridLayoutManager.VERTICAL,false);
+            layoutManager.setSpanSizeLookup(new GridLayoutManager.DefaultSpanSizeLookup());
+
+
+
 
               /*  DividerItemDecoration dividerItemDecorationHor=
                         new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);*/
-            DividerItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL);
+         /*   DividerItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL);
             GradientDrawable drawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, new int[]{0xfff7f7f7, 0xfff7f7f7});
             drawable.setSize(1,1);
             itemDecoration.setDrawable(drawable);
-            /*            dividerItemDecorationHor.setDrawable(context.getDrawable(R.drawable.divider_for_order_transport1));///R.dimen.activity_horizontal_margin*/
+            *//*            dividerItemDecorationHor.setDrawable(context.getDrawable(R.drawable.divider_for_order_transport1));///R.dimen.activity_horizontal_margin*//*
             recyclerViewСогласование1С.addItemDecoration(itemDecoration);
 
-            LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context);
-            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            recyclerViewСогласование1С.setLayoutManager(linearLayoutManager);
+            LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context);*/
+          /*  linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);*/
+            recyclerViewСогласование1С.setLayoutManager(layoutManager);
             //TODO new LinearLayoutManager(context) // TODO: 28.02.2022 создаем наш первый RecyclerView recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerViewСогласование1С.startAnimation(animation);
             // TODO: 28.02.2022
@@ -534,53 +667,28 @@ public class Bl_CommintigPay {
 
     }
 
-    private void metodEndingRecyreViewElseData1C(@NonNull JsonNode jsonNode1сСогласованияAllRows,
-                                                 @NonNull MyRecycleViewAdapterPay myRecycleViewAdapter,
-                                                 @NonNull RecyclerView recyclerViewСогласование1С,
-                                                 @NonNull  MyRecycleViewIsNullAdapterPay myRecycleViewIsNullAdapter) {
 
-        try{
-            if (jsonNode1сСогласованияAllRows!=null) {
-
-                  методRebootDisaynRecyreViewonStopOrAsync(jsonNode1сСогласованияAllRows,myRecycleViewAdapter,recyclerViewСогласование1С);
-            } else {
-
-                   методRebootRecyreviewDontJsonNULL(myRecycleViewIsNullAdapter,recyclerViewСогласование1С);
-            }
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " jsonNode1сСогласованияAllRows " +jsonNode1сСогласованияAllRows);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
     // TODO: 14.03.2022
 
-    public void МетодКпопкаСоЗачкомКраснымДополнительныйСтатус(@NonNull JsonNode jsonNode1сСогласованияRow,
-                                                               @NonNull BottomNavigationView bottomNavigationViewParent)
+    public void МетодКпопкаСоЗачкомКраснымДополнительныйСтатус(@NonNull JsonNode jsonNode1сСогласованияRow )
     {
         try {
             // TODO: 09.03.2022
             if (jsonNode1сСогласованияRow!=null) {
                 if (  jsonNode1сСогласованияRow.size()>0) {
-                    bottomNavigationViewParent.getOrCreateBadge(R.id.bottomNavigationAsync).setBackgroundColor(Color.parseColor("#008080"));
-                    bottomNavigationViewParent.getOrCreateBadge(R.id.bottomNavigationAsync).setNumber(jsonNode1сСогласованияRow.size());//.getOrCreateBadge(R.id.id_taskHome).setVisible(true);
+                    bottomNavigationViewParentCommitingPay.getOrCreateBadge(R.id.bottomNavigationAsync).setBackgroundColor(Color.parseColor("#008080"));
+                    bottomNavigationViewParentCommitingPay.getOrCreateBadge(R.id.bottomNavigationAsync).setNumber(jsonNode1сСогласованияRow.size());//.getOrCreateBadge(R.id.id_taskHome).setVisible(true);
                 } else {
-                    bottomNavigationViewParent.getOrCreateBadge(R.id.bottomNavigationAsync).setBackgroundColor(Color.RED)        ;
-                    bottomNavigationViewParent.getOrCreateBadge(R.id.bottomNavigationAsync).setNumber(0);//.getOrCreateBadge(R.id.id_taskHome).setVisible(true);
+                    bottomNavigationViewParentCommitingPay.getOrCreateBadge(R.id.bottomNavigationAsync).setBackgroundColor(Color.RED)        ;
+                    bottomNavigationViewParentCommitingPay.getOrCreateBadge(R.id.bottomNavigationAsync).setNumber(0);//.getOrCreateBadge(R.id.id_taskHome).setVisible(true);
                 }
             }else {
-                bottomNavigationViewParent.getOrCreateBadge(R.id.bottomNavigationAsync).setBackgroundColor(Color.RED)        ;
-                bottomNavigationViewParent.getOrCreateBadge(R.id.bottomNavigationAsync).setNumber(0);//.getOrCreateBadge(R.id.id_taskHome).setVisible(true);
+                bottomNavigationViewParentCommitingPay.getOrCreateBadge(R.id.bottomNavigationAsync).setBackgroundColor(Color.RED)        ;
+                bottomNavigationViewParentCommitingPay.getOrCreateBadge(R.id.bottomNavigationAsync).setNumber(0);//.getOrCreateBadge(R.id.id_taskHome).setVisible(true);
             }
-            bottomNavigationViewParent.requestLayout();
-            bottomNavigationViewParent.refreshDrawableState();
+            bottomNavigationViewParentCommitingPay.requestLayout();
+            bottomNavigationViewParentCommitingPay.refreshDrawableState();
 
             // TODO: 15.01.2024
             Log.d(context.getClass().getName(), "\n"
@@ -602,7 +710,7 @@ public class Bl_CommintigPay {
             // TODO: 09.03.2022
             if (jsonNode1сСогласованияRow.size()>0) {
 
-                BottomNavigationView    bottomNavigationSearch = bottomNavigationViewParent.findViewById(R.id.bottomNavigationSearch);
+                BottomNavigationItemView    bottomNavigationSearch = bottomNavigationViewParent.findViewById(R.id.bottomNavigationSearch);
 
                 bottomNavigationSearch.setEnabled(true);
                 bottomNavigationSearch.setClickable(true);
@@ -648,15 +756,9 @@ public class Bl_CommintigPay {
 
 
     // TODO: 12.07.2022  метод получение данных от 1С для согласования
-    public void metodGetDataOt1cCommitPay(@NonNull AsyncTaskLoader <JsonNode> asyncTaskLoader,
-                                          @NonNull ProgressBar progressBarCommitPay,
-                                          @NonNull ObjectMapper objectMapper,
-                                          @NonNull Integer ПубличныйidPay,
-                                          @NonNull MyRecycleViewAdapterPay myRecycleViewAdapter,
-                                          @NonNull RecyclerView recyclerViewСогласование1С,
-                                          @NonNull  MyRecycleViewIsNullAdapterPay myRecycleViewIsNullAdapter) {
+    public void metodGetDataOt1cCommitPay() {
         try {
-            asyncTaskLoader=new AsyncTaskLoader<JsonNode>(context) {
+            AsyncTaskLoader <JsonNode>    asyncTaskLoader=new AsyncTaskLoader<JsonNode>(context) {
                 @Override
                 protected void onStartLoading() {
                     super.onStartLoading();
@@ -682,13 +784,18 @@ public class Bl_CommintigPay {
                     try{
                       /// Integer ПубличныйidPay=247;
                         //TODO получаем данные для соглачования
-                        //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С
+
+
+                        //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С DEBUG
                         jsonNode1сСогласования =
-                                new Class_Get_Json_1C(context ,"http://uat.dsu1.ru:55080/dds/hs/jsonto1c/listofdocuments")
+                                new Class_Get_Json_1C(context ,"http://192.168.3.10/dds_copy/hs/jsonto1c/listofdocuments")
                                         .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper);//ПубличныйidPay*/
 
 
-
+                /*        //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С RELIS
+                        jsonNode1сСогласования =
+                                new Class_Get_Json_1C(context ,"http://uat.dsu1.ru:55080/dds/hs/jsonto1c/listofdocuments")
+                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper); */
 /*
 [{"Ndoc":"000021992","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"СИТИЛИНК ООО","sum":6,"articleDDS":"2.2.04. Оргтехника","nomenclature":[{"nomen":"Тест 1"},{"nomen":"Тест 2"},{"nomen":"Тест 3"}],"filenames":[{"ВinNameFile":"Текстовый документ","expansion":"txt"}]},
                             {"Ndoc":"000021993","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"ИП Пряслов Алексей Александрович","sum":50,"articleDDS":"2.2.05. Прочие (инвестиционная деятельность)","nomenclature":[{"nomen":"Тест картридж"}],"filenames":[{"ВinNameFile":"Справочник","expansion":"xlsx"}]}]*/
@@ -722,11 +829,9 @@ public class Bl_CommintigPay {
                 public void onLoadComplete(@NonNull Loader<JsonNode> loader, @Nullable JsonNode jsonNode1сСогласования) {
                     try{
 
-                            // TODO: 08.11.2023  данные есть
-                            metodEndingRecyreViewElseData1C(jsonNode1сСогласования,
-                                    myRecycleViewAdapter,
-                                    recyclerViewСогласование1С,
-                                      myRecycleViewIsNullAdapter);
+                        // TODO: 16.01.2024  результата при получение певого раза  данных
+                        resultatFisrtПолучениеДанных((Serializable) jsonNode1сСогласования);
+
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -757,19 +862,81 @@ public class Bl_CommintigPay {
     }
 
 
+// TODO: 16.01.2024 FIRST
+
+    private void resultatFisrtПолучениеДанных(Serializable jsonNode1сСогласования) {
+
+        try{
+        Intent intentCallBackAfter1cData=new Intent("CallBackAflerGetData1c");
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("jsonNode1сСогласования", jsonNode1сСогласования);
+        intentCallBackAfter1cData.putExtras(bundle);
+        jsonNodeMutableLiveDataPayCommintg.postValue(intentCallBackAfter1cData);
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " jsonNode1сСогласования " +jsonNode1сСогласования);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+    }
+
+    // TODO: 16.01.2024 Second
+    private void resultatSecondПолучениеДанных(Serializable jsonNode1сСогласования) {
+
+        try{
+            Intent intentCallBackAfter1cData=new Intent("SecondCallBackAflerGetData1c");
+            Bundle bundle=new Bundle();
+            bundle.putSerializable("jsonNode1сСогласования", jsonNode1сСогласования);
+            intentCallBackAfter1cData.putExtras(bundle);
+            jsonNodeMutableLiveDataPayCommintg.postValue(intentCallBackAfter1cData);
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " jsonNode1сСогласования " +jsonNode1сСогласования);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+    // TODO: 16.01.2024 Second Принудительная
+    private void resultatSecondPrinyditelnayПолучениеДанных(Serializable jsonNode1сСогласования) {
+
+        try{
+            Intent intentCallBackAfter1cData=new Intent("PrinyditelnaySecondCallBackAflerGetData1c");
+            Bundle bundle=new Bundle();
+            bundle.putSerializable("jsonNode1сСогласования", jsonNode1сСогласования);
+            intentCallBackAfter1cData.putExtras(bundle);
+            jsonNodeMutableLiveDataPayCommintg.postValue(intentCallBackAfter1cData);
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " jsonNode1сСогласования " +jsonNode1сСогласования);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
 
 
 
-    // TODO: 21.11.2023  метод получение данныых Синхронно
-    private void МетодISNUllПолучениеДанныхОт1сДляСогласования(@NonNull AsyncTaskLoader <JsonNode> asyncTaskLoader,
-                                                               @NonNull ProgressBar progressBarCommitPay,
-                                                               @NonNull ObjectMapper objectMapper,
-                                                               @NonNull Integer ПубличныйidPay,
-                                                               @NonNull MyRecycleViewAdapterPay myRecycleViewAdapter,
-                                                               @NonNull RecyclerView recyclerViewСогласование1С,
-                                                               @NonNull  MyRecycleViewIsNullAdapterPay myRecycleViewIsNullAdapter) {
+    // TODO: 12.07.2022  метод получение данных от 1С для согласования
+    public void metodSecondGetDataOt1cCommitPay() {
         try {
-            asyncTaskLoader=new AsyncTaskLoader<JsonNode>(context) {
+            AsyncTaskLoader <JsonNode>    asyncTaskLoader=new AsyncTaskLoader<JsonNode>(context) {
                 @Override
                 protected void onStartLoading() {
                     super.onStartLoading();
@@ -793,11 +960,24 @@ public class Bl_CommintigPay {
                 public JsonNode loadInBackground() {
                     JsonNode jsonNode1сСогласования = null;
                     try{
+                        /// Integer ПубличныйidPay=247;
                         //TODO получаем данные для соглачования
-                        //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С
+
+
+                        //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С DEBUG
+                        jsonNode1сСогласования =
+                                new Class_Get_Json_1C(context ,"http://192.168.3.10/dds_copy/hs/jsonto1c/listofdocuments")
+                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper);//ПубличныйidPay*/
+
+
+                /*        //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С RELIS
                         jsonNode1сСогласования =
                                 new Class_Get_Json_1C(context ,"http://uat.dsu1.ru:55080/dds/hs/jsonto1c/listofdocuments")
-                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper);//ПубличныйidPay*/
+                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper); */
+/*
+[{"Ndoc":"000021992","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"СИТИЛИНК ООО","sum":6,"articleDDS":"2.2.04. Оргтехника","nomenclature":[{"nomen":"Тест 1"},{"nomen":"Тест 2"},{"nomen":"Тест 3"}],"filenames":[{"ВinNameFile":"Текстовый документ","expansion":"txt"}]},
+                            {"Ndoc":"000021993","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"ИП Пряслов Алексей Александрович","sum":50,"articleDDS":"2.2.05. Прочие (инвестиционная деятельность)","nomenclature":[{"nomen":"Тест картридж"}],"filenames":[{"ВinNameFile":"Справочник","expansion":"xlsx"}]}]*/
+
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -805,9 +985,7 @@ public class Bl_CommintigPay {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "  jsonNode1сСогласования  " + jsonNode1сСогласования);
 
 
-/*
-[{"Ndoc":"000021992","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"СИТИЛИНК ООО","sum":6,"articleDDS":"2.2.04. Оргтехника","nomenclature":[{"nomen":"Тест 1"},{"nomen":"Тест 2"},{"nomen":"Тест 3"}],"filenames":[{"ВinNameFile":"Текстовый документ","expansion":"txt"}]},
-                            {"Ndoc":"000021993","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"ИП Пряслов Алексей Александрович","sum":50,"articleDDS":"2.2.05. Прочие (инвестиционная деятельность)","nomenclature":[{"nomen":"Тест картридж"}],"filenames":[{"ВinNameFile":"Справочник","expansion":"xlsx"}]}]*/
+
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -826,18 +1004,26 @@ public class Bl_CommintigPay {
             asyncTaskLoader.forceLoad();
             asyncTaskLoader.registerListener(new Random().nextInt(), new Loader.OnLoadCompleteListener<JsonNode>() {
                 @Override
-                public void onLoadComplete(@NonNull Loader<JsonNode> loader, @Nullable JsonNode jsonNode1сСогласованияISNull) {
+                public void onLoadComplete(@NonNull Loader<JsonNode> loader, @Nullable JsonNode jsonNode1сСогласования) {
                     try{
 
-// TODO: 21.11.2023 получаем данные сихронно для Async
-                        // TODO: 08.11.2023  данные есть
-                        metodEndingRecyreViewElseData1C(jsonNode1сСогласованияISNull,myRecycleViewAdapter,recyclerViewСогласование1С,myRecycleViewIsNullAdapter);
+                        // TODO: 16.01.2024  результата при получение певого раза  данных  SECOND !!!!!!!
+
+                        if (myRecycleViewAdapter!=null) {
+                            resultatSecondПолучениеДанных((Serializable) jsonNode1сСогласования);
+
+
+
+                            // TODO: 16.01.2024  результата при получение певого раза  данных  SECOND Принудительная !!!!!!!
+                        } else {
+
+                            resultatSecondPrinyditelnayПолучениеДанных((Serializable) jsonNode1сСогласования);
+                        }
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                + " jsonNode1сСогласованияISNull " +jsonNode1сСогласованияISNull);
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " jsonNode1сСогласования " +jsonNode1сСогласования);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -872,16 +1058,17 @@ public class Bl_CommintigPay {
 
 
 
-
-
-
-
     public void методЗакрываемКлавитатуру(@NonNull androidx.appcompat.widget.SearchView searchview_commitpay,
                                           @NonNull Activity activity) {
         try{
 
-            searchview_commitpay.clearFocus();
-            activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+           // searchview_commitpay.clearFocus();
+
+       Window w =activity.getWindow();
+
+            if (w!=null) {
+                w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            }
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -901,9 +1088,7 @@ public class Bl_CommintigPay {
 
 
 
-    public void методRebootDisaynRecyreViewonStopOrAsync(@NonNull JsonNode jsonNode1сСогласованияAllRows,
-                                                         @NonNull MyRecycleViewAdapterPay myRecycleViewAdapter,
-                                                         @NonNull RecyclerView recyclerViewСогласование1С) {
+    public void методRebootDisaynRecyreViewonStopOrAsync(@NonNull JsonNode jsonNode1сСогласованияAllRows) {
         try{
             if (jsonNode1сСогласованияAllRows!=null) {
                 if (myRecycleViewAdapter!=null) {
@@ -931,6 +1116,39 @@ public class Bl_CommintigPay {
 
     }
 
+
+
+
+    public void методRebootDisaynRecyreViewFromSearchView(@NonNull JsonNode jsonNode1сСогласованияAllRows) {
+        try{
+            if (jsonNode1сСогласованияAllRows!=null) {
+                if (myRecycleViewAdapter!=null) {
+                    myRecycleViewAdapter.jsonNode1сСогласования=jsonNode1сСогласованияAllRows;
+                    myRecycleViewAdapter.notifyDataSetChanged();
+                    RecyclerView.Adapter recyclerViewAdapter=         recyclerViewСогласование1С.getAdapter();
+                    recyclerViewСогласование1С.swapAdapter(recyclerViewAdapter,false);
+                    recyclerViewСогласование1С.getAdapter().notifyDataSetChanged();
+                }
+            }
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласованияAllRows " +jsonNode1сСогласованияAllRows);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(context.getClass().getName(),
+                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+    }
+
+
+
     public void методClearRecyreView(  @NonNull RecyclerView recyclerViewСогласование1С) {
 
         try{
@@ -957,10 +1175,12 @@ public class Bl_CommintigPay {
     }
 
 
-    private void методRebootRecyreviewDontJsonNULL(@NonNull MyRecycleViewIsNullAdapterPay myRecycleViewIsNullAdapter,
-                                                   @NonNull RecyclerView recyclerViewСогласование1С) {
+    public void методRebootRecyreviewDontJsonNULL() {
         try{
             if (myRecycleViewIsNullAdapter!=null) {
+                ArrayList<Boolean> arrayListIsNull1cData=new ArrayList<>();
+                arrayListIsNull1cData.add(false);
+                myRecycleViewIsNullAdapter.arrayListIsNull1cData=arrayListIsNull1cData;
                 myRecycleViewIsNullAdapter.notifyDataSetChanged();
                 RecyclerView.Adapter recyclerViewAdapter=         recyclerViewСогласование1С.getAdapter();
                 recyclerViewСогласование1С.swapAdapter(recyclerViewAdapter,true);
@@ -990,9 +1210,9 @@ public class Bl_CommintigPay {
 
 
 
-    public void metodSetNameCommitHeaders(@NonNull TextView textViewТекущаяЗадача,@NonNull Animation animation) {
+    public void metodSetNameCommitHeaders( ) {
         try{
-            textViewТекущаяЗадача.setText("Список согласований".toUpperCase());
+            textViewТекущаяЗадача.setText("Согласования".toUpperCase());
             textViewТекущаяЗадача.startAnimation(animation);
             textViewТекущаяЗадача.requestLayout();
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1008,6 +1228,46 @@ public class Bl_CommintigPay {
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

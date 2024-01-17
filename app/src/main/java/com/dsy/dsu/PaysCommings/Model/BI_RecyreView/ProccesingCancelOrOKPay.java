@@ -331,18 +331,19 @@ class ProccesingCancelOrOKPay {
                                 @NonNull Integer ПубличныйidPay){
             try{
                 // TODO: 03.11.2023 Childern
-                MaterialCardView materialCardViewRowpaycommit = (MaterialCardView) LayoutInflater.from(context).inflate(R.layout.simpleforfileaycommit3, null);
+                MaterialCardView materialCardViewRowpaycommit =
+                        (MaterialCardView) LayoutInflater.from(context).inflate(R.layout.simpleforfileaycommit_newfile1c_pay, null);
 
                 // TODO: 03.11.2023 Childern
                 TableLayout tablelayoutRowpaycommit = materialCardViewRowpaycommit.findViewById(R.id.tablelayoutRowpaycommit);
 
 
-                TableRow tableRowpaycommit = (TableRow) tablelayoutRowpaycommit.findViewById(R.id.tableRowpaycommit);
+                TableRow tableRowpaycommitingpay =   tablelayoutRowpaycommit.findViewById(R.id.tableRowpaycommitingpay);
 
 
 
                 // TODO: 03.11.2023 Set Datas NEW
-                metodAddTExtView1cPayCommit(НазваниеТекущегот1С, tablelayoutRowpaycommit, tableRowpaycommit,РасширенияФайла);
+                metodAddTExtView1cPayCommit(НазваниеТекущегот1С, tablelayoutRowpaycommit, tableRowpaycommitingpay,РасширенияФайла);
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -350,26 +351,26 @@ class ProccesingCancelOrOKPay {
                         " НазваниеТекущегот1С " +НазваниеТекущегот1С+" РасширенияФайла " +РасширенияФайла);
 
                 // TODO: 10.11.2023  меняем Дизан textview FILE
-                metodAddTExtViewChengeDisainPayCommit(tableRowpaycommit);
+                metodAddTExtViewChengeDisainPayCommit(tableRowpaycommitingpay);
 
 
                 // TODO: 10.11.2023  Клик по TExtView  FIle
-                metodClicksForTextViewPayCommit(tableRowpaycommit,holder,ПубличныйidPay);
+                metodClicksForTextViewPayCommit(tableRowpaycommitingpay,holder,ПубличныйidPay);
 
 
 
                 // TODO: 03.11.2023 Delete Datas
-                tablelayoutRowpaycommit.recomputeViewAttributes(tableRowpaycommit);
-                tablelayoutRowpaycommit.removeViewInLayout(tableRowpaycommit);
-                tablelayoutRowpaycommit.removeView(tableRowpaycommit);
-                tableRowpaycommit.setId(new Random().nextInt());
-                tablelayoutRowpaycommit.recomputeViewAttributes(tableRowpaycommit);
+                tablelayoutRowpaycommit.recomputeViewAttributes(tableRowpaycommitingpay);
+                tablelayoutRowpaycommit.removeViewInLayout(tableRowpaycommitingpay);
+                tablelayoutRowpaycommit.removeView(tableRowpaycommitingpay);
+                tableRowpaycommitingpay.setId(new Random().nextInt());
+                tablelayoutRowpaycommit.recomputeViewAttributes(tableRowpaycommitingpay);
 
                 // TODO: 03.11.2023 Set Animaziy
-                tableRowpaycommit.startAnimation(animation1);
+                tableRowpaycommitingpay.startAnimation(animation1);
 
                 // TODO: 03.11.2023 Final Add Row in Parent Tableyout
-                metodParentAddRowFinal(tableRowpaycommit, tableLayoutcommitpayfiles);
+                metodParentAddRowFinal(tableRowpaycommitingpay, tableLayoutcommitpayfiles);
 
 
 
@@ -425,7 +426,7 @@ class ProccesingCancelOrOKPay {
             textvalueRowpaycommit.setText(НазваниеТекущегот1С.trim());
             textvalueRowpaycommit.setTooltipText(НазваниеТекущегот1С.trim());
             // TODO: 13.11.2023 название расфирения
-            textnameRowpaycommit.setHint("Файл "+"("+РасширенияФайла+")");
+            textnameRowpaycommit.setText("Файл "+"(."+РасширенияФайла+")");
             textnameRowpaycommit.setTooltipText(РасширенияФайла.trim());
 
             // TODO: 03.11.2023 Tag
@@ -602,7 +603,7 @@ class ProccesingCancelOrOKPay {
                                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                         Thread.currentThread().getStackTrace()[2].getLineNumber());
                             }
-                        },250);
+                        },100);
 
 
 

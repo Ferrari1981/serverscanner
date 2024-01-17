@@ -37,6 +37,8 @@ public class InizializayRecyreViewsNested {
               GridLayoutManager   layoutManager = new GridLayoutManager(context, 1,GridLayoutManager.VERTICAL,false);
             layoutManager.setSpanSizeLookup(new GridLayoutManager.DefaultSpanSizeLookup());
 
+
+
            // LinearLayoutManager  layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
             layoutManager.setItemPrefetchEnabled(true);
             layoutManager.setSmoothScrollbarEnabled(true);

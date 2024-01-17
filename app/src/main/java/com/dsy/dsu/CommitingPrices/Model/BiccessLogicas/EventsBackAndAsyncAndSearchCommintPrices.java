@@ -32,20 +32,24 @@ public class EventsBackAndAsyncAndSearchCommintPrices {
     private Context context;
 
     private BottomNavigationView bottomnavigationw_commintingprices;
-    private BottomNavigationItemView bottomNavigationBack;
-    private BottomNavigationItemView bottomNavigationAsync;
-    private BottomNavigationItemView bottomNavigationSearch;
+
+
+
+
+    private BottomNavigationItemView bottomNavigationBackCommingPrices;
+    private BottomNavigationItemView bottomNavigationAsyncCommingPrices;
+    private BottomNavigationItemView bottomNavigationSearchCommingPrices;
 
     public EventsBackAndAsyncAndSearchCommintPrices(@NonNull  Context context,
                                                     @NonNull   BottomNavigationView bottomnavigationw_commintingprices,
-                                                    @NonNull   BottomNavigationItemView bottomNavigationBack,
-                                                    @NonNull   BottomNavigationItemView bottomNavigationAsync,
-                                                    @NonNull   BottomNavigationItemView bottomNavigationSearch) {
+                                                    @NonNull   BottomNavigationItemView bottomNavigationBackCommingPrices,
+                                                    @NonNull   BottomNavigationItemView bottomNavigationAsyncCommingPrices,
+                                                    @NonNull   BottomNavigationItemView bottomNavigationSearchCommingPrices) {
         this.context = context;
         this.bottomnavigationw_commintingprices = bottomnavigationw_commintingprices;
-        this.bottomNavigationBack = bottomNavigationBack;
-        this.bottomNavigationAsync = bottomNavigationAsync;
-        this.bottomNavigationSearch = bottomNavigationSearch;
+        this.bottomNavigationBackCommingPrices = bottomNavigationBackCommingPrices;
+        this.bottomNavigationAsyncCommingPrices = bottomNavigationAsyncCommingPrices;
+        this.bottomNavigationSearchCommingPrices = bottomNavigationSearchCommingPrices;
     }
 
 
@@ -53,8 +57,8 @@ public class EventsBackAndAsyncAndSearchCommintPrices {
 
         public  void eventsBack  (){
             try{
-
-                RxView.clicks(  bottomNavigationBack)
+// TODO: 16.01.2024 возврат назад
+                RxView.clicks(  bottomNavigationBackCommingPrices)
                         .throttleFirst(1, TimeUnit.SECONDS)
                         .filter(s -> !s.toString().isEmpty())
                         .map(new Function<Unit, Object>() {
@@ -63,7 +67,7 @@ public class EventsBackAndAsyncAndSearchCommintPrices {
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-                                return    bottomNavigationBack;
+                                return    bottomNavigationBackCommingPrices;
                             }
                         })
                         .doOnError(new io.reactivex.rxjava3.functions.Consumer<Throwable>() {
@@ -144,7 +148,7 @@ public class EventsBackAndAsyncAndSearchCommintPrices {
         public    void eventsAsync  (@NotNull BLFragmentCommintingPrices BLFragmentCommintingPrices, @NonNull ProgressBar prograessbar_commintingprices){
             try{
 
-                RxView.clicks(  bottomNavigationAsync)
+                RxView.clicks(  bottomNavigationAsyncCommingPrices)
                         .throttleFirst(1, TimeUnit.SECONDS)
                         .filter(s -> !s.toString().isEmpty())
                         .map(new Function<Unit, Object>() {
@@ -155,7 +159,7 @@ public class EventsBackAndAsyncAndSearchCommintPrices {
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-                                return    bottomNavigationAsync;
+                                return    bottomNavigationAsyncCommingPrices;
                             }
                         })
                         .doOnError(new Consumer<Throwable>() {
@@ -243,11 +247,11 @@ public class EventsBackAndAsyncAndSearchCommintPrices {
 
     public class EventsSearch  {
 
-        public     void eventsSearch  (@NotNull BottomNavigationItemView bottomNavigationSearch,
+        public     void eventsSearch  (@NotNull BottomNavigationItemView bottomNavigationSearchCommitPrices,
                                        @NotNull androidx.appcompat.widget.SearchView searchview_commintingprices){
             try{
 
-                RxView.clicks(  bottomNavigationSearch)
+                RxView.clicks(  bottomNavigationSearchCommitPrices)
                         .throttleFirst(1, TimeUnit.SECONDS)
                         .filter(s -> !s.toString().isEmpty())
                         .map(new Function<Unit, Object>() {
@@ -257,7 +261,7 @@ public class EventsBackAndAsyncAndSearchCommintPrices {
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-                                return    bottomNavigationSearch;
+                                return    bottomNavigationSearchCommitPrices;
                             }
                         })
                         .doOnError(new Consumer<Throwable>() {

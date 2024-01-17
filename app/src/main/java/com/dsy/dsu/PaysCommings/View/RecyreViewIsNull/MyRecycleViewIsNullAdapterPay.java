@@ -30,17 +30,15 @@ import java.util.List;
 
 // TODO: 09.11.2023 ВТОРОЯ Rereview
 public class MyRecycleViewIsNullAdapterPay extends RecyclerView.Adapter<  MyViewHolderNULLPay> {
-    private ArrayList<String> arrayListIsNull1cData=new ArrayList<>();
+  public ArrayList<Boolean> arrayListIsNull1cData=new ArrayList<>();
     Context context;
-    AsyncTaskLoader<JsonNode> asyncTaskLoader;
+
 
     MyViewHolderNULLPay myViewHolderNULLPay;
 
-    public MyRecycleViewIsNullAdapterPay(ArrayList<String> arrayListIsNull1cData, Context context, AsyncTaskLoader<JsonNode> asyncTaskLoader) {
+    public MyRecycleViewIsNullAdapterPay(ArrayList<Boolean> arrayListIsNull1cData, Context context ) {
         this.arrayListIsNull1cData = arrayListIsNull1cData;
         this.context = context;
-        this.asyncTaskLoader = asyncTaskLoader;
-
     }
 
 
@@ -48,6 +46,8 @@ public class MyRecycleViewIsNullAdapterPay extends RecyclerView.Adapter<  MyView
     public void onBindViewHolder(@NonNull MyViewHolderNULLPay holder, @NonNull int position, @NonNull List<Object> payloads) {
         Log.i(this.getClass().getName(), "   onBindViewHolder  position" + position);
         try {
+            // TODO: 15.01.2024  отправляем для  получени данных
+
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"arrayListIsNull1cData "
@@ -137,19 +137,17 @@ public class MyRecycleViewIsNullAdapterPay extends RecyclerView.Adapter<  MyView
     public MyViewHolderNULLPay onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View viewГлавныйВидДляRecyclleViewДляСогласованияISNull = null;
         try {
+            Boolean СтатусЗагрузки=    arrayListIsNull1cData.stream().findFirst().get();
 
-
-            if (asyncTaskLoader==null || asyncTaskLoader.isStarted() ) {
+            if (СтатусЗагрузки ) {
                 viewГлавныйВидДляRecyclleViewДляСогласованияISNull = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.simple_for_commitpay_cardview1empty_in_prossering, parent, false);
-
 
             }else {
                 viewГлавныйВидДляRecyclleViewДляСогласованияISNull = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.simple_for_commitpay_dont_jsonot1c, parent, false);
 
             }
-
 
 
             myViewHolderNULLPay = new  MyViewHolderNULLPay(viewГлавныйВидДляRecyclleViewДляСогласованияISNull,context);
