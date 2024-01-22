@@ -23,24 +23,23 @@ import java.io.OutputStream;
 //TODO класс работает когда файл от 1 с пришел
 public  class  SuccessGet1CpayCommitProccesing{
     
-    Context context;
-    
-    
-    
-    protected String ТекущийФорматДокумента=null;
+   private Context context;
 
-    public SuccessGet1CpayCommitProccesing(Context context) {
+    private   byte[] getFileNewOt1cPayCommit;
+
+    private  String  ТекущийФорматДокумента;
+    private  Bundle bundleChildreRow;
+
+    public SuccessGet1CpayCommitProccesing(Context context, byte[] getFileNewOt1cPayCommit, Bundle bundleChildreRow) {
         this.context = context;
+        this.getFileNewOt1cPayCommit = getFileNewOt1cPayCommit;
+        this.bundleChildreRow = bundleChildreRow;
     }
 
-    String filesuccessDownDisk1CpayCommitProccesing(@NotNull byte[] getFileNewOt1cPayCommit, @NotNull TextView textvalueRowpaycommit){
+
+    String filesuccessDownDisk1CpayCommitProccesing( @NonNull String ТекущийФорматДокумента  ){
         String NameNewDownloadFileOt1c=null;
         try{
-            if (getFileNewOt1cPayCommit!=null) {
-                if (getFileNewOt1cPayCommit.length > 0) {
-
-                    // TODO: 03.11.2023 Tag
-                    Bundle bundleChildreRow = (Bundle) textvalueRowpaycommit.getTag();
                     String    НазваниеТекущегОт1С = bundleChildreRow.getString("ВinNameFile", "");
                     String РасширенияФайлаОт1С = bundleChildreRow.getString("expansion", "");
 
@@ -69,9 +68,23 @@ public  class  SuccessGet1CpayCommitProccesing{
                             out.close();
                         }
 
-                        // TODO: 14.11.2023
-                        if ( !fileNewPhotoFromCameraX.exists()) {
-                            NameNewDownloadFileOt1c=null;
+
+
+
+
+
+                        // TODO: 14.11.2023  ЕСЛИ ФАЙЛ загрузилься то поднимаем его на экран
+                        if ( fileNewPhotoFromCameraX.exists()) {
+
+                            UpFileSuccessOt1cPayCommit(  fileNewPhotoFromCameraX,  ТекущийФорматДокумента);
+
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    + " НазваниеТекущегОт1С " +НазваниеТекущегОт1С+" fileNewPhotoFromCameraX.exists() " +fileNewPhotoFromCameraX.exists());
+
+
+
                         }
                     }
 
@@ -81,10 +94,9 @@ public  class  SuccessGet1CpayCommitProccesing{
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "getFileNewOt1cPayCommit" +
-                            getFileNewOt1cPayCommit + "  textvalueRowpaycommit" + textvalueRowpaycommit);
+                            getFileNewOt1cPayCommit );
 
-                }
-            }
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(context.getClass().getName(),
@@ -97,20 +109,20 @@ public  class  SuccessGet1CpayCommitProccesing{
         return  NameNewDownloadFileOt1c;
     }
 
-    void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С){
+    void UpFileSuccessOt1cPayCommit(@NonNull File fileNewPhotoFromCameraX,@NotNull String ТекущийФорматДокумента){
         try{
-            String patchFileName = "SousAvtoFile/AppCommitPays1C/Photos";
+         /*   String patchFileName = "SousAvtoFile/AppCommitPays1C/Photos";
             File UpFileOt1cPay = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                    + File.separator + patchFileName + File.separator + НазваниеТекущегОт1С);
+                    + File.separator + patchFileName + File.separator + НазваниеТекущегОт1С);*/
             // TODO: 03.11.2023 Tag
-            if (UpFileOt1cPay.exists()) {
+            if (fileNewPhotoFromCameraX.exists()) {
 
-                Uri address = FileProvider.getUriForFile(context, "com.dsy.dsu.provider", UpFileOt1cPay);
+                Uri address = FileProvider.getUriForFile(context, "com.dsy.dsu.provider", fileNewPhotoFromCameraX);
 
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 // intent.setDataAndType(address, "text/*");
                 intent.setDataAndType(address, ТекущийФорматДокумента);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                context. startActivity(intent); // Crashes on this line
@@ -138,7 +150,7 @@ public  class  SuccessGet1CpayCommitProccesing{
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    " НазваниеТекущегОт1С " + НазваниеТекущегОт1С);
+                    " fileNewPhotoFromCameraX.getName() " + fileNewPhotoFromCameraX.getName());
 
         } catch (Exception e) {
             e.printStackTrace();

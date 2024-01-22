@@ -13,14 +13,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.loader.content.AsyncTaskLoader;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -65,7 +63,7 @@ public class Bl_CommintigPay {
     LifecycleOwner lifecycleOwner;
     Context context;
     ProgressBar progressBarCommitPay;
-    RecyclerView recyclerViewСогласование1С;
+    RecyclerView recycleviewcommitpays;
     MyRecycleViewIsNullAdapterPay myRecycleViewIsNullAdapter;
     Animation animation;
     TextView textViewТекущаяЗадача;
@@ -81,13 +79,14 @@ public class Bl_CommintigPay {
 
     MutableLiveData<Intent> jsonNodeMutableLiveDataPayCommintg;
     androidx.appcompat.widget.SearchView searchview_commitpay;
+    String getHiltCommintgPays;
     public    Bl_CommintigPay(@NonNull  Activity activity,
                               @NonNull  Context context ,
                               @NotNull View viewCore,
                               @NonNull ObjectMapper objectMapper,
                               @NonNull Integer ПубличныйidPay,
                               @NonNull LifecycleOwner lifecycleOwner,
-                              @NonNull RecyclerView recyclerViewСогласование1С,
+                              @NonNull RecyclerView recycleviewcommitpays,
                               @NonNull     MyRecycleViewIsNullAdapterPay myRecycleViewIsNullAdapter,
                               @NonNull Animation animation,
                               @NonNull TextView textViewТекущаяЗадача,
@@ -100,7 +99,8 @@ public class Bl_CommintigPay {
 
                               @NonNull MyRecycleViewAdapterPay myRecycleViewAdapter,
                              @NonNull MutableLiveData<Intent> jsonNodeMutableLiveDataPayCommintg,
-                              @NonNull androidx.appcompat.widget.SearchView searchview_commitpay) {
+                              @NonNull androidx.appcompat.widget.SearchView searchview_commitpay,
+                              @NonNull String getHiltCommintgPays) {
         try{
         this.activity = activity;
         this.viewCore = viewCore;
@@ -108,7 +108,7 @@ public class Bl_CommintigPay {
         this.ПубличныйidPay = ПубличныйidPay;
         this.lifecycleOwner = lifecycleOwner;
         this.context = context;
-        this.recyclerViewСогласование1С = recyclerViewСогласование1С;
+        this.recycleviewcommitpays = recycleviewcommitpays;
         this.myRecycleViewIsNullAdapter = myRecycleViewIsNullAdapter;
         this.animation = animation;
         this.textViewТекущаяЗадача = textViewТекущаяЗадача;
@@ -123,6 +123,7 @@ public class Bl_CommintigPay {
         this.myRecycleViewAdapter = myRecycleViewAdapter;
         this.jsonNodeMutableLiveDataPayCommintg = jsonNodeMutableLiveDataPayCommintg;
         this.searchview_commitpay = searchview_commitpay;
+        this.getHiltCommintgPays = getHiltCommintgPays;
 
             // TODO: 15.01.2024 init...
 
@@ -132,7 +133,7 @@ public class Bl_CommintigPay {
                 + " время: " + new Date()+"\n+" +
                 " Класс в процессе... " +  this.getClass().getName()+"\n"+
                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                " recyclerViewСогласование1С " +recyclerViewСогласование1С);
+                " recyclerViewСогласование1С " + recycleviewcommitpays);
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -546,7 +547,7 @@ public class Bl_CommintigPay {
 
 
               new AdapterSerachViewPay(searchview_commitpay,context, jsonNode1сСогласованияAllRows,activity,
-                      myRecycleViewAdapter,recyclerViewСогласование1С,this).setAdapterSerachViewPay();
+                      myRecycleViewAdapter, recycleviewcommitpays,this).setAdapterSerachViewPay();
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -557,8 +558,8 @@ public class Bl_CommintigPay {
             searchview_commitpay.requestLayout();
             searchview_commitpay.refreshDrawableState();
 
-            recyclerViewСогласование1С.requestLayout();
-            recyclerViewСогласование1С.refreshDrawableState();
+            recycleviewcommitpays.requestLayout();
+            recycleviewcommitpays.refreshDrawableState();
 
 
         }
@@ -579,14 +580,16 @@ public class Bl_CommintigPay {
 
     // TODO: 04.03.2022 прозвомжность Заполения RecycleView
   public   void InitMyAdapterRecyreViewWorker(@NonNull JsonNode jsonNode1сСогласованияAllRows,
-                                              @NonNull   Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C) {
+                                              @NonNull   Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
+                                              @NonNull  String getHiltCommintgPays) {
         try {
             if (myRecycleViewAdapter==null) {
                 myRecycleViewAdapter = new MyRecycleViewAdapterPay(jsonNode1сСогласованияAllRows,context
-                        ,binderСогласования1C,animation,ПубличныйidPay,objectMapper,bottomNavigationViewParentCommitingPay);
+                        ,binderСогласования1C,animation,ПубличныйidPay,objectMapper,bottomNavigationViewParentCommitingPay,recycleviewcommitpays,
+                        getHiltCommintgPays);
                 myRecycleViewAdapter.notifyDataSetChanged();
-                recyclerViewСогласование1С.setAdapter(myRecycleViewAdapter);
-                recyclerViewСогласование1С.getAdapter().notifyDataSetChanged();
+                recycleviewcommitpays.setAdapter(myRecycleViewAdapter);
+                recycleviewcommitpays.getAdapter().notifyDataSetChanged();
             }
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -608,8 +611,8 @@ public class Bl_CommintigPay {
                 arrayListIsNull1cData.add(true);
                 myRecycleViewIsNullAdapter = new MyRecycleViewIsNullAdapterPay(arrayListIsNull1cData,activity  );
                 myRecycleViewIsNullAdapter.notifyDataSetChanged();
-                recyclerViewСогласование1С.setAdapter(myRecycleViewIsNullAdapter);
-                recyclerViewСогласование1С.getAdapter().notifyDataSetChanged();
+                recycleviewcommitpays.setAdapter(myRecycleViewIsNullAdapter);
+                recycleviewcommitpays.getAdapter().notifyDataSetChanged();
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -630,8 +633,8 @@ public class Bl_CommintigPay {
         try {
 
 
-
-            recyclerViewСогласование1С.addItemDecoration(new LeftDividerItemDecoratorCommitPay(context));
+            recycleviewcommitpays.setHasFixedSize(true);
+            recycleviewcommitpays.addItemDecoration(new LeftDividerItemDecoratorCommitPay(context));
             GridLayoutManager layoutManager = new GridLayoutManager(context, 1,GridLayoutManager.VERTICAL,false);
             layoutManager.setSpanSizeLookup(new GridLayoutManager.DefaultSpanSizeLookup());
 
@@ -649,9 +652,9 @@ public class Bl_CommintigPay {
 
             LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context);*/
           /*  linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);*/
-            recyclerViewСогласование1С.setLayoutManager(layoutManager);
+            recycleviewcommitpays.setLayoutManager(layoutManager);
             //TODO new LinearLayoutManager(context) // TODO: 28.02.2022 создаем наш первый RecyclerView recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerViewСогласование1С.startAnimation(animation);
+            recycleviewcommitpays.startAnimation(animation);
             // TODO: 28.02.2022
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -782,20 +785,20 @@ public class Bl_CommintigPay {
                 public JsonNode loadInBackground() {
                     JsonNode jsonNode1сСогласования = null;
                     try{
-                      /// Integer ПубличныйidPay=247;
+                        ПубличныйidPay=8;
                         //TODO получаем данные для соглачования
 
 
                         //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С DEBUG
                         jsonNode1сСогласования =
-                                new Class_Get_Json_1C(context ,"http://192.168.3.10/dds_copy/hs/jsonto1c/listofdocuments")
-                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper);//ПубличныйidPay*/
+                                new Class_Get_Json_1C(context ,getHiltCommintgPays)
+                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper);
 
-
-                /*        //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С RELIS
+/*
+                        //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С RELIS
                         jsonNode1сСогласования =
-                                new Class_Get_Json_1C(context ,"http://uat.dsu1.ru:55080/dds/hs/jsonto1c/listofdocuments")
-                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper); */
+                                new Class_Get_Json_1C(context ,)
+                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper);*/
 /*
 [{"Ndoc":"000021992","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"СИТИЛИНК ООО","sum":6,"articleDDS":"2.2.04. Оргтехника","nomenclature":[{"nomen":"Тест 1"},{"nomen":"Тест 2"},{"nomen":"Тест 3"}],"filenames":[{"ВinNameFile":"Текстовый документ","expansion":"txt"}]},
                             {"Ndoc":"000021993","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"ИП Пряслов Алексей Александрович","sum":50,"articleDDS":"2.2.05. Прочие (инвестиционная деятельность)","nomenclature":[{"nomen":"Тест картридж"}],"filenames":[{"ВinNameFile":"Справочник","expansion":"xlsx"}]}]*/
@@ -960,20 +963,20 @@ public class Bl_CommintigPay {
                 public JsonNode loadInBackground() {
                     JsonNode jsonNode1сСогласования = null;
                     try{
-                        /// Integer ПубличныйidPay=247;
+
                         //TODO получаем данные для соглачования
 
 
-                        //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С DEBUG
+                  /*      //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С DEBUG
                         jsonNode1сСогласования =
-                                new Class_Get_Json_1C(context ,"http://192.168.3.10/dds_copy/hs/jsonto1c/listofdocuments")
-                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper);//ПубличныйidPay*/
+                                new Class_Get_Json_1C(context ,)
+                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper);
+*/
 
-
-                /*        //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С RELIS
+                        //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С RELIS
                         jsonNode1сСогласования =
-                                new Class_Get_Json_1C(context ,"http://uat.dsu1.ru:55080/dds/hs/jsonto1c/listofdocuments")
-                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper); */
+                                new Class_Get_Json_1C(context ,getHiltCommintgPays)
+                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper);
 /*
 [{"Ndoc":"000021992","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"СИТИЛИНК ООО","sum":6,"articleDDS":"2.2.04. Оргтехника","nomenclature":[{"nomen":"Тест 1"},{"nomen":"Тест 2"},{"nomen":"Тест 3"}],"filenames":[{"ВinNameFile":"Текстовый документ","expansion":"txt"}]},
                             {"Ndoc":"000021993","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"ИП Пряслов Алексей Александрович","sum":50,"articleDDS":"2.2.05. Прочие (инвестиционная деятельность)","nomenclature":[{"nomen":"Тест картридж"}],"filenames":[{"ВinNameFile":"Справочник","expansion":"xlsx"}]}]*/
@@ -1094,9 +1097,9 @@ public class Bl_CommintigPay {
                 if (myRecycleViewAdapter!=null) {
                     myRecycleViewAdapter.jsonNode1сСогласования=jsonNode1сСогласованияAllRows;
                     myRecycleViewAdapter.notifyDataSetChanged();
-                    RecyclerView.Adapter recyclerViewAdapter=         recyclerViewСогласование1С.getAdapter();
-                    recyclerViewСогласование1С.swapAdapter(recyclerViewAdapter,true);
-                    recyclerViewСогласование1С.getAdapter().notifyDataSetChanged();
+                    RecyclerView.Adapter recyclerViewAdapter=         recycleviewcommitpays.getAdapter();
+                    recycleviewcommitpays.swapAdapter(recyclerViewAdapter,true);
+                    recycleviewcommitpays.getAdapter().notifyDataSetChanged();
                 }
             }
             Log.d(this.getClass().getName(), "\n" + " class " +
@@ -1125,9 +1128,9 @@ public class Bl_CommintigPay {
                 if (myRecycleViewAdapter!=null) {
                     myRecycleViewAdapter.jsonNode1сСогласования=jsonNode1сСогласованияAllRows;
                     myRecycleViewAdapter.notifyDataSetChanged();
-                    RecyclerView.Adapter recyclerViewAdapter=         recyclerViewСогласование1С.getAdapter();
-                    recyclerViewСогласование1С.swapAdapter(recyclerViewAdapter,false);
-                    recyclerViewСогласование1С.getAdapter().notifyDataSetChanged();
+                    RecyclerView.Adapter recyclerViewAdapter=         recycleviewcommitpays.getAdapter();
+                    recycleviewcommitpays.swapAdapter(recyclerViewAdapter,false);
+                    recycleviewcommitpays.getAdapter().notifyDataSetChanged();
                 }
             }
             Log.d(this.getClass().getName(), "\n" + " class " +
@@ -1182,16 +1185,16 @@ public class Bl_CommintigPay {
                 arrayListIsNull1cData.add(false);
                 myRecycleViewIsNullAdapter.arrayListIsNull1cData=arrayListIsNull1cData;
                 myRecycleViewIsNullAdapter.notifyDataSetChanged();
-                RecyclerView.Adapter recyclerViewAdapter=         recyclerViewСогласование1С.getAdapter();
-                recyclerViewСогласование1С.swapAdapter(recyclerViewAdapter,true);
-                recyclerViewСогласование1С.getAdapter().notifyDataSetChanged();
+                RecyclerView.Adapter recyclerViewAdapter=         recycleviewcommitpays.getAdapter();
+                recycleviewcommitpays.swapAdapter(recyclerViewAdapter,true);
+                recycleviewcommitpays.getAdapter().notifyDataSetChanged();
             }
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " recyclerViewСогласование1С " +recyclerViewСогласование1С);
+                    + " recyclerViewСогласование1С " + recycleviewcommitpays);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(context.getClass().getName(),

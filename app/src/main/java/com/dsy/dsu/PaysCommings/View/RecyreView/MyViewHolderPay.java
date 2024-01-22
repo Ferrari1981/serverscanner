@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,33 +21,30 @@ import com.google.android.material.textview.MaterialTextView;
 // TODO: 28.02.2022 начало  MyViewHolderДляЧата
 public class MyViewHolderPay extends RecyclerView.ViewHolder {// TODO: 28.02.2022 начало  MyViewHolderДляЧата
     // TODO: 28.02.2022
-    public MaterialTextView tx_sum, tx_nomer, tx_zfo,
-            tx_kontragent, tx_statiy,
-            tx_namelklatura,
-            tx_organizations;
+    public MaterialTextView tx_sum, tx_nomer, tx_zfo, tx_kontragent, tx_statiy, tx_namelklatura, tx_organizations;
     public MaterialButton     arrowpay_nested_receriview_commitingpay;
-    public      MaterialTextView textViewКонтрагент,textViewЦФО,textViewДДС,TextViewНамелклатура;
     public MaterialCardView cardview_commingpay;
     public MaterialButton butt_cancel,butt_successcommit;
-    public TableLayout tableLayoutcommitpayfiles ;
-
+    public TableLayout tableLayoutpayfilescommitingpays;
+    public TableLayout tableLayoutparentrow_pays;
     public ProgressBar progressbar_commingpay;
-
+    public TableRow tablerow_nesters_commininggpay;
     public RecyclerView recycleview_nesters_commininggpay;
 
     public Context context;
+    public   JsonNode jsonNode1сСогласования;
+    public MaterialTextView obiyectRaskhoda, Avans, PoDogovoruSMP, PredelnayaData, NomerScheta, DataScheta, Otvetstvenniy, Commentariy;
 
-    public   JsonNode jsonNode1сСогласованияAllRows;
 
 
     // TODO: 02.03.2022
     public MyViewHolderPay(@NonNull View itemView,
                            @NonNull Context context,
-                           @NonNull JsonNode jsonNode1сСогласованияAllRows ) {
+                           @NonNull JsonNode jsonNode1сСогласования) {
         super(itemView);
         try{
             this.context=context;
-            this.jsonNode1сСогласованияAllRows=jsonNode1сСогласованияAllRows;
+            this.jsonNode1сСогласования = jsonNode1сСогласования;
             // TODO: 02.03.2022
             МетодИнициализацииКомпонетовЗаданияCardView(itemView);
             // TODO: 01.03.2022
@@ -65,9 +63,6 @@ public class MyViewHolderPay extends RecyclerView.ViewHolder {// TODO: 28.02.202
     // TODO: 14.03.2022
     private void МетодИнициализацииКомпонетовЗаданияCardView(@NonNull View itemView) {
         try {
-
-                Log.d(this.getClass().getName(), " отработоатл new SubClassBuccessLogin_ГлавныйКлассБизнесЛогикиФрагмент1 itemView   " + itemView);
-
                 tx_sum = itemView.findViewById(R.id.tx_sum);
                 tx_nomer = itemView.findViewById(R.id.tx_nomer);
                 tx_zfo = itemView.findViewById(R.id.tx_zfo);
@@ -82,9 +77,14 @@ public class MyViewHolderPay extends RecyclerView.ViewHolder {// TODO: 28.02.202
                 butt_successcommit = itemView.findViewById(R.id.butt_successcommit);
                 butt_cancel = itemView.findViewById(R.id.butt_cancel);
 
-               tableLayoutcommitpayfiles = itemView.findViewById(R.id.tableLayoutcommitpayfiles);
+            tableLayoutpayfilescommitingpays = itemView.findViewById(R.id.tableLayoutpayfilescommitingpays);
+
+            tableLayoutparentrow_pays = itemView.findViewById(R.id.tableLayoutparentrow_pays);
 
              progressbar_commingpay = itemView.findViewById(R.id.progressbar_commingpay);
+
+
+            tablerow_nesters_commininggpay = itemView.findViewById(R.id.tablerow_nesters_commininggpay);
 
                 // TODO: 12.01.2024 Click Arrow Nestesd
             arrowpay_nested_receriview_commitingpay= itemView.findViewById(R.id.arrowpay_nested_receriview_commitingpay);
@@ -94,9 +94,26 @@ public class MyViewHolderPay extends RecyclerView.ViewHolder {// TODO: 28.02.202
 
 
 
+
+
+
+            // TODO: 17.01.2024 переменые доля Скрытого Nested  RecyreView    // TODO: 17.01.2024 переменые доля Скрытого Nested  RecyreView
+
+            obiyectRaskhoda = itemView.findViewById(R.id.obiyectRaskhoda);
+            Avans = itemView.findViewById(R.id.Avans);
+            PoDogovoruSMP = itemView.findViewById(R.id.PoDogovoruSMP);
+            PredelnayaData = itemView.findViewById(R.id.PredelnayaData);
+            NomerScheta = itemView.findViewById(R.id.NomerScheta);
+            DataScheta = itemView.findViewById(R.id.DataScheta);
+            Otvetstvenniy = itemView.findViewById(R.id.Otvetstvenniy);
+            Commentariy = itemView.findViewById(R.id.Commentariy);
+
+
+
+
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " mTV_1value  " + obiyectRaskhoda);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

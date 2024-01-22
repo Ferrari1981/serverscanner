@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 
+import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterPay;
 import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPay;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
@@ -32,10 +34,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.android.material.card.MaterialCardView;
+import com.google.common.io.ByteSource;
 import com.jakewharton.rxbinding4.view.RxView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -65,100 +72,33 @@ class ProccesingCancelOrOKPay {
     JsonNode jsonNode1сСогласованияAllRows;
     Animation animation1;
     ObjectMapper objectMapper;
-    public ProccesingCancelOrOKPay(@NonNull  Context context,
-                                   @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
-                                   @NonNull JsonNode jsonNode1сСогласованияAllRows,
-                                   @NonNull Animation animation1,
-                                   @NonNull ObjectMapper objectMapper) {
+
+    public ProccesingCancelOrOKPay(@NonNull Context context,
+                                   @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C) {
         this.context = context;
-        this.binderСогласования1C = binderСогласования1C;
-        this.jsonNode1сСогласованияAllRows = jsonNode1сСогласованияAllRows;
-        this.animation1 = animation1;
-        this.objectMapper = objectMapper;
-        Log.d(context.getClass().getName(), "\n"
-                + " время: " + new Date()+"\n+" +
-                " Класс в процессе... " +  this.getClass().getName()+"\n"+
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+        this.  animation1 = AnimationUtils.loadAnimation(context, R.anim.slide_in_scrolls);
+        this. binderСогласования1C = binderСогласования1C;
     }
 
 
-    public void proccerCancelOrOKPay(@NonNull Intent заданиеНаВыполение, @NonNull View v) {
+    public StringBuffer proccerCancelOrOKPay(@NonNull  Context context,
+                                     @NonNull Intent intentзаданиеНаВыполение,    @NonNull  String getHiltCommintgPays) {
+
+     StringBuffer ОТветОт1СОперациисДанными =new StringBuffer();
         try{
-            final StringBuffer[] ОТветОт1СОперациисДанными = {new StringBuffer()};
             // TODO: 14.11.2023  ОПРАВЛЯЕМ ОТКАЗ иилиОК  в сошгоасованиеию СОГЛАСОВПНИЕ ИЛИ ОТКАЗ
-            Maybe. fromAction(new Action() {
-                        @Override
-                        public void run() throws Throwable {
-                            ОТветОт1СОперациисДанными[0] =
+
+                            ОТветОт1СОперациисДанными =
                                     binderСогласования1C.getService().
-                                            МетодЗапускаСогласованияВнутриСлужбы(заданиеНаВыполение, context);
+                                            МетодЗапускаСогласованияВнутриСлужбы(intentзаданиеНаВыполение, context,getHiltCommintgPays);
 
 
                             Log.d(this.getClass().getName(), "\n" + " class "
                                     + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " ОТветОт1СОперациисДанными " + ОТветОт1СОперациисДанными[0]);
+                                    + " ОТветОт1СОперациисДанными " + ОТветОт1СОперациисДанными);
 
-                            Log.d(this.getClass().getName(), "\n" + " class "
-                                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"
-                                    +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " ОТветОт1СОперациисДанными " + ОТветОт1СОперациисДанными[0]);
-
-
-                        }
-                    }).subscribeOn(Schedulers.single())
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe(new MaybeObserver<Object>() {
-                        @Override
-                        public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " ОТветОт1СОперациисДанными " + ОТветОт1СОперациисДанными[0]);
-
-                        }
-
-                        @Override
-                        public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Object o) {
-                            onComplete();
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " ОТветОт1СОперациисДанными " + ОТветОт1СОперациисДанными[0]);
-
-                        }
-
-                        @Override
-                        public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " ОТветОт1СОперациисДанными " + ОТветОт1СОперациисДанными[0]);
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-                            if (ОТветОт1СОперациисДанными[0].length()>0) {
-                                // TODO: 08.11.2023 после успешно операции перепоудчаем даные  1с Сограсование
-                            //   onStart();
-
-                            }else{
-                                Toast.makeText(context, "Операция  не прошла !!! "    , Toast.LENGTH_SHORT).show();
-                                Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                                v2.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
-                            }
-                            // TODO: 26.12.2022  конец основгого кода
-                            v.animate().rotationX(0);
-
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " ОТветОт1СОперациисДанными[0] " + ОТветОт1СОперациисДанными[0]);
-                        }
-                    });
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -170,18 +110,22 @@ class ProccesingCancelOrOKPay {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
 
+        return      ОТветОт1СОперациисДанными;
+
     }
 
 
     // TODO: 10.11.2023 get Binary
     @CheckResult
-    byte[] proccerGetBinaty1c(@NonNull Intent заданиеНаВыполение,@NonNull View v) {
+    byte[] proccerGetBinaty1c(@NonNull Intent заданиеНаВыполение,@NonNull View v,
+                              @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
+                              @NonNull  String getHiltCommintgPays) {
         byte[] getFileNewOt1cPayCommit = null;
         try{
             // TODO: 10.11.2023 получаем файл от 1с Соглосования Binaty
             getFileNewOt1cPayCommit =
                     binderСогласования1C.getService().
-                            МетодПолучаемNewFile1CСогласованияЧерезСлужбу(заданиеНаВыполение, context,objectMapper);
+                            МетодПолучаемNewFile1CСогласованияЧерезСлужбу(заданиеНаВыполение, context,getHiltCommintgPays );
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -189,10 +133,7 @@ class ProccesingCancelOrOKPay {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
                     + "\n" + "   getFileNewOt1cPayCommit " +   getFileNewOt1cPayCommit);
 
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " ОgetFileNewOt1cPayCommit[0] " + getFileNewOt1cPayCommit);
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -222,221 +163,40 @@ class ProccesingCancelOrOKPay {
 
 
 
-    // TODO: 10.11.2023  класс Самой вставки файлов от 1с
-    class AddFilesot1CPaycommitting{
-
-        void addfilessot1CPaycommitting(@NotNull TableLayout tableLayoutcommitpayfiles, @NonNull JsonNode jsonNode1сСогласованияRow,
-                                        @NonNull MyViewHolderPay holder,@NonNull Integer ПубличныйidPay){
-            try{
-                if (tableLayoutcommitpayfiles.getChildCount() == 0) {
-
-                    // TODO: 10.11.2023  Заполняем ДАнные Из Массива Файлов
-                    ArrayNode datasetArray = (ArrayNode)jsonNode1сСогласованияRow.get("filenames");
-
-                    datasetArray.forEach(new Consumer<JsonNode>() {
-                        @Override
-                        public void accept(JsonNode jsonNodeМассивФайлы1cBinaty) {
-
-
-                            // TODO: 10.11.2023 ццикл массив  крутим файцлы вставки
-                            ArrayFileNewPay1c(      jsonNodeМассивФайлы1cBinaty,  tableLayoutcommitpayfiles,holder, ПубличныйidPay);
-
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                                    " jsonNode1сСогласованияAllRows " +jsonNode1сСогласованияAllRows);
-                        }
-                    });
-
-                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                            " jsonNode1сСогласованияAllRows " +jsonNode1сСогласованияAllRows);
-
-                } else {
-
-                    tableLayoutcommitpayfiles.refreshDrawableState();
-                    tableLayoutcommitpayfiles.requestLayout();
-
-                }
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                        " jsonNode1сСогласования " +jsonNode1сСогласованияAllRows);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(context.getClass().getName(),
-                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
-
-
-        // TODO: 10.11.2023  класс крутим файлы от 1с
-        void  ArrayFileNewPay1c(@NotNull  JsonNode      МассивИменСограсований,
-                                @NonNull TableLayout tableLayoutcommitpayfiles,
-                                @NonNull MyViewHolderPay holder,
-                                @NonNull Integer ПубличныйidPay){
-            try{
-
-
-                String НазваниеТекущегот1С    = МассивИменСограсований.get("ВinNameFile").asText().trim();
-                String РасширенияФайла=   МассивИменСограсований.get("expansion").asText().trim();
-
-                // TODO: 10.11.2023  добалвем новую строчку
-                AddFileFromPayCommiting addFileFromPayCommiting=new AddFileFromPayCommiting();
-
-                addFileFromPayCommiting.addingNewFilePay(tableLayoutcommitpayfiles,context,НазваниеТекущегот1С,РасширенияФайла,holder,ПубличныйidPay);
-
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                        " jsonNode1сСогласованияAllRows " +jsonNode1сСогласованияAllRows+ " НазваниеТекущегот1С " +НазваниеТекущегот1С+" РасширенияФайла " +РасширенияФайла);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(context.getClass().getName(),
-                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-
-        }
 
 
 
 
 
-
-
-
-/////todo END CLASS  class AddFilesot1CPaycommitting
-    }/////todo END CLASS  class AddFilesot1CPaycommitting
-
-
-    // TODO: 08.11.2023 ЗАПОЛЕНИЕ ФАЛОМИ
-
-
-    class AddFileFromPayCommiting{
-        // TODO: 08.11.2023 метод додабвление файлов от 1с
-        void   addingNewFilePay(@NotNull  TableLayout tableLayoutcommitpayfiles,
-                                @NotNull Context context,
-                                @NotNull String НазваниеТекущегот1С,
-                                @NotNull String РасширенияФайла,
-                                @NonNull MyViewHolderPay holder,
-                                @NonNull Integer ПубличныйidPay){
-            try{
-                // TODO: 03.11.2023 Childern
-                MaterialCardView materialCardViewRowpaycommit =
-                        (MaterialCardView) LayoutInflater.from(context).inflate(R.layout.simpleforfileaycommit_newfile1c_pay, null);
-
-                // TODO: 03.11.2023 Childern
-                TableLayout tablelayoutRowpaycommit = materialCardViewRowpaycommit.findViewById(R.id.tablelayoutRowpaycommit);
-
-
-                TableRow tableRowpaycommitingpay =   tablelayoutRowpaycommit.findViewById(R.id.tableRowpaycommitingpay);
-
-
-
-                // TODO: 03.11.2023 Set Datas NEW
-                metodAddTExtView1cPayCommit(НазваниеТекущегот1С, tablelayoutRowpaycommit, tableRowpaycommitingpay,РасширенияФайла);
-
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                        " НазваниеТекущегот1С " +НазваниеТекущегот1С+" РасширенияФайла " +РасширенияФайла);
-
-                // TODO: 10.11.2023  меняем Дизан textview FILE
-                metodAddTExtViewChengeDisainPayCommit(tableRowpaycommitingpay);
-
-
-                // TODO: 10.11.2023  Клик по TExtView  FIle
-                metodClicksForTextViewPayCommit(tableRowpaycommitingpay,holder,ПубличныйidPay);
-
-
-
-                // TODO: 03.11.2023 Delete Datas
-                tablelayoutRowpaycommit.recomputeViewAttributes(tableRowpaycommitingpay);
-                tablelayoutRowpaycommit.removeViewInLayout(tableRowpaycommitingpay);
-                tablelayoutRowpaycommit.removeView(tableRowpaycommitingpay);
-                tableRowpaycommitingpay.setId(new Random().nextInt());
-                tablelayoutRowpaycommit.recomputeViewAttributes(tableRowpaycommitingpay);
-
-                // TODO: 03.11.2023 Set Animaziy
-                tableRowpaycommitingpay.startAnimation(animation1);
-
-                // TODO: 03.11.2023 Final Add Row in Parent Tableyout
-                metodParentAddRowFinal(tableRowpaycommitingpay, tableLayoutcommitpayfiles);
-
-
-
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                        " НазваниеТекущегот1С " +НазваниеТекущегот1С);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(context.getClass().getName(),
-                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
-
-        private void metodParentAddRowFinal(TableRow rowПервыеДанные,
-                                            @NonNull TableLayout tableLayoutРодительская) {
-            try {
-                tableLayoutРодительская.removeView(rowПервыеДанные);
-                tableLayoutРодительская.removeViewInLayout(rowПервыеДанные);
-                tableLayoutРодительская.addView(rowПервыеДанные);
-                tableLayoutРодительская.requestLayout();
-                tableLayoutРодительская.refreshDrawableState();
-
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(context.getClass().getName(),
-                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
-    }//todo end classs class AddFileFromPayCommiting
-
-    private void metodAddTExtView1cPayCommit(@NonNull String НазваниеТекущегот1С,
-                                             @NonNull TableLayout tablelayoutRowpaycommit,
-                                             @NonNull TableRow tableRowpaycommit,
-                                             @NotNull String РасширенияФайла) {
+    void metodAddTExtView1cPayCommit(@NonNull String НазваниеТекущегот1С,
+                                     @NonNull TableLayout tablelayoutRowpaycommit,
+                                     @NonNull TableRow tableRowpaycommit,
+                                     @NotNull String РасширенияФайла) {
         try{
             TextView textnameRowpaycommit = tableRowpaycommit.findViewById(R.id.textnameRowpaycommit);
             TextView textvalueRowpaycommit = tableRowpaycommit.findViewById(R.id.textvalueRowpaycommit);
 
-            // TODO: 10.11.2023 добалвем назваение файла
-            textvalueRowpaycommit.setText(НазваниеТекущегот1С.trim());
-            textvalueRowpaycommit.setTooltipText(НазваниеТекущегот1С.trim());
-            // TODO: 13.11.2023 название расфирения
-            textnameRowpaycommit.setText("Файл "+"(."+РасширенияФайла+")");
-            textnameRowpaycommit.setTooltipText(РасширенияФайла.trim());
+                // TODO: 10.11.2023 добалвем назваение файла
+                textvalueRowpaycommit.setText(НазваниеТекущегот1С.trim());
+                textvalueRowpaycommit.setTooltipText(НазваниеТекущегот1С.trim());
+                // TODO: 13.11.2023 название расфирения
+                textnameRowpaycommit.setText("Файл "+"(."+РасширенияФайла+")");
+                textnameRowpaycommit.setTooltipText(РасширенияФайла.trim());
 
-            // TODO: 03.11.2023 Tag
-            Bundle bundleChildreRow = new Bundle();
-            bundleChildreRow.putString("ВinNameFile", НазваниеТекущегот1С.trim());
-            bundleChildreRow.putString("expansion", РасширенияФайла.trim());
+                // TODO: 03.11.2023 Tag
+                Bundle bundleChildreRow = new Bundle();
+                bundleChildreRow.putString("ВinNameFile", НазваниеТекущегот1С.trim());
+                bundleChildreRow.putString("expansion", РасширенияФайла.trim());
 
-            tablelayoutRowpaycommit.setTag(bundleChildreRow);
-            textvalueRowpaycommit.setTag(bundleChildreRow);
-            textnameRowpaycommit.setTag(bundleChildreRow);
+                tablelayoutRowpaycommit.setTag(bundleChildreRow);
+                textvalueRowpaycommit.setTag(bundleChildreRow);
+                // TODO: 18.01.2024
+
+                textnameRowpaycommit.requestLayout();
+                textvalueRowpaycommit.refreshDrawableState();
+                textnameRowpaycommit.requestLayout();
+                textvalueRowpaycommit.refreshDrawableState();
+
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -453,7 +213,7 @@ class ProccesingCancelOrOKPay {
     }
     // TODO: 10.11.2023 меняем дизацйн ноых файлов
 
-    private void metodAddTExtViewChengeDisainPayCommit(@NonNull TableRow tableRowpaycommit) {
+    void metodAddTExtViewChengeDisainPayCommit(@NonNull TableRow tableRowpaycommit) {
         try{
             TextView textnameRowpaycommit = tableRowpaycommit.findViewById(R.id.textnameRowpaycommit);
             TextView textvalueRowpaycommit = tableRowpaycommit.findViewById(R.id.textvalueRowpaycommit);
@@ -463,6 +223,7 @@ class ProccesingCancelOrOKPay {
             textvalueRowpaycommit.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
+                    try{
                     textvalueRowpaycommit.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     int height =  textvalueRowpaycommit.getHeight();
                     int width =  textvalueRowpaycommit.getWidth();
@@ -477,9 +238,15 @@ class ProccesingCancelOrOKPay {
                     ss.setSpan(new UnderlineSpan(), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     textvalueRowpaycommit.setText(ss);
 
-                    textvalueRowpaycommit.startAnimation(animation1);
-
-
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(context.getClass().getName(),
+                            "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
                 }
             });
 
@@ -529,9 +296,10 @@ class ProccesingCancelOrOKPay {
 
     // TODO: 10.11.2023  метод  клик по файлва Для Отправки
 
-    private void metodClicksForTextViewPayCommit(@NonNull TableRow tableRowpaycommit,
-                                                 @NonNull MyViewHolderPay holder,
-                                                  @NonNull Integer ПубличныйidPay) {
+    void metodClicksForTextViewPayCommit(@NonNull TableRow tableRowpaycommit,
+                                         @NonNull MyViewHolderPay holder,
+                                         @NonNull Integer ПубличныйidPay,
+                                         @NonNull    String getHiltCommintgPays) {
         try{
 
             final Handler[] handler = new Handler[1];
@@ -540,7 +308,7 @@ class ProccesingCancelOrOKPay {
             TextView textvalueRowpaycommit = tableRowpaycommit.findViewById(R.id.textvalueRowpaycommit);
             // TODO: 10.11.2023 клик по файлов
             RxView.clicks(textvalueRowpaycommit)
-                    .throttleFirst(2, TimeUnit.SECONDS)
+                    .throttleFirst(1, TimeUnit.SECONDS)
                     .filter(s -> !s.toString().isEmpty())
                     .map(new Function<Unit, Object>() {
                         @Override
@@ -550,6 +318,14 @@ class ProccesingCancelOrOKPay {
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                     +"  s.toString(); " + unit.toString());
                             handler[0] =   textnameRowpaycommit.getHandler();
+
+
+                            metodPrograssbarDowloadFile1cPayCommit(holder,true );
+
+                            Animation animationscroll = AnimationUtils.loadAnimation(context, R.anim.slide_in_scrolls);
+
+                            textvalueRowpaycommit.startAnimation(animationscroll);
+
                             return textvalueRowpaycommit.getText().toString();
                         }
                     })
@@ -578,34 +354,15 @@ class ProccesingCancelOrOKPay {
                             return false;
                         }
                     })
-                    .subscribe( GetNameSingleNewFile1c->{
-
-                        metodPrograssbarDowloadFile1cPayCommit(holder,true );
-                        tableRowpaycommit.startAnimation(animation1);
-
-                        handler[0].postDelayed(()->{
-                            try{
-
-                                metodCompleteStartDownloadfILE1C(holder, textvalueRowpaycommit, GetNameSingleNewFile1c,ПубличныйidPay);
-
-                                metodPrograssbarDowloadFile1cPayCommit(holder,false );
-                                tableRowpaycommit.clearAnimation();
-                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(context.getClass().getName(),
-                                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-                        },100);
+                    .subscribe( GettextvalueRowpaycommit->{
 
 
+
+
+                        // TODO: 18.01.2024 получаем файл 
+                        startdownloadFileOt1cCommintPay(tableRowpaycommit, holder, ПубличныйidPay,
+                                handler, textvalueRowpaycommit,
+                                GettextvalueRowpaycommit,binderСогласования1C,getHiltCommintgPays);
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -629,19 +386,66 @@ class ProccesingCancelOrOKPay {
         }
     }
 
+    private void startdownloadFileOt1cCommintPay(@NonNull TableRow tableRowpaycommit, @NonNull MyViewHolderPay holder,
+                                                 @NonNull Integer ПубличныйidPay, Handler[] handler,
+                                                 @NonNull    TextView textvalueRowpaycommit, Object GettextvalueRowpaycommit,
+                                                 @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
+                                                 @NonNull    String getHiltCommintgPays) {
+        try{
+        handler[0].postDelayed(()->{
+            try{
+                // TODO: 18.01.2024  получаем файл от 1с
+
+                metodCompleteStartDownloadfILE1C(holder, textvalueRowpaycommit, GettextvalueRowpaycommit, ПубличныйidPay,binderСогласования1C,getHiltCommintgPays);
+
+                metodPrograssbarDowloadFile1cPayCommit(holder,false );
+
+                tableRowpaycommit.clearAnimation();
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(context.getClass().getName(),
+                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+        },100);
+
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(context.getClass().getName(),
+                "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+    }
+
 
     // TODO: 13.11.2023 метод Загрузки Старта Новго Файла От 1с Complete 
     private void metodCompleteStartDownloadfILE1C(@NonNull MyViewHolderPay holder,
                                                   @NonNull  TextView textvalueRowpaycommit,
                                                   @NonNull Object GetNameSingleNewFile1c,
-                                                   @NonNull Integer ПубличныйidPay) {
+                                                   @NonNull Integer ПубличныйidPay,
+                                                  @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
+                                                  @NonNull  String getHiltCommintgPays) {
         try{
             final byte[][] getFileNewOt1cPayCommit = {null};
             Completable.fromSupplier(new Supplier<byte[]>() {
                         @Override
                         public byte[] get() throws Throwable {
 
-                            getFileNewOt1cPayCommit[0] =     metodSubscrionGets1cСограсование(textvalueRowpaycommit, GetNameSingleNewFile1c.toString(),holder,ПубличныйidPay);
+                            getFileNewOt1cPayCommit[0] =     metodSubscrionGets1cСограсование(textvalueRowpaycommit,
+                                    GetNameSingleNewFile1c.toString(),holder,ПубличныйidPay,binderСогласования1C,getHiltCommintgPays);
 
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -651,7 +455,7 @@ class ProccesingCancelOrOKPay {
                             return getFileNewOt1cPayCommit[0];
                         }
                     })
-                    .blockingSubscribe(new CompletableObserver() {
+                    .subscribe(new CompletableObserver() {
                         @Override
                         public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
 
@@ -671,24 +475,15 @@ class ProccesingCancelOrOKPay {
 
 
                             // TODO: 13.11.2023 МетодЗапускает Если Файл Есть Пднимаем Его Птом
-                            reakziyHaSizeFile1cPayCommi(getFileNewOt1cPayCommit[0]);
-
-                            // TODO: 13.11.2023 ЗАгружаем ФАйл Н адИСк
-                        SuccessGet1CpayCommitProccesing successGet1CpayCommitProccesing = new SuccessGet1CpayCommitProccesing(context);
-
-                            String НазваниеТекущегОт1С=       successGet1CpayCommitProccesing.
-                                    filesuccessDownDisk1CpayCommitProccesing(getFileNewOt1cPayCommit[0],textvalueRowpaycommit);
+                            reakziyHaSizeFile1cPayCommi(getFileNewOt1cPayCommit[0],textvalueRowpaycommit);
 
 
-                            // TODO: 14.11.2023 Поднимаем Файл с Диска И Показываем Его Пользователю
-                            metodUpsAllsFileOt1cUserS(НазваниеТекущегОт1С,(Bundle) textvalueRowpaycommit.getTag());
 
 
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    +"  GetNameSingleNewFile1c " + GetNameSingleNewFile1c +" getFileNewOt1cPayCommit " + getFileNewOt1cPayCommit[0]+
-                                    " НазваниеТекущегОт1С " +НазваниеТекущегОт1С);
+                                    +"  GetNameSingleNewFile1c " + GetNameSingleNewFile1c +" getFileNewOt1cPayCommit " + getFileNewOt1cPayCommit[0]);
                         }
 
                         @Override
@@ -714,229 +509,94 @@ class ProccesingCancelOrOKPay {
 
 
 
-    private void metodUpsAllsFileOt1cUserS(@NonNull  String NameNewDownloadFileOt1c,@NonNull   Bundle bundleChildreRow) {
+    private void metodUpsAllsFileOt1cUserS( @NonNull   Bundle bundleChildreRow,@NonNull   byte[] getFileNewOt1cPayCommit) {
         // TODO: 14.11.2023 ПОказываем файл пользоватолю
         try {
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    +"  NameNewDownloadFileOt1c " + NameNewDownloadFileOt1c );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                SuccessGet1CpayCommitProccesing successGet1CpayCommitProccesing=new SuccessGet1CpayCommitProccesing(context,getFileNewOt1cPayCommit,bundleChildreRow);
 
-            if (NameNewDownloadFileOt1c !=null) {
 
                 String РасширенияФайлаОт1С = bundleChildreRow.getString("expansion", "");
                 switch (РасширенияФайлаОт1С.trim()){
                     case "xlsx":
                     case "xltx":
                     case "xlsm":
-                        class UpFileXlsx extends SuccessGet1CpayCommitProccesing {
-                            public UpFileXlsx(Context context) {
-                                super(context);
-                            }
-
-                            @Override
-                            void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С) {
-                                //ТекущийФорматДокумента="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                                ТекущийФорматДокумента="application/vnd.ms-excel";
-                                super.UpFileSuccessOt1cPayCommit(НазваниеТекущегОт1С);
-                            }
-                        }
-                        // TODO: 14.11.2023 staring childer class up file
-                        new UpFileXlsx(context).UpFileSuccessOt1cPayCommit(NameNewDownloadFileOt1c);
+                        // TODO: 18.01.2024  подпимаем файл определного формата
+                       // successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("application/vnd.ms-excel");
+                        successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
                         break;
 
                     case "xls":
                     case "xla":
                     case "xlt":
-                        class UpFileXlsxSimple extends SuccessGet1CpayCommitProccesing {
-                            public UpFileXlsxSimple(Context context) {
-                                super(context);
-                            }
+                        // TODO: 18.01.2024  подпимаем файл определного формата
+                        successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
-                            @Override
-                            void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С) {
-                                ТекущийФорматДокумента="application/vnd.ms-excel";
-                                super.UpFileSuccessOt1cPayCommit(НазваниеТекущегОт1С);
-                            }
-                        }
-                        // TODO: 14.11.2023 staring childer class up file
-                        new UpFileXlsxSimple(context).UpFileSuccessOt1cPayCommit(NameNewDownloadFileOt1c);
                         break;
                     case "mdb":
                     case "accdb":
-                        class UpFileAccess extends  SuccessGet1CpayCommitProccesing {
-                            public UpFileAccess(Context context) {
-                                super(context);
-                            }
+                        // TODO: 18.01.2024  подпимаем файл определного формата
+                        successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("application/vnd.ms-access");
 
-                            @Override
-                            void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С) {
-                                ТекущийФорматДокумента="application/vnd.ms-access";
-                                super.UpFileSuccessOt1cPayCommit(НазваниеТекущегОт1С);
-                            }
-                        }
-                        // TODO: 14.11.2023 staring childer class up file
-                        new UpFileAccess(context).UpFileSuccessOt1cPayCommit(NameNewDownloadFileOt1c);
                         break;
                     case "ppt":
                     case "pot":
                     case "pps":
-                        class UpFilePowerPoint extends  SuccessGet1CpayCommitProccesing {
-                            public UpFilePowerPoint(Context context) {
-                                super(context);
-                            }
-
-                            @Override
-                            void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С) {
-                                ТекущийФорматДокумента="application/vnd.ms-powerpoint";
-                                super.UpFileSuccessOt1cPayCommit(НазваниеТекущегОт1С);
-                            }
-                        }
-                        // TODO: 14.11.2023 staring childer class up file
-                        new UpFilePowerPoint(context).UpFileSuccessOt1cPayCommit(NameNewDownloadFileOt1c);
+                        // TODO: 18.01.2024  подпимаем файл определного формата
+                        successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("application/vnd.ms-powerpoint");
                         break;
 
                     case "docx":
                     case "dotx":
                     case "docm":
-                        class UpFileWord extends  SuccessGet1CpayCommitProccesing {
-                            public UpFileWord(Context context) {
-                                super(context);
-                            }
+                        // TODO: 18.01.2024  подпимаем файл определного формата
+                        successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 
-                            @Override
-                            void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С) {
-                                ТекущийФорматДокумента="application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-                                super.UpFileSuccessOt1cPayCommit(НазваниеТекущегОт1С);
-                            }
-                        }
-                        // TODO: 14.11.2023 staring childer class up file
-                        new UpFileWord(context).UpFileSuccessOt1cPayCommit(NameNewDownloadFileOt1c);
                         break;
                     case "doc":
                     case "dot":
-                        class UpFileWordSimple extends  SuccessGet1CpayCommitProccesing {
-                            public UpFileWordSimple(Context context) {
-                                super(context);
-                            }
-
-                            @Override
-                            void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С) {
-                                ТекущийФорматДокумента="application/msword";
-                                super.UpFileSuccessOt1cPayCommit(НазваниеТекущегОт1С);
-                            }
-                        }
-                        // TODO: 14.11.2023 staring childer class up file
-                        new UpFileWordSimple(context).UpFileSuccessOt1cPayCommit(NameNewDownloadFileOt1c);
+                        // TODO: 18.01.2024  подпимаем файл определного формата
+                        successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("application/msword");
                         break;
                     case "jpg":
-                        class UpFileJPG extends  SuccessGet1CpayCommitProccesing {
-                            public UpFileJPG(Context context) {
-                                super(context);
-                            }
-
-                            @Override
-                            void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С) {
-                                ТекущийФорматДокумента="image/jpg";
-                                super.UpFileSuccessOt1cPayCommit(НазваниеТекущегОт1С);
-                            }
-                        }
-                        // TODO: 14.11.2023 staring childer class up file
-                        new UpFileJPG(context).UpFileSuccessOt1cPayCommit(NameNewDownloadFileOt1c);
+                        // TODO: 18.01.2024  подпимаем файл определного формата
+                        successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("image/jpg");
                         break;
                     case "jpeg":
-                        class UpFileJPEG extends  SuccessGet1CpayCommitProccesing {
-                            public UpFileJPEG(Context context) {
-                                super(context);
-                            }
+                        // TODO: 18.01.2024  подпимаем файл определного формата
+                        successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("image/jpeg");
 
-                            @Override
-                            void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С) {
-                                ТекущийФорматДокумента="image/jpeg";
-                                super.UpFileSuccessOt1cPayCommit(НазваниеТекущегОт1С);
-                            }
-                        }
-                        // TODO: 14.11.2023 staring childer class up file
-                        new UpFileJPEG(context).UpFileSuccessOt1cPayCommit(NameNewDownloadFileOt1c);
                         break;
                     case "png":
-                        class UpFilePNG extends  SuccessGet1CpayCommitProccesing {
-                            public UpFilePNG(Context context) {
-                                super(context);
-                            }
-
-                            @Override
-                            void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С) {
-                                ТекущийФорматДокумента="image/png";
-                                super.UpFileSuccessOt1cPayCommit(НазваниеТекущегОт1С);
-                            }
-                        }
-                        // TODO: 14.11.2023 staring childer class up file
-                        new UpFilePNG(context).UpFileSuccessOt1cPayCommit(NameNewDownloadFileOt1c);
+                        // TODO: 18.01.2024  подпимаем файл определного формата
+                        successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("image/png");
                         break;
                     case "pdf":
-                        class UpFilePDF extends  SuccessGet1CpayCommitProccesing {
-                            public UpFilePDF(Context context) {
-                                super(context);
-                            }
-
-                            @Override
-                            void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С) {
-                                ТекущийФорматДокумента="application/pdf";
-                                super.UpFileSuccessOt1cPayCommit(НазваниеТекущегОт1С);
-                            }
-                        }
-                        // TODO: 14.11.2023 staring childer class up file
-                        new UpFilePDF(context).UpFileSuccessOt1cPayCommit(NameNewDownloadFileOt1c);
+                        // TODO: 18.01.2024  подпимаем файл определного формата
+                        successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("application/pdf");
                         break;
                     case "zip":
-                        class UpFileZIP extends  SuccessGet1CpayCommitProccesing {
-                            public UpFileZIP(Context context) {
-                                super(context);
-                            }
-
-                            @Override
-                            void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С) {
-                                ТекущийФорматДокумента="application/zip";
-                                super.UpFileSuccessOt1cPayCommit(НазваниеТекущегОт1С);
-                            }
-                        }
-                        // TODO: 14.11.2023 staring childer class up file
-                        new UpFileZIP(context).UpFileSuccessOt1cPayCommit(NameNewDownloadFileOt1c);
+                        // TODO: 18.01.2024  подпимаем файл определного формата
+                        successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("application/zip");
                         break;
                     case "rar":
-                        class UpFileRAR extends  SuccessGet1CpayCommitProccesing {
-                            public UpFileRAR(Context context) {
-                                super(context);
-                            }
+                        // TODO: 18.01.2024  подпимаем файл определного формата
+                        successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("application/vnd.rar");
 
-                            @Override
-                            void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С) {
-                                ТекущийФорматДокумента="application/vnd.rar";
-                                super.UpFileSuccessOt1cPayCommit(НазваниеТекущегОт1С);
-                            }
-                        }
-                        // TODO: 14.11.2023 staring childer class up file
-                        new UpFileRAR(context).UpFileSuccessOt1cPayCommit(NameNewDownloadFileOt1c);
                         break;
                     case "txt":
-                        class UpFileTXT extends  SuccessGet1CpayCommitProccesing {
-                            public UpFileTXT(Context context) {
-                                super(context);
-                            }
-
-                            @Override
-                            void UpFileSuccessOt1cPayCommit(@NonNull String НазваниеТекущегОт1С) {
-                                ТекущийФорматДокумента="text/*";
-                                super.UpFileSuccessOt1cPayCommit(НазваниеТекущегОт1С);
-                            }
-                        }
-                        // TODO: 14.11.2023 staring childer class up file
-                        new UpFileTXT(context).UpFileSuccessOt1cPayCommit(NameNewDownloadFileOt1c);
+                        // TODO: 18.01.2024  подпимаем файл определного формата
+                        successGet1CpayCommitProccesing.filesuccessDownDisk1CpayCommitProccesing("text/*");
                         break;
                 }
 
-            }
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -957,7 +617,9 @@ class ProccesingCancelOrOKPay {
     private byte[] metodSubscrionGets1cСограсование(@NotNull TextView textvalueRowpaycommit,
                                                     @NotNull Object GetNameSingleNewFile1c,
                                                     @NonNull MyViewHolderPay holder
-                                                   ,@NonNull Integer ПубличныйidPay) {
+                                                   ,@NonNull Integer ПубличныйidPay,
+                                                    @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
+                                                    @NonNull  String getHiltCommintgPays) {
         byte[] getFileNewOt1cPayCommit=null;
         try{
             // TODO: 26.12.2022  конец основгого кода
@@ -989,7 +651,7 @@ class ProccesingCancelOrOKPay {
             textvalueRowpaycommit.setTag(bundleДляПередачиВСлужбуСогласования);
 
             ///TODO выполнил ОТКАЗ CANCEL
-            getFileNewOt1cPayCommit =proccerGetBinaty1c(заданиеGetNewFile1C, textvalueRowpaycommit);
+            getFileNewOt1cPayCommit =proccerGetBinaty1c(заданиеGetNewFile1C, textvalueRowpaycommit,binderСогласования1C,getHiltCommintgPays);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1014,11 +676,52 @@ class ProccesingCancelOrOKPay {
 
 
 
-    void reakziyHaSizeFile1cPayCommi(@NotNull byte[] getFileNewOt1cPayCommit){
+    void reakziyHaSizeFile1cPayCommi(@NotNull byte[] getFileNewOt1cPayCommit,@NonNull  TextView textvalueRowpaycommit){
         try{
             if (getFileNewOt1cPayCommit!=null) {
                 if (getFileNewOt1cPayCommit.length>0) {
+
+
+                    // TODO: 18.01.2024  когдла успешно получили АЙЛ О ОТ 1С  СОГЛАСОВАНИЯ
                     // TODO: 08.11.2023 после успешно операции перепоудчаем даные  1с Сограсование
+                    InputStream inputStreamFile        = ByteSource.wrap(getFileNewOt1cPayCommit).openBufferedStream();
+                    // TODO: 07.10.2023 end
+                    if (inputStreamFile.available()>0) {
+                        BufferedReader  РидерileNewOt1cPayCommit = new BufferedReader(new InputStreamReader(inputStreamFile, StandardCharsets.UTF_8));
+                        StringBuffer БуферРидерileNewOt1cPayCommit= РидерileNewOt1cPayCommit.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
+                                StringBuffer::append);
+
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                + " s " +inputStreamFile+" inputStreamFile.available()" +inputStreamFile.available()+" БуферРидерileNewOt1cPayCommit " +БуферРидерileNewOt1cPayCommit);
+
+                        // TODO: 18.01.2024
+                        if(!БуферРидерileNewOt1cPayCommit.toString().matches("(.*)Файл не найден(.*)")){
+
+
+                            // TODO: 13.11.2023 ЗАгружаем ФАйл Н адИСк
+
+
+
+                            // TODO: 14.11.2023 Поднимаем Файл с Диска И Показываем Его Пользователю
+                            metodUpsAllsFileOt1cUserS( (Bundle) textvalueRowpaycommit.getTag(),getFileNewOt1cPayCommit);
+
+
+
+                        }else{
+                            Toast.makeText(context, "Нет файла 1С !!!"    , Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(context, "Нет файла 1С !!!"    , Toast.LENGTH_SHORT).show();
+                    }
+                    // TODO: 18.01.2024  close
+                    inputStreamFile.close();
+
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                            + " s " +inputStreamFile+" inputStreamFile" +inputStreamFile.available());
 
 
                 }else{

@@ -250,7 +250,6 @@ public class EventsBackAndAsyncAndSearchCommintPrices {
         public     void eventsSearch  (@NotNull BottomNavigationItemView bottomNavigationSearchCommitPrices,
                                        @NotNull androidx.appcompat.widget.SearchView searchview_commintingprices){
             try{
-
                 RxView.clicks(  bottomNavigationSearchCommitPrices)
                         .throttleFirst(1, TimeUnit.SECONDS)
                         .filter(s -> !s.toString().isEmpty())

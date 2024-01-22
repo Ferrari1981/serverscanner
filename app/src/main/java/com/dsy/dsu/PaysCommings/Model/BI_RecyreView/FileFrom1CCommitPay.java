@@ -2,7 +2,6 @@ package com.dsy.dsu.PaysCommings.Model.BI_RecyreView;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.Animation;
 import android.widget.TableLayout;
 
@@ -21,36 +20,35 @@ public class FileFrom1CCommitPay {
     private  MyViewHolderPay holder;
     private Context context;
 
+    private  Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C;
     public FileFrom1CCommitPay(@NonNull MyViewHolderPay holder,
-                               @NonNull Context context) {
+                               @NonNull Context context,
+                               @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C) {
         this.holder = holder;
         this.context = context;
+        this.binderСогласования1C = binderСогласования1C;
 
     }
 
     public void startFileFrom1CCommitPay(@NotNull JsonNode jsonNode1сСогласованияRow,
                                          @NonNull MyViewHolderPay holder,
-                                         @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
-                                         @NotNull Animation animation1,
                                          @NonNull Integer ПубличныйidPay,
-                                          @NonNull ObjectMapper objectMapper) {
+                                         @NonNull  String getHiltCommintgPays) {
         try{
             // TODO: 03.11.2023 Parent
-            TableLayout tableLayoutcommitpayfiles = (TableLayout) holder.tableLayoutcommitpayfiles;
-            // TODO: 10.11.2023  Сама Вставка Данных Файлов От 1с Согласование
-            ProccesingCancelOrOKPay  proccesingCancelOrOKPay
-                    =new ProccesingCancelOrOKPay(context,binderСогласования1C,jsonNode1сСогласованияRow,animation1,objectMapper) ;
+            TableLayout tableLayoutpayfilescommitingpays = (TableLayout) holder.tableLayoutpayfilescommitingpays;
+                // TODO: 10.11.2023  Сама Вставка Данных Файлов От 1с Согласование
 
-            proccesingCancelOrOKPay.new AddFilesot1CPaycommitting()
-                    .addfilessot1CPaycommitting(  tableLayoutcommitpayfiles,  jsonNode1сСогласованияRow,holder, ПубличныйidPay);
+                AddFilesot1CPaycommitting addFilesot1CPaycommitting = new AddFilesot1CPaycommitting(context, binderСогласования1C);
+
+                addFilesot1CPaycommitting.addfilessot1CPaycommitting(tableLayoutpayfilescommitingpays,
+                        jsonNode1сСогласованияRow, holder, ПубличныйidPay,getHiltCommintgPays);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " jsonNode1сСогласованияRow " +jsonNode1сСогласованияRow);
-
-            // TODO: 10.11.2023  после всего добавлени выкобчаем програсс бар
-            holder.progressbar_commingpay .setVisibility(View.INVISIBLE);
+                    " jsonNode1сСогласованияRow " +jsonNode1сСогласованияRow
+                    + " tableLayoutcommitpayfiles.getChildCount() " +tableLayoutpayfilescommitingpays.getChildCount());
 
         } catch (Exception e) {
             e.printStackTrace();

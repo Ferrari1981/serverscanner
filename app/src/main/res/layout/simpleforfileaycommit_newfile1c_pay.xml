@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/materialCardViewRowpaycommit"
+    android:id="@+id/materialCardViewnewRowpaycommit"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_gravity="center"
@@ -22,7 +22,7 @@
 
 
     <TableLayout
-        android:id="@+id/tablelayoutRowpaycommit"
+        android:id="@+id/tablelayoutnewrowcommingpay"
         android:shrinkColumns="*"
         android:stretchColumns="1"
         android:gravity="center_horizontal|center_vertical"
@@ -49,8 +49,11 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerInParent="true"
                     android:layout_marginStart="2dp"
+
                     android:layout_marginEnd="2dp"
-                    android:background="@drawable/style_forpolymaterialb_cycle_createspinner5"
+
+
+                    android:background="@drawable/style_forpolymaterialb_cycle_createspinner14"
                     android:gravity="center"
                     android:hint="Файл"
                     android:minWidth="120dp"
@@ -74,11 +77,13 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    android:background="@drawable/style_forpolymaterialb_cycle_createspinner2"
+
+                    android:background="@drawable/style_forpolymaterialb_cycle_createspinner9"
+
                     android:gravity="center"
                     android:minWidth="400dp"
                     android:minHeight="25dp"
-                    android:text="не заполнено"
+                    android:text=""
                     android:textAlignment="gravity"
                     android:textColor="#000000"
                     android:textColorHint="#80807C"
