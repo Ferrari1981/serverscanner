@@ -35,7 +35,7 @@ public class ModulePublicId {
     @Singleton
     @Provides
     public Integer getHiltPublicId(@ApplicationContext Context context) {
-        Integer ПубличныйID = null;
+        Integer ПубличныйID = 0;
         try {
             ПубличныйID =
                     new Class_Generations_PUBLIC_CURRENT_ID().ПолучениеПубличногоТекущегоПользователяID(context);

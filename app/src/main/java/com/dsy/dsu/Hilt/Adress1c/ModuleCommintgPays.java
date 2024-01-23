@@ -26,7 +26,7 @@ public class ModuleCommintgPays {
     public String getHiltCommintgPays(@ApplicationContext Context context) {
         String АдресСеврера1сДляgetFile=new String();
         try {
-            // АдресСеврера1сДляgetFile="http://192.168.3.10/dds_copy/hs/jsonto1c/listofdocuments".trim();// TODO: 18.01.2024 DEBUG
+          //   АдресСеврера1сДляgetFile="http://192.168.3.10/dds_copy/hs/jsonto1c/listofdocuments".trim();// TODO: 18.01.2024 DEBUG
 
            АдресСеврера1сДляgetFile="http://uat.dsu1.ru:55080/dds/hs/jsonto1c/listofdocuments".trim();// TODO: 18.01.2024  REliz
 
