@@ -33,8 +33,12 @@ public class GetArrayNodeForNestedChildern implements  InForChilderArrayJSon  {
         ArrayNode arrayNode=null;
         try{
             Iterator<String> iterator = jsonNodeNested.fieldNames();
-            String ВерхнийКлюч=  iterator.next();
-            arrayNode = (ArrayNode) jsonNodeNested.get(ВерхнийКлюч);
+            while (iterator.hasNext()) {
+                String ВерхнийКлюч=  iterator.next();
+                arrayNode = (ArrayNode) jsonNodeNested.get(ВерхнийКлюч);
+                // TODO: 23.01.2024
+                break;
+            }
             Log.d(this.getClass().getName(),"\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

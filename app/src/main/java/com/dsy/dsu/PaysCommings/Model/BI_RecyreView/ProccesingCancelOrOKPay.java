@@ -697,7 +697,7 @@ class ProccesingCancelOrOKPay {
                                 + " s " +inputStreamFile+" inputStreamFile.available()" +inputStreamFile.available()+" БуферРидерileNewOt1cPayCommit " +БуферРидерileNewOt1cPayCommit);
 
                         // TODO: 18.01.2024
-                        if(!БуферРидерileNewOt1cPayCommit.toString().matches("(.*)Файл не найден(.*)")){
+                        if(!БуферРидерileNewOt1cPayCommit.toString().trim().matches("(.*)Файл не найден(.*)")){
 
 
                             // TODO: 13.11.2023 ЗАгружаем ФАйл Н адИСк

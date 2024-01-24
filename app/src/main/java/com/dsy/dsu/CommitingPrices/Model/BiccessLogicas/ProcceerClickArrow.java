@@ -11,12 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.LiveData.CallBacksLiveDataNested;
+import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
+import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPricesAdvanced;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHolders;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.button.MaterialButton;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -40,6 +44,7 @@ public  class ProcceerClickArrow {
       ObjectMapper objectMapper;
 
      Integer getHiltPublicId;
+     private  String getHiltCommintgPrices;
 
     public ProcceerClickArrow( @NonNull  RecyclerView recycleview_nesters_comminingpprices,
                                @NonNull MaterialButton materialButton,
@@ -48,7 +53,10 @@ public  class ProcceerClickArrow {
                                @NonNull  Context context,
                                @NonNull Integer position,
                                @NotNull ObjectMapper objectMapper,
-                               @NotNull Integer getHiltPublicId) {
+                               @NotNull Integer getHiltPublicId,
+                               @NotNull String getHiltCommintgPrices) {
+
+
         this.recycleview_nesters_comminingpprices = recycleview_nesters_comminingpprices;
         this.materialButton = materialButton;
         this.progressbar_comminingprices = progressbar_comminingprices;
@@ -57,6 +65,7 @@ public  class ProcceerClickArrow {
         this.position = position;
         this.objectMapper = objectMapper;
         this.getHiltPublicId = getHiltPublicId;
+        this.getHiltCommintgPrices = getHiltCommintgPrices;
         // TODO: 10.01.2024
         handlerBut=  materialButton.getHandler();
         handlerProgbar=  progressbar_comminingprices.getHandler();
@@ -167,9 +176,13 @@ public  class ProcceerClickArrow {
     private void initNedsterRecyreView() {
         try{
             CallBacksLiveDataNested callBacksLiveDataNested =
-                    new CallBacksLiveDataNested(holder, context, recycleview_nesters_comminingpprices, holder.jsonNode, position,objectMapper,getHiltPublicId);
+                    new CallBacksLiveDataNested(holder, context, recycleview_nesters_comminingpprices,
+                            holder.jsonNode, position,objectMapper,
+                            getHiltPublicId,getHiltCommintgPrices);
+
             // TODO: 30.12.2023 запукскаем
             callBacksLiveDataNested.callbackLiveData();
+
             Log.d(this.getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -182,6 +195,11 @@ public  class ProcceerClickArrow {
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
+
+
+
+
+
 
 
     public  Integer chnageStatusArrowData(){

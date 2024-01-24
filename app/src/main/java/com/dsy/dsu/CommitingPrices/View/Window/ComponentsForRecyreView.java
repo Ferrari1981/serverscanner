@@ -41,19 +41,22 @@ public class ComponentsForRecyreView {
     private  MaterialButton  arrow_nested_receriview;
     private  ObjectMapper objectMapper;
     private Integer getHiltPublicId;
+    private  String getHiltCommintgPrices;
 
 
     public ComponentsForRecyreView(@NotNull  MyViewHolders holder,
                                    @NotNull  Context context,
                                    @NotNull  int position,
                                    @NotNull ObjectMapper objectMapper,
-                                   @NotNull Integer getHiltPublicId) {
+                                   @NotNull Integer getHiltPublicId,
+                                   @NotNull String getHiltCommintgPrices) {
         try{
         this.holder = holder;
         this.context = context;
         this.position = position;
         this.objectMapper = objectMapper;
         this.getHiltPublicId = getHiltPublicId;
+        this.getHiltCommintgPrices = getHiltCommintgPrices;
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -121,7 +124,7 @@ public class ComponentsForRecyreView {
 
 
             RxView.clicks(  arrow_nested_receriview)
-                    .throttleFirst(2, TimeUnit.SECONDS)
+                    .throttleFirst(1, TimeUnit.SECONDS)
                     .filter(s -> !s.toString().isEmpty())
                     .map(new Function<Unit, MaterialButton>() {
                         @Override
@@ -175,7 +178,7 @@ public class ComponentsForRecyreView {
                                     materialButton,
                                     progressbar_comminingprices,
                                     holder,
-                                    context,position,objectMapper,getHiltPublicId) ;
+                                    context,position,objectMapper,getHiltPublicId,getHiltCommintgPrices) ;
 
 // TODO: 30.12.2023 запускам при нажатии на Кнопку Arrow  внутрнеий
 

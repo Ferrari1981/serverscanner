@@ -1,22 +1,11 @@
 
-package com.dsy.dsu.Hilt.PublicId;
+package com.dsy.dsu.Hilt.Adress1cPays;
 
 
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import javax.inject.Singleton;
 
@@ -28,23 +17,25 @@ import dagger.hilt.components.SingletonComponent;
 
 
 
-@QualifierPublicId
+@QualifierCommintgPays
 @Module
 @InstallIn(SingletonComponent.class)
-public class ModulePublicId {
+public class ModuleCommintgPays {
     @Singleton
     @Provides
-    public Integer getHiltPublicId(@ApplicationContext Context context) {
-        Integer ПубличныйID = 0;
+    public String getHiltCommintgPays(@ApplicationContext Context context) {
+        String АдресСеврера1сДляgetFile=new String();
         try {
-            ПубличныйID =
-                    new Class_Generations_PUBLIC_CURRENT_ID().ПолучениеПубличногоТекущегоПользователяID(context);
+             АдресСеврера1сДляgetFile="http://192.168.3.10/dds_copy/hs/jsonto1c/listofdocuments".trim();// TODO: 18.01.2024 DEBUG
 
-            ПубличныйID=8;
+           //АдресСеврера1сДляgetFile="http://uat.dsu1.ru:55080/dds/hs/jsonto1c/listofdocuments".trim();// TODO: 18.01.2024  REliz
+
+
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " ПубличныйID " + ПубличныйID);
+                    + " АдресСеврера1сДляgetFile " + АдресСеврера1сДляgetFile);
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -52,8 +43,13 @@ public class ModulePublicId {
             new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return ПубличныйID;
+        return АдресСеврера1сДляgetFile;
 
 
     }
+
+
+
+
+
 }

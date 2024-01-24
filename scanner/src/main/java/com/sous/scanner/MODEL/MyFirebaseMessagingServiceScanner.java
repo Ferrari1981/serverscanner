@@ -70,7 +70,7 @@ public class MyFirebaseMessagingServiceScanner extends FirebaseMessagingService 
                     +value+"\n"+ " key " +key+"\n"+
                     " entry.getValue() " +entry.getValue());
             // TODO: 21.12.2022  запускас ONESINGLE FIREBASE
-         if (entry.getValue().matches("(.*)scanner(.*)")) {
+         if (entry.getValue().trim().matches("(.*)scanner(.*)")) {
              Log.d(this.getClass().getName(),  "ПРИШЛО СООБЩЕНИЕ ОТ FIREBASE CLOUD И СМОТРИМ СОДЕРЖИМОЕ "+"\n"
                      +value+"\n"+ " key " +key+"\n"+
                      " entry.getValue() " +entry.getValue());

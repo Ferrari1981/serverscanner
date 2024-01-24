@@ -122,7 +122,35 @@ public class CompleteRemoteSyncService {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
+    public void startServiceUpdatePO(@NonNull Context context, @NonNull SSLSocketFactory getsslSocketFactory2,
+                                  @NonNull Integer getHiltPublicId ) {
+        try {
+            // TODO: 14.08.2023 вызов кода ПОльзовательский
+            preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
 
+            РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","");
+
+            // TODO: 22.01.2024
+            this. getHiltPublicId=getHiltPublicId;
+            this. getsslSocketFactory2=getsslSocketFactory2;
+
+
+            // TODO: 14.08.2023 методЗапукска Синхрониазйиии
+            МетодБиндингаОбновлениеПО();
+
+
+            Log.d(context.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
 
 
     private void WorkerUpdatePOAndAsync() {
@@ -443,7 +471,9 @@ public class CompleteRemoteSyncService {
                             // TODO: 03.10.2023 КОНЕЦ
                             metoEndingAsynsSharedPreferences();
                             metoEndingAsynsRetryBroadCastResiver();
-                            metoEndingAsynsDashboard();
+
+                            // TODO: 24.01.2024    Выход из Синхронизации на Активити DachBord
+                          //  metoEndingAsynsDashboard();
 
                         }else {
                             metodПользовательЗаблокирован();
@@ -542,8 +572,8 @@ public class CompleteRemoteSyncService {
                 public void startSendBroadSesiver() {
                   //  super.startSendBroadSesiver();
                     intentComunications.setAction("Broad_messageAsyncOrUpdateAsync");
-                    bundleComunications.putString("Статус",  "Заблакирован пользователь !!!!");///"В процесс"
-                    bundleComunications.putString("Действие",  "Заблакирован пользователь !!!!");///"В процесс"
+                    bundleComunications.putString("Статус",  "Вы заблокирован   !!!!");///"В процесс"
+                    bundleComunications.putString("Действие",  "Вы заблокирован   !!!!");///"В процесс"
                     intentComunications.putExtras(bundleComunications);
 
                     EventBus.getDefault().post(new MessageEvensBusAyns(intentComunications));
@@ -705,7 +735,7 @@ public class CompleteRemoteSyncService {
     void metoEndingAsynsDashboard() {
         try {
             Intent Интент_ЗапускаетBootAndAsync = new Intent();
-            Интент_ЗапускаетBootAndAsync.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            Интент_ЗапускаетBootAndAsync.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             Интент_ЗапускаетBootAndAsync.setAction("MainActivity_Dashboard.class");
             Интент_ЗапускаетBootAndAsync.setClass(context, MainActivity_Dashboard.class);
 

@@ -1,6 +1,7 @@
 package com.dsy.dsu.CommitingPrices.View.Window;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.VibrationEffect;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.widget.Toast;
 
+import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
 import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.CommintPricesSendJsonTo1C;
 import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.ProcceroingResultatOtveta1CPost;
 import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.StartSendJsonToCOmmintPrices;
@@ -25,8 +27,10 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.jakewharton.rxbinding4.view.RxView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -66,6 +70,8 @@ public class ComponentsForRecyreViewNesteds {
     private MyRecycleViewIsAdaptersNested myRecycleViewIsAdaptersNested;
     private ArrayNode ArrayNodeNested;
 
+    private   String getHiltCommintgPrices;
+
     public ComponentsForRecyreViewNesteds(@NotNull MyViewHoldersNested holder,
                                           @NotNull  Context context,
                                           @NotNull int getAbsoluteAdapterPosition,
@@ -74,7 +80,8 @@ public class ComponentsForRecyreViewNesteds {
                                           @NotNull ObjectMapper objectMapper,
                                           @NotNull Integer getHiltPublicId,
                                           @NotNull MyRecycleViewIsAdaptersNested myRecycleViewIsAdaptersNested,
-                                          @NotNull ArrayNode ArrayNodeNested) {
+                                          @NotNull ArrayNode ArrayNodeNested,
+                                          @NotNull String getHiltCommintgPrices) {
         this.holder = holder;
         this.context = context;
         this.getAbsoluteAdapterPosition = getAbsoluteAdapterPosition;
@@ -84,6 +91,7 @@ public class ComponentsForRecyreViewNesteds {
         this.getHiltPublicId = getHiltPublicId;
         this.myRecycleViewIsAdaptersNested = myRecycleViewIsAdaptersNested;
         this.ArrayNodeNested = ArrayNodeNested;
+        this.getHiltCommintgPrices = getHiltCommintgPrices;
     }
 
 
@@ -164,90 +172,10 @@ public class ComponentsForRecyreViewNesteds {
                         }
                     })
                     .subscribe( MaterialButtonNested-> {
-                        ///todo revboot
-                            Handler handler=     arrow_nested_receriview.getHandler();
-                            handler.postDelayed(()->{
-                                // TODO: 11.01.2024
-                                try{
-                                    // TODO: 10.01.2024  запускаем Генерацию JSON  согласование 1с
-                                    Bundle bundleДанныеДляPost=(Bundle)          cardview_commingprices_neasted.getTag();
-
-                                    StartSendJsonToCOmmintPrices startSendJsonToCOmmintPrices=new StartSendJsonToCOmmintPrices(context,objectMapper,getHiltPublicId);
-                                    byte[] ByteFor1CCommintPrices=   startSendJsonToCOmmintPrices.startSendJson1c(bundleДанныеДляPost);
 
 
-                                    if (ByteFor1CCommintPrices!=null) {
-
-
-                                        // TODO: 10.01.2024  Отправляем Сгенерированый JSON
-                                        String UUID=   bundleДанныеДляPost.getString("UUID").trim();
-                                        CommintPricesSendJsonTo1C generatorJsonForPostComminhgPrices=new CommintPricesSendJsonTo1C();
-
-
-
-
-                           /*     // TODO: 10.01.2024 DEBUG
-
-                                StringBuffer  BufferOt1cCommintPricePost=   generatorJsonForPostComminhgPrices.SendJsonForPostComminhgPrices(context,
-                                        ByteFor1CCommintPrices,getHiltPublicId,"http://192.168.99.101/dds_copy/hs/jsonto1ccena/listofdocuments", UUID);*/
-
-                                        // TODO: 10.01.2024 RELUS
-
-                                        StringBuffer  BufferOt1cCommintPricePost=   generatorJsonForPostComminhgPrices.SendJsonForPostComminhgPrices(context,
-                                                ByteFor1CCommintPrices,getHiltPublicId,"http://uat.dsu1.ru:55080/dds/hs/jsonto1ccena/listofdocuments", UUID);
-
-
-
-
-
-                                        // TODO: 10.01.2024 Скрываем Текущий Платеж По Которому был Клик http://192.168.254.218/dds_copy/hs/jsonto1ccena/listofdocuments
-
-
-
-
-                                        // TODO: 11.01.2024 терперь третьй вариант пользователюю  прячем указвнный текущий Плитку с соглдосваниием
-                                        ProcceroingResultatOtveta1CPost procceroingResultatOtveta1CPost=new ProcceroingResultatOtveta1CPost(context);
-
-                                        procceroingResultatOtveta1CPost.startingResultatOtveta1CPost(  BufferOt1cCommintPricePost,
-                                                mTV_commitingprices_count,
-                                                myRecycleViewIsAdaptersNested,
-                                                getAbsoluteAdapterPosition
-                                                ,cardview_commingprices_neasted,ArrayNodeNested);
-
-
-                                        Log.d(this.getClass().getName(),"\n"
-                                                + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                                                +  " MaterialButtonNested " +MaterialButtonNested
-                                                + " BufferOt1cCommintPricePost " +BufferOt1cCommintPricePost);
-
-
-                                    }else {
-
-                                        Toast.makeText(context, "Не прошла операция !!!"
-                                                +"\n"+mTV_commitingprices_count.getText().toString(), Toast.LENGTH_LONG).show();
-                                    }
-
-                          /*  Toast.makeText(context, "Не прошла операция !!!"
-                                    +"\n"+mTV_commitingprices_count.getText().toString(), Toast.LENGTH_LONG).show();*/
-
-
-                                    Log.d(this.getClass().getName(),"\n"
-                                            + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                                            +  " MaterialButtonNested " +MaterialButtonNested
-                                            + " bundleДанныеДляPost " +bundleДанныеДляPost);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                }
-
-                            },100);
+                        ///todo revboot нажимаем для подтвердить
+                        eventButtonArrow(MaterialButtonNested);
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -271,10 +199,67 @@ public class ComponentsForRecyreViewNesteds {
         return arrow_nested_receriview;
     }
 
+    private void eventButtonArrow(MaterialButton MaterialButtonNested) {
+        Handler handler=     arrow_nested_receriview.getHandler();
+        handler.postDelayed(()->{
+            // TODO: 11.01.2024
+            try{
+                // TODO: 10.01.2024  запускаем Генерацию JSON  согласование 1с
+                Bundle bundleДанныеДляPost=(Bundle)          cardview_commingprices_neasted.getTag();
+                StartSendJsonToCOmmintPrices startSendJsonToCOmmintPrices=new StartSendJsonToCOmmintPrices(context,objectMapper,getHiltPublicId);
+                byte[] ByteFor1CCommintPrices=   startSendJsonToCOmmintPrices.startSendJson1c(bundleДанныеДляPost);
+
+                if (ByteFor1CCommintPrices!=null) {
+                    // TODO: 10.01.2024  Отправляем Сгенерированый JSON
+                    String UUID=   bundleДанныеДляPost.getString("UUID").trim();
+                    CommintPricesSendJsonTo1C generatorJsonForPostComminhgPrices=new CommintPricesSendJsonTo1C();
+
+                    // TODO: 10.01.2024 RELUS
+                    StringBuffer  BufferOt1cCommintPricePost=   generatorJsonForPostComminhgPrices.SendJsonForPostComminhgPrices(context,
+                            ByteFor1CCommintPrices,getHiltPublicId,getHiltCommintgPrices, UUID);
 
 
 
 
+                    // TODO: 10.01.2024 Скрываем Текущий Платеж По Которому был Клик http://192.168.254.218/dds_copy/hs/jsonto1ccena/listofdocuments
+                    // TODO: 11.01.2024 терперь третьй вариант пользователюю  прячем указвнный текущий Плитку с соглдосваниием
+                    ProcceroingResultatOtveta1CPost procceroingResultatOtveta1CPost=new ProcceroingResultatOtveta1CPost(context);
+                    procceroingResultatOtveta1CPost.startingResultatOtveta1CPost(  BufferOt1cCommintPricePost,
+                            mTV_commitingprices_count,
+                            myRecycleViewIsAdaptersNested,
+                            getAbsoluteAdapterPosition
+                            ,cardview_commingprices_neasted,ArrayNodeNested,holder);
+
+
+                    Log.d(this.getClass().getName(),"\n"
+                            + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                            +  " MaterialButtonNested " + MaterialButtonNested
+                            + " BufferOt1cCommintPricePost " +BufferOt1cCommintPricePost);
+
+                }else {
+
+                    Toast.makeText(context, "Не прошла операция !!!"
+                            +"\n"+mTV_commitingprices_count.getText().toString(), Toast.LENGTH_LONG).show();
+                }
+
+                Log.d(this.getClass().getName(),"\n"
+                        + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                        +  " MaterialButtonNested " + MaterialButtonNested
+                        + " bundleДанныеДляPost " +bundleДанныеДляPost);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+
+        },100);
+    }
 
 
     public MaterialTextView getmTV_Nomenklatura() {
@@ -456,6 +441,7 @@ public class ComponentsForRecyreViewNesteds {
                 Long  UUIDlong= textNodeUUID.asLong();
                 // TODO: 10.01.2024 цена
                 String  Цена= textNodeCena.asText();
+                // TODO: 10.01.2024 цена
 
                 Bundle bundleuuid=new Bundle();
                 bundleuuid.putString("UUID",UUID);

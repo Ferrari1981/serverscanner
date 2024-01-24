@@ -45,6 +45,7 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
     private ObjectMapper objectMapper;
 
     private Integer getHiltPublicId;
+    private String getHiltCommintgPrices;
 
 
     public MyRecycleViewIsAdaptersNested(@NonNull View itemView,
@@ -52,7 +53,8 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
                                          @NotNull JsonNode jsonNode,
                                          @NotNull int getAbsoluteAdapterPosition,
                                          @NotNull ObjectMapper objectMapper,
-                                         @NotNull Integer getHiltPublicId) {
+                                         @NotNull Integer getHiltPublicId,
+                                         @NotNull String getHiltCommintgPrices) {
         // super();
         try{
             this.itemView=itemView;
@@ -60,6 +62,7 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             this.getAbsoluteAdapterPosition=getAbsoluteAdapterPosition;
             this.objectMapper=objectMapper;
             this.getHiltPublicId=getHiltPublicId;
+            this.getHiltCommintgPrices=getHiltCommintgPrices;
 
             animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_row8);
 
@@ -251,35 +254,40 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
 
             ComponentsForRecyreViewNesteds componentsForRecyreViewNesteds=
                     new ComponentsForRecyreViewNesteds(holder,context,
-                            position,materialCardView,animation,objectMapper,getHiltPublicId,  this,ArrayNodeNested);
+                            position,materialCardView,animation,objectMapper,getHiltPublicId,
+                            this,ArrayNodeNested,getHiltCommintgPrices);
 
 // TODO: 30.12.2023  запуск метода Сверху Сумма согласования цены
-            componentsForRecyreViewNesteds.getmTV_commitingprices_count();
+            if (ArrayNodeNested.size()>0) {
 
-            // TODO: 30.12.2023 кнопка подтверждения  согласования цены указонной
-            componentsForRecyreViewNesteds.getArrow_nested_receriview();
+                componentsForRecyreViewNesteds.getmTV_commitingprices_count();
 
-            // TODO: 30.12.2023 кнопка Номелклатура
-            componentsForRecyreViewNesteds.getmTV_Nomenklatura();
+                // TODO: 30.12.2023 кнопка подтверждения  согласования цены указонной
+                componentsForRecyreViewNesteds.getArrow_nested_receriview();
 
-            // TODO: 30.12.2023 кнопка ДДС
-            componentsForRecyreViewNesteds.getmTV_StatyaDDS_value();
+                // TODO: 30.12.2023 кнопка Номелклатура
+                componentsForRecyreViewNesteds.getmTV_Nomenklatura();
 
-            // TODO: 30.12.2023 кнопка Единица измериния
-            componentsForRecyreViewNesteds.getmTV_EdIzm_value();
+                // TODO: 30.12.2023 кнопка ДДС
+                componentsForRecyreViewNesteds.getmTV_StatyaDDS_value();
 
-            // TODO: 30.12.2023 кнопка Дата
-            componentsForRecyreViewNesteds.getmTV_Data_value();
+                // TODO: 30.12.2023 кнопка Единица измериния
+                componentsForRecyreViewNesteds.getmTV_EdIzm_value();
 
-            // TODO: 30.12.2023 кнопка Количество
-            componentsForRecyreViewNesteds.getmTV_Kolichestvo_value();
+                // TODO: 30.12.2023 кнопка Дата
+                componentsForRecyreViewNesteds.getmTV_Data_value();
 
-            // TODO: 30.12.2023 кнопка ЦФО Расчет
-            componentsForRecyreViewNesteds.getmTV_CFORaskhoda_value();
+                // TODO: 30.12.2023 кнопка Количество
+                componentsForRecyreViewNesteds.getmTV_Kolichestvo_value();
+
+                // TODO: 30.12.2023 кнопка ЦФО Расчет
+                componentsForRecyreViewNesteds.getmTV_CFORaskhoda_value();
 
 
-            // TODO: 30.12.2023  rebbot Sxreen Recyreview
-            componentsForRecyreViewNesteds.setagMaterialCardViewNestad();
+                // TODO: 30.12.2023  rebbot Sxreen Recyreview
+                componentsForRecyreViewNesteds.setagMaterialCardViewNestad();
+                // TODO: 23.01.2024 кожа нет данных
+            }
 
             Log.d(this.getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

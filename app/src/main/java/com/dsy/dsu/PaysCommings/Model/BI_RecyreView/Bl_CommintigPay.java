@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -586,7 +587,8 @@ public class Bl_CommintigPay {
             if (myRecycleViewAdapter==null) {
                 myRecycleViewAdapter = new MyRecycleViewAdapterPay(jsonNode1сСогласованияAllRows,context
                         ,binderСогласования1C,animation,ПубличныйidPay,objectMapper,bottomNavigationViewParentCommitingPay,recycleviewcommitpays,
-                        getHiltCommintgPays);
+                        getHiltCommintgPays,this);
+                // TODO: 24.01.2024
                 myRecycleViewAdapter.notifyDataSetChanged();
                 recycleviewcommitpays.setAdapter(myRecycleViewAdapter);
                 recycleviewcommitpays.getAdapter().notifyDataSetChanged();
@@ -1016,6 +1018,8 @@ public class Bl_CommintigPay {
                             resultatSecondПолучениеДанных((Serializable) jsonNode1сСогласования);
 
 
+                            // TODO: 24.01.2024 перрерисовка дизайна
+                            startAnimationsRecyreView();
 
                             // TODO: 16.01.2024  результата при получение певого раза  данных  SECOND Принудительная !!!!!!!
                         } else {
@@ -1052,13 +1056,23 @@ public class Bl_CommintigPay {
 
     }
 
+    private void startAnimationsRecyreView() {
+        // TODO: 24.01.2024
+        try {
+        Animation      animationscroll = AnimationUtils.loadAnimation(context, R.anim.slide_in_row_vibrator1);
 
+        recycleviewcommitpays.startAnimation(animationscroll);
 
-
-
-
-
-
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
+                Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+    }
 
 
     public void методЗакрываемКлавитатуру(@NonNull androidx.appcompat.widget.SearchView searchview_commitpay,

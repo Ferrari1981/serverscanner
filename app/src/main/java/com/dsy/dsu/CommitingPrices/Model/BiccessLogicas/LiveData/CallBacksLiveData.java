@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.ByteGenetarorJsonNode;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.EventsBackAndAsyncAndSearchCommintPrices;
+import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.GeneratorBundleForJsonNode;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews.InizializayRecyreViews;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyRecycleViewIsAdapters;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewIsNull.MyRecycleViewIsNullAdapters;
@@ -39,13 +40,17 @@ public class CallBacksLiveData {
     private EventsBackAndAsyncAndSearchCommintPrices eventsBackAndAsyncAndSearchCommintPrices;
 
     private Integer getHiltPublicId;
+    private  String getHiltCommintgPrices;
+
     public CallBacksLiveData( @NotNull  Context context,
                               @NotNull   ProgressBar prograessbar_commintingprices,
                               @NotNull   RecyclerView  recycleview_comminingpprices,
                               @NotNull MyRecycleViewIsNullAdapters myRecycleViewIsNullAdapters,
                               @NotNull ObjectMapper objectMapper,
                               @NotNull      EventsBackAndAsyncAndSearchCommintPrices eventsBackAndAsyncAndSearchCommintPrices,
-                              @NotNull Integer getHiltPublicId) {
+                              @NotNull Integer getHiltPublicId,
+                              @NotNull String getHiltCommintgPrices) {
+
         this.context = context;
         this.prograessbar_commintingprices = prograessbar_commintingprices;
         this.recycleview_comminingpprices = recycleview_comminingpprices;
@@ -53,6 +58,7 @@ public class CallBacksLiveData {
         this.objectMapper = objectMapper;
         this.eventsBackAndAsyncAndSearchCommintPrices = eventsBackAndAsyncAndSearchCommintPrices;
         this.getHiltPublicId = getHiltPublicId;
+        this.getHiltCommintgPrices = getHiltCommintgPrices;
     }
 
     public  void callbackLiveData(Bundle bundle) {
@@ -62,15 +68,16 @@ public class CallBacksLiveData {
                 // TODO: 25.12.2023
                 Bundle validadress=   Objects.requireNonNullElse(bundle,new Bundle());
 
-                // TODO: 25.12.2023  пришел ответ в livedata от VieModel
-                byte[] getbyteComminhgPrices=  validadress.getByteArray("getbyteComminhgPrices");
+               // TODO: 25.12.2023  пришел ответ в livedata от VieModel
+
+
+                JsonNode     jsonNode1сСогласованиеЦен=    new GeneratorBundleForJsonNode().
+                        generatorBunbleForJsonNode(validadress,context,objectMapper);
 
                 // TODO: 26.12.2023  когда данные пришли от 1с согласования цен
-                if (getbyteComminhgPrices!=null && getbyteComminhgPrices.length>0){
+                if (jsonNode1сСогласованиеЦен!=null && jsonNode1сСогласованиеЦен.size()>0){
 
                     // TODO: 26.12.2023 пришли байты  из байт в обьект  json node
-
-                    JsonNode     jsonNode1сСогласованиеЦен=    new ByteGenetarorJsonNode().genetarorJsonnode(context,objectMapper,getbyteComminhgPrices);
 
                     if (jsonNode1сСогласованиеЦен.isArray()&& jsonNode1сСогласованиеЦен.size()>0) {
                         // TODO: 28.12.2023 Запускам настрощий recyreview при получение ииз байт обьект JsonNode
@@ -95,14 +102,14 @@ public class CallBacksLiveData {
                         Log.d(this.getClass().getName(),"\n"
                                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+ " getbyteComminhgPrices " + getbyteComminhgPrices);
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+ " jsonNode1сСогласованиеЦен " + jsonNode1сСогласованиеЦен);
                     }
 
 
                     Log.d(this.getClass().getName(),"\n"
                             + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+ " getbyteComminhgPrices " + getbyteComminhgPrices);
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+ " jsonNode1сСогласованиеЦен " + jsonNode1сСогласованиеЦен);
                 }else {
 
                     // TODO: 26.12.2023 нет  байты
@@ -111,7 +118,7 @@ public class CallBacksLiveData {
                     Log.d(this.getClass().getName(),"\n"
                             + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+ " getbyteComminhgPrices " + getbyteComminhgPrices);
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+ " jsonNode1сСогласованиеЦен " + jsonNode1сСогласованиеЦен);
                 }
             }
 
@@ -199,7 +206,7 @@ public class CallBacksLiveData {
     public void startGetRecyreView( JsonNode     jsonNode1сСогласованиеЦен ) {
         try {
             if (myRecycleViewIsAdapters==null) {
-                myRecycleViewIsAdapters = new MyRecycleViewIsAdapters(jsonNode1сСогласованиеЦен, context,objectMapper ,getHiltPublicId );
+                myRecycleViewIsAdapters = new MyRecycleViewIsAdapters(jsonNode1сСогласованиеЦен, context,objectMapper ,getHiltPublicId,getHiltCommintgPrices );
                 myRecycleViewIsAdapters.notifyDataSetChanged();
                 recycleview_comminingpprices.setAdapter(myRecycleViewIsAdapters);
                 recycleview_comminingpprices.getAdapter().notifyDataSetChanged();

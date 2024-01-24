@@ -2,8 +2,10 @@ package com.dsy.dsu.CommitingPrices.Model.BiccessLogicas;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import androidx.lifecycle.LifecycleOwner;
@@ -12,13 +14,17 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.LiveData.CallBacksLiveData;
+import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyRecycleViewIsAdapters;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewIsNull.MyRecycleViewIsNullAdapters;
 import com.dsy.dsu.CommitingPrices.ViewModel.ModelComminingPrisesByte;
 import com.dsy.dsu.CommitingPrices.ViewModel.ModelComminingPrisesString;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -36,7 +42,7 @@ public class BLFragmentCommintingPrices {
 
     private  MyRecycleViewIsNullAdapters myRecycleViewIsNullAdapters;
 
-    private MyRecycleViewIsAdapters myRecycleViewIsAdapters;
+
     private RecyclerView recycleview_comminingpprices;
 
     private ProgressBar prograessbar_commintingprices ;
@@ -46,8 +52,9 @@ public class BLFragmentCommintingPrices {
 
     private  EventsBackAndAsyncAndSearchCommintPrices eventsBackAndAsyncAndSearchCommintPrices;
 
-
+    private  String getHiltCommintgPrices;
     private  LiveData<Bundle>     liveData1;
+    private  LiveData<Bundle>     liveData2;
     private Integer getHiltPublicId;
     public @Inject BLFragmentCommintingPrices(@NotNull  Activity activity,
                                               @NotNull  Context context,
@@ -59,7 +66,8 @@ public class BLFragmentCommintingPrices {
                                               @NotNull  LifecycleOwner lifecycleOwner ,
                                               @NotNull androidx.appcompat.widget.SearchView searchview_commintingprices,
                                               @NotNull   EventsBackAndAsyncAndSearchCommintPrices eventsBackAndAsyncAndSearchCommintPrices,
-                                              @NotNull Integer getHiltPublicId ) {
+                                              @NotNull Integer getHiltPublicId,
+                                              @NotNull String getHiltCommintgPrices) {
         this.activity = activity;
         this.context = context;
         this.objectMapper = objectMapper;
@@ -71,6 +79,7 @@ public class BLFragmentCommintingPrices {
         this. searchview_commintingprices = searchview_commintingprices;
         this. eventsBackAndAsyncAndSearchCommintPrices = eventsBackAndAsyncAndSearchCommintPrices;
         this. getHiltPublicId = getHiltPublicId;
+        this. getHiltCommintgPrices = getHiltCommintgPrices;
     }
 
     // TODO: 26.12.2023 получение данных в виде String
@@ -90,15 +99,11 @@ public class BLFragmentCommintingPrices {
 
 
 
-       /*     // TODO: 25.12.2023  запускаем получение Данных DEBUG
-            modelComminingPrisesByte.livedatastartSetJsonByte("http://192.168.99.101/dds_copy/hs/jsonto1ccena/listofdocuments"
-                    ,objectMapper );*/
 
 
             // TODO: 25.12.2023  запускаем получение Данных RELIS RELIS
 
-            modelComminingPrisesByte.livedatastartSetJsonByte("http://uat.dsu1.ru:55080/dds/hs/jsonto1ccena/listofdocuments"
-                    ,objectMapper );
+            modelComminingPrisesByte.livedatastartSetJsonByte(getHiltCommintgPrices,objectMapper,prograessbar_commintingprices );
 
             Log.d(this.getClass().getName(),"\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -112,6 +117,9 @@ public class BLFragmentCommintingPrices {
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
+
+
+
 
     public void getLiveDataCallBacks(@NotNull  LifecycleOwner lifecycleOwner){
         try{
@@ -130,12 +138,13 @@ public class BLFragmentCommintingPrices {
 
                             new CallBacksLiveData(context,prograessbar_commintingprices,
                                     recycleview_comminingpprices,myRecycleViewIsNullAdapters,
-                                    objectMapper,   eventsBackAndAsyncAndSearchCommintPrices,getHiltPublicId).callbackLiveData(bundle);
+                                    objectMapper,   eventsBackAndAsyncAndSearchCommintPrices,
+                                    getHiltPublicId,getHiltCommintgPrices).callbackLiveData(bundle);
 
 
                             // TODO: 09.01.2024
 
-
+                            prograessbar_commintingprices.setVisibility(View.GONE);
 
                             Log.d(this.getClass().getName(),"\n"
                                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -166,6 +175,68 @@ public class BLFragmentCommintingPrices {
 
     }
 
+
+    public void getLiveDataCallBacksEventBus(@NotNull  LifecycleOwner lifecycleOwner){
+        try{
+            liveData2 = modelComminingPrisesByte.livedatastartGetJsonByteEventBus();
+            // TODO: 30.12.2023 has тогда выключаем обсервер
+            if (! liveData2.hasObservers()) {
+                Log.d(this.getClass().getName(),"\n"
+                        + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() +  "  liveData1.hasObservers()  " + liveData1.hasObservers());
+
+                liveData2.observe(lifecycleOwner, new Observer<Bundle>() {
+                    @Override
+                    public void onChanged(Bundle bundle) {
+                        try{
+
+                            JsonNode     jsonNode1сСогласованиеЦен=    new GeneratorBundleForJsonNode().
+                                    generatorBunbleForJsonNode(bundle,context,objectMapper);
+
+                            Log.d(this.getClass().getName(),"\n"
+                                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                                    " jsonNode1сСогласованиеЦен " +jsonNode1сСогласованиеЦен);
+
+// TODO: 24.01.2024 Update Screeen
+
+                            new CallBacksLiveData(context,prograessbar_commintingprices,
+                                    recycleview_comminingpprices,myRecycleViewIsNullAdapters,
+                                    objectMapper,   eventsBackAndAsyncAndSearchCommintPrices,getHiltPublicId,getHiltCommintgPrices)
+                                    .completeRecyreView(jsonNode1сСогласованиеЦен);
+
+
+                            // TODO: 09.01.2024
+
+                            prograessbar_commintingprices.setVisibility(View.GONE);
+
+                            Log.d(this.getClass().getName(),"\n"
+                                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+                    }
+                });
+            }
+            // TODO: 30.12.2023
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+    }
 
 
 

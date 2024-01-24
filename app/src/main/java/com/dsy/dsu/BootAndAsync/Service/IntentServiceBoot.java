@@ -98,14 +98,22 @@ public class IntentServiceBoot extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try {
 
+
+            // TODO: 24.01.2024 Синхрониазция и Обновление ПО  
             if (intent.getAction().contains("IntentServiceBootAsync.com")) {
                 // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                 completeRemoteSyncService.startServiceAsybc(getApplicationContext(),getsslSocketFactory2,  getHiltPublicId);
 
+                
+                
+                
+                
             }else {
+                // TODO: 24.01.2024 ТОлькоОбновления ПО
+                
                 if (intent.getAction().contains("IntentServiceBootUpdatePo.com")) {
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceAsybc(getApplicationContext(),getsslSocketFactory2,   getHiltPublicId);
+                    completeRemoteSyncService.startServiceUpdatePO(getApplicationContext(),getsslSocketFactory2,   getHiltPublicId);
                 }
 
             }

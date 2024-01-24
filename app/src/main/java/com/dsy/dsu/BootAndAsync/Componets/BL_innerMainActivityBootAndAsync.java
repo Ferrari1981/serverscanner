@@ -1,11 +1,9 @@
 package com.dsy.dsu.BootAndAsync.Componets;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
@@ -23,9 +21,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.dsy.dsu.BootAndAsync.DowloadUpdatePO.DownLoadPO;
+import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
+import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
+import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.Service.IntentServiceBoot;
 import com.dsy.dsu.BootAndAsync.Window.MainActivityBootAndAsync;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
@@ -70,19 +70,19 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
     }
 
 
-    public void getLocalBroadcastManagerUpdatePo(){
+    public void getEventBusUpdatePo(@NonNull MessageEvensBusUpdatePO messageEvensBusUpdatePO){
 
         try{
-            BroadcastReceiver mMessageReceiverAsyncOrUpdatePO = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    // Get Пришли ДАнные из службы после посика
-                    Bundle bundleGetOtService=         intent.getExtras();
-                    String Статус=   bundleGetOtService.getString("Статус").trim();
-
+            Bundle bundleGetOtServiceUpdatePO =(Bundle)         messageEvensBusUpdatePO.mess.getExtras();
+            String Статус=   bundleGetOtServiceUpdatePO.getString("Статус");
+            Integer СервернаяВерсия=   bundleGetOtServiceUpdatePO.getInt("СервернаяВерсия");
 
 
                     if(Статус.contains( "У вас последная версия ПО !!!")){
+
+
+                        Toast.makeText(getApplicationContext(),
+                                "Последная версия ПО !!! "+ СервернаяВерсия    , Toast.LENGTH_LONG).show();
 
 // TODO: 26.12.2022  конец основгого кода
                         Log.d(context.getClass().getName(), "\n" + " class "
@@ -94,8 +94,6 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                     }else {
                         if(Статус.contains( "Запускаем Обновление ПО !!!!")) {
                             // TODO: 22.01.2024
-                            Integer СервернаяВерсия=   bundleGetOtService.getInt("СервернаяВерсия") ;
-
                             DownLoadPO downLoadPO=new DownLoadPO(activity,context,СервернаяВерсия,getsslSocketFactory2);
 
                             downLoadPO.МетодСообщениеАнализПО( );
@@ -114,15 +112,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                             + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                }
-            };
-            LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiverAsyncOrUpdatePO,
-                    new IntentFilter("Broad_messageAsyncOrUpdatePO"));
 
-
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -136,31 +126,39 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
 
 
 
-    public void getLocalBroadcastManagerAsync(){
+    public void getEventBusManagerAsync(@NonNull MessageEvensBusAyns messageEvensBusAyns){
 
         try{
-            BroadcastReceiver mMessageReceiverAsyncOrUpdatePO = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    // Get Пришли ДАнные из службы после посика
-                    Bundle bundleGetOtService=         intent.getExtras();
-                    String Статус=   bundleGetOtService.getString("Статус").trim();
 
-                    if(Статус.contains("Логин и пароль нет !!!!")){
+            Bundle bundleGetOtServicePrograssBar =(Bundle)         messageEvensBusAyns.mess.getExtras();
+            String Статус=   bundleGetOtServicePrograssBar.getString("Статус");
 
+
+                    if(Статус.contains("Логин и/или пароль неправильный !!!!")){
                         методПереходНаActivityPassword();
+                        Toast.makeText(getApplicationContext(), "Логин и/или пароль неправильный !!!!"    , Toast.LENGTH_LONG).show();
+                    }
 
 
-                    }else {
-                        if(Статус.contains("Заблакирован пользователь !!!!")){
+
+
+                        if(Статус.contains("Вы заблокирован   !!!!")){
                             // TODO: 22.01.2024  заблокирован
                             методПереходНаActivityPassword();
+                            Toast.makeText(getApplicationContext(), "Вы заблокирован   !!!! "    , Toast.LENGTH_LONG).show();
+
                         }
 
 
+            if(Статус.contains(    "Сервер выкл.!!!")){
+                Toast.makeText(getApplicationContext(),     "Сервер выкл.!!!"    , Toast.LENGTH_LONG).show();
+
+            }
 
 
-                    }
+
+
+
 
 
                     // TODO: 26.12.2022  конец основгого кода
@@ -168,15 +166,8 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                             + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Статус " +Статус);
-                }
-            };
-            LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiverAsyncOrUpdatePO,
-                    new IntentFilter("Broad_messageAsyncOrUpdateAsync"));
 
 
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -196,18 +187,11 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
 
 
 
-    public void getLocalBroadcastManagerPrograssBar(){
+    public void getEventBusPrograssBar(MessageEvensBusPrograssBar messageEvensBusPrograssBar){
 
         try{
-            BroadcastReceiver mMessageReceiverAsyncOrUpdatePO = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    // Get Пришли ДАнные из службы после посика
-                    Bundle bundleGetOtServicePrograssBar =(Bundle)         intent.getExtras();
+                    Bundle bundleGetOtServicePrograssBar =(Bundle)         messageEvensBusPrograssBar.mess.getExtras();
                     String Статус=   bundleGetOtServicePrograssBar.getString("Статус");
-
-
-
 
                     if (Статус.contains("PrograssBarVisible")) {
 
@@ -240,16 +224,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                     }else {
 
-                        if (Статус.contains("AsyncPrograssBarEND")) {
 
-
-                            // TODO: 26.12.2022  конец основгого кода
-                            Log.d(context.getClass().getName(), "\n" + " class "
-                                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                        }
 
 
 
@@ -264,15 +239,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                     }
 
 
-                    // TODO: 26.12.2022  конец основгого кода
-                    Log.d(context.getClass().getName(), "\n" + " class "
-                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                }
-            };
-            LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiverAsyncOrUpdatePO,
-                    new IntentFilter("Broad_messageAsyncPrograssBar"));
+
 
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -368,6 +335,52 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
+    public void startServiceUpdatePO(){
+
+        try{
+
+            Intent intentstartServiceOneSignal=new Intent(context, IntentServiceBoot.class);
+            intentstartServiceOneSignal.setAction("IntentServiceBootUpdatePo.com");
+            activity.startService(intentstartServiceOneSignal);
+
+
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
+
+    public void stopServiceBootAndAsync(){
+
+        try{
+
+            Intent intentstartServiceOneSignal=new Intent(context, IntentServiceBoot.class);
+            intentstartServiceOneSignal.setAction("IntentServiceBootAsync.com");
+            activity.stopService(intentstartServiceOneSignal);
+            // TODO: 24.01.2024
+            activity.finishAffinity();
+
+
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
 
 
 
@@ -378,11 +391,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
 
 
 
-
-
-
-
-    private void МетодБоковаяПанельОткрытьЗАкрыть() {
+    public void МетодБоковаяПанельОткрытьЗАкрыть() {
         try {
             if (drawerLayoutAsync.isDrawerOpen(Gravity.LEFT)) {
                 drawerLayoutAsync.closeDrawer(Gravity.LEFT);
@@ -487,16 +496,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
 
     }
 
-    private void МетодСообщениеПользоватлюЧтоНЕтИнтренета(String КакойРежимОтоброжать) {
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast toast = Toast.makeText(context, КакойРежимОтоброжать, Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.BOTTOM, 0, 40);
-                toast.show();
-            }
-        });
-    }
+
 
 
       public void startBl_inner(){
@@ -567,20 +567,45 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
             drawerLayoutAsync.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
                 @Override
                 public void onDrawerOpened(View drawerView) {
-                    Drawable drawable = getResources().getDrawable(R.mipmap.icon_dsu1_for_asyncapp_close_naviga);///
+                    try {
+                    Drawable drawable =context. getResources().getDrawable(R.mipmap.icon_dsu1_for_asyncapp_close_naviga);///
+
                     navigationViewAsyncApp.setVisibility(View.VISIBLE);
+
                     super.onDrawerOpened(drawerView);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    }
                 }
                 @Override
                 public void onDrawerClosed(View drawerView) {
-                    Drawable drawable = getResources().getDrawable(R.drawable.icon_dsu1_async_asynprograssbar);///
+                    try {
+                    Drawable drawable =context. getResources().getDrawable(R.drawable.icon_dsu1_async_asynprograssbar);///
+
                     navigationViewAsyncApp.setVisibility(View.GONE);
+
                     super.onDrawerClosed(drawerView);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                            Thread.currentThread().getStackTrace()[2].getMethodName(),
+                            Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
+                }
+
             });
             navigationViewAsyncApp.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    try{
                     switch (item.getItemId()) {
                         // TODO: 06.04.2022 Запускаем ОШибки
                         case R.id.one:
@@ -611,10 +636,12 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                             item.setChecked(true);
                             try {
 // TODO: 10.07.2023  запуск обновление ПО
-                                //  методЗапускаОбновлениеПо(false);
-                                Log.i(this.getClass().getName(),  " Атоманически установкаОбновление ПО "+ Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
-                                Log.w(getPackageName().getClass().getName(), "item.getItemId() Посмотреть ошибки   " + item.getItemId() + "\n");//////////
-                                Log.i(this.getClass().getName(),  "R.id.item_async_updatepo  "+Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
+                                startServiceUpdatePO();
+                                Log.d(getApplicationContext().getClass().getName(), "\n"
+                                        + " время: " + new Date() + "\n+" +
+                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                        " intent.getAction() "  );
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -629,6 +656,15 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                     if (drawerLayoutAsync.isDrawerOpen(Gravity.LEFT)) {
                         drawerLayoutAsync.closeDrawer(Gravity.LEFT);
                     }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                            Thread.currentThread().getStackTrace()[2].getMethodName(),
+                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
                     return true;
                 }
             });

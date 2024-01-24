@@ -6,16 +6,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
+import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
 import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreView;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -30,14 +36,19 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
     private ObjectMapper objectMapper;
 
     private Integer getHiltPublicId;
+    private  String getHiltCommintgPrices;
 
-    public MyRecycleViewIsAdapters(@NotNull JsonNode jsonNodeParent, @NotNull Context context,@NotNull ObjectMapper objectMapper,@NotNull Integer getHiltPublicId ) {
+    public MyRecycleViewIsAdapters(@NotNull JsonNode jsonNodeParent,
+                                   @NotNull Context context,@NotNull ObjectMapper objectMapper,
+                                   @NotNull Integer getHiltPublicId,
+                                   @NotNull String getHiltCommintgPrices) {
         // super();
         try{
         this.jsonNodeParent = jsonNodeParent;
         this.context = context;
         this.objectMapper = objectMapper;
         this.getHiltPublicId = getHiltPublicId;
+        this.getHiltCommintgPrices = getHiltCommintgPrices;
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -53,6 +64,7 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
 
 
 }
+
 
     @SuppressLint("RecyclerView")
     @Override
@@ -199,7 +211,7 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
         // TODO: 27.12.2023
 
             // TODO: 02.03.2022 Запускаем Обработку Parent Конмоненты
-            ComponentsForRecyreView componentsForRecyreView=  new ComponentsForRecyreView(holder,context,position,objectMapper,getHiltPublicId);
+            ComponentsForRecyreView componentsForRecyreView=  new ComponentsForRecyreView(holder,context,position,objectMapper,getHiltPublicId,getHiltCommintgPrices);
 
             // TODO: 29.12.2023 Кнопка Стрелочка которая показывает и скрывает Дочериний recyreview
             componentsForRecyreView.getArrow_nested_receriview();

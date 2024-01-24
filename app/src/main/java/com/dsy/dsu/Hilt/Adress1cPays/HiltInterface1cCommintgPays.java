@@ -1,9 +1,5 @@
-package com.dsy.dsu.Hilt.Adress1c;
+package com.dsy.dsu.Hilt.Adress1cPays;
 
-
-import android.content.Intent;
-
-import androidx.lifecycle.MutableLiveData;
 
 import dagger.hilt.EntryPoint;
 import dagger.hilt.InstallIn;

@@ -1,12 +1,14 @@
 package com.dsy.dsu.CommitingPrices.View.Window;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,9 +18,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.BLFragmentCommintingPrices;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.EventsBackAndAsyncAndSearchCommintPrices;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews.InizializayRecyreViews;
+import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
+import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPricesAdvanced;
 import com.dsy.dsu.CommitingPrices.ViewModel.ModelComminingPrisesByte;
 import com.dsy.dsu.CommitingPrices.ViewModel.ModelComminingPrisesString;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
@@ -27,6 +32,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+import com.google.common.util.concurrent.AtomicDouble;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import javax.inject.Inject;
 
@@ -40,6 +50,11 @@ public class FragmentCommingPrices extends Fragment {
 
     @Inject
     Integer getHiltPublicId;
+
+    @Inject
+    StringBuffer getHiltCommintgPrices;
+
+
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private LifecycleOwner lifecycleOwner;
@@ -63,6 +78,9 @@ public class FragmentCommingPrices extends Fragment {
     private BottomNavigationItemView bottomNavigationSearch;
     private     EventsBackAndAsyncAndSearchCommintPrices eventsBackAndAsyncAndSearchCommintPrices;
 
+
+
+   private BLFragmentCommintingPrices bucesslogicFragmentCommintingPrices;
     public FragmentCommingPrices() {
         // Required empty public constructor
         Log.d(this.getClass().getName(),"\n"
@@ -100,6 +118,10 @@ public class FragmentCommingPrices extends Fragment {
     }
 
     }
+
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -146,44 +168,7 @@ public class FragmentCommingPrices extends Fragment {
             bottomNavigationSearch.setTitle("Поиск");
 
 
-            // TODO: 30.12.2023 код бизнес логики ддля Трех кнопок снизу ВЫход , СИнхрозауия, Посик
-          eventsBackAndAsyncAndSearchCommintPrices= new EventsBackAndAsyncAndSearchCommintPrices(getContext(),bottomnavigationw_commintingprices,
-                            bottomNavigationBack,bottomNavigationAsync,bottomNavigationSearch );
 
-// TODO: 30.12.2023 запускаем первоночальную оценку количество записей
-            eventsBackAndAsyncAndSearchCommintPrices.new EventsAsync().eventsSearchsetNumber(null);
-
-
-            // TODO: 30.12.2023 инициализируем посик SearchView
-            eventsBackAndAsyncAndSearchCommintPrices.new EventsSearch().eventsSearch(bottomNavigationSearch,  searchview_commintingprices);
-
-
-
-            // TODO: 30.12.2023  кнопка back обратно на все приложения faceApp
-            eventsBackAndAsyncAndSearchCommintPrices.new EventsBack().eventsBack( );
-
-
-            // TODO: 28.12.2023  запускаем класс бизнес логики для Фрагметна Commint Prices
-            BLFragmentCommintingPrices BLFragmentCommintingPrices =new BLFragmentCommintingPrices(getActivity(),getContext()
-                    ,getHiltJaksonObjectMapper,modelComminingPrisesString,
-                    modelComminingPrisesByte ,recycleview_comminingpprices
-                    ,prograessbar_commintingprices,lifecycleOwner ,searchview_commintingprices,
-                      eventsBackAndAsyncAndSearchCommintPrices,getHiltPublicId);
-
-
-              // TODO: 27.12.2023  начинаем запуск is null
-            BLFragmentCommintingPrices.startIsNullRecyreView( );
-
-            // TODO: 28.12.2023 инизилащитция recyreview
-
-             new InizializayRecyreViews(recycleview_comminingpprices,getContext()).startInitRecyreview();
-
-         // TODO: 26.12.2023 запускаем получение данных при NULL
-            BLFragmentCommintingPrices.getmodelByte( );
-
-
-            // TODO: 30.12.2023  иницилизиуем кнопку запуска ASyncсинхрониазции
-            eventsBackAndAsyncAndSearchCommintPrices.new EventsAsync( ).eventsAsync(BLFragmentCommintingPrices,prograessbar_commintingprices);
 
 
             Log.d(this.getClass().getName(),"\n"
@@ -209,9 +194,47 @@ public class FragmentCommingPrices extends Fragment {
     public void onStart() {
         super.onStart();
  try{
+     EventBus.getDefault().register(this);
+     // TODO: 24.01.2024 Bisnes COde
+     // TODO: 30.12.2023 код бизнес логики ддля Трех кнопок снизу ВЫход , СИнхрозауия, Посик
+     eventsBackAndAsyncAndSearchCommintPrices= new EventsBackAndAsyncAndSearchCommintPrices(getContext(),bottomnavigationw_commintingprices,
+             bottomNavigationBack,bottomNavigationAsync,bottomNavigationSearch );
 
-/*     // TODO: 26.12.2023
-     biznesLogicainnerFragment.getmodelByte();*/
+// TODO: 30.12.2023 запускаем первоночальную оценку количество записей
+     eventsBackAndAsyncAndSearchCommintPrices.new EventsAsync().eventsSearchsetNumber(null);
+
+
+     // TODO: 30.12.2023 инициализируем посик SearchView
+     eventsBackAndAsyncAndSearchCommintPrices.new EventsSearch().eventsSearch(bottomNavigationSearch,  searchview_commintingprices);
+
+
+
+     // TODO: 30.12.2023  кнопка back обратно на все приложения faceApp
+     eventsBackAndAsyncAndSearchCommintPrices.new EventsBack().eventsBack( );
+
+
+     // TODO: 28.12.2023  запускаем класс бизнес логики для Фрагметна Commint Prices
+     bucesslogicFragmentCommintingPrices =new BLFragmentCommintingPrices(getActivity(),getContext()
+             ,getHiltJaksonObjectMapper,modelComminingPrisesString,
+             modelComminingPrisesByte ,recycleview_comminingpprices
+             ,prograessbar_commintingprices,lifecycleOwner ,searchview_commintingprices,
+             eventsBackAndAsyncAndSearchCommintPrices,getHiltPublicId,getHiltCommintgPrices.toString());
+
+
+     // TODO: 27.12.2023  начинаем запуск is null
+     bucesslogicFragmentCommintingPrices.startIsNullRecyreView( );
+
+     // TODO: 28.12.2023 инизилащитция recyreview
+
+     new InizializayRecyreViews(recycleview_comminingpprices,getContext()).startInitRecyreview();
+
+     // TODO: 26.12.2023 запускаем получение данных при NULL
+     bucesslogicFragmentCommintingPrices.getmodelByte( );
+
+
+     // TODO: 30.12.2023  иницилизиуем кнопку запуска ASyncсинхрониазции
+     eventsBackAndAsyncAndSearchCommintPrices.new EventsAsync( ).eventsAsync(bucesslogicFragmentCommintingPrices,prograessbar_commintingprices);
+
 
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -234,7 +257,7 @@ public class FragmentCommingPrices extends Fragment {
     public void onStop() {
         super.onStop();
         try{
-
+            EventBus.getDefault().unregister(this);
             Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -249,4 +272,35 @@ public class FragmentCommingPrices extends Fragment {
     }
         // TODO: 09.01.202
     }
+
+
+
+    // TODO: 23.01.2024 EventBus for Async
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void EventMessageEvensBusAyns(MessageEvensBusPrices messageEvensBusPrices){
+try{
+        // TODO: 26.12.2023 запускаем получение данных при NULL
+
+    // TODO: 26.12.2023 запускаем получение данных при NULL
+    bucesslogicFragmentCommintingPrices.getmodelByte( );
+
+
+        Log.d(this.getClass().getName(),"\n"
+                + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                " messageEvensBusPrices " +messageEvensBusPrices.mess);
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+
+    }
+
+
+
+
 }
