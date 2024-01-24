@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
@@ -88,18 +88,20 @@ public class CompleteRemoteSyncService {
     private  SSLSocketFactory getsslSocketFactory2;
 
     private ExecutorService executorService  = Executors.newSingleThreadExecutor();
+    String Режим;
     public  @Inject CompleteRemoteSyncService(@ApplicationContext Context context) {
         //TODO сомо имя json
         this.context=context;
     }
 
     public void startServiceAsybc(@NonNull Context context, @NonNull SSLSocketFactory getsslSocketFactory2,
-                                 @NonNull Integer getHiltPublicId ) {
+                                 @NonNull Integer getHiltPublicId,@NonNull String Режим ) {
         try {
+            this.Режим=Режим;
             // TODO: 14.08.2023 вызов кода ПОльзовательский
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
 
-            РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","");
+            РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
 
             // TODO: 22.01.2024
            this. getHiltPublicId=getHiltPublicId;
@@ -123,12 +125,13 @@ public class CompleteRemoteSyncService {
         }
     }
     public void startServiceUpdatePO(@NonNull Context context, @NonNull SSLSocketFactory getsslSocketFactory2,
-                                  @NonNull Integer getHiltPublicId ) {
+                                  @NonNull Integer getHiltPublicId,@NonNull String Режим ) {
         try {
+            this.Режим=Режим;
             // TODO: 14.08.2023 вызов кода ПОльзовательский
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
 
-            РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","");
+            РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
 
             // TODO: 22.01.2024
             this. getHiltPublicId=getHiltPublicId;
@@ -183,13 +186,17 @@ public class CompleteRemoteSyncService {
                     metodSucceessNetwork();
 
 
-                    metodВыполняетсяГлавнаяWork();//todo Main Code Sercice
+
+                        metodВыполняетсяГлавнаяWork();//todo Main Code Sercice
+
+
+
 
                     // TODO: 26.12.2022  конец основгого кода
                     Log.d(context.getClass().getName(), "\n" + " class "
                             + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
                 }
 
                 @Override
@@ -296,6 +303,7 @@ public class CompleteRemoteSyncService {
 
 
     private void metodВыполняетсяГлавнаяWork() {
+        try{
         if (      date_update != null && success_users != null && success_login != null
                 && ФиналПолучаемРазницуМеждуДатами < 20  ) {
 
@@ -313,20 +321,30 @@ public class CompleteRemoteSyncService {
 
             // TODO: 28.04.2023 НЕт Анутифтикации Пароль
             // TODO: 28.04.2023 НЕт Анутифтикации Пароль
-            metodЛогинаиПароляНЕт();
+            startFirstApp();
 
             Log.d(this.getClass().getName(), "  ФиналПолучаемРазницуМеждуДатами  " + ФиналПолучаемРазницуМеждуДатами
                     + " date_update " + date_update + " СтатусРаботыСервера " + СтатусРаботыСервера);
 
         }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
     }
 
 
 
-    private void metodЛогинаиПароляНЕт() {
-        class SendUserЛогиниПарольDont extends      SendMainActivity{
 
-            public SendUserЛогиниПарольDont(Context context) {
+    private void startFirstApp() {
+        class SendUserFirstApp extends      SendMainActivity{
+
+            public SendUserFirstApp(Context context) {
                 super(context);
             }
 
@@ -334,8 +352,8 @@ public class CompleteRemoteSyncService {
             public void startSendBroadSesiver() {
                 //super.startSendBroadSesiver();
                 intentComunications.setAction("Broad_messageAsyncOrUpdateAsync");
-                bundleComunications.putString("Статус",  "Логин и пароль нет !!!!");///"В процесс"
-                bundleComunications.putString("Действие",  "Логин и пароль нет !!!!");///"В процесс"
+                bundleComunications.putString("Статус",  "Первый запуск  !!!!");///"В процесс"
+                bundleComunications.putString("Действие",   "Первый запуск  !!!!");///"В процесс"
                 intentComunications.putExtras(bundleComunications);
 
                 // TODO: 23.01.2024 SEND event bus
@@ -347,7 +365,7 @@ public class CompleteRemoteSyncService {
             }
         }
         // TODO: 22.01.2024 когда режим офлайн
-        new SendUserЛогиниПарольDont(context).startSendBroadSesiver();
+        new SendUserFirstApp(context).startSendBroadSesiver();
     }
     
     
@@ -457,36 +475,35 @@ public class CompleteRemoteSyncService {
 
 
 
+
+
+
                 // TODO: 22.01.2024 true запускаем синхронизации
                     if (СервернаяВерсия==0) {
-                        // TODO: 03.10.2023 Запуск Синхронизации
-                     Long   ФинальныйРезультатAsyncBackgroud = localBinderAsync.getService().metodStartingSync(   context);
+                        if (Режим.contains("IntentServiceBootAsync.com")) {
 
-
-                        Boolean СтатусБлокировкиПользотеляТекущего=    getBlockCurrentUser();
-
-                        // TODO: 22.01.2024
-                        if(СтатусБлокировкиПользотеляТекущего==false){
-
-                            // TODO: 03.10.2023 КОНЕЦ
-                            metoEndingAsynsSharedPreferences();
-                            metoEndingAsynsRetryBroadCastResiver();
-
-                            // TODO: 24.01.2024    Выход из Синхронизации на Активити DachBord
-                          //  metoEndingAsynsDashboard();
-
+                            startingAsyncElseWithParamets();
+                            // TODO: 03.10.2023
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                    " Режим " +Режим);
                         }else {
-                            metodПользовательЗаблокирован();
+// TODO: 24.01.2024  отправляем пользователб точ но он имеет уже полседнию датиу
 
+                            metodAfterVersionEst(СервернаяВерсия);
+                            // TODO: 03.10.2023
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                    " Режим " +Режим);
+                            
                         }
-
-
                         // TODO: 03.10.2023
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                " ФинальныйРезультатAsyncBackgroud  Запуск Синхронизации "+ФинальныйРезультатAsyncBackgroud+
-                                " СтатусБлокировкиПользотеляТекущего " +СтатусБлокировкиПользотеляТекущего);
+                                " Режим " +Режим);
 
 
 
@@ -495,11 +512,8 @@ public class CompleteRemoteSyncService {
 
                         // TODO: 22.01.2024  запускаем обновдение ПО
                     }else {
-
                         // TODO: 22.01.2024 запускаю обновление ПО
                         metodStartUpdatePoMessgeUser(СервернаяВерсия);
-
-
 
                         // TODO: 03.10.2023
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -529,6 +543,49 @@ public class CompleteRemoteSyncService {
         }
 
 
+
+        Long startingAsyncElseWithParamets(){
+            Long   ФинальныйРезультатAsyncBackgroud=0l;
+            try{
+            // TODO: 03.10.2023 Запуск Синхронизации
+              ФинальныйРезультатAsyncBackgroud = localBinderAsync.getService().metodStartingSync(   context);
+
+
+            Boolean СтатусБлокировкиПользотеляТекущего=    getBlockCurrentUser();
+
+            // TODO: 22.01.2024
+            if(СтатусБлокировкиПользотеляТекущего==false){
+
+                // TODO: 03.10.2023 КОНЕЦ
+                metoEndingAsynsSharedPreferences();
+                metoEndingAsynsRetryBroadCastResiver();
+
+                // TODO: 24.01.2024    Выход из Синхронизации на Активити DachBord
+                  metoEndingAsynsDashboard();
+
+            }else {
+                metodПользовательЗаблокирован();
+
+            }
+
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " localBinderAsync ");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+            return ФинальныйРезультатAsyncBackgroud;
+
+        }
+
         private void metodStartUpdatePoMessgeUser(@NonNull Integer СервернаяВерсия) {
             class SendUserProssecingUpdatePo extends      SendMainActivity{
 
@@ -554,6 +611,51 @@ public class CompleteRemoteSyncService {
             }
             // TODO: 22.01.2024 когда режим офлайн
             new SendUserProssecingUpdatePo(context).startSendBroadSesiver();
+        }
+        private void metodAfterVersionEst(@NonNull Integer СервернаяВерсия) {
+            class SendUserAfterVersionPO extends      SendMainActivity{
+
+                public SendUserAfterVersionPO(Context context) {
+                    super(context);
+                }
+
+                public void startSendBroadSesiver( ) {
+                    try{
+
+                    PackageInfo pInfo = context. getPackageManager().getPackageInfo(context. getPackageName(), 0);
+                    String version = pInfo.versionName;//Version Name
+                    Integer ЛокальнаяВерсияПО = pInfo.versionCode;//Version Code
+
+                        if(СервернаяВерсия==0){
+                            bundleComunications.putInt("СервернаяВерсия",  ЛокальнаяВерсияПО);///"В процесс"
+                        }else {
+                            bundleComunications.putInt("СервернаяВерсия",  СервернаяВерсия);///"В процесс"
+                        }
+
+                    intentComunications.setAction("Broad_messageAsyncOrUpdatePO");
+                    bundleComunications.putString("Статус",   "У вас последная версия ПО !!!");///"В процесс"
+                    bundleComunications.putString("Действие",   "У вас последная версия ПО !!!");///"В процесс"
+
+                    intentComunications.putExtras(bundleComunications);
+
+                    EventBus.getDefault().post(new MessageEvensBusUpdatePO(intentComunications));
+
+              /*      // TODO: 22.01.2024 останавливаем службу
+                    stopServiceBoot();*/
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
+                }
+            }
+            // TODO: 22.01.2024 когда режим офлайн
+            new SendUserAfterVersionPO(context).startSendBroadSesiver();
         }
 
 
@@ -975,10 +1077,7 @@ public class CompleteRemoteSyncService {
                             localBinderОбновлениеПО = (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) service;
 
                             // TODO: 23.01.2024 stating .... Main Code
-
-                            WorkerUpdatePOAndAsync();
-
-
+                                WorkerUpdatePOAndAsync();
 
                             // TODO: 25.03.2023
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

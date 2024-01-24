@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts.StartingEventAsyncOrUpdatePOUsers;
 import com.dsy.dsu.BootAndAsync.DowloadUpdatePO.DownLoadPO;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
@@ -37,6 +38,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Date;
 
+import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
 // TODO: 19.01.2024  внутренаяя бизнес логика Активтив BootAndAsync
@@ -50,6 +52,9 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
     private NavigationView navigationViewAsyncApp;
     
     private  Context context;
+
+    
+    StartingEventAsyncOrUpdatePOUsers startingEventAsyncOrUpdatePOUsers;
 
     public BL_innerMainActivityBootAndAsync(@NonNull SSLSocketFactory getsslSocketFactory2,
                                             @NonNull  ProgressBar progressbarbootandasync,
@@ -67,6 +72,8 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
         this.navigationViewAsyncApp = navigationViewAsyncApp;
         this.context = context;
         this.lifecycleOwner = lifecycleOwner;
+        // TODO: 24.01.2024  
+        startingEventAsyncOrUpdatePOUsers=new StartingEventAsyncOrUpdatePOUsers(context);
     }
 
 
@@ -81,7 +88,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                     if(Статус.contains( "У вас последная версия ПО !!!")){
 
 
-                        Toast.makeText(getApplicationContext(),
+                        Toast.makeText(context,
                                 "Последная версия ПО !!! "+ СервернаяВерсия    , Toast.LENGTH_LONG).show();
 
 // TODO: 26.12.2022  конец основгого кода
@@ -136,7 +143,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
 
                     if(Статус.contains("Логин и/или пароль неправильный !!!!")){
                         методПереходНаActivityPassword();
-                        Toast.makeText(getApplicationContext(), "Логин и/или пароль неправильный !!!!"    , Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Логин и/или пароль неправильный !!!!"    , Toast.LENGTH_LONG).show();
                     }
 
 
@@ -145,13 +152,22 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                         if(Статус.contains("Вы заблокирован   !!!!")){
                             // TODO: 22.01.2024  заблокирован
                             методПереходНаActivityPassword();
-                            Toast.makeText(getApplicationContext(), "Вы заблокирован   !!!! "    , Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Вы заблокирован   !!!! "    , Toast.LENGTH_LONG).show();
 
                         }
 
+            if(Статус.contains("Первый запуск  !!!!")){
+                // TODO: 22.01.2024  заблокирован
+                методПереходНаActivityPassword();
+              //  Toast.makeText(context, "Вы заблокирован   !!!! "    , Toast.LENGTH_LONG).show();
+
+            }
+
+
+
 
             if(Статус.contains(    "Сервер выкл.!!!")){
-                Toast.makeText(getApplicationContext(),     "Сервер выкл.!!!"    , Toast.LENGTH_LONG).show();
+                Toast.makeText(context,     "Сервер выкл.!!!"    , Toast.LENGTH_LONG).show();
 
             }
 
@@ -314,48 +330,8 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
     }
     // TODO: 19.01.2024
 
-    public void startServiceBootAndAsync(){
-
-        try{
-
-            Intent intentstartServiceOneSignal=new Intent(context, IntentServiceBoot.class);
-            intentstartServiceOneSignal.setAction("IntentServiceBootAsync.com");
-            activity.startService(intentstartServiceOneSignal);
 
 
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-    public void startServiceUpdatePO(){
-
-        try{
-
-            Intent intentstartServiceOneSignal=new Intent(context, IntentServiceBoot.class);
-            intentstartServiceOneSignal.setAction("IntentServiceBootUpdatePo.com");
-            activity.startService(intentstartServiceOneSignal);
-
-
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
 
     public void stopServiceBootAndAsync(){
@@ -609,17 +585,19 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                     switch (item.getItemId()) {
                         // TODO: 06.04.2022 Запускаем ОШибки
                         case R.id.one:
-                            item.setChecked(true);
-                            Log.w(getPackageName().getClass().getName(), "item.getItemId() Посмотреть ошибки   " + item.getItemId() + "\n");//////////
                             try {
+                            item.setChecked(true);
                                 Intent Интент_Меню = new Intent(activity, MainActivity_Errors.class);
                                 Интент_Меню.setAction("com.CallBackBootAndAsync");
                                 Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
 
-                                startActivity(Интент_Меню);
+                               context. startActivity(Интент_Меню);
 
-                                Log.i(this.getClass().getName(),  "R.id.one "+Thread.currentThread().getStackTrace()[2].getMethodName()+
-                                        " время " +new Date().toLocaleString() );
+                                Log.d(context.getClass().getName(), "\n"
+                                        + " время: " + new Date() + "\n+" +
+                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                        " intent.getAction() "  );
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
@@ -636,8 +614,9 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                             item.setChecked(true);
                             try {
 // TODO: 10.07.2023  запуск обновление ПО
-                                startServiceUpdatePO();
-                                Log.d(getApplicationContext().getClass().getName(), "\n"
+                                startingEventAsyncOrUpdatePOUsers.  startServiceUpdatePO();
+
+                                Log.d(context.getClass().getName(), "\n"
                                         + " время: " + new Date() + "\n+" +
                                         " Класс в процессе... " + this.getClass().getName() + "\n" +
                                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+

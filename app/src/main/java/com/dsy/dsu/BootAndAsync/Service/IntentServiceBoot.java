@@ -102,7 +102,7 @@ public class IntentServiceBoot extends IntentService {
             // TODO: 24.01.2024 Синхрониазция и Обновление ПО  
             if (intent.getAction().contains("IntentServiceBootAsync.com")) {
                 // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                completeRemoteSyncService.startServiceAsybc(getApplicationContext(),getsslSocketFactory2,  getHiltPublicId);
+                completeRemoteSyncService.startServiceAsybc(getApplicationContext(),getsslSocketFactory2,  getHiltPublicId,"IntentServiceBootAsync.com");
 
                 
                 
@@ -113,7 +113,7 @@ public class IntentServiceBoot extends IntentService {
                 
                 if (intent.getAction().contains("IntentServiceBootUpdatePo.com")) {
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceUpdatePO(getApplicationContext(),getsslSocketFactory2,   getHiltPublicId);
+                    completeRemoteSyncService.startServiceUpdatePO(getApplicationContext(),getsslSocketFactory2,   getHiltPublicId,"IntentServiceBootUpdatePo.com");
                 }
 
             }
