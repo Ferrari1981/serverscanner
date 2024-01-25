@@ -314,7 +314,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
             Интент_ЗапускаетFaceApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             Интент_ЗапускаетFaceApp.setAction("MainActivityPasswords.class");
            activity.startActivity(Интент_ЗапускаетFaceApp);//tso
-           activity. finishAfterTransition();
+           activity. finish();
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -483,6 +483,11 @@ public class CompleteRemoteSyncService {
                         if (Режим.contains("IntentServiceBootAsync.com")) {
 
                             startingAsyncElseWithParamets();
+
+                            // TODO: 25.01.2024  после упешного получение данных синхрониазции идем на экран DashBoard
+
+                            metoEndingAsynsDashboard();
+                            
                             // TODO: 03.10.2023
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -545,28 +550,74 @@ public class CompleteRemoteSyncService {
 
 
         Long startingAsyncElseWithParamets(){
-            Long   ФинальныйРезультатAsyncBackgroud=0l;
+            final Long[] ФинальныйРезультатAsyncBackgroud = {0l};
             try{
-            // TODO: 03.10.2023 Запуск Синхронизации
-              ФинальныйРезультатAsyncBackgroud = localBinderAsync.getService().metodStartingSync(   context);
 
 
-            Boolean СтатусБлокировкиПользотеляТекущего=    getBlockCurrentUser();
+                // TODO: 03.10.2023 Запуск Синхронизации
+                ФинальныйРезультатAsyncBackgroud[0] = localBinderAsync.getService().metodStartingSync(   context);
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                        " localBinderAsync "+" ФинальныйРезультатAsyncBackgroud[0] "+ФинальныйРезультатAsyncBackgroud[0]);
 
-            // TODO: 22.01.2024
-            if(СтатусБлокировкиПользотеляТекущего==false){
 
-                // TODO: 03.10.2023 КОНЕЦ
-                metoEndingAsynsSharedPreferences();
-                metoEndingAsynsRetryBroadCastResiver();
 
-                // TODO: 24.01.2024    Выход из Синхронизации на Активити DachBord
-                  metoEndingAsynsDashboard();
 
-            }else {
-                metodПользовательЗаблокирован();
+      /*          Completable.complete().subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
 
-            }
+                        // TODO: 03.10.2023 Запуск Синхронизации
+                        ФинальныйРезультатAsyncBackgroud[0] = localBinderAsync.getService().metodStartingSync(   context);
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                " localBinderAsync "+" ФинальныйРезультатAsyncBackgroud[0] "+ФинальныйРезультатAsyncBackgroud[0]);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Boolean СтатусБлокировкиПользотеляТекущего=    getBlockCurrentUser();
+
+                        // TODO: 22.01.2024
+                        if(СтатусБлокировкиПользотеляТекущего==false){
+
+                            // TODO: 03.10.2023 КОНЕЦ
+                            metoEndingAsynsSharedPreferences();
+                            metoEndingAsynsRetryBroadCastResiver();
+
+                            // TODO: 24.01.2024    Выход из Синхронизации на Активити DachBord
+                            metoEndingAsynsDashboard();
+
+                        }else {
+                            metodПользовательЗаблокирован();
+
+                        }
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                " localBinderAsync "+ " СтатусБлокировкиПользотеляТекущего " +СтатусБлокировкиПользотеляТекущего);
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                          e.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                                + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    }
+                });*/
+
+
+
+
+
+
+
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -582,7 +633,7 @@ public class CompleteRemoteSyncService {
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-            return ФинальныйРезультатAsyncBackgroud;
+            return ФинальныйРезультатAsyncBackgroud[0];
 
         }
 
@@ -1041,7 +1092,8 @@ public class CompleteRemoteSyncService {
          /*       Boolean asBoolenCbyСинхронная =context. bindService(intentAsync,
                         connectionAsync, Context.BIND_AUTO_CREATE);*/
 
-          Boolean asBoolenCbyСинхронная =context. bindService(intentAsync,Context.BIND_AUTO_CREATE,executorService ,connectionAsync );
+          //Boolean asBoolenCbyСинхронная =context. bindService(intentAsync,   connectionAsync,Context.BIND_AUTO_CREATE );
+        Boolean asBoolenCbyСинхронная =context. bindService(intentAsync,Context.BIND_AUTO_CREATE,executorService ,connectionAsync );
 
 
             // TODO: 28.04.2023
@@ -1124,6 +1176,7 @@ public class CompleteRemoteSyncService {
            // Boolean asBoolenОбновлениеПО = context.bindService(intentЗапускСлужбыОбновлениеПО, connectionОбновлениеПО, Context.BIND_AUTO_CREATE);
 
         Boolean asBoolenОбновлениеПО =context. bindService(intentЗапускСлужбыОбновлениеПО,Context.BIND_AUTO_CREATE,executorService ,connectionОбновлениеПО );
+       //Boolean asBoolenОбновлениеПО =context. bindService(intentЗапускСлужбыОбновлениеПО,   connectionОбновлениеПО ,Context.BIND_AUTO_CREATE);
 
             // TODO: 28.04.2023
             Log.d(this.getClass().getName(), "\n" + " class " +
