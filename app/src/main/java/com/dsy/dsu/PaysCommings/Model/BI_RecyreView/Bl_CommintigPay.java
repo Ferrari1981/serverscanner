@@ -787,31 +787,10 @@ public class Bl_CommintigPay {
                 public JsonNode loadInBackground() {
                     JsonNode jsonNode1сСогласования = null;
                     try{
-                        ПубличныйidPay=8;
-                        //TODO получаем данные для соглачования
-
-
                         //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С DEBUG
                         jsonNode1сСогласования =
                                 new Class_Get_Json_1C(context ,getHiltCommintgPays)
                                         .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper);
-
-/*
-                        //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С RELIS
-                        jsonNode1сСогласования =
-                                new Class_Get_Json_1C(context ,)
-                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper);*/
-/*
-[{"Ndoc":"000021992","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"СИТИЛИНК ООО","sum":6,"articleDDS":"2.2.04. Оргтехника","nomenclature":[{"nomen":"Тест 1"},{"nomen":"Тест 2"},{"nomen":"Тест 3"}],"filenames":[{"ВinNameFile":"Текстовый документ","expansion":"txt"}]},
-                            {"Ndoc":"000021993","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"ИП Пряслов Алексей Александрович","sum":50,"articleDDS":"2.2.05. Прочие (инвестиционная деятельность)","nomenclature":[{"nomen":"Тест картридж"}],"filenames":[{"ВinNameFile":"Справочник","expansion":"xlsx"}]}]*/
-
-
-
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "  jsonNode1сСогласования  " + jsonNode1сСогласования);
-
-
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
