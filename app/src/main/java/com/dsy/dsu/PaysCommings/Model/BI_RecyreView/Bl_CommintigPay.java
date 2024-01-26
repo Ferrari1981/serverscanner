@@ -81,6 +81,7 @@ public class Bl_CommintigPay {
     MutableLiveData<Intent> jsonNodeMutableLiveDataPayCommintg;
     androidx.appcompat.widget.SearchView searchview_commitpay;
     String getHiltCommintgPays;
+    private   Animation    animationДляСогласования;
     public    Bl_CommintigPay(@NonNull  Activity activity,
                               @NonNull  Context context ,
                               @NotNull View viewCore,
@@ -97,8 +98,6 @@ public class Bl_CommintigPay {
                               @NonNull BottomNavigationItemView bottomNavigationBackCommitingPay,
                               @NonNull BottomNavigationItemView bottomNavigationAsyncCommitingPay,
                               @NonNull BottomNavigationItemView bottomNavigationSearchCommitingPay,
-
-                              @NonNull MyRecycleViewAdapterPay myRecycleViewAdapter,
                              @NonNull MutableLiveData<Intent> jsonNodeMutableLiveDataPayCommintg,
                               @NonNull androidx.appcompat.widget.SearchView searchview_commitpay,
                               @NonNull String getHiltCommintgPays) {
@@ -129,6 +128,9 @@ public class Bl_CommintigPay {
             // TODO: 15.01.2024 init...
 
         progressBarCommitPay = viewCore.findViewById(R.id.prograessbarcommitpaydown); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
+   // animationДляСогласования= AnimationUtils.loadAnimation(context, R.anim.slide_in_row);//R.anim.layout_animal_commit
+    animationДляСогласования= AnimationUtils.loadAnimation(context,  R.anim.slide_in_scrolls);//R.anim.layout_animal_commit
 
         Log.d(activity.getClass().getName(), "\n"
                 + " время: " + new Date()+"\n+" +
@@ -592,6 +594,9 @@ public class Bl_CommintigPay {
                 myRecycleViewAdapter.notifyDataSetChanged();
                 recycleviewcommitpays.setAdapter(myRecycleViewAdapter);
                 recycleviewcommitpays.getAdapter().notifyDataSetChanged();
+
+
+
             }
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -607,7 +612,9 @@ public class Bl_CommintigPay {
         }
     }
 
-  public   void InitMyAdapterRecyreViewIsNull( ) {
+
+
+    public   void InitMyAdapterRecyreViewIsNull( ) {
         try {
                 ArrayList<Boolean> arrayListIsNull1cData=new ArrayList<>();
                 arrayListIsNull1cData.add(true);
@@ -615,6 +622,9 @@ public class Bl_CommintigPay {
                 myRecycleViewIsNullAdapter.notifyDataSetChanged();
                 recycleviewcommitpays.setAdapter(myRecycleViewIsNullAdapter);
                 recycleviewcommitpays.getAdapter().notifyDataSetChanged();
+
+
+
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1093,6 +1103,8 @@ public class Bl_CommintigPay {
                     RecyclerView.Adapter recyclerViewAdapter=         recycleviewcommitpays.getAdapter();
                     recycleviewcommitpays.swapAdapter(recyclerViewAdapter,true);
                     recycleviewcommitpays.getAdapter().notifyDataSetChanged();
+
+
                 }
             }
             Log.d(this.getClass().getName(), "\n" + " class " +
@@ -1124,6 +1136,8 @@ public class Bl_CommintigPay {
                     RecyclerView.Adapter recyclerViewAdapter=         recycleviewcommitpays.getAdapter();
                     recycleviewcommitpays.swapAdapter(recyclerViewAdapter,false);
                     recycleviewcommitpays.getAdapter().notifyDataSetChanged();
+
+
                 }
             }
             Log.d(this.getClass().getName(), "\n" + " class " +
@@ -1181,6 +1195,8 @@ public class Bl_CommintigPay {
                 RecyclerView.Adapter recyclerViewAdapter=         recycleviewcommitpays.getAdapter();
                 recycleviewcommitpays.swapAdapter(recyclerViewAdapter,true);
                 recycleviewcommitpays.getAdapter().notifyDataSetChanged();
+
+
             }
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()

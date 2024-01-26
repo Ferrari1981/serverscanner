@@ -71,6 +71,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
     // TODO: 17.01.2024 nested
     String getHiltCommintgPays;
+    Animation animationДляСогласовани;
 
     public MyRecycleViewAdapterPay(@NotNull JsonNode jsonNode1сСогласования,
                                    @NonNull Context context,
@@ -94,7 +95,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
             this.getHiltCommintgPays = getHiltCommintgPays;
             this.bl_commintigPay = bl_commintigPay;
 
-
+            animationДляСогласовани = AnimationUtils.loadAnimation(context,  R.anim.slide_in_scrolls);//R.anim.layout_animal_commit
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -459,6 +460,8 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
                 myViewHolderPay.setIsRecyclable(false);
 
+                moveAnitationRecyrevirew(  holder);
+
             }
 
 
@@ -470,7 +473,20 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
-
+    private void moveAnitationRecyrevirew( @NonNull MyViewHolderPay holder) {
+        try{
+            holder.itemView.startAnimation(animationДляСогласовани);
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
 
     // TODO: 03.11.2023  метод загрузки файлов с 1с
     void AddFileOt1c(@NonNull MyViewHolderPay holder, @NotNull JsonNode jsonNode1сСогласованияSingleRow, @NonNull ObjectMapper objectMapper) {

@@ -7,11 +7,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.ProcceerClickArrow;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHolders;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPay;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,7 +45,7 @@ public class ComponentsForRecyreView {
     private Integer getHiltPublicId;
     private  String getHiltCommintgPrices;
 
-
+    Animation    animationДляСогласованияЦены;
     public ComponentsForRecyreView(@NotNull  MyViewHolders holder,
                                    @NotNull  Context context,
                                    @NotNull  int position,
@@ -61,6 +63,9 @@ public class ComponentsForRecyreView {
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " position " +position);
+
+
+      animationДляСогласованияЦены= AnimationUtils.loadAnimation(context, R.anim.slide_in_scrolls);//R.anim.layout_animal_commit
 
     } catch (Exception e) {
         e.printStackTrace();

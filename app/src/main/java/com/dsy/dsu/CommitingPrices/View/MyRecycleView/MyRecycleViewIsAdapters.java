@@ -6,22 +6,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
-import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
 import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreView;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPay;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -37,6 +34,7 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
 
     private Integer getHiltPublicId;
     private  String getHiltCommintgPrices;
+    private Animation animationДляСогласованияЦены;
 
     public MyRecycleViewIsAdapters(@NotNull JsonNode jsonNodeParent,
                                    @NotNull Context context,@NotNull ObjectMapper objectMapper,
@@ -49,11 +47,13 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
         this.objectMapper = objectMapper;
         this.getHiltPublicId = getHiltPublicId;
         this.getHiltCommintgPrices = getHiltCommintgPrices;
-        Log.d(this.getClass().getName(),"\n"
-                + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+
-                " jsonNodeParent.size() " + jsonNodeParent.size());
+            animationДляСогласованияЦены = AnimationUtils.loadAnimation(context,  R.anim.slide_in_scrolls);//R.anim.layout_animal_commit
+           // animationДляСогласованияЦены = AnimationUtils.loadAnimation(context, R.anim.slide_in_row);//R.anim.layout_animal_commit
+            Log.d(this.getClass().getName(),"\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                    " jsonNodeParent.size() " + jsonNodeParent.size());
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -220,6 +220,9 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
             componentsForRecyreView.getmTV_commitingprices_value();
 
 
+                 moveAnitationRecyrevirew(holder);
+
+
 
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -316,4 +319,21 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
         // TODO: 28.02.2022
         return КоличесвоСтрок ;
     }
+
+
+    private void moveAnitationRecyrevirew( @NonNull MyViewHolders holder) {
+        try{
+            holder.itemView.startAnimation(animationДляСогласованияЦены);
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
 }//TODO  конец два22

@@ -26,7 +26,7 @@ public class InizializayRecyreViews {
 
     public void startInitRecyreview() {
         try {
-            animationДляСогласования= AnimationUtils.loadAnimation(context, R.anim.slide_in_row);//R.anim.layout_animal_commit
+
 
 
 
@@ -47,7 +47,6 @@ public class InizializayRecyreViews {
             LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context);
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recycleview_comminingpprices.setLayoutManager(linearLayoutManager);
-            recycleview_comminingpprices.startAnimation(animationДляСогласования);
             recycleview_comminingpprices.requestLayout();
             recycleview_comminingpprices.refreshDrawableState();
             // TODO: 28.02.2022
