@@ -25,10 +25,13 @@ public class MyViewHolderPay extends RecyclerView.ViewHolder {// TODO: 28.02.202
     public MaterialButton     arrowpay_nested_receriview_commitingpay;
     public MaterialCardView cardview_commingpay;
     public MaterialButton butt_cancel,butt_successcommit;
-    public TableLayout tableLayoutpayfilescommitingpays;
-    public TableLayout tableLayoutparentrow_pays;
+
+
     public ProgressBar progressbar_commingpay;
-    public TableRow tablerow_nesters_commininggpay;
+
+    public TableLayout  tablelayoutnewfilefrom1c;
+
+    public TableRow tableRowFisrt, tablerowsecond,tableRowpayButtons;
     public RecyclerView recycleview_nesters_commininggpay;
 
     public Context context;
@@ -76,24 +79,11 @@ public class MyViewHolderPay extends RecyclerView.ViewHolder {// TODO: 28.02.202
 
                 butt_successcommit = itemView.findViewById(R.id.butt_successcommit);
                 butt_cancel = itemView.findViewById(R.id.butt_cancel);
-
-            tableLayoutpayfilescommitingpays = itemView.findViewById(R.id.tableLayoutpayfilescommitingpays);
-
-            tableLayoutparentrow_pays = itemView.findViewById(R.id.tableLayoutparentrow_pays);
-
              progressbar_commingpay = itemView.findViewById(R.id.progressbar_commingpay);
-
-
-            tablerow_nesters_commininggpay = itemView.findViewById(R.id.tablerow_nesters_commininggpay);
 
                 // TODO: 12.01.2024 Click Arrow Nestesd
             arrowpay_nested_receriview_commitingpay= itemView.findViewById(R.id.arrowpay_nested_receriview_commitingpay);
-
             recycleview_nesters_commininggpay = itemView.findViewById(R.id.recycleview_nesters_commininggpay);
-
-
-
-
 
 
 
@@ -108,6 +98,16 @@ public class MyViewHolderPay extends RecyclerView.ViewHolder {// TODO: 28.02.202
             Otvetstvenniy = itemView.findViewById(R.id.Otvetstvenniy);
             Commentariy = itemView.findViewById(R.id.Commentariy);
 
+
+
+
+
+
+            // TODO: 26.01.2024 данные для послддующего скрытия
+            tableRowFisrt=  itemView.findViewById(R.id.tableRowFisrt);
+            tablerowsecond = itemView.findViewById(R.id.tablerowsecond);
+            tableRowpayButtons = itemView.findViewById(R.id.tableRowpayButtons);
+            tablelayoutnewfilefrom1c = itemView.findViewById(R.id.tablelayoutnewfilefrom1c);
 
 
 

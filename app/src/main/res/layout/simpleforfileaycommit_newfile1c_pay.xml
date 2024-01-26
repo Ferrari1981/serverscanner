@@ -47,13 +47,13 @@
                     android:layout_height="wrap_content"
                     android:layout_column="0"
                     android:layout_alignParentTop="true"
+
                     android:layout_centerInParent="true"
+
+
                     android:layout_marginStart="2dp"
-
                     android:layout_marginEnd="2dp"
-
-
-                    android:background="@drawable/style_forpolymaterialb_cycle_createspinner14"
+                    android:background="@drawable/style_forpolymaterialb_cycle_createspinner2"
                     android:gravity="center"
                     android:hint="Файл"
                     android:minWidth="120dp"
@@ -75,11 +75,11 @@
                     android:layout_below="@+id/textnameRowpaycommit"
                     android:layout_centerInParent="true"
                     android:layout_marginStart="5dp"
+
                     android:layout_marginEnd="5dp"
+
                     android:layout_marginBottom="5dp"
-
-                    android:background="@drawable/style_forpolymaterialb_cycle_createspinner9"
-
+                    android:background="@drawable/style_forpolymaterialb_cycle_createspinner14"
                     android:gravity="center"
                     android:minWidth="400dp"
                     android:minHeight="25dp"

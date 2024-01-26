@@ -185,47 +185,39 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
     private void setеVisibleTablerow_nesters(MyViewHolderPay holder,@NonNull Handler handler) {
         try{
+            holder.progressbar_commingpay.setVisibility(View.VISIBLE);
 
             handler.postDelayed(()->{
                 try{
-                TableRow tablerow_nesters_commininggpay = holder.tablerow_nesters_commininggpay;
 
-                if (tablerow_nesters_commininggpay.getVisibility()==View.GONE) {
-                    tablerow_nesters_commininggpay.setVisibility(View.VISIBLE);
+                    TableRow tableRowFisrt=    holder.    tableRowFisrt;
 
-                    Drawable drawableup=context.getDrawable(R.drawable.icon_for_commingpricesup);
-                    holder. arrowpay_nested_receriview_commitingpay.setIcon(drawableup);
+                    TableRow  tablerowsecond = holder. tablerowsecond;
 
 
-                    ViewGroup.LayoutParams params = tablerow_nesters_commininggpay.getLayoutParams();
-                    params.height = 400;
-                    tablerow_nesters_commininggpay.setLayoutParams(params);
+                       if(tableRowFisrt.getVisibility()==View.VISIBLE){
 
+                        procceseringHideorVisibleSecornd(  holder);
 
+                         //procceseringButtonVisibleSecornd(  holder);
 
-                }else {
+                    }
 
+                    if(tablerowsecond.getVisibility()==View.GONE) {
 
-                    Drawable drawabledown=context.getDrawable(R.drawable.icon_for_commingpricesdown2);
-                    holder. arrowpay_nested_receriview_commitingpay.setIcon(drawabledown);
+                        procceseringHideorVisibleFisrt(holder);
 
+                        procceseringButtonVisibleSecornd(holder);
+                    }
 
-
-                    tablerow_nesters_commininggpay.setVisibility(View.GONE);
-                    ViewGroup.LayoutParams params = tablerow_nesters_commininggpay.getLayoutParams();
-                    params.height = 0;
-                    tablerow_nesters_commininggpay.setLayoutParams(params);
-
-
-                }
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "tablerow_nesters_commininggpay.getVisibility() "
-                            + tablerow_nesters_commininggpay.getVisibility() );
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "tablerow_nesters_commininggpay.getVisibility() ");
 
-                    tablerow_nesters_commininggpay.requestLayout();
-                    tablerow_nesters_commininggpay.refreshDrawableState();
+
+                    holder.progressbar_commingpay.setVisibility(View.GONE);
+                   
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -234,7 +226,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
 
-            },100);
+            },50);
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -250,20 +242,66 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
         }
     }
 
+    private  void procceseringHideorVisibleSecornd(@NonNull MyViewHolderPay holder) {
 
-
-
-    private void setеHideTablerow_nesters(MyViewHolderPay holder ) {
         try{
-                    TableRow tablerow_nesters_commininggpay = holder.tablerow_nesters_commininggpay;
-                        tablerow_nesters_commininggpay.setVisibility(View.GONE);
-                        tablerow_nesters_commininggpay.setEnabled(false);
-                        ViewGroup.LayoutParams params = tablerow_nesters_commininggpay.getLayoutParams();
-                        params.height = 0;
-                        tablerow_nesters_commininggpay.setLayoutParams(params);
+        if (holder.tablerowsecond.getVisibility()==View.GONE) {
+            holder.tablerowsecond.setVisibility(View.VISIBLE);
+            Drawable drawableup=context.getDrawable(R.drawable.icon_for_commingpricesup);
+            holder. arrowpay_nested_receriview_commitingpay.setIcon(drawableup);
+            ViewGroup.LayoutParams params = holder.tablerowsecond.getLayoutParams();
+            params.height = 400;
+            holder.tablerowsecond.setLayoutParams(params);
+        }else {
+            Drawable drawabledown=context.getDrawable(R.drawable.icon_for_commingpricesdown2);
+            holder. arrowpay_nested_receriview_commitingpay.setIcon(drawabledown);
+            holder.tablerowsecond.setVisibility(View.GONE);
+            ViewGroup.LayoutParams params = holder.tablerowsecond.getLayoutParams();
+            params.height = 0;
+            holder.tablerowsecond.setLayoutParams(params);
 
-                        tablerow_nesters_commininggpay.requestLayout();
-                        tablerow_nesters_commininggpay.refreshDrawableState();
+
+        }
+
+            holder.tablerowsecond.requestLayout();
+            holder.tablerowsecond.refreshDrawableState();
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+
+    }
+    private void procceseringHideorVisibleFisrt(@NonNull MyViewHolderPay holder) {
+
+        try{
+            if (holder.tableRowFisrt.getVisibility()==View.GONE) {
+                holder.tableRowFisrt.setVisibility(View.VISIBLE);
+                Drawable drawableup=context.getDrawable(R.drawable.icon_for_commingpricesup);
+                holder. arrowpay_nested_receriview_commitingpay.setIcon(drawableup);
+                ViewGroup.LayoutParams params = holder.tableRowFisrt.getLayoutParams();
+                params.height = 400;
+                holder.tableRowFisrt.setLayoutParams(params);
+            }else {
+                //Drawable drawabledown=context.getDrawable(R.drawable.icon_for_commingpricesdown2);
+                Drawable drawabledown=context.getDrawable(R.drawable.icon_commotpay_seconthide);
+                holder. arrowpay_nested_receriview_commitingpay.setIcon(drawabledown);
+                holder.tableRowFisrt.setVisibility(View.GONE);
+                ViewGroup.LayoutParams params = holder.tableRowFisrt.getLayoutParams();
+                params.height = 0;
+                holder.tableRowFisrt.setLayoutParams(params);
+
+
+            }
+
+            holder.tableRowFisrt.requestLayout();
+            holder.tableRowFisrt.refreshDrawableState();
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -278,6 +316,146 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     }
 
 
+
+    private  void procceseringButtonVisibleSecornd(@NonNull MyViewHolderPay holder) {
+
+        try{
+            if (holder.tableRowpayButtons.getVisibility()==View.GONE) {
+                holder.tableRowpayButtons.setVisibility(View.VISIBLE);
+                Drawable drawableup=context.getDrawable(R.drawable.icon_for_commingpricesup);
+                holder. arrowpay_nested_receriview_commitingpay.setIcon(drawableup);
+                ViewGroup.LayoutParams params = holder.tableRowpayButtons.getLayoutParams();
+                params.height = 400;
+                holder.tableRowpayButtons.setLayoutParams(params);
+            }else {
+                Drawable drawabledown=context.getDrawable(R.drawable.icon_for_commingpricesdown2);
+                holder. arrowpay_nested_receriview_commitingpay.setIcon(drawabledown);
+                holder.tableRowpayButtons.setVisibility(View.GONE);
+                ViewGroup.LayoutParams params = holder.tableRowpayButtons.getLayoutParams();
+                params.height = 0;
+                holder.tableRowpayButtons.setLayoutParams(params);
+
+
+            }
+
+            holder.tableRowpayButtons.requestLayout();
+            holder.tableRowpayButtons.refreshDrawableState();
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+    }
+
+
+
+    private void defalultsetVisibleSecontTableRow(@NonNull MyViewHolderPay holder ) {
+        try{
+            // TODO: 26.01.2024 данные для послддующего скрытия
+         TableRow   tableRowFisrt=  holder.tableRowFisrt;
+            tableRowFisrt.setVisibility(View.GONE);
+            tableRowFisrt.setEnabled(false);
+            ViewGroup.LayoutParams params = tableRowFisrt.getLayoutParams();
+            params.height = 0;
+            tableRowFisrt.setLayoutParams(params);
+            tableRowFisrt.requestLayout();
+            tableRowFisrt.refreshDrawableState();
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+    }
+
+
+
+    private   void defalultsetVisibleFirstTableRow(@NonNull  MyViewHolderPay holder  ) {
+        try {
+        // TODO: 26.01.2024 данные для послддующего скрытия
+            // TODO: 26.01.2024 данные для послддующего скрытия
+            TableRow      tableRowFisrt=  holder.   tableRowFisrt;
+            tableRowFisrt.setVisibility(View.GONE);
+            tableRowFisrt.setEnabled(false);
+        ViewGroup.LayoutParams params =   tableRowFisrt.getLayoutParams();
+        params.height = 0;
+            tableRowFisrt.setLayoutParams(params);
+            tableRowFisrt.requestLayout();
+            tableRowFisrt.refreshDrawableState();
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+    }
+
+    private   void defalultsetVisibleSecondTableRow(@NonNull  MyViewHolderPay holder  ) {
+        try {
+            // TODO: 26.01.2024 данные для послддующего скрытия
+            // TODO: 26.01.2024 данные для послддующего скрытия
+            TableRow       tablerowsecond=  holder.    tablerowsecond;
+            tablerowsecond.setVisibility(View.GONE);
+            tablerowsecond.setEnabled(false);
+            ViewGroup.LayoutParams params =    tablerowsecond.getLayoutParams();
+            params.height = 0;
+            tablerowsecond.setLayoutParams(params);
+            tablerowsecond.requestLayout();
+            tablerowsecond.refreshDrawableState();
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
+    private   void defalultsetVisiblebuttonsTableRow(@NonNull  MyViewHolderPay holder  ) {
+        try {
+            // TODO: 26.01.2024 данные для послддующего скрытия
+            // TODO: 26.01.2024 данные для послддующего скрытия
+            TableRow       tableRowpayButtons=  holder.    tableRowpayButtons;
+            tableRowpayButtons.setVisibility(View.GONE);
+            tableRowpayButtons.setEnabled(false);
+            ViewGroup.LayoutParams params =    tableRowpayButtons.getLayoutParams();
+            params.height = 0;
+            tableRowpayButtons.setLayoutParams(params);
+            tableRowpayButtons.requestLayout();
+            tableRowpayButtons.refreshDrawableState();
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
 
 
     @Override
@@ -454,13 +632,21 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
                 setBungleCardView(holder, arrayNodeJsonRow);
 
 
-                // TODO: 17.01.2024 метод идет последним
-                setеHideTablerow_nesters(holder);
+                // TODO: 17.01.2024 показать или скрыть
+                defalultsetVisibleFirstTableRow(holder);
 
+                defalultsetVisibleSecondTableRow(holder);
+
+                defalultsetVisiblebuttonsTableRow(holder);
+
+
+                moveAnitationRecyrevirew(  holder);
+
+                // TODO: 26.01.2024 end
 
                 myViewHolderPay.setIsRecyclable(false);
 
-                moveAnitationRecyrevirew(  holder);
+          
 
             }
 
@@ -504,7 +690,6 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "   holder.tableLayoutcommitpayfiles "
-                    + holder.tableLayoutpayfilescommitingpays
                     + " jsonNode1сСогласованияSingleRow " + jsonNode1сСогласованияSingleRow);
         } catch (Exception e) {
             e.printStackTrace();

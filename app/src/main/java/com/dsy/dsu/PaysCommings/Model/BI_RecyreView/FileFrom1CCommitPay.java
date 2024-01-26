@@ -2,14 +2,12 @@ package com.dsy.dsu.PaysCommings.Model.BI_RecyreView;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.animation.Animation;
 import android.widget.TableLayout;
 
 import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPay;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.Services.Service_Notificatios_Для_Согласования;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,19 +34,19 @@ public class FileFrom1CCommitPay {
                                          @NonNull  String getHiltCommintgPays) {
         try{
             // TODO: 03.11.2023 Parent
-            TableLayout tableLayoutpayfilescommitingpays = (TableLayout) holder.tableLayoutpayfilescommitingpays;
+            TableLayout tablelayoutnewfilefrom1c = (TableLayout) holder.tablelayoutnewfilefrom1c;
                 // TODO: 10.11.2023  Сама Вставка Данных Файлов От 1с Согласование
 
                 AddFilesot1CPaycommitting addFilesot1CPaycommitting = new AddFilesot1CPaycommitting(context, binderСогласования1C);
 
-                addFilesot1CPaycommitting.addfilessot1CPaycommitting(tableLayoutpayfilescommitingpays,
+                addFilesot1CPaycommitting.addfilessot1CPaycommitting(tablelayoutnewfilefrom1c,
                         jsonNode1сСогласованияRow, holder, ПубличныйidPay,getHiltCommintgPays);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
                     " jsonNode1сСогласованияRow " +jsonNode1сСогласованияRow
-                    + " tableLayoutcommitpayfiles.getChildCount() " +tableLayoutpayfilescommitingpays.getChildCount());
+                    + " tableLayoutcommitpayfiles.getChildCount() " +tablelayoutnewfilefrom1c.getChildCount());
 
         } catch (Exception e) {
             e.printStackTrace();
