@@ -37,6 +37,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.textview.MaterialTextView;
 import com.jakewharton.rxbinding4.view.RxView;
 
 import org.jetbrains.annotations.NotNull;
@@ -67,7 +68,7 @@ public class Bl_CommintigPay {
     RecyclerView recycleviewcommitpays;
     MyRecycleViewIsNullAdapterPay myRecycleViewIsNullAdapter;
     Animation animation;
-    TextView textViewТекущаяЗадача;
+    MaterialTextView textViewТекущаяЗадача;
       JsonNode jsonNode1сСогласованияRow;
 
       BottomNavigationView bottomNavigationViewParentCommitingPay;
@@ -91,7 +92,7 @@ public class Bl_CommintigPay {
                               @NonNull RecyclerView recycleviewcommitpays,
                               @NonNull     MyRecycleViewIsNullAdapterPay myRecycleViewIsNullAdapter,
                               @NonNull Animation animation,
-                              @NonNull TextView textViewТекущаяЗадача,
+                              @NonNull MaterialTextView textViewТекущаяЗадача,
                               @NonNull JsonNode jsonNode1сСогласованияRow,
 
                               @NonNull BottomNavigationView bottomNavigationViewParentCommitingPay,
@@ -589,7 +590,7 @@ public class Bl_CommintigPay {
             if (myRecycleViewAdapter==null) {
                 myRecycleViewAdapter = new MyRecycleViewAdapterCommingPay(jsonNode1сСогласованияAllRows,context
                         ,binderСогласования1C,animation,ПубличныйidPay,objectMapper,bottomNavigationViewParentCommitingPay,recycleviewcommitpays,
-                        getHiltCommintgPays,this);
+                        getHiltCommintgPays,this,jsonNode1сСогласованияAllRows);
                 // TODO: 24.01.2024
                 myRecycleViewAdapter.notifyDataSetChanged();
                 recycleviewcommitpays.setAdapter(myRecycleViewAdapter);

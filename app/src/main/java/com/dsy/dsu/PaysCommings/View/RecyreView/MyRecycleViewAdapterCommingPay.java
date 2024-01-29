@@ -72,7 +72,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     // TODO: 17.01.2024 nested
     String getHiltCommintgPays;
     Animation animationДляСогласовани;
-
+    JsonNode jsonNode1сСогласованияAll;
     public MyRecycleViewAdapterCommingPay(@NotNull JsonNode jsonNode1сСогласования,
                                           @NonNull Context context,
                                           @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
@@ -82,7 +82,8 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                           @NonNull BottomNavigationView bottomNavigationViewParent,
                                           @NonNull RecyclerView recycleviewcommitpays,
                                           @NonNull String getHiltCommintgPays,
-                                          @NonNull Bl_CommintigPay bl_commintigPay) {
+                                          @NonNull Bl_CommintigPay bl_commintigPay,
+                                           @NotNull JsonNode jsonNode1сСогласованияAll) {
         try {
             this.jsonNode1сСогласования = jsonNode1сСогласования;
             this.context = context;
@@ -94,6 +95,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
             this.recycleviewcommitpays = recycleviewcommitpays;
             this.getHiltCommintgPays = getHiltCommintgPays;
             this.bl_commintigPay = bl_commintigPay;
+            this.jsonNode1сСогласованияAll = jsonNode1сСогласованияAll;
 
             animationДляСогласовани = AnimationUtils.loadAnimation(context,  R.anim.slide_in_scrolls);//R.anim.layout_animal_commit
 
@@ -1026,6 +1028,10 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                StringBuffer ОТветОт1СОперациисДанными=
                            proccesingCancelOrOKPay.proccerCancelOrOKPay(context,  intentзаданиеНаВыполениеSuccess,getHiltCommintgPays);
 
+
+                        ///StringBuffer   ОТветОт1СОперациисДанными=new StringBuffer();
+
+                        ОТветОт1СОперациисДанными.append("Операция успешна");
 // TODO: 23.01.2024  удаление строчки
                         notifynotifyDataSetChanged(ОТветОт1СОперациисДанными,holder,cardview_commingpay,  position);
 
@@ -1100,13 +1106,14 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
 
             // TODO: 23.01.2024  удаление
-            jsonNode1сСогласования=       remoteSingleJson(  jsonNode1сСогласования,   position);
+            jsonNode1сСогласования=       remoteSingleJson(  jsonNode1сСогласованияAll,   position);
 
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласования " +jsonNode1сСогласования);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласования " +jsonNode1сСогласования+
+                    " jsonNode1сСогласованияAll "+jsonNode1сСогласованияAll);
 
         }else{
             Toast.makeText(context, "Операция  не прошла !!! "    , Toast.LENGTH_SHORT).show();
