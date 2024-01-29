@@ -1,9 +1,6 @@
 package com.dsy.dsu.CommitingPrices.View.Window;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -11,7 +8,6 @@ import android.widget.ProgressBar;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.CommitingPrices.EventBusCominPrices.MessageEvensComitnPrices;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.ProcceerClickArrow;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHoldersCommintPrices;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
@@ -20,11 +16,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.jakewharton.rxbinding4.view.RxView;
 
-import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
@@ -118,7 +112,7 @@ public class ComponentsForRecyreView {
 
 
             RxView.clicks(  arrow_nested_receriview)
-                    .throttleFirst(500, TimeUnit.MILLISECONDS)
+                    .throttleFirst(250, TimeUnit.MILLISECONDS)
                     .filter(s -> !s.toString().isEmpty())
                     .map(new Function<Unit, MaterialButton>() {
                         @Override
@@ -157,7 +151,7 @@ public class ComponentsForRecyreView {
                     .subscribe( Getarrow_nested_receriview-> {
 
                         ///todo отрыкавем или скрываем дополнительнае данные в Соглосование Цен
-                        EventUpOrDownAdvaceDataCommingPrices((MaterialButton) Getarrow_nested_receriview);
+                        EventUpOrDownAdvaceDataCommingPrices(  Getarrow_nested_receriview);
 
 
 

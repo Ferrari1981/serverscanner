@@ -1,14 +1,12 @@
 package com.dsy.dsu.CommitingPrices.View.Window;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,12 +16,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.BLFragmentCommintingPrices;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.EventsBackAndAsyncAndSearchCommintPrices;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews.InizializayRecyreViews;
 import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
-import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPricesAdvanced;
+import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEventBusItemCount;
 import com.dsy.dsu.CommitingPrices.ViewModel.ModelComminingPrisesByte;
 import com.dsy.dsu.CommitingPrices.ViewModel.ModelComminingPrisesString;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
@@ -32,7 +29,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
-import com.google.common.util.concurrent.AtomicDouble;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -221,12 +217,15 @@ public class FragmentCommingPrices extends Fragment {
              eventsBackAndAsyncAndSearchCommintPrices,getHiltPublicId,getHiltCommintgPrices.toString());
 
 
-     // TODO: 27.12.2023  начинаем запуск is null
-     bucesslogicFragmentCommintingPrices.startIsNullRecyreView( );
-
      // TODO: 28.12.2023 инизилащитция recyreview
 
      new InizializayRecyreViews(recycleview_comminingpprices,getContext()).startInitRecyreview();
+
+
+     // TODO: 27.12.2023  начинаем запуск is null
+     bucesslogicFragmentCommintingPrices.startIsNullRecyreView( );
+
+
 
      // TODO: 26.12.2023 запускаем получение данных при NULL
      bucesslogicFragmentCommintingPrices.getmodelByte( );
@@ -299,6 +298,7 @@ try{
     }
 
     }
+
 
 
 

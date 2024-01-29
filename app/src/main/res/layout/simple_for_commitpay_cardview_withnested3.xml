@@ -15,7 +15,7 @@
     app:strokeColor="#ABB1B1"
 
     app:cardBackgroundColor="#F1F4F4"
-
+    android:background="@drawable/style_forpolymaterialb_cycle_createspinner2"
 
     app:cardMaxElevation="30dp"
     app:strokeWidth="1dp"
@@ -137,10 +137,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:padding="2dp"
-                app:cardCornerRadius="5dp"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="5dp"
                 app:strokeColor="#E1E6E6"
-                app:cardBackgroundColor="#F1F4F4"
+                app:cardBackgroundColor="#FBFBFB"
                 app:cardMaxElevation="30dp"
                 app:strokeWidth="1dp"
                 android:translationZ="100dp"

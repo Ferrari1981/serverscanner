@@ -1,7 +1,6 @@
 package com.dsy.dsu.CommitingPrices.View.Window;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.VibrationEffect;
@@ -10,10 +9,6 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.dsy.dsu.CommitingPrices.EventBusCominPrices.MessageEvensComitnPrices;
-import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
 import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.CommintPricesSendJsonTo1C;
 import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.ProcceroingResultatOtveta1CPost;
 import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.StartSendJsonToCOmmintPrices;
@@ -30,10 +25,8 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.jakewharton.rxbinding4.view.RxView;
 
-import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

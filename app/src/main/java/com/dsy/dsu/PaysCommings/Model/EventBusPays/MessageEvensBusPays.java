@@ -13,5 +13,17 @@ public class MessageEvensBusPays {
 
         this.mess = mess;
     }
+
+    public static class MessageEvensBusCommintPay {
+
+        public Intent mess;
+
+
+        public MessageEvensBusCommintPay( @NonNull Intent mess) {
+
+            this.mess = mess;
+        }
+
+    }
 }
 

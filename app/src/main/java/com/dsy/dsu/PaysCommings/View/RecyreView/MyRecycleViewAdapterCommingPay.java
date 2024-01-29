@@ -183,12 +183,9 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     }
 
 
-    private void setеVisibleTablerow_nesters(MyViewHolderPayCommingPay holder, @NonNull Handler handler) {
+    private void setеVisibleTablerow_nesters(MyViewHolderPayCommingPay holder ) {
         try{
             holder.progressbar_commingpay.setVisibility(View.VISIBLE);
-
-            handler.postDelayed(()->{
-                try{
 
                     TableRow tableRowFisrt=    holder.    tableRowFisrt;
 
@@ -203,8 +200,6 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
                     }
 
-
-
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "tablerow_nesters_commininggpay.getVisibility() ");
@@ -212,16 +207,6 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
                     holder.progressbar_commingpay.setVisibility(View.GONE);
                    
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-
-            },50);
-
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1431,7 +1416,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
             // TODO: 10.11.2023 клик по файлов
             RxView.clicks(   holder. arrowpay_nested_receriview_commitingpay)
-                    .throttleFirst(500, TimeUnit.MILLISECONDS)
+                    .throttleFirst(250, TimeUnit.MILLISECONDS)
                     .filter(s -> !s.toString().isEmpty())
                     .filter(jsonnester->arrayNodeJsonRow.has("obiyectRaskhoda")==true)
                     .map(new Function<Unit, Object>() {
@@ -1470,9 +1455,9 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         }
                     })
                     .subscribe( Getarrow_nested_receriview_commitingpay-> {
-// TODO: 18.01.2024 код показываем или скрываем Nested RecyreView 
+// TODO: 18.01.2024 код показываем или скрываем Nested RecyreView
 
-                       setеVisibleTablerow_nesters(holder, handler[0]);
+                       setеVisibleTablerow_nesters(holder );
                         
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

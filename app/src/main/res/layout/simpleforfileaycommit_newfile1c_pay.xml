@@ -6,16 +6,13 @@
     android:id="@+id/materialCardViewnewRowpaycommit"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layout_gravity="center"
-    app:cardCornerRadius="0dp"
-    app:cardElevation="10dp"
-    app:cardMaxElevation="5dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp"
+    app:strokeColor="#E1E6E6"
+    android:background="@drawable/style_forpolymaterialb_cycle_createspinner2"
+    app:cardMaxElevation="30dp"
     app:strokeWidth="1dp"
-    android:translationZ="10dp"
-    app:strokeColor="#ABB1B1"
-    app:cardBackgroundColor="#F1F4F4"
-    android:animateLayoutChanges="true"
-    android:background="#F0F8FF"
+    android:translationZ="100dp"
     android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
     tools:context=".PaysCommings.View.Window.MainActivity_CommitPay">
 
@@ -35,7 +32,7 @@
             android:id="@+id/tableRowpaycommitingpay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/disayn_line_tablerow10"
+
             android:gravity="center_vertical|center_horizontal">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -72,10 +69,9 @@
                     android:layout_height="wrap_content"
                     android:layout_column="0"
                     android:layout_below="@+id/textnameRowpaycommit"
+
                     android:layout_centerInParent="true"
-
                     android:layout_marginStart="5dp"
-
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/style_forpolymaterialb_cycle_createspinner14"

@@ -12,8 +12,9 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.CommitingPrices.EventBusCominPrices.MessageEvensComitnPrices;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.LiveData.CallBacksLiveDataNested;
+import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
+import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEventBusItemCount;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHoldersCommintPrices;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
@@ -219,8 +220,9 @@ public  class ProcceerClickArrow {
                         recycleview_nesters_comminingpprices.setVisibility(View.GONE);
                         // TODO: 29.12.2023
                         progressbar_comminingprices.setVisibility(View.GONE);
-// TODO: 29.01.2024 посылаем количество item показываем nestd элемента или главные элементы
-                        EventBusNestedCountItem(false);
+
+
+
 
                         Log.d(this.getClass().getName(),"\n"
                                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -239,8 +241,8 @@ public  class ProcceerClickArrow {
                         // TODO: 30.12.2023  метод смой загрузки данных
                       startProccerotNested();
 
-// TODO: 29.01.2024 посылаем количество item показываем nestd элемента или главные элементы
-                        EventBusNestedCountItem(true);
+
+
 
                         // TODO: 29.12.2023
                         Log.d(this.getClass().getName(),"\n"
@@ -283,27 +285,5 @@ public  class ProcceerClickArrow {
         }
         return 0;
     }
-    private void EventBusNestedCountItem(@NonNull Boolean режимКакозыватьКоличестовItem) {
 
-        try{
-            Intent intentItenCountNestd=new Intent();
-            intentItenCountNestd.setAction("Broad_messageAsyncOrUpdatePO");
-            Bundle bundle=new Bundle();
-            bundle.putBoolean("counitems",   режимКакозыватьКоличестовItem);///"В процесс"
-            intentItenCountNestd.putExtras(intentItenCountNestd);
-
-            EventBus.getDefault().post(new MessageEvensComitnPrices(intentItenCountNestd));
-            Log.d(this.getClass().getName(),"\n"
-                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 }
