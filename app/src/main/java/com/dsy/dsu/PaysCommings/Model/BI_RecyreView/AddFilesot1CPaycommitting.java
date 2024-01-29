@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.TableLayout;
 
 import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPay;
+import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPayCommingPay;
 import com.dsy.dsu.Services.Service_Notificatios_Для_Согласования;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -31,7 +31,7 @@ class AddFilesot1CPaycommitting{
 
     void addfilessot1CPaycommitting(@NotNull TableLayout tableLayoutpayfilescommitingpays,
                                     @NonNull JsonNode jsonNode1сСогласованияRow,
-                                    @NonNull MyViewHolderPay holder,
+                                    @NonNull MyViewHolderPayCommingPay holder,
                                     @NonNull Integer ПубличныйidPay,
                                     @NonNull  String getHiltCommintgPays){
         try{
@@ -89,7 +89,7 @@ class AddFilesot1CPaycommitting{
     // TODO: 10.11.2023  класс крутим файлы от 1с
     void  ArrayFileNewPay1c(@NotNull  JsonNode      МассивИменСограсований,
                             @NonNull TableLayout tableLayoutpayfilescommitingpays,
-                            @NonNull MyViewHolderPay holder,
+                            @NonNull MyViewHolderPayCommingPay holder,
                             @NonNull Integer ПубличныйidPay,
                             @NonNull  String getHiltCommintgPays){
         try{

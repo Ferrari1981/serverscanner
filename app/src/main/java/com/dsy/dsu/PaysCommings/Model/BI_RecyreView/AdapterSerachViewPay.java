@@ -8,14 +8,11 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterPay;
+import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterCommingPay;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -28,7 +25,7 @@ class AdapterSerachViewPay{
     Bl_CommintigPay bl_commintigPay;
     JsonNode jsonNode1сСогласованияAllRows;
     Activity activity;
-    MyRecycleViewAdapterPay  myRecycleViewAdapter;
+    MyRecycleViewAdapterCommingPay myRecycleViewAdapter;
     RecyclerView recyclerViewСогласование1С;
 
     public AdapterSerachViewPay(@NotNull
@@ -36,7 +33,7 @@ class AdapterSerachViewPay{
                                 @NotNull  Context context,
                                 @NotNull JsonNode jsonNode1сСогласованияAllRows,
                                 @NonNull Activity activity,
-                                @NonNull MyRecycleViewAdapterPay  myRecycleViewAdapter,
+                                @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapter,
                                 @NonNull RecyclerView recyclerViewСогласование1С,
                                 @NonNull Bl_CommintigPay bl_commintigPay) {
         this.searchview_commitpay = searchview_commitpay;

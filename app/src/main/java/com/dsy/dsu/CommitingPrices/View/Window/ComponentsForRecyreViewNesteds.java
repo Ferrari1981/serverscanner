@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.dsy.dsu.CommitingPrices.EventBusCominPrices.MessageEvensComitnPrices;
 import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
 import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.CommintPricesSendJsonTo1C;
 import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.ProcceroingResultatOtveta1CPost;
@@ -71,6 +74,8 @@ public class ComponentsForRecyreViewNesteds {
     private ArrayNode ArrayNodeNested;
 
     private   String getHiltCommintgPrices;
+
+
 
     public ComponentsForRecyreViewNesteds(@NotNull MyViewHoldersNested holder,
                                           @NotNull  Context context,
@@ -467,6 +472,8 @@ public class ComponentsForRecyreViewNesteds {
 
         return cardview_commingprices_neasted;
     }
+
+
 
 
 

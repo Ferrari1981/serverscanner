@@ -14,6 +14,7 @@ import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textview.MaterialTextView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,6 +33,8 @@ public class MyViewHoldersNested extends RecyclerView.ViewHolder {// TODO: 28.02
     public View itemView;
     public JsonNode ArrayNode;
     public  int getAbsoluteAdapterPosition;
+
+    public MaterialTextView bot_number_current_item;
 
     // TODO: 02.03.2022
     public MyViewHoldersNested(@NonNull View itemView,

@@ -50,7 +50,7 @@ import io.reactivex.rxjava3.functions.Predicate;
 import kotlin.Unit;
 
 @SuppressLint("SuspiciousIndentation")
-public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPay> {
+public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewHolderPayCommingPay> {
 
 
   public   JsonNode jsonNode1сСогласования;
@@ -58,7 +58,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
     Context context;
 
-    MyViewHolderPay myViewHolderPay;
+    MyViewHolderPayCommingPay myViewHolderPayCommingPay;
 
     Bl_CommintigPay bl_commintigPay;
 
@@ -73,16 +73,16 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     String getHiltCommintgPays;
     Animation animationДляСогласовани;
 
-    public MyRecycleViewAdapterPay(@NotNull JsonNode jsonNode1сСогласования,
-                                   @NonNull Context context,
-                                   @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
-                                   @NotNull Animation animation1,
-                                   @NonNull Integer ПубличныйidPay,
-                                   @NonNull ObjectMapper objectMapper,
-                                   @NonNull BottomNavigationView bottomNavigationViewParent,
-                                   @NonNull RecyclerView recycleviewcommitpays,
-                                   @NonNull String getHiltCommintgPays,
-                                   @NonNull Bl_CommintigPay bl_commintigPay) {
+    public MyRecycleViewAdapterCommingPay(@NotNull JsonNode jsonNode1сСогласования,
+                                          @NonNull Context context,
+                                          @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
+                                          @NotNull Animation animation1,
+                                          @NonNull Integer ПубличныйidPay,
+                                          @NonNull ObjectMapper objectMapper,
+                                          @NonNull BottomNavigationView bottomNavigationViewParent,
+                                          @NonNull RecyclerView recycleviewcommitpays,
+                                          @NonNull String getHiltCommintgPays,
+                                          @NonNull Bl_CommintigPay bl_commintigPay) {
         try {
             this.jsonNode1сСогласования = jsonNode1сСогласования;
             this.context = context;
@@ -113,7 +113,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolderPay holder, @NonNull int position, @NonNull List<Object> payloads) {
+    public void onBindViewHolder(@NonNull MyViewHolderPayCommingPay holder, @NonNull int position, @NonNull List<Object> payloads) {
         Log.i(this.getClass().getName(), "   onBindViewHolder  position" + position);
         try {
             // TODO: 19.01.2024  данные
@@ -154,7 +154,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
 
     // TODO: 18.01.2024  заполенеия Bungle
-    private void setBungleCardView(@NonNull MyViewHolderPay holder, @NonNull JsonNode jsonNode1сСогласованияSingleRow) {
+    private void setBungleCardView(@NonNull MyViewHolderPayCommingPay holder, @NonNull JsonNode jsonNode1сСогласованияSingleRow) {
         try{
             Bundle bundleCacdView=new Bundle();
 
@@ -183,7 +183,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     }
 
 
-    private void setеVisibleTablerow_nesters(MyViewHolderPay holder,@NonNull Handler handler) {
+    private void setеVisibleTablerow_nesters(MyViewHolderPayCommingPay holder, @NonNull Handler handler) {
         try{
             holder.progressbar_commingpay.setVisibility(View.VISIBLE);
 
@@ -203,12 +203,6 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
                     }
 
-                    if(tablerowsecond.getVisibility()==View.GONE) {
-
-                        procceseringHideorVisibleFisrt(holder);
-
-                        procceseringButtonVisibleSecornd(holder);
-                    }
 
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -242,7 +236,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
         }
     }
 
-    private  void procceseringHideorVisibleSecornd(@NonNull MyViewHolderPay holder) {
+    private  void procceseringHideorVisibleSecornd(@NonNull MyViewHolderPayCommingPay holder) {
 
         try{
         if (holder.tablerowsecond.getVisibility()==View.GONE) {
@@ -278,7 +272,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     }
 
     }
-    private void procceseringHideorVisibleFisrt(@NonNull MyViewHolderPay holder) {
+    private void procceseringHideorVisibleFisrt(@NonNull MyViewHolderPayCommingPay holder) {
 
         try{
             if (holder.tableRowFisrt.getVisibility()==View.GONE) {
@@ -317,7 +311,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
 
 
-    private  void procceseringButtonVisibleSecornd(@NonNull MyViewHolderPay holder) {
+    private  void procceseringButtonVisibleSecornd(@NonNull MyViewHolderPayCommingPay holder) {
 
         try{
             if (holder.tableRowpayButtons.getVisibility()==View.GONE) {
@@ -356,7 +350,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
 
 
-    private void defalultsetVisibleSecontTableRow(@NonNull MyViewHolderPay holder ) {
+    private void defalultsetVisibleSecontTableRow(@NonNull MyViewHolderPayCommingPay holder ) {
         try{
             // TODO: 26.01.2024 данные для послддующего скрытия
          TableRow   tableRowFisrt=  holder.tableRowFisrt;
@@ -382,7 +376,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
 
 
-    private   void defalultsetVisibleFirstTableRow(@NonNull  MyViewHolderPay holder  ) {
+    private   void defalultsetVisibleFirstTableRow(@NonNull MyViewHolderPayCommingPay holder  ) {
         try {
         // TODO: 26.01.2024 данные для послддующего скрытия
             // TODO: 26.01.2024 данные для послддующего скрытия
@@ -407,7 +401,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     }
     }
 
-    private   void defalultsetVisibleSecondTableRow(@NonNull  MyViewHolderPay holder  ) {
+    private   void defalultsetVisibleSecondTableRow(@NonNull MyViewHolderPayCommingPay holder  ) {
         try {
             // TODO: 26.01.2024 данные для послддующего скрытия
             // TODO: 26.01.2024 данные для послддующего скрытия
@@ -432,7 +426,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
         }
     }
 
-    private   void defalultsetVisiblebuttonsTableRow(@NonNull  MyViewHolderPay holder  ) {
+    private   void defalultsetVisiblebuttonsTableRow(@NonNull MyViewHolderPayCommingPay holder  ) {
         try {
             // TODO: 26.01.2024 данные для послддующего скрытия
             // TODO: 26.01.2024 данные для послддующего скрытия
@@ -464,25 +458,25 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     }
 
     @Override
-    public void onViewRecycled(@NonNull MyViewHolderPay holder) {
+    public void onViewRecycled(@NonNull MyViewHolderPayCommingPay holder) {
         super.onViewRecycled(holder);
     }
 
     @Override
-    public boolean onFailedToRecycleView(@NonNull MyViewHolderPay holder) {
+    public boolean onFailedToRecycleView(@NonNull MyViewHolderPayCommingPay holder) {
         // TODO: 03.11.2023 Parent
         return super.onFailedToRecycleView(holder);
 
     }
 
     @Override
-    public void onViewAttachedToWindow(@NonNull MyViewHolderPay holder) {
+    public void onViewAttachedToWindow(@NonNull MyViewHolderPayCommingPay holder) {
         super.onViewAttachedToWindow(holder);
 
     }
 
     @Override
-    public void onViewDetachedFromWindow(@NonNull MyViewHolderPay holder) {
+    public void onViewDetachedFromWindow(@NonNull MyViewHolderPayCommingPay holder) {
         super.onViewDetachedFromWindow(holder);
     }
 
@@ -531,7 +525,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
     @NonNull
     @Override
-    public MyViewHolderPay onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolderPayCommingPay onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View viewГлавныйВидДляRecyclleViewДляСогласования = null;
         try {
 
@@ -556,7 +550,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
 
             // TODO: 22.03.2022
-            myViewHolderPay = new MyViewHolderPay(viewГлавныйВидДляRecyclleViewДляСогласования, context, jsonNode1сСогласования);
+            myViewHolderPayCommingPay = new MyViewHolderPayCommingPay(viewГлавныйВидДляRecyclleViewДляСогласования, context, jsonNode1сСогласования);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" );
@@ -568,12 +562,12 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
             new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return myViewHolderPay;
+        return myViewHolderPayCommingPay;
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolderPay holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolderPayCommingPay holder, int position) {
         try {
 
             if (arrayNodeJsonRow!=null && arrayNodeJsonRow.size()>0) {
@@ -633,18 +627,19 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
 
                 // TODO: 17.01.2024 показать или скрыть
-                defalultsetVisibleFirstTableRow(holder);
+/*                defalultsetVisibleFirstTableRow(holder);
+                defalultsetVisiblebuttonsTableRow(holder);*/
 
                 defalultsetVisibleSecondTableRow(holder);
 
-                defalultsetVisiblebuttonsTableRow(holder);
+
 
 
                 moveAnitationRecyrevirew(  holder);
 
                 // TODO: 26.01.2024 end
 
-                myViewHolderPay.setIsRecyclable(false);
+                myViewHolderPayCommingPay.setIsRecyclable(false);
 
           
 
@@ -659,7 +654,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
-    private void moveAnitationRecyrevirew( @NonNull MyViewHolderPay holder) {
+    private void moveAnitationRecyrevirew( @NonNull MyViewHolderPayCommingPay holder) {
         try{
             holder.itemView.startAnimation(animationДляСогласовани);
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -675,7 +670,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     }
 
     // TODO: 03.11.2023  метод загрузки файлов с 1с
-    void AddFileOt1c(@NonNull MyViewHolderPay holder, @NotNull JsonNode jsonNode1сСогласованияSingleRow, @NonNull ObjectMapper objectMapper) {
+    void AddFileOt1c(@NonNull MyViewHolderPayCommingPay holder, @NotNull JsonNode jsonNode1сСогласованияSingleRow, @NonNull ObjectMapper objectMapper) {
         try {
             // TODO: 03.11.2023 advanset code Downloaf Image rom Commit Pay
 
@@ -704,7 +699,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
     ///todo первый метод #1
 
-    private void МетодБиндингаСозданиеНомерДокумента(@NonNull MyViewHolderPay holder ) {
+    private void МетодБиндингаСозданиеНомерДокумента(@NonNull MyViewHolderPayCommingPay holder ) {
         try {
             if (  holder.tx_nomer != null) {///"Ndoc"
 
@@ -712,7 +707,9 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
                 String ПерваяСтрочкаЗначения = jsonNodeCurrent.get("Ndoc").asText().trim();
 
-                holder.tx_nomer.setText(ПерваяСтрочкаЗначения);
+                Integer Ndoc=Integer.parseInt(ПерваяСтрочкаЗначения);
+
+                holder.tx_nomer.setText(Ndoc.toString());
                 holder.butt_successcommit.setTag(ПерваяСтрочкаЗначения);
 
                 holder.butt_cancel.setTag(ПерваяСтрочкаЗначения);
@@ -741,7 +738,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
     ///todo первый метод #2
 
-    private void МетодБиндингаСозданиеДДС(@NonNull MyViewHolderPay holder ) {
+    private void МетодБиндингаСозданиеДДС(@NonNull MyViewHolderPayCommingPay holder ) {
 
         try {
             // TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1
@@ -777,7 +774,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     }
     ///todo первый метод #3
 
-    private void МетодБиндингаСозданиеКонтрагент(@NonNull MyViewHolderPay holder ) {
+    private void МетодБиндингаСозданиеКонтрагент(@NonNull MyViewHolderPayCommingPay holder ) {
 
         try {
             // TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1
@@ -818,7 +815,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
     ///todo первый метод #4
 
-    private void МетодБиндингаСозданиеСФО(@NonNull MyViewHolderPay holder ) {
+    private void МетодБиндингаСозданиеСФО(@NonNull MyViewHolderPayCommingPay holder ) {
 
         try {
             // TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1
@@ -858,7 +855,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
     ///todo первый метод #7
 
-    private void МетодБиндингаСозданиеНомелклатура(@NonNull MyViewHolderPay holder ) {
+    private void МетодБиндингаСозданиеНомелклатура(@NonNull MyViewHolderPayCommingPay holder ) {
         try {
             // TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1
 
@@ -929,7 +926,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
     // TODO: 14.03.2022  Успешное Согласования
 
-    private void МетодКпопкаСогласованияУспешное(@NonNull MyViewHolderPay holder,
+    private void МетодКпопкаСогласованияУспешное(@NonNull MyViewHolderPayCommingPay holder,
                                                  @NonNull Integer ПубличныйidPay,
                                                  @NonNull  String getHiltCommintgPays,
                                                  @NonNull int position)
@@ -939,7 +936,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
             final Handler[] handler = {null};
 
-            MyRecycleViewAdapterPay myRecycleViewAdapterPay=this;
+            MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay =this;
 
             // TODO: 10.11.2023 клик по файлов
             RxView.clicks(holder.butt_successcommit)
@@ -984,7 +981,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
                         // TODO: 18.01.2024  метод успешного соглавования
                                     proccerClickSucceesPay(holder, handler, holder.cardview_commingpay,
-                                            ПубличныйidPay,getHiltCommintgPays,  position,myRecycleViewAdapterPay);
+                                            ПубличныйidPay,getHiltCommintgPays,  position, myRecycleViewAdapterCommingPay);
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1008,13 +1005,13 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     }
 
     // TODO: 12.01.2024  метод срабоатывает когда нажали Согласовать Succeeess
-    private void proccerClickSucceesPay(@NonNull MyViewHolderPay holder,
+    private void proccerClickSucceesPay(@NonNull MyViewHolderPayCommingPay holder,
                                         Handler[] handler,
                                         MaterialCardView cardview_commingpay,
                                         @NonNull Integer ПубличныйidPay,
                                         @NonNull  String getHiltCommintgPays,
                                         @NonNull int position,
-                                        @NonNull MyRecycleViewAdapterPay myRecycleViewAdapterPay) {
+                                        @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay) {
         try {
             handler[0].postDelayed(new Runnable() {
                 @Override
@@ -1053,7 +1050,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
                         if (jsonNode1сСогласования.size()>0) {
                             componensForRecyreviewNestedPay.методRebootRecyreViewCommingPays(jsonNode1сСогласования,
-                                    myRecycleViewAdapterPay,recycleviewcommitpays,ОТветОт1СОперациисДанными.toString());
+                                    myRecycleViewAdapterCommingPay,recycleviewcommitpays,ОТветОт1СОперациисДанными.toString());
                         } else {
                             componensForRecyreviewNestedPay.методRebootRecyreViewCommingPaysDontRow(jsonNode1сСогласования,
                                     recycleviewcommitpays,ОТветОт1СОперациисДанными.toString());
@@ -1090,7 +1087,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     }
 
     private void notifynotifyDataSetChanged(StringBuffer ОТветОт1СОперациисДанными,
-                                            @NonNull MyViewHolderPay holder,
+                                            @NonNull MyViewHolderPayCommingPay holder,
                                             @NonNull   MaterialCardView cardview_commingpay,
                                             @NonNull int position) {
         try{
@@ -1173,7 +1170,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     // TODO: 12.01.2024 Кнопка РАскрытие Скрытого recyreview
 
 
-    private void МетодForPrograBarInner(@NonNull MyViewHolderPay holder) {
+    private void МетодForPrograBarInner(@NonNull MyViewHolderPayCommingPay holder) {
         try {
             holder.progressbar_commingpay.setVisibility(View.INVISIBLE);
 
@@ -1194,7 +1191,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
     //TODO вторая кнопка
     // TODO: 14.03.2022  отказа Согласования
-    private void МетодКпопкаОтказаСогласования(@NonNull MyViewHolderPay holder,@NonNull int position)
+    private void МетодКпопкаОтказаСогласования(@NonNull MyViewHolderPayCommingPay holder, @NonNull int position)
             throws ExecutionException, InterruptedException {
         try {
             // TODO: 02.03.2022
@@ -1203,7 +1200,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
             final Handler[] handler = {null};
 
-            MyRecycleViewAdapterPay myRecycleViewAdapterPay=this;
+            MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay =this;
 
             RxView.clicks(holder.butt_cancel)
                     .throttleFirst(2, TimeUnit.SECONDS)
@@ -1249,7 +1246,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
-                        procceringCancelButtonClick(holder, handler[0], holder.cardview_commingpay,position,myRecycleViewAdapterPay);
+                        procceringCancelButtonClick(holder, handler[0], holder.cardview_commingpay,position, myRecycleViewAdapterCommingPay);
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1269,10 +1266,10 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
 
     // TODO: 12.01.2024  Дейставия по кнопек ОТКАЗ
-    private void procceringCancelButtonClick(@NonNull MyViewHolderPay holder,
+    private void procceringCancelButtonClick(@NonNull MyViewHolderPayCommingPay holder,
                                              @NonNull  Handler handler, MaterialCardView cardview_commingpay,
                                              @NonNull int position,
-                                             @NonNull MyRecycleViewAdapterPay myRecycleViewAdapterPay) {
+                                             @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay) {
         try {
             handler.postDelayed(new Runnable() {
                 @Override
@@ -1314,7 +1311,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
                         // TODO: 24.01.2024  ;
                         if (jsonNode1сСогласования.size()>0) {
                             componensForRecyreviewNestedPay.методRebootRecyreViewCommingPays(jsonNode1сСогласования,
-                                    myRecycleViewAdapterPay,recycleviewcommitpays,ОТветОт1СОперациисДанными.toString());
+                                    myRecycleViewAdapterCommingPay,recycleviewcommitpays,ОТветОт1СОперациисДанными.toString());
                         } else {
                             componensForRecyreviewNestedPay.методRebootRecyreViewCommingPaysDontRow(jsonNode1сСогласования,
                                     recycleviewcommitpays,ОТветОт1СОперациисДанными.toString());
@@ -1349,7 +1346,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
     ///todo первый метод #3
 
-    private void МетодБиндингаСозданиеОрганизация(@NonNull MyViewHolderPay holder ) {
+    private void МетодБиндингаСозданиеОрганизация(@NonNull MyViewHolderPayCommingPay holder ) {
 
         try {
             // TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1
@@ -1387,7 +1384,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     ///todo первый метод #5
 
 
-    private void МетодБиндингаСозданиеСумма(@NonNull MyViewHolderPay holder ) {
+    private void МетодБиндингаСозданиеСумма(@NonNull MyViewHolderPayCommingPay holder ) {
 
         try {
             // TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1
@@ -1426,7 +1423,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
 
 
-    public void ClickvisibleOrHideNestedRecyreView(@NonNull MyViewHolderPay holder  ) {
+    public void ClickvisibleOrHideNestedRecyreView(@NonNull MyViewHolderPayCommingPay holder  ) {
         try {
             Log.d(this.getClass().getName(), "   КнопкаУспешноеСогласования    Успехх Согласования 2 " );
 
@@ -1509,7 +1506,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
 // TODO: 17.01.2024 методы Hide Nested RecyreView Or Visible
     ///todo первый метод #1
-    private void metodNestdobiyectRaskhoda(@NonNull MyViewHolderPay holder ) {
+    private void metodNestdobiyectRaskhoda(@NonNull MyViewHolderPayCommingPay holder ) {
         try {
             if ( holder.obiyectRaskhoda!=null ) {///"Ndoc"
 
@@ -1556,7 +1553,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
     ///todo первый метод #4
 
-    private void metodnestedAvans(@NonNull MyViewHolderPay holder  ) {
+    private void metodnestedAvans(@NonNull MyViewHolderPayCommingPay holder  ) {
 
         try {
             // TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1
@@ -1596,7 +1593,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     }
 
 
-    private void metodNestdPoDogovoruSMP(@NonNull MyViewHolderPay holder ) {
+    private void metodNestdPoDogovoruSMP(@NonNull MyViewHolderPayCommingPay holder ) {
 
         try {
             // TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1
@@ -1635,7 +1632,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
 
     ///todo первый метод #3
-    private void metodNestdPredelnayaData(@NonNull MyViewHolderPay holder ) {
+    private void metodNestdPredelnayaData(@NonNull MyViewHolderPayCommingPay holder ) {
 
         try {
             // TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1
@@ -1674,7 +1671,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
     ///todo первый метод #7
 
-    private void metodNestdNomerScheta(@NonNull MyViewHolderPay holder ) {
+    private void metodNestdNomerScheta(@NonNull MyViewHolderPayCommingPay holder ) {
         try {
             // TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1
             if (  holder.NomerScheta !=null ) {
@@ -1715,7 +1712,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
 
 
-    private void metodNestdDataScheta( @NonNull MyViewHolderPay holder ) {
+    private void metodNestdDataScheta( @NonNull MyViewHolderPayCommingPay holder ) {
 
         try {
             // TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1
@@ -1750,7 +1747,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
     }
 
 
-    private void metodNestdOtvetstvenniy(@NonNull MyViewHolderPay holder  ) {
+    private void metodNestdOtvetstvenniy(@NonNull MyViewHolderPayCommingPay holder  ) {
 
         try {
             // TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1// TODO: 02.03.2022#1
@@ -1787,7 +1784,7 @@ public class MyRecycleViewAdapterPay extends RecyclerView.Adapter<MyViewHolderPa
 
 
 
-    private void metodNestdCommentariy(@NonNull MyViewHolderPay holder ) {
+    private void metodNestdCommentariy(@NonNull MyViewHolderPayCommingPay holder ) {
         try {
             if (  holder.Commentariy !=null ) {
 

@@ -73,7 +73,7 @@ public class LeftDividerItemDecoratorCommitPay extends RecyclerView.ItemDecorati
             outRect.set(0, 0, 0, 0);
         } else {
             int childAdapterPosition = parent.getChildAdapterPosition(view);
-            outRect.set(  0, 5, 0, 30);
+            outRect.set(  0, 5, 0, 15);
         }
     }
 

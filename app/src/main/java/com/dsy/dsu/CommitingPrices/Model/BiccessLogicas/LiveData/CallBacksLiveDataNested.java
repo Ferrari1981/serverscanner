@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews.InizializayRecyreViewsNested;
 import com.dsy.dsu.CommitingPrices.Model.NestedDataGetAll.GetArrayNodeForNestedChildern;
-import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHolders;
+import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHoldersCommintPrices;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyRecycleViewIsAdaptersNested;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -28,7 +28,7 @@ public class CallBacksLiveDataNested {
 
     private RecyclerView recycleview_comminingppricesNesteds;
     private  JsonNode  jsonNodeNested;
-    private  MyViewHolders holder;
+    private MyViewHoldersCommintPrices holder;
     private  MyRecycleViewIsAdaptersNested myRecycleViewIsAdaptersNested;
     private  int postion;
     private ObjectMapper objectMapper;
@@ -36,7 +36,7 @@ public class CallBacksLiveDataNested {
     private Integer getHiltPublicId;
     private    String getHiltCommintgPrices;
 
-    public CallBacksLiveDataNested(@NotNull MyViewHolders holder,
+    public CallBacksLiveDataNested(@NotNull MyViewHoldersCommintPrices holder,
                                    @NotNull  Context context,
                                    @NotNull   RecyclerView  recycleview_comminingpricesNested,
                                    @NotNull JsonNode  jsonNodeNested,

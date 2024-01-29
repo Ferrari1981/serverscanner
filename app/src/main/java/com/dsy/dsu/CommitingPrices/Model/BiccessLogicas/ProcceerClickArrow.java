@@ -1,7 +1,9 @@
 package com.dsy.dsu.CommitingPrices.Model.BiccessLogicas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -10,17 +12,15 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dsy.dsu.CommitingPrices.EventBusCominPrices.MessageEvensComitnPrices;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.LiveData.CallBacksLiveDataNested;
-import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
-import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPricesAdvanced;
-import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHolders;
+import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHoldersCommintPrices;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.button.MaterialButton;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -35,7 +35,7 @@ public  class ProcceerClickArrow {
     private   RecyclerView recycleview_nesters_comminingpprices;
     private    MaterialButton materialButton;
     private   ProgressBar  progressbar_comminingprices;
-    private  MyViewHolders holder;
+    private MyViewHoldersCommintPrices holder;
     private  Context context;
 
     private  Integer position;
@@ -49,7 +49,7 @@ public  class ProcceerClickArrow {
     public ProcceerClickArrow( @NonNull  RecyclerView recycleview_nesters_comminingpprices,
                                @NonNull MaterialButton materialButton,
                                @NonNull  ProgressBar progressbar_comminingprices,
-                               @NonNull  MyViewHolders holder,
+                               @NonNull MyViewHoldersCommintPrices holder,
                                @NonNull  Context context,
                                @NonNull Integer position,
                                @NotNull ObjectMapper objectMapper,
@@ -219,6 +219,8 @@ public  class ProcceerClickArrow {
                         recycleview_nesters_comminingpprices.setVisibility(View.GONE);
                         // TODO: 29.12.2023
                         progressbar_comminingprices.setVisibility(View.GONE);
+// TODO: 29.01.2024 посылаем количество item показываем nestd элемента или главные элементы
+                        EventBusNestedCountItem(false);
 
                         Log.d(this.getClass().getName(),"\n"
                                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -237,6 +239,8 @@ public  class ProcceerClickArrow {
                         // TODO: 30.12.2023  метод смой загрузки данных
                       startProccerotNested();
 
+// TODO: 29.01.2024 посылаем количество item показываем nestd элемента или главные элементы
+                        EventBusNestedCountItem(true);
 
                         // TODO: 29.12.2023
                         Log.d(this.getClass().getName(),"\n"
@@ -279,5 +283,27 @@ public  class ProcceerClickArrow {
         }
         return 0;
     }
+    private void EventBusNestedCountItem(@NonNull Boolean режимКакозыватьКоличестовItem) {
 
+        try{
+            Intent intentItenCountNestd=new Intent();
+            intentItenCountNestd.setAction("Broad_messageAsyncOrUpdatePO");
+            Bundle bundle=new Bundle();
+            bundle.putBoolean("counitems",   режимКакозыватьКоличестовItem);///"В процесс"
+            intentItenCountNestd.putExtras(intentItenCountNestd);
+
+            EventBus.getDefault().post(new MessageEvensComitnPrices(intentItenCountNestd));
+            Log.d(this.getClass().getName(),"\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
 }

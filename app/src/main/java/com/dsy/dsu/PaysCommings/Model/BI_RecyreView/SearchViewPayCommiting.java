@@ -13,16 +13,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
-import androidx.lifecycle.MutableLiveData;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterPay;
+import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterCommingPay;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.Services.ServiceForCommitPay;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -38,7 +36,7 @@ public class SearchViewPayCommiting {
     Context context;
     androidx.appcompat.widget.SearchView searchview_commitpay;
 
-  MyRecycleViewAdapterPay myRecycleViewAdapter;
+  MyRecycleViewAdapterCommingPay myRecycleViewAdapter;
     RecyclerView recyclerViewСогласование1С;
 
     Bl_CommintigPay bl_commintigPay;
@@ -47,7 +45,7 @@ public class SearchViewPayCommiting {
                                   @NonNull    String query,
                                   @NonNull    Context context,
                                   @NonNull   SearchView searchview_commitpay,
-                                  @NonNull MyRecycleViewAdapterPay myRecycleViewAdapter,
+                                  @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapter,
                                   @NonNull RecyclerView recyclerViewСогласование1С,
                                   @NonNull Bl_CommintigPay bl_commintigPay) {
         this.jsonNode1сСогласованияAllRows = jsonNode1сСогласованияAllRows;

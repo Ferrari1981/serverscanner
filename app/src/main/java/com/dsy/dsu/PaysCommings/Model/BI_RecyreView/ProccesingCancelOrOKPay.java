@@ -11,7 +11,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
@@ -25,15 +24,12 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 
-import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterPay;
-import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPay;
+import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPayCommingPay;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Services.Service_Notificatios_Для_Согласования;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.google.android.material.card.MaterialCardView;
 import com.google.common.io.ByteSource;
 import com.jakewharton.rxbinding4.view.RxView;
 
@@ -44,21 +40,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
-import io.reactivex.rxjava3.core.Maybe;
-import io.reactivex.rxjava3.core.MaybeObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.functions.Supplier;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 import kotlin.Unit;
 
 // TODO: 08.11.2023  класс не посредственого выоления операции cancel или  OK 
@@ -271,7 +260,7 @@ class ProccesingCancelOrOKPay {
     // TODO: 11.11.2023  програсс бакр при загрузке файла 1с согооасования
 
     @UiThread
-    private void metodPrograssbarDowloadFile1cPayCommit(@NonNull MyViewHolderPay holder,
+    private void metodPrograssbarDowloadFile1cPayCommit(@NonNull MyViewHolderPayCommingPay holder,
                                                         @NotNull Boolean Flag ) {
         try{
 
@@ -297,7 +286,7 @@ class ProccesingCancelOrOKPay {
     // TODO: 10.11.2023  метод  клик по файлва Для Отправки
 
     void metodClicksForTextViewPayCommit(@NonNull TableRow tableRowpaycommit,
-                                         @NonNull MyViewHolderPay holder,
+                                         @NonNull MyViewHolderPayCommingPay holder,
                                          @NonNull Integer ПубличныйidPay,
                                          @NonNull    String getHiltCommintgPays) {
         try{
@@ -386,7 +375,7 @@ class ProccesingCancelOrOKPay {
         }
     }
 
-    private void startdownloadFileOt1cCommintPay(@NonNull TableRow tableRowpaycommit, @NonNull MyViewHolderPay holder,
+    private void startdownloadFileOt1cCommintPay(@NonNull TableRow tableRowpaycommit, @NonNull MyViewHolderPayCommingPay holder,
                                                  @NonNull Integer ПубличныйidPay, Handler[] handler,
                                                  @NonNull    TextView textvalueRowpaycommit, Object GettextvalueRowpaycommit,
                                                  @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
@@ -432,7 +421,7 @@ class ProccesingCancelOrOKPay {
 
 
     // TODO: 13.11.2023 метод Загрузки Старта Новго Файла От 1с Complete 
-    private void metodCompleteStartDownloadfILE1C(@NonNull MyViewHolderPay holder,
+    private void metodCompleteStartDownloadfILE1C(@NonNull MyViewHolderPayCommingPay holder,
                                                   @NonNull  TextView textvalueRowpaycommit,
                                                   @NonNull Object GetNameSingleNewFile1c,
                                                    @NonNull Integer ПубличныйidPay,
@@ -616,7 +605,7 @@ class ProccesingCancelOrOKPay {
     // TODO: 10.11.2023 Метод Подписка Subcrion Получение файла от 1с Сограсование
     private byte[] metodSubscrionGets1cСограсование(@NotNull TextView textvalueRowpaycommit,
                                                     @NotNull Object GetNameSingleNewFile1c,
-                                                    @NonNull MyViewHolderPay holder
+                                                    @NonNull MyViewHolderPayCommingPay holder
                                                    ,@NonNull Integer ПубличныйidPay,
                                                     @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
                                                     @NonNull  String getHiltCommintgPays) {

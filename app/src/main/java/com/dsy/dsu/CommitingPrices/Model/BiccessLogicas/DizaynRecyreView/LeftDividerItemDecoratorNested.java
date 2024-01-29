@@ -69,7 +69,7 @@ public class LeftDividerItemDecoratorNested extends RecyclerView.ItemDecoration 
             outRect.set(0, 0, 0, 0);
         } else {
             int childAdapterPosition = parent.getChildAdapterPosition(view);
-            outRect.set(mDivider.getIntrinsicWidth() * childAdapterPosition, 0, 0, 15);
+            outRect.set(  0, 5, 0, 30);
         }
     }
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.TableLayout;
 
-import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPay;
+import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPayCommingPay;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.Services.Service_Notificatios_Для_Согласования;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -15,11 +15,11 @@ import io.reactivex.rxjava3.annotations.NonNull;
 
 // TODO: 03.11.2023  класс добпдонительного добвления поля Файлыв Более Онлгого
 public class FileFrom1CCommitPay {
-    private  MyViewHolderPay holder;
+    private MyViewHolderPayCommingPay holder;
     private Context context;
 
     private  Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C;
-    public FileFrom1CCommitPay(@NonNull MyViewHolderPay holder,
+    public FileFrom1CCommitPay(@NonNull MyViewHolderPayCommingPay holder,
                                @NonNull Context context,
                                @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C) {
         this.holder = holder;
@@ -29,7 +29,7 @@ public class FileFrom1CCommitPay {
     }
 
     public void startFileFrom1CCommitPay(@NotNull JsonNode jsonNode1сСогласованияRow,
-                                         @NonNull MyViewHolderPay holder,
+                                         @NonNull MyViewHolderPayCommingPay holder,
                                          @NonNull Integer ПубличныйidPay,
                                          @NonNull  String getHiltCommintgPays) {
         try{

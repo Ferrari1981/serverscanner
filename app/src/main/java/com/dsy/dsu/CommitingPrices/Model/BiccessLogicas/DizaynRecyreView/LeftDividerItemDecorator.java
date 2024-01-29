@@ -69,8 +69,10 @@ public class LeftDividerItemDecorator extends RecyclerView.ItemDecoration {
             outRect.set(0, 0, 0, 0);
         } else {
             int childAdapterPosition = parent.getChildAdapterPosition(view);
-            outRect.set(mDivider.getIntrinsicWidth() * childAdapterPosition, 10, 0, 0);
+            outRect.set(  0, 5, 0, 15);
         }
+
+
     }
 
 }

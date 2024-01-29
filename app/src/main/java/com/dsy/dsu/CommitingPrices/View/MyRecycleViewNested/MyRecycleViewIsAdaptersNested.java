@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.android.material.card.MaterialCardView;
+import com.jakewharton.rxbinding4.view.RxView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -256,7 +257,6 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
                     new ComponentsForRecyreViewNesteds(holder,context,
                             position,materialCardView,animation,objectMapper,getHiltPublicId,
                             this,ArrayNodeNested,getHiltCommintgPrices);
-
 // TODO: 30.12.2023  запуск метода Сверху Сумма согласования цены
             if (ArrayNodeNested.size()>0) {
 
@@ -287,6 +287,9 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
                 // TODO: 30.12.2023  rebbot Sxreen Recyreview
                 componentsForRecyreViewNesteds.setagMaterialCardViewNestad();
                 // TODO: 23.01.2024 кожа нет данных
+
+                // TODO: 29.01.2024 мсобытие вент басс
+
             }
 
             Log.d(this.getClass().getName(), "\n"

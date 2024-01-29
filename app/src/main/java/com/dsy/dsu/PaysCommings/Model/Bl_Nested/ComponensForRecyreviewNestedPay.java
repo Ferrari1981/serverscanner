@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewIsNull.MyRecycleViewIsNullAdapters;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterPay;
+import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterCommingPay;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.ArrayList;
@@ -23,14 +23,14 @@ Context context;
 
 
    public void методRebootRecyreViewCommingPays(@NonNull JsonNode jsonNode1сСогласования
-            ,@NonNull MyRecycleViewAdapterPay myRecycleViewAdapterPay ,
+            ,@NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay,
                                              @NonNull RecyclerView recyclerViewPays,
                                                 @NonNull String ОТветОт1СОперациисДанными) {
 
         try{
             if (ОТветОт1СОперациисДанными.toString().trim().matches("(.*)Операция успешна(.*)")) {
-                myRecycleViewAdapterPay.jsonNode1сСогласования=jsonNode1сСогласования;
-                myRecycleViewAdapterPay.notifyDataSetChanged();
+                myRecycleViewAdapterCommingPay.jsonNode1сСогласования=jsonNode1сСогласования;
+                myRecycleViewAdapterCommingPay.notifyDataSetChanged();
                 RecyclerView.Adapter recyclerViewОбновление=         recyclerViewPays.getAdapter();
                 recyclerViewPays.swapAdapter(recyclerViewОбновление,true);
                 recyclerViewPays.getAdapter().notifyDataSetChanged();

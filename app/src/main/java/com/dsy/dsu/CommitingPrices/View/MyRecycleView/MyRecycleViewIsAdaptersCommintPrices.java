@@ -14,21 +14,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreView;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPay;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jakewharton.rxbinding4.view.RxView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 // TODO: 09.11.2023 ВТОРОЯ Rereview
-public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders> {
+public  class MyRecycleViewIsAdaptersCommintPrices extends RecyclerView.Adapter<MyViewHoldersCommintPrices> {
 
     public JsonNode jsonNodeParent;
     private Context context;
-    private MyViewHolders viewHolders;
+    private MyViewHoldersCommintPrices viewHolders;
 
     private ObjectMapper objectMapper;
 
@@ -36,10 +36,10 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
     private  String getHiltCommintgPrices;
     private Animation animationДляСогласованияЦены;
 
-    public MyRecycleViewIsAdapters(@NotNull JsonNode jsonNodeParent,
-                                   @NotNull Context context,@NotNull ObjectMapper objectMapper,
-                                   @NotNull Integer getHiltPublicId,
-                                   @NotNull String getHiltCommintgPrices) {
+    public MyRecycleViewIsAdaptersCommintPrices(@NotNull JsonNode jsonNodeParent,
+                                                @NotNull Context context, @NotNull ObjectMapper objectMapper,
+                                                @NotNull Integer getHiltPublicId,
+                                                @NotNull String getHiltCommintgPrices) {
         // super();
         try{
         this.jsonNodeParent = jsonNodeParent;
@@ -68,7 +68,7 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
 
     @SuppressLint("RecyclerView")
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolders holder,  @NonNull int position, @NonNull List<Object> payloads) {
+    public void onBindViewHolder(@NonNull MyViewHoldersCommintPrices holder, @NonNull int position, @NonNull List<Object> payloads) {
         try {///Данные
 
             // TODO: 29.12.2023  получаем Single Row
@@ -113,25 +113,25 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
     }
 
     @Override
-    public void onViewRecycled(@NonNull MyViewHolders holder) {
+    public void onViewRecycled(@NonNull MyViewHoldersCommintPrices holder) {
         super.onViewRecycled(holder);
     }
 
     @Override
-    public boolean onFailedToRecycleView(@NonNull MyViewHolders holder) {
+    public boolean onFailedToRecycleView(@NonNull MyViewHoldersCommintPrices holder) {
         // TODO: 03.11.2023 Parent
         return super.onFailedToRecycleView(holder);
 
     }
 
     @Override
-    public void onViewAttachedToWindow(@NonNull MyViewHolders holder) {
+    public void onViewAttachedToWindow(@NonNull MyViewHoldersCommintPrices holder) {
         super.onViewAttachedToWindow(holder);
 
     }
 
     @Override
-    public void onViewDetachedFromWindow(@NonNull MyViewHolders holder) {
+    public void onViewDetachedFromWindow(@NonNull MyViewHoldersCommintPrices holder) {
         super.onViewDetachedFromWindow(holder);
     }
 
@@ -171,7 +171,7 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
 
     @NonNull
     @Override
-    public MyViewHolders onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHoldersCommintPrices onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View viewComminigPrices = null;
         try {
 
@@ -186,7 +186,7 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
             int  getPostionViewHolder=  getPostions();
 
             // TODO: 22.03.2022
-            viewHolders = new MyViewHolders(viewComminigPrices,context,getPostionViewHolder);
+            viewHolders = new MyViewHoldersCommintPrices(viewComminigPrices,context,getPostionViewHolder);
             // TODO: 27.12.2023
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -206,21 +206,20 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolders holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHoldersCommintPrices holder, int position) {
         try{
         // TODO: 27.12.2023
 
             // TODO: 02.03.2022 Запускаем Обработку Parent Конмоненты
-            ComponentsForRecyreView componentsForRecyreView=  new ComponentsForRecyreView(holder,context,position,objectMapper,getHiltPublicId,getHiltCommintgPrices);
+            ComponentsForRecyreView componentsForRecyreView=
+                    new ComponentsForRecyreView(holder,context,position,objectMapper,
+                            getHiltPublicId,getHiltCommintgPrices);
 
             // TODO: 29.12.2023 Кнопка Стрелочка которая показывает и скрывает Дочериний recyreview
             componentsForRecyreView.getArrow_nested_receriview();
 
             // TODO: 29.12.2023 название ЦФО
             componentsForRecyreView.getmTV_commitingprices_value();
-
-
-                 moveAnitationRecyrevirew(holder);
 
 
 
@@ -321,7 +320,7 @@ public  class MyRecycleViewIsAdapters extends RecyclerView.Adapter<MyViewHolders
     }
 
 
-    private void moveAnitationRecyrevirew( @NonNull MyViewHolders holder) {
+    private void moveAnitationRecyrevirew( @NonNull MyViewHoldersCommintPrices holder) {
         try{
             holder.itemView.startAnimation(animationДляСогласованияЦены);
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -6,13 +6,11 @@ package com.dsy.dsu.PaysCommings.Model.BI_RecyreView;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPay;
+import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPayCommingPay;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Services.Service_Notificatios_Для_Согласования;
 import com.google.android.material.card.MaterialCardView;
@@ -38,7 +36,7 @@ class AddFileFromPayCommiting{
                             @NotNull Context context,
                             @NotNull String НазваниеТекущегот1С,
                             @NotNull String РасширенияФайла,
-                            @NonNull MyViewHolderPay holder,
+                            @NonNull MyViewHolderPayCommingPay holder,
                             @NonNull Integer ПубличныйidPay,
                             @NonNull  String getHiltCommintgPays){
         try{

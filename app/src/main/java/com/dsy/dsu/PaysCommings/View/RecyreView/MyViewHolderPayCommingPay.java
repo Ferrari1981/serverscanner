@@ -19,7 +19,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 // TODO: 15.03.2022  перенесееный код
 // TODO: 28.02.2022 начало  MyViewHolderДляЧата
-public class MyViewHolderPay extends RecyclerView.ViewHolder {// TODO: 28.02.2022 начало  MyViewHolderДляЧата
+public class MyViewHolderPayCommingPay extends RecyclerView.ViewHolder {// TODO: 28.02.2022 начало  MyViewHolderДляЧата
     // TODO: 28.02.2022
     public MaterialTextView tx_sum, tx_nomer, tx_zfo, tx_kontragent, tx_statiy, tx_namelklatura, tx_organizations;
     public MaterialButton     arrowpay_nested_receriview_commitingpay;
@@ -41,9 +41,9 @@ public class MyViewHolderPay extends RecyclerView.ViewHolder {// TODO: 28.02.202
 
 
     // TODO: 02.03.2022
-    public MyViewHolderPay(@NonNull View itemView,
-                           @NonNull Context context,
-                           @NonNull JsonNode jsonNode1сСогласования) {
+    public MyViewHolderPayCommingPay(@NonNull View itemView,
+                                     @NonNull Context context,
+                                     @NonNull JsonNode jsonNode1сСогласования) {
         super(itemView);
         try{
             this.context=context;

@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.BusinessLogicAll.Class_Get_Json_1C;
 import com.dsy.dsu.PaysCommings.Model.LeftDividerItemDecoratorCommitPay;
-import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterPay;
+import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterCommingPay;
 import com.dsy.dsu.PaysCommings.View.RecyreViewIsNull.MyRecycleViewIsNullAdapterPay;
 import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
@@ -76,7 +76,7 @@ public class Bl_CommintigPay {
 
       BottomNavigationItemView bottomNavigationAsyncCommitingPay;
      BottomNavigationItemView bottomNavigationSearchCommitingPay;
-    MyRecycleViewAdapterPay myRecycleViewAdapter;
+    MyRecycleViewAdapterCommingPay myRecycleViewAdapter;
 
     MutableLiveData<Intent> jsonNodeMutableLiveDataPayCommintg;
     androidx.appcompat.widget.SearchView searchview_commitpay;
@@ -150,10 +150,10 @@ public class Bl_CommintigPay {
     }
 
 
-    public void МетодСлушательObserverДляRecycleView(@NonNull    MyRecycleViewAdapterPay myRecycleViewAdapterPay) {  // TODO: 04.03.2022  класс в котором находяться слушатели
+    public void МетодСлушательObserverДляRecycleView(@NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay) {  // TODO: 04.03.2022  класс в котором находяться слушатели
         try {
-            if (myRecycleViewAdapterPay!=null) {
-                myRecycleViewAdapterPay.registerAdapterDataObserver(      new RecyclerView.AdapterDataObserver() {
+            if (myRecycleViewAdapterCommingPay !=null) {
+                myRecycleViewAdapterCommingPay.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                     @Override
                     public void onChanged() {
                         super.onChanged();
@@ -587,7 +587,7 @@ public class Bl_CommintigPay {
                                               @NonNull  String getHiltCommintgPays) {
         try {
             if (myRecycleViewAdapter==null) {
-                myRecycleViewAdapter = new MyRecycleViewAdapterPay(jsonNode1сСогласованияAllRows,context
+                myRecycleViewAdapter = new MyRecycleViewAdapterCommingPay(jsonNode1сСогласованияAllRows,context
                         ,binderСогласования1C,animation,ПубличныйidPay,objectMapper,bottomNavigationViewParentCommitingPay,recycleviewcommitpays,
                         getHiltCommintgPays,this);
                 // TODO: 24.01.2024

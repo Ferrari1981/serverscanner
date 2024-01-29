@@ -8,11 +8,10 @@ import android.widget.ProgressBar;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.ByteGenetarorJsonNode;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.EventsBackAndAsyncAndSearchCommintPrices;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.GeneratorBundleForJsonNode;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews.InizializayRecyreViews;
-import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyRecycleViewIsAdapters;
+import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyRecycleViewIsAdaptersCommintPrices;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewIsNull.MyRecycleViewIsNullAdapters;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -35,7 +34,7 @@ public class CallBacksLiveData {
     private RecyclerView recycleview_comminingpprices;
 
     private  MyRecycleViewIsNullAdapters myRecycleViewIsNullAdapters;
-    private  MyRecycleViewIsAdapters myRecycleViewIsAdapters;
+    private MyRecycleViewIsAdaptersCommintPrices myRecycleViewIsAdaptersCommintPrices;
     private  ObjectMapper objectMapper;
     private EventsBackAndAsyncAndSearchCommintPrices eventsBackAndAsyncAndSearchCommintPrices;
 
@@ -205,10 +204,10 @@ public class CallBacksLiveData {
 
     public void startGetRecyreView( JsonNode     jsonNode1сСогласованиеЦен ) {
         try {
-            if (myRecycleViewIsAdapters==null) {
-                myRecycleViewIsAdapters = new MyRecycleViewIsAdapters(jsonNode1сСогласованиеЦен, context,objectMapper ,getHiltPublicId,getHiltCommintgPrices );
-                myRecycleViewIsAdapters.notifyDataSetChanged();
-                recycleview_comminingpprices.setAdapter(myRecycleViewIsAdapters);
+            if (myRecycleViewIsAdaptersCommintPrices ==null) {
+                myRecycleViewIsAdaptersCommintPrices = new MyRecycleViewIsAdaptersCommintPrices(jsonNode1сСогласованиеЦен, context,objectMapper ,getHiltPublicId,getHiltCommintgPrices );
+                myRecycleViewIsAdaptersCommintPrices.notifyDataSetChanged();
+                recycleview_comminingpprices.setAdapter(myRecycleViewIsAdaptersCommintPrices);
                 recycleview_comminingpprices.getAdapter().notifyDataSetChanged();
                 // TODO: 09.01.2024
                 recyreViewReboot();
@@ -216,7 +215,7 @@ public class CallBacksLiveData {
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "myRecycleViewIsAdapters  "
-                        + myRecycleViewIsAdapters  + " jsonNode1сСогласованиеЦен " +jsonNode1сСогласованиеЦен);
+                        + myRecycleViewIsAdaptersCommintPrices + " jsonNode1сСогласованиеЦен " +jsonNode1сСогласованиеЦен);
             }
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -240,9 +239,9 @@ public class CallBacksLiveData {
 
     public void completeRecyreView(@NotNull  JsonNode     jsonNode1сСогласованиеЦен) {
         try{
-            if (myRecycleViewIsAdapters!=null) {
-                myRecycleViewIsAdapters.jsonNodeParent=jsonNode1сСогласованиеЦен;
-                myRecycleViewIsAdapters.notifyDataSetChanged();
+            if (myRecycleViewIsAdaptersCommintPrices !=null) {
+                myRecycleViewIsAdaptersCommintPrices.jsonNodeParent=jsonNode1сСогласованиеЦен;
+                myRecycleViewIsAdaptersCommintPrices.notifyDataSetChanged();
                 RecyclerView.Adapter recyclerViewAdapter=         recycleview_comminingpprices.getAdapter();
                 recycleview_comminingpprices.swapAdapter(recyclerViewAdapter,true);
                 recycleview_comminingpprices.getAdapter().notifyDataSetChanged();
