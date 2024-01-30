@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,6 +46,7 @@ public class CallBacksLiveData {
     private  String getHiltCommintgPrices;
     GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
     MutableLiveData<Intent> getHiltMutableLiveDataPay;
+    private LifecycleOwner lifecycleOwner;
     public CallBacksLiveData( @NotNull  Context context,
                               @NotNull   ProgressBar prograessbar_commintingprices,
                               @NotNull   RecyclerView  recycleview_comminingpprices,
@@ -54,7 +56,8 @@ public class CallBacksLiveData {
                               @NotNull Integer getHiltPublicId,
                               @NotNull String getHiltCommintgPrices,
                               @NotNull GetLiveDataForrecyreViewPrices  getLiveDataForrecyreViewPrices,
-                              @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay ) {
+                              @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay ,
+                              @NotNull  LifecycleOwner lifecycleOwner) {
 
         this.context = context;
         this.prograessbar_commintingprices = prograessbar_commintingprices;
@@ -66,6 +69,7 @@ public class CallBacksLiveData {
         this.getHiltCommintgPrices = getHiltCommintgPrices;
         this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
         this.getHiltMutableLiveDataPay = getHiltMutableLiveDataPay;
+        this.lifecycleOwner = lifecycleOwner;
     }
 
     public  void callbackLiveData(Bundle bundle) {
@@ -217,7 +221,8 @@ public class CallBacksLiveData {
                         new MyRecycleViewIsAdaptersCommintPrices(jsonNode1сСогласованиеЦен, 
                                 context,objectMapper 
                                 ,getHiltPublicId,
-                                getHiltCommintgPrices,getLiveDataForrecyreViewPrices,getHiltMutableLiveDataPay );
+                                getHiltCommintgPrices,getLiveDataForrecyreViewPrices,getHiltMutableLiveDataPay ,
+                                lifecycleOwner);
                 // TODO: 30.01.2024
                 myRecycleViewIsAdaptersCommintPrices.notifyDataSetChanged();
                 recycleview_comminingpprices.setAdapter(myRecycleViewIsAdaptersCommintPrices);

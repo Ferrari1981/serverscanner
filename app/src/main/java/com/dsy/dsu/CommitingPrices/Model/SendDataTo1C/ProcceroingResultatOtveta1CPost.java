@@ -44,7 +44,7 @@ Context context;
    public void startingResultatOtveta1CPost(@NotNull StringBuffer  BufferOt1cCommintPricePost,
                                             @NotNull MaterialTextView mTV_commitingprices_count,
                                             @NotNull MyRecycleViewIsAdaptersNested myRecycleViewIsAdaptersNested,
-                                            @NotNull Integer getAbsoluteAdapterPosition,
+                                            @NotNull int position,
                                             @NotNull MaterialCardView cardview_commingprices_neasted,
                                             @NotNull ArrayNode ArrayNodeNested,
                                             @NotNull MyViewHoldersNested holder){
@@ -65,14 +65,14 @@ Context context;
                 holder.itemView.refreshDrawableState();
 
                 // TODO: 11.01.2024 перегрузка данных
-                myRecycleViewIsAdaptersNested.notifyItemRemoved(getAbsoluteAdapterPosition );
+                myRecycleViewIsAdaptersNested.notifyItemRemoved(position );
 
-                myRecycleViewIsAdaptersNested.notifyItemChanged(getAbsoluteAdapterPosition );
+                myRecycleViewIsAdaptersNested.notifyItemChanged(position );
 
 
 
              // TODO: 23.01.2024  удаление
-                ArrayNodeNested.remove(getAbsoluteAdapterPosition);
+                ArrayNodeNested.remove(position);
 
 
 

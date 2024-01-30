@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.CommintPricesSendJsonTo1C;
 import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.ProcceroingResultatOtveta1CPost;
+import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyRecycleViewIsAdaptersNested;
+import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyViewHoldersNested;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.Bl_CommintigPay;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.LiveData.QualifierGetLiveDataForrecyreViewPay;
@@ -24,7 +26,9 @@ import com.dsy.dsu.PaysCommings.Model.Bl_Nested.ComponensForRecyreviewNestedPay;
 import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterCommingPay;
 import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPayCommingPay;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textview.MaterialTextView;
 
 import javax.inject.Inject;
 
@@ -44,13 +48,16 @@ public class GetLiveDataForrecyreViewPrices {
     public void setObservableLiveDataRecyreViewPrices(@NonNull  LifecycleOwner lifecycleOwner ,
                                                       @NonNull Context context,
                                                       @NonNull  MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView,
-                                                      @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay,
-                                                      @NonNull Bl_CommintigPay bl_commintigPay,
-                                                      @NonNull JsonNode jsonNode1сСогласования,
-                                                      @NonNull MyViewHolderPayCommingPay holder,
-                                                      @NonNull MaterialCardView cardview_commingpay,
-                                                      @NonNull int position,
-                                                      @NonNull RecyclerView recycleviewcommitpays) {
+                                                      @NonNull     byte[] ByteFor1CCommintPrices,
+                                                      @NonNull Integer getHiltPublicId,
+                                                      @NonNull String getHiltCommintgPrices,
+                                                      @NonNull    String UUID,
+                                                      @NonNull MaterialTextView mTV_commitingprices_count,
+                                                      @NonNull MyRecycleViewIsAdaptersNested myRecycleViewIsAdaptersNested,
+                                                      @NonNull  int position,
+                                                      @NonNull MaterialCardView cardview_commingprices_neasted,
+                                                      @NonNull ArrayNode ArrayNodeNested,
+                                                      @NonNull MyViewHoldersNested holder) {
         try{
             if (!getHiltMutableLiveDataPayForRecyreView.hasObservers()) {
                 // TODO: 16.01.2024
@@ -71,7 +78,7 @@ public class GetLiveDataForrecyreViewPrices {
                                             ByteFor1CCommintPrices,getHiltPublicId,getHiltCommintgPrices, UUID);
 
 
-                                    //  StringBuffer  BufferOt1cCommintPricePost=new StringBuffer("Согласование внесено в базу!");
+                                ///////  StringBuffer  BufferOt1cCommintPricePost=new StringBuffer("Согласование внесено в базу!");
 
 
                                     // TODO: 10.01.2024 Скрываем Текущий Платеж По Которому был Клик http://192.168.254.218/dds_copy/hs/jsonto1ccena/listofdocuments
@@ -80,15 +87,14 @@ public class GetLiveDataForrecyreViewPrices {
                                     procceroingResultatOtveta1CPost.startingResultatOtveta1CPost(  BufferOt1cCommintPricePost,
                                             mTV_commitingprices_count,
                                             myRecycleViewIsAdaptersNested,
-                                            getAbsoluteAdapterPosition
+                                            position
                                             ,cardview_commingprices_neasted,ArrayNodeNested,holder);
 
 
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                                            + "\n"+ " recycleviewcommitpays "+recycleviewcommitpays);
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
                                     break;
 
                             }

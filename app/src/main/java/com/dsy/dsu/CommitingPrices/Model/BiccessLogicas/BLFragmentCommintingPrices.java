@@ -143,7 +143,8 @@ public class BLFragmentCommintingPrices {
                             new CallBacksLiveData(context,prograessbar_commintingprices,
                                     recycleview_comminingpprices,myRecycleViewIsNullAdapters,
                                     objectMapper,   eventsBackAndAsyncAndSearchCommintPrices,
-                                    getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices,getHiltMutableLiveDataPay).callbackLiveData(bundle);
+                                    getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices
+                                    ,getHiltMutableLiveDataPay,lifecycleOwner).callbackLiveData(bundle);
 
 
                             // TODO: 09.01.2024
@@ -209,7 +210,8 @@ public class BLFragmentCommintingPrices {
                             new CallBacksLiveData(context,prograessbar_commintingprices,
                                     recycleview_comminingpprices,myRecycleViewIsNullAdapters,
                                     objectMapper,   eventsBackAndAsyncAndSearchCommintPrices,getHiltPublicId,
-                                    getHiltCommintgPrices,getLiveDataForrecyreViewPrices,getHiltMutableLiveDataPay)
+                                    getHiltCommintgPrices,getLiveDataForrecyreViewPrices,getHiltMutableLiveDataPay
+                                    ,lifecycleOwner)
                                     .completeRecyreView(jsonNode1сСогласованиеЦен);
 
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +43,8 @@ public class CallBacksLiveDataNested {
     GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
 
     MutableLiveData<Intent> getHiltMutableLiveDataPay;
+
+    private LifecycleOwner lifecycleOwner;
     public CallBacksLiveDataNested(@NotNull MyViewHoldersCommintPrices holder,
                                    @NotNull  Context context,
                                    @NotNull   RecyclerView  recycleview_comminingpricesNested,
@@ -51,7 +54,8 @@ public class CallBacksLiveDataNested {
                                    @NotNull Integer getHiltPublicId,
                                    @NotNull   String getHiltCommintgPrices,
                                    @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
-                                   @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay) {
+                                   @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay,
+                                   @NotNull LifecycleOwner lifecycleOwner) {
         this.context = context;
         this.recycleview_comminingppricesNesteds = recycleview_comminingpricesNested;
         this.jsonNodeNested = jsonNodeNested;
@@ -62,6 +66,8 @@ public class CallBacksLiveDataNested {
         this.getHiltCommintgPrices = getHiltCommintgPrices;
         this. getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
         this. getHiltMutableLiveDataPay = getHiltMutableLiveDataPay;
+        this. lifecycleOwner = lifecycleOwner;
+
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -129,7 +135,9 @@ public class CallBacksLiveDataNested {
 
 
                 myRecycleViewIsAdaptersNested = new MyRecycleViewIsAdaptersNested(holder.itemView, context
-                        ,jsonNodeNested, postion,objectMapper,getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices,  getHiltMutableLiveDataPay);
+                        ,jsonNodeNested, postion,objectMapper,getHiltPublicId,getHiltCommintgPrices
+                        ,getLiveDataForrecyreViewPrices,  getHiltMutableLiveDataPay,lifecycleOwner);
+            // TODO: 30.01.2024
                 myRecycleViewIsAdaptersNested.notifyDataSetChanged();
                 recycleview_comminingppricesNesteds.setAdapter(myRecycleViewIsAdaptersNested);
                 recycleview_comminingppricesNesteds.getAdapter().notifyDataSetChanged();

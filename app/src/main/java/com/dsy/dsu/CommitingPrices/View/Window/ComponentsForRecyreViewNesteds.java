@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.widget.Toast;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 
 import com.dsy.dsu.CommitingPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
@@ -75,6 +76,8 @@ public class ComponentsForRecyreViewNesteds {
     GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
    MutableLiveData<Intent> getHiltMutableLiveDataPay;
 
+    private LifecycleOwner lifecycleOwner;
+
     public ComponentsForRecyreViewNesteds(@NotNull MyViewHoldersNested holder,
                                           @NotNull  Context context,
                                           @NotNull int getAbsoluteAdapterPosition,
@@ -86,7 +89,8 @@ public class ComponentsForRecyreViewNesteds {
                                           @NotNull ArrayNode ArrayNodeNested,
                                           @NotNull String getHiltCommintgPrices,
                                           @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
-                                          @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay) {
+                                          @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay,
+                                          @NotNull    LifecycleOwner lifecycleOwner) {
         this.holder = holder;
         this.context = context;
         this.getAbsoluteAdapterPosition = getAbsoluteAdapterPosition;
@@ -99,6 +103,7 @@ public class ComponentsForRecyreViewNesteds {
         this.getHiltCommintgPrices = getHiltCommintgPrices;
         this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
         this.getHiltMutableLiveDataPay = getHiltMutableLiveDataPay;
+        this.lifecycleOwner = lifecycleOwner;
     }
 
 
@@ -132,7 +137,7 @@ public class ComponentsForRecyreViewNesteds {
         return mTV_commitingprices_count;
     }
 
-    public MaterialButton getArrow_nested_receriview() {
+    public MaterialButton getArrow_nested_receriview(@NotNull  int position) {
         try{
             arrow_nested_receriview=    holder.itemView.findViewById(R.id.arrow_nested_receriview) ;
 
@@ -185,7 +190,7 @@ public class ComponentsForRecyreViewNesteds {
 
 
                         ///todo revboot нажимаем для подтвердить
-                       eventButtonArrow(MaterialButtonNested);
+                       eventButtonArrow(MaterialButtonNested,position);
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -209,7 +214,7 @@ public class ComponentsForRecyreViewNesteds {
         return arrow_nested_receriview;
     }
 
-    private void eventButtonArrow(MaterialButton MaterialButtonNested) {
+    private void eventButtonArrow(@NotNull  MaterialButton MaterialButtonNested,@NotNull  int position) {
         Handler handler=     arrow_nested_receriview.getHandler();
         handler.postDelayed(()->{
             // TODO: 11.01.2024
@@ -228,7 +233,12 @@ public class ComponentsForRecyreViewNesteds {
         
 
 
-                    getLiveDataForrecyreViewPrices.setObservableLiveDataRecyreViewPrices();
+                    getLiveDataForrecyreViewPrices.setObservableLiveDataRecyreViewPrices(lifecycleOwner,
+                            context,
+                            getHiltMutableLiveDataPay
+                            ,ByteFor1CCommintPrices,getHiltPublicId,getHiltCommintgPrices,UUID,mTV_commitingprices_count,
+                            myRecycleViewIsAdaptersNested,position,cardview_commingprices_neasted,
+                            ArrayNodeNested,holder);
 
 
 

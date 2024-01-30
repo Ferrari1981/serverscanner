@@ -7,6 +7,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,6 +49,7 @@ public class ComponentsForRecyreView {
     Animation    animationДляСогласованияЦены;
     GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
     MutableLiveData<Intent> getHiltMutableLiveDataPay;
+    private LifecycleOwner lifecycleOwner;
     public ComponentsForRecyreView(@NotNull MyViewHoldersCommintPrices holder,
                                    @NotNull  Context context,
                                    @NotNull  int position,
@@ -55,7 +57,8 @@ public class ComponentsForRecyreView {
                                    @NotNull Integer getHiltPublicId,
                                    @NotNull String getHiltCommintgPrices,
                                    @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
-                                   @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay) {
+                                   @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay,
+                                   @NotNull  LifecycleOwner lifecycleOwner) {
         try{
         this.holder = holder;
         this.context = context;
@@ -65,6 +68,7 @@ public class ComponentsForRecyreView {
         this.getHiltCommintgPrices = getHiltCommintgPrices;
         this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
         this.getHiltMutableLiveDataPay = getHiltMutableLiveDataPay;
+        this.lifecycleOwner = lifecycleOwner;
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -206,7 +210,7 @@ public class ComponentsForRecyreView {
                     progressbar_comminingprices,
                     holder,
                     context,position,objectMapper,getHiltPublicId,getHiltCommintgPrices,
-                    getLiveDataForrecyreViewPrices,getHiltMutableLiveDataPay) ;
+                    getLiveDataForrecyreViewPrices,getHiltMutableLiveDataPay,lifecycleOwner) ;
 
 // TODO: 30.12.2023 запускам при нажатии на Кнопку Arrow  внутрнеий
 

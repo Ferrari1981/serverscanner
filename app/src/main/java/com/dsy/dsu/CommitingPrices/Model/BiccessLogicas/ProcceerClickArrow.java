@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,6 +53,7 @@ public  class ProcceerClickArrow {
     GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
 
     MutableLiveData<Intent> getHiltMutableLiveDataPay;
+    private LifecycleOwner lifecycleOwner;
 
     public ProcceerClickArrow( @NonNull  RecyclerView recycleview_nesters_comminingpprices,
                                @NonNull MaterialButton materialButton,
@@ -63,7 +65,8 @@ public  class ProcceerClickArrow {
                                @NotNull Integer getHiltPublicId,
                                @NotNull String getHiltCommintgPrices,
                                @NonNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
-                               @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay) {
+                               @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay,
+                               @NonNull    LifecycleOwner lifecycleOwner) {
 
 
         this.recycleview_nesters_comminingpprices = recycleview_nesters_comminingpprices;
@@ -77,6 +80,7 @@ public  class ProcceerClickArrow {
         this.getHiltCommintgPrices = getHiltCommintgPrices;
         this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
         this.getHiltMutableLiveDataPay = getHiltMutableLiveDataPay;
+        this.lifecycleOwner = lifecycleOwner;
 
 
 
@@ -192,7 +196,10 @@ public  class ProcceerClickArrow {
             CallBacksLiveDataNested callBacksLiveDataNested =
                     new CallBacksLiveDataNested(holder, context, recycleview_nesters_comminingpprices,
                             holder.jsonNode, position,objectMapper,
-                            getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices,getHiltMutableLiveDataPay);
+                            getHiltPublicId,getHiltCommintgPrices,
+                            getLiveDataForrecyreViewPrices,
+                            getHiltMutableLiveDataPay,
+                            lifecycleOwner);
 
             // TODO: 30.12.2023 запукскаем
             callBacksLiveDataNested.callbackLiveData();

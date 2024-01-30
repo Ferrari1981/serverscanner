@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,6 +49,7 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
 
 
     private MutableLiveData<Intent> getHiltMutableLiveDataPrices;
+    private LifecycleOwner lifecycleOwner;
 
     public MyRecycleViewIsAdaptersNested(@NonNull View itemView,
                                          @NotNull Context context,
@@ -57,7 +59,8 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
                                          @NotNull Integer getHiltPublicId,
                                          @NotNull String getHiltCommintgPrices,
                                          @NonNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
-                                         @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPrices) {
+                                         @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPrices,
+                                         @NonNull LifecycleOwner lifecycleOwner) {
         // super();
         try{
             this.itemView=itemView;
@@ -68,6 +71,7 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             this.getHiltCommintgPrices=getHiltCommintgPrices;
             this.getLiveDataForrecyreViewPrices=getLiveDataForrecyreViewPrices;
             this.getHiltMutableLiveDataPrices = getHiltMutableLiveDataPrices;
+            this.lifecycleOwner = lifecycleOwner;
 
             animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_row8);
 
@@ -260,14 +264,16 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             ComponentsForRecyreViewNesteds componentsForRecyreViewNesteds=
                     new ComponentsForRecyreViewNesteds(holder,context,
                             position,cardview_commingprices_neasted,animation,objectMapper,getHiltPublicId,
-                            this,ArrayNodeNested,getHiltCommintgPrices,getLiveDataForrecyreViewPrices, getHiltMutableLiveDataPrices);
+                            this,ArrayNodeNested,getHiltCommintgPrices,
+                            getLiveDataForrecyreViewPrices,
+                            getHiltMutableLiveDataPrices,lifecycleOwner);
 // TODO: 30.12.2023  запуск метода Сверху Сумма согласования цены
             if (ArrayNodeNested.size()>0) {
 
                 componentsForRecyreViewNesteds.getmTV_commitingprices_count();
 
                 // TODO: 30.12.2023 кнопка подтверждения  согласования цены указонной
-                componentsForRecyreViewNesteds.getArrow_nested_receriview();
+                componentsForRecyreViewNesteds.getArrow_nested_receriview(position);
 
                 // TODO: 30.12.2023 кнопка Номелклатура
                 componentsForRecyreViewNesteds.getmTV_Nomenklatura();
