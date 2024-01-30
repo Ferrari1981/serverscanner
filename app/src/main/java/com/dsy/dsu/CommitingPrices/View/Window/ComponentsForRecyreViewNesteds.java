@@ -222,34 +222,27 @@ public class ComponentsForRecyreViewNesteds {
                 if (ByteFor1CCommintPrices!=null) {
                     // TODO: 10.01.2024  Отправляем Сгенерированый JSON
                     String UUID=   bundleДанныеДляPost.getString("UUID").trim();
-                    CommintPricesSendJsonTo1C generatorJsonForPostComminhgPrices=new CommintPricesSendJsonTo1C();
-
-               /*     // TODO: 10.01.2024 Отправка данных Price на сервер 1с
-                    StringBuffer  BufferOt1cCommintPricePost=   generatorJsonForPostComminhgPrices.SendJsonForPostComminhgPrices(context,
-                            ByteFor1CCommintPrices,getHiltPublicId,getHiltCommintgPrices, UUID);*/
-
-
-                    //getHiltMutableLiveDataPay
-
-                    StringBuffer  BufferOt1cCommintPricePost=new StringBuffer("Согласование внесено в базу!");
+                    
+                    
+                    
+        
 
 
-                    // TODO: 10.01.2024 Скрываем Текущий Платеж По Которому был Клик http://192.168.254.218/dds_copy/hs/jsonto1ccena/listofdocuments
-                    // TODO: 11.01.2024 терперь третьй вариант пользователюю  прячем указвнный текущий Плитку с соглдосваниием
-                    ProcceroingResultatOtveta1CPost procceroingResultatOtveta1CPost=new ProcceroingResultatOtveta1CPost(context);
-                    procceroingResultatOtveta1CPost.startingResultatOtveta1CPost(  BufferOt1cCommintPricePost,
-                            mTV_commitingprices_count,
-                            myRecycleViewIsAdaptersNested,
-                            getAbsoluteAdapterPosition
-                            ,cardview_commingprices_neasted,ArrayNodeNested,holder);
+                    getLiveDataForrecyreViewPrices.setObservableLiveDataRecyreViewPrices();
+
+
+
+
+
+                    // TODO: 30.01.2024  запускаем Mutable 
+                    sendLiveDataRecyreViewEventCallBacl1c(  );
 
 
                     Log.d(this.getClass().getName(),"\n"
                             + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                            +  " MaterialButtonNested " + MaterialButtonNested
-                            + " BufferOt1cCommintPricePost " +BufferOt1cCommintPricePost);
+                            +  " MaterialButtonNested " + MaterialButtonNested);
 
                 }else {
 
@@ -274,7 +267,24 @@ public class ComponentsForRecyreViewNesteds {
         },100);
     }
 
+    private void sendLiveDataRecyreViewEventCallBacl1c(  ) {
 
+        try{
+            Intent intentCallBackRcyreCiew1cPayEvent=new Intent("CallBackRecyreViewPrices");
+            getHiltMutableLiveDataPay.postValue(intentCallBackRcyreCiew1cPayEvent);
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
     public MaterialTextView getmTV_Nomenklatura() {
         try{
             mTV_Nomenklatura=    holder.itemView.findViewById(R.id.mTV_Nomenklatura) ;

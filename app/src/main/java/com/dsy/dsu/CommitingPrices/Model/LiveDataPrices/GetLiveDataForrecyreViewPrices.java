@@ -15,6 +15,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.CommintPricesSendJsonTo1C;
+import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.ProcceroingResultatOtveta1CPost;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.Bl_CommintigPay;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.LiveData.QualifierGetLiveDataForrecyreViewPay;
@@ -59,15 +61,29 @@ public class GetLiveDataForrecyreViewPrices {
                             switch (intent.getAction())  {
                                 case           "CallBackRecyreViewPrices":
                                     // TODO: 16.01.2024  пришли данные
-                                    Bundle bundleFirst =      intent.getExtras();
-                                    String   ОТветОт1СОперациисДанными=     (String )      bundleFirst.getString("recyreViewPrices");
-                                    StringBuffer stringBufferОт1СОперациисДанными=new StringBuffer(ОТветОт1СОперациисДанными);
 
 
-// TODO: 30.01.2024  метод ответа от 1с pay согласовано или нет
-                                    procesingCallBackOt1cPays( stringBufferОт1СОперациисДанными,
-                                            myRecycleViewAdapterCommingPay, holder, cardview_commingpay, position,
-                                            context, jsonNode1сСогласования, recycleviewcommitpays, bl_commintigPay);
+                                    // TODO: 10.01.2024 Отправка данных Price на сервер 1с
+                                    CommintPricesSendJsonTo1C generatorJsonForPostComminhgPrices=new CommintPricesSendJsonTo1C();
+
+                                    // TODO: 30.01.2024 Отправляем задаени на 1с
+                                    StringBuffer  BufferOt1cCommintPricePost=   generatorJsonForPostComminhgPrices.SendJsonForPostComminhgPrices(context,
+                                            ByteFor1CCommintPrices,getHiltPublicId,getHiltCommintgPrices, UUID);
+
+
+                                    //  StringBuffer  BufferOt1cCommintPricePost=new StringBuffer("Согласование внесено в базу!");
+
+
+                                    // TODO: 10.01.2024 Скрываем Текущий Платеж По Которому был Клик http://192.168.254.218/dds_copy/hs/jsonto1ccena/listofdocuments
+                                    // TODO: 11.01.2024 терперь третьй вариант пользователюю  прячем указвнный текущий Плитку с соглдосваниием
+                                    ProcceroingResultatOtveta1CPost procceroingResultatOtveta1CPost=new ProcceroingResultatOtveta1CPost(context);
+                                    procceroingResultatOtveta1CPost.startingResultatOtveta1CPost(  BufferOt1cCommintPricePost,
+                                            mTV_commitingprices_count,
+                                            myRecycleViewIsAdaptersNested,
+                                            getAbsoluteAdapterPosition
+                                            ,cardview_commingprices_neasted,ArrayNodeNested,holder);
+
+
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
