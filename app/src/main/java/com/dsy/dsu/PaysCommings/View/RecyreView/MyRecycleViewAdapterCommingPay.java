@@ -3,7 +3,6 @@ package com.dsy.dsu.PaysCommings.View.RecyreView;
 // TODO: 28.02.2022 ViewHolder
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -28,9 +27,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.Bl_CommintigPay;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.FileFrom1CCommitPay;
-import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.LiveData.GetLiveDataForrecyreView;
+import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.LiveData.GetLiveDataForrecyreViewPay;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.ProccesingCancelOrOKPay;
-import com.dsy.dsu.PaysCommings.Model.Bl_Nested.ComponensForRecyreviewNestedPay;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Services.Service_Notificatios_Для_Согласования;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -42,15 +40,12 @@ import com.jakewharton.rxbinding4.view.RxView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-
-import javax.inject.Inject;
 
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
@@ -86,7 +81,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
     LifecycleOwner lifecycleOwner;
 
-    GetLiveDataForrecyreView getLiveDataForrecyreView;
+    GetLiveDataForrecyreViewPay getLiveDataForrecyreViewPay;
 
     MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView;
     public MyRecycleViewAdapterCommingPay(@NotNull JsonNode jsonNode1сСогласования,
@@ -101,7 +96,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                           @NonNull Bl_CommintigPay bl_commintigPay,
                                            @NotNull JsonNode jsonNode1сСогласованияAll,
                                             @NonNull LifecycleOwner lifecycleOwner,
-                                          @NonNull  GetLiveDataForrecyreView getLiveDataForrecyreView,
+                                          @NonNull GetLiveDataForrecyreViewPay getLiveDataForrecyreViewPay,
                                           @NonNull MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView) {
         try {
             this.jsonNode1сСогласования = jsonNode1сСогласования;
@@ -116,7 +111,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
             this.bl_commintigPay = bl_commintigPay;
             this.jsonNode1сСогласованияAll = jsonNode1сСогласованияAll;
             this.lifecycleOwner = lifecycleOwner;
-            this.getLiveDataForrecyreView = getLiveDataForrecyreView;
+            this.getLiveDataForrecyreViewPay = getLiveDataForrecyreViewPay;
             this.getHiltMutableLiveDataPayForRecyreView = getHiltMutableLiveDataPayForRecyreView;
 
             animationДляСогласовани = AnimationUtils.loadAnimation(context,  R.anim.slide_in_scrolls);//R.anim.layout_animal_commit
@@ -1033,7 +1028,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         // TODO: 24.01.2024 сама операиция подтверждения отправляем ее
 
                         // TODO: 30.01.2024  слушатель на дейстия при СУПЕШНО
-                        getLiveDataForrecyreView.setObservableLiveDataRecyreViewPays(lifecycleOwner,
+                        getLiveDataForrecyreViewPay.setObservableLiveDataRecyreViewPays(lifecycleOwner,
                                 context,
                                 getHiltMutableLiveDataPayForRecyreView,
                                 myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования,holder,cardview_commingpay,position,recycleviewcommitpays);
@@ -1286,7 +1281,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
                         
                         // TODO: 30.01.2024  слушатель на дейстия при ОТКАЗЕ
-                        getLiveDataForrecyreView.setObservableLiveDataRecyreViewPays(lifecycleOwner,
+                        getLiveDataForrecyreViewPay.setObservableLiveDataRecyreViewPays(lifecycleOwner,
                                 context,
                                 getHiltMutableLiveDataPayForRecyreView,
                                 myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования,holder,cardview_commingpay,position,recycleviewcommitpays);

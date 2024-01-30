@@ -10,10 +10,12 @@ import android.widget.ProgressBar;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.LiveData.CallBacksLiveData;
+import com.dsy.dsu.CommitingPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewIsNull.MyRecycleViewIsNullAdapters;
 import com.dsy.dsu.CommitingPrices.ViewModel.ModelComminingPrisesByte;
 import com.dsy.dsu.CommitingPrices.ViewModel.ModelComminingPrisesString;
@@ -52,6 +54,8 @@ public class BLFragmentCommintingPrices {
     private  LiveData<Bundle>     liveData1;
     private  LiveData<Bundle>     liveData2;
     private Integer getHiltPublicId;
+    private GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
+    private MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView;
     public @Inject BLFragmentCommintingPrices(@NotNull  Activity activity,
                                               @NotNull  Context context,
                                               @NotNull   ObjectMapper objectMapper,
@@ -63,7 +67,9 @@ public class BLFragmentCommintingPrices {
                                               @NotNull androidx.appcompat.widget.SearchView searchview_commintingprices,
                                               @NotNull   EventsBackAndAsyncAndSearchCommintPrices eventsBackAndAsyncAndSearchCommintPrices,
                                               @NotNull Integer getHiltPublicId,
-                                              @NotNull String getHiltCommintgPrices) {
+                                              @NotNull String getHiltCommintgPrices,
+                                              @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
+                                              @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView) {
         this.activity = activity;
         this.context = context;
         this.objectMapper = objectMapper;
@@ -76,6 +82,8 @@ public class BLFragmentCommintingPrices {
         this. eventsBackAndAsyncAndSearchCommintPrices = eventsBackAndAsyncAndSearchCommintPrices;
         this. getHiltPublicId = getHiltPublicId;
         this. getHiltCommintgPrices = getHiltCommintgPrices;
+        this. getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
+        this. getHiltMutableLiveDataPayForRecyreView = getHiltMutableLiveDataPayForRecyreView;
     }
 
     // TODO: 26.12.2023 получение данных в виде String
@@ -135,7 +143,7 @@ public class BLFragmentCommintingPrices {
                             new CallBacksLiveData(context,prograessbar_commintingprices,
                                     recycleview_comminingpprices,myRecycleViewIsNullAdapters,
                                     objectMapper,   eventsBackAndAsyncAndSearchCommintPrices,
-                                    getHiltPublicId,getHiltCommintgPrices).callbackLiveData(bundle);
+                                    getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices).callbackLiveData(bundle);
 
 
                             // TODO: 09.01.2024
@@ -200,7 +208,8 @@ public class BLFragmentCommintingPrices {
 
                             new CallBacksLiveData(context,prograessbar_commintingprices,
                                     recycleview_comminingpprices,myRecycleViewIsNullAdapters,
-                                    objectMapper,   eventsBackAndAsyncAndSearchCommintPrices,getHiltPublicId,getHiltCommintgPrices)
+                                    objectMapper,   eventsBackAndAsyncAndSearchCommintPrices,getHiltPublicId,
+                                    getHiltCommintgPrices,getLiveDataForrecyreViewPrices)
                                     .completeRecyreView(jsonNode1сСогласованиеЦен);
 
 

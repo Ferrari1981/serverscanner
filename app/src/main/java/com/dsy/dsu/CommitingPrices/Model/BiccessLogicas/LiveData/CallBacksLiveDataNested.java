@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews.InizializayRecyreViewsNested;
+import com.dsy.dsu.CommitingPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
 import com.dsy.dsu.CommitingPrices.Model.NestedDataGetAll.GetArrayNodeForNestedChildern;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHoldersCommintPrices;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyRecycleViewIsAdaptersNested;
@@ -36,6 +37,7 @@ public class CallBacksLiveDataNested {
     private Integer getHiltPublicId;
     private    String getHiltCommintgPrices;
 
+    GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
     public CallBacksLiveDataNested(@NotNull MyViewHoldersCommintPrices holder,
                                    @NotNull  Context context,
                                    @NotNull   RecyclerView  recycleview_comminingpricesNested,
@@ -43,7 +45,8 @@ public class CallBacksLiveDataNested {
                                    @NotNull int postion,
                                    @NotNull ObjectMapper objectMapper,
                                    @NotNull Integer getHiltPublicId,
-                                   @NotNull   String getHiltCommintgPrices) {
+                                   @NotNull   String getHiltCommintgPrices,
+                                   @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices) {
         this.context = context;
         this.recycleview_comminingppricesNesteds = recycleview_comminingpricesNested;
         this.jsonNodeNested = jsonNodeNested;
@@ -52,6 +55,7 @@ public class CallBacksLiveDataNested {
         this.objectMapper = objectMapper;
         this.getHiltPublicId = getHiltPublicId;
         this.getHiltCommintgPrices = getHiltCommintgPrices;
+        this. getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -117,7 +121,7 @@ public class CallBacksLiveDataNested {
 
 
                 myRecycleViewIsAdaptersNested = new MyRecycleViewIsAdaptersNested(holder.itemView, context
-                        ,jsonNodeNested, postion,objectMapper,getHiltPublicId,getHiltCommintgPrices);
+                        ,jsonNodeNested, postion,objectMapper,getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices);
                 myRecycleViewIsAdaptersNested.notifyDataSetChanged();
                 recycleview_comminingppricesNesteds.setAdapter(myRecycleViewIsAdaptersNested);
                 recycleview_comminingppricesNesteds.getAdapter().notifyDataSetChanged();

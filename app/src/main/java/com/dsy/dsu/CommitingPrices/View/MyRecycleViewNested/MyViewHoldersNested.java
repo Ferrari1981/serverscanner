@@ -21,20 +21,11 @@ import org.jetbrains.annotations.NotNull;
 // TODO: 28.02.2022 начало  MyViewHolderДляЧата
 public class MyViewHoldersNested extends RecyclerView.ViewHolder {// TODO: 28.02.2022 начало  MyViewHolderДляЧата
     // TODO: 28.02.2022
-    private TextView textView1, textView2, textView3, textView4, textView5Намеклатура, textorganizationvalue, textvalueSUM;
-    private      TextView textViewКонтрагент,textViewЦФО,textViewДДС,TextViewНамелклатура;
-    private MaterialCardView cardviewmatireacommitpay;
-    private MaterialButton КнопкаСогласованиеОтказ,КнопкаУспешноеСогласования;
-    private TableLayout tableLayoutcommitpayfiles,tableLayoutcommitpay;
-    private ProgressBar progressbarfilepay;
-
-
     public Context context;
     public View itemView;
     public JsonNode ArrayNode;
     public  int getAbsoluteAdapterPosition;
-
-    public MaterialTextView bot_number_current_item;
+    public  MaterialCardView  cardview_commingprices_neasted;
 
     // TODO: 02.03.2022
     public MyViewHoldersNested(@NonNull View itemView,

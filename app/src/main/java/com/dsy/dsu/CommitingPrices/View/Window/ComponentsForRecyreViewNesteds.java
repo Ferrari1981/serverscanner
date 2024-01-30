@@ -138,9 +138,12 @@ public class ComponentsForRecyreViewNesteds {
                             Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                             v2.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
 
+                            cardview_commingprices_neasted.animate().rotationXBy(5);
+
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
                             return    arrow_nested_receriview;
                         }
                     })
@@ -173,7 +176,7 @@ public class ComponentsForRecyreViewNesteds {
 
 
                         ///todo revboot нажимаем для подтвердить
-                        eventButtonArrow(MaterialButtonNested);
+                      //  eventButtonArrow(MaterialButtonNested);
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

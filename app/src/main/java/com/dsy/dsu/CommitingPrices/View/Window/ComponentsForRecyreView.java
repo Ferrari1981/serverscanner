@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.ProcceerClickArrow;
+import com.dsy.dsu.CommitingPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHoldersCommintPrices;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
@@ -43,12 +44,14 @@ public class ComponentsForRecyreView {
     private  String getHiltCommintgPrices;
 
     Animation    animationДляСогласованияЦены;
+    GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
     public ComponentsForRecyreView(@NotNull MyViewHoldersCommintPrices holder,
                                    @NotNull  Context context,
                                    @NotNull  int position,
                                    @NotNull ObjectMapper objectMapper,
                                    @NotNull Integer getHiltPublicId,
-                                   @NotNull String getHiltCommintgPrices) {
+                                   @NotNull String getHiltCommintgPrices,
+                                   @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices) {
         try{
         this.holder = holder;
         this.context = context;
@@ -56,6 +59,7 @@ public class ComponentsForRecyreView {
         this.objectMapper = objectMapper;
         this.getHiltPublicId = getHiltPublicId;
         this.getHiltCommintgPrices = getHiltCommintgPrices;
+        this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -196,7 +200,7 @@ public class ComponentsForRecyreView {
                     materialButton,
                     progressbar_comminingprices,
                     holder,
-                    context,position,objectMapper,getHiltPublicId,getHiltCommintgPrices) ;
+                    context,position,objectMapper,getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices) ;
 
 // TODO: 30.12.2023 запускам при нажатии на Кнопку Arrow  внутрнеий
 

@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dsy.dsu.CommitingPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
 import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreView;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
@@ -36,10 +37,13 @@ public  class MyRecycleViewIsAdaptersCommintPrices extends RecyclerView.Adapter<
     private  String getHiltCommintgPrices;
     private Animation animationДляСогласованияЦены;
 
+    GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
+
     public MyRecycleViewIsAdaptersCommintPrices(@NotNull JsonNode jsonNodeParent,
                                                 @NotNull Context context, @NotNull ObjectMapper objectMapper,
                                                 @NotNull Integer getHiltPublicId,
-                                                @NotNull String getHiltCommintgPrices) {
+                                                @NotNull String getHiltCommintgPrices,
+                                                @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices ) {
         // super();
         try{
         this.jsonNodeParent = jsonNodeParent;
@@ -47,6 +51,9 @@ public  class MyRecycleViewIsAdaptersCommintPrices extends RecyclerView.Adapter<
         this.objectMapper = objectMapper;
         this.getHiltPublicId = getHiltPublicId;
         this.getHiltCommintgPrices = getHiltCommintgPrices;
+        this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
+
+            // TODO: 30.01.2024
             animationДляСогласованияЦены = AnimationUtils.loadAnimation(context,  R.anim.slide_in_scrolls);//R.anim.layout_animal_commit
            // animationДляСогласованияЦены = AnimationUtils.loadAnimation(context, R.anim.slide_in_row);//R.anim.layout_animal_commit
             Log.d(this.getClass().getName(),"\n"
@@ -213,7 +220,7 @@ public  class MyRecycleViewIsAdaptersCommintPrices extends RecyclerView.Adapter<
             // TODO: 02.03.2022 Запускаем Обработку Parent Конмоненты
             ComponentsForRecyreView componentsForRecyreView=
                     new ComponentsForRecyreView(holder,context,position,objectMapper,
-                            getHiltPublicId,getHiltCommintgPrices);
+                            getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices);
 
             // TODO: 29.12.2023 Кнопка Стрелочка которая показывает и скрывает Дочериний recyreview
             componentsForRecyreView.getArrow_nested_receriview();

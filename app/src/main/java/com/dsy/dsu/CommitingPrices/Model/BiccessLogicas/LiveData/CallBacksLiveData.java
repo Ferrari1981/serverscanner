@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.EventsBackAndAsyncAndSearchCommintPrices;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.GeneratorBundleForJsonNode;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews.InizializayRecyreViews;
+import com.dsy.dsu.CommitingPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyRecycleViewIsAdaptersCommintPrices;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewIsNull.MyRecycleViewIsNullAdapters;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
@@ -40,7 +41,7 @@ public class CallBacksLiveData {
 
     private Integer getHiltPublicId;
     private  String getHiltCommintgPrices;
-
+    GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
     public CallBacksLiveData( @NotNull  Context context,
                               @NotNull   ProgressBar prograessbar_commintingprices,
                               @NotNull   RecyclerView  recycleview_comminingpprices,
@@ -48,7 +49,8 @@ public class CallBacksLiveData {
                               @NotNull ObjectMapper objectMapper,
                               @NotNull      EventsBackAndAsyncAndSearchCommintPrices eventsBackAndAsyncAndSearchCommintPrices,
                               @NotNull Integer getHiltPublicId,
-                              @NotNull String getHiltCommintgPrices) {
+                              @NotNull String getHiltCommintgPrices,
+                              @NotNull GetLiveDataForrecyreViewPrices  getLiveDataForrecyreViewPrices) {
 
         this.context = context;
         this.prograessbar_commintingprices = prograessbar_commintingprices;
@@ -58,6 +60,7 @@ public class CallBacksLiveData {
         this.eventsBackAndAsyncAndSearchCommintPrices = eventsBackAndAsyncAndSearchCommintPrices;
         this.getHiltPublicId = getHiltPublicId;
         this.getHiltCommintgPrices = getHiltCommintgPrices;
+        this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
     }
 
     public  void callbackLiveData(Bundle bundle) {
@@ -205,7 +208,12 @@ public class CallBacksLiveData {
     public void startGetRecyreView( JsonNode     jsonNode1сСогласованиеЦен ) {
         try {
             if (myRecycleViewIsAdaptersCommintPrices ==null) {
-                myRecycleViewIsAdaptersCommintPrices = new MyRecycleViewIsAdaptersCommintPrices(jsonNode1сСогласованиеЦен, context,objectMapper ,getHiltPublicId,getHiltCommintgPrices );
+                myRecycleViewIsAdaptersCommintPrices =
+                        new MyRecycleViewIsAdaptersCommintPrices(jsonNode1сСогласованиеЦен, 
+                                context,objectMapper 
+                                ,getHiltPublicId,
+                                getHiltCommintgPrices,getLiveDataForrecyreViewPrices );
+                // TODO: 30.01.2024
                 myRecycleViewIsAdaptersCommintPrices.notifyDataSetChanged();
                 recycleview_comminingpprices.setAdapter(myRecycleViewIsAdaptersCommintPrices);
                 recycleview_comminingpprices.getAdapter().notifyDataSetChanged();

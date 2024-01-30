@@ -14,7 +14,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +25,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.BusinessLogicAll.Class_Get_Json_1C;
-import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.LiveData.GetLiveDataForrecyreView;
+import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.LiveData.GetLiveDataForrecyreViewPay;
 import com.dsy.dsu.PaysCommings.Model.LeftDividerItemDecoratorCommitPay;
 import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterCommingPay;
 import com.dsy.dsu.PaysCommings.View.RecyreViewIsNull.MyRecycleViewIsNullAdapterPay;
@@ -49,8 +48,6 @@ import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
 
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
@@ -88,7 +85,7 @@ public class Bl_CommintigPay {
     private   Animation    animationДляСогласования;
 
 
-    GetLiveDataForrecyreView getLiveDataForrecyreView;
+    GetLiveDataForrecyreViewPay getLiveDataForrecyreViewPay;
 
     MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView;
     public    Bl_CommintigPay(@NonNull  Activity activity,
@@ -110,7 +107,7 @@ public class Bl_CommintigPay {
                              @NonNull MutableLiveData<Intent> jsonNodeMutableLiveDataPayCommintg,
                               @NonNull androidx.appcompat.widget.SearchView searchview_commitpay,
                               @NonNull String getHiltCommintgPays,
-                              @NonNull GetLiveDataForrecyreView getLiveDataForrecyreView,
+                              @NonNull GetLiveDataForrecyreViewPay getLiveDataForrecyreViewPay,
                               @NonNull  MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView) {
         try{
         this.activity = activity;
@@ -135,7 +132,7 @@ public class Bl_CommintigPay {
         this.jsonNodeMutableLiveDataPayCommintg = jsonNodeMutableLiveDataPayCommintg;
         this.searchview_commitpay = searchview_commitpay;
         this.getHiltCommintgPays = getHiltCommintgPays;
-        this.getLiveDataForrecyreView = getLiveDataForrecyreView;
+        this.getLiveDataForrecyreViewPay = getLiveDataForrecyreViewPay;
         this.  getHiltMutableLiveDataPayForRecyreView = getHiltMutableLiveDataPayForRecyreView;
 
             // TODO: 15.01.2024 init...
@@ -602,7 +599,7 @@ public class Bl_CommintigPay {
             if (myRecycleViewAdapter==null) {
                 myRecycleViewAdapter = new MyRecycleViewAdapterCommingPay(jsonNode1сСогласованияAllRows,context
                         ,binderСогласования1C,animation,ПубличныйidPay,objectMapper,bottomNavigationViewParentCommitingPay,recycleviewcommitpays,
-                        getHiltCommintgPays,this,jsonNode1сСогласованияAllRows,lifecycleOwner,  getLiveDataForrecyreView,getHiltMutableLiveDataPayForRecyreView);
+                        getHiltCommintgPays,this,jsonNode1сСогласованияAllRows,lifecycleOwner, getLiveDataForrecyreViewPay,getHiltMutableLiveDataPayForRecyreView);
                 // TODO: 24.01.2024
                 myRecycleViewAdapter.notifyDataSetChanged();
                 recycleviewcommitpays.setAdapter(myRecycleViewAdapter);

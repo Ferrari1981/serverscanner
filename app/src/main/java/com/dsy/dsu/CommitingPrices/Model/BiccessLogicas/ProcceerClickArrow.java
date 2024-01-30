@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.LiveData.CallBacksLiveDataNested;
 import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
 import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEventBusItemCount;
+import com.dsy.dsu.CommitingPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHoldersCommintPrices;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
@@ -47,6 +48,8 @@ public  class ProcceerClickArrow {
      Integer getHiltPublicId;
      private  String getHiltCommintgPrices;
 
+    GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
+
     public ProcceerClickArrow( @NonNull  RecyclerView recycleview_nesters_comminingpprices,
                                @NonNull MaterialButton materialButton,
                                @NonNull  ProgressBar progressbar_comminingprices,
@@ -55,7 +58,8 @@ public  class ProcceerClickArrow {
                                @NonNull Integer position,
                                @NotNull ObjectMapper objectMapper,
                                @NotNull Integer getHiltPublicId,
-                               @NotNull String getHiltCommintgPrices) {
+                               @NotNull String getHiltCommintgPrices,
+                               @NonNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices) {
 
 
         this.recycleview_nesters_comminingpprices = recycleview_nesters_comminingpprices;
@@ -67,6 +71,7 @@ public  class ProcceerClickArrow {
         this.objectMapper = objectMapper;
         this.getHiltPublicId = getHiltPublicId;
         this.getHiltCommintgPrices = getHiltCommintgPrices;
+        this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
         // TODO: 10.01.2024
         handlerBut=  materialButton.getHandler();
         handlerProgbar=  progressbar_comminingprices.getHandler();
@@ -179,7 +184,7 @@ public  class ProcceerClickArrow {
             CallBacksLiveDataNested callBacksLiveDataNested =
                     new CallBacksLiveDataNested(holder, context, recycleview_nesters_comminingpprices,
                             holder.jsonNode, position,objectMapper,
-                            getHiltPublicId,getHiltCommintgPrices);
+                            getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices);
 
             // TODO: 30.12.2023 запукскаем
             callBacksLiveDataNested.callbackLiveData();

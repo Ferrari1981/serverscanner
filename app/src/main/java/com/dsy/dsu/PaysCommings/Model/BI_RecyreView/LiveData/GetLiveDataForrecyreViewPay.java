@@ -29,17 +29,17 @@ import dagger.Module;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 
-@QualifierPublicId
+@QualifierGetLiveDataForrecyreViewPay
 @Module
 @InstallIn(SingletonComponent.class)
-public class GetLiveDataForrecyreView {
+public class GetLiveDataForrecyreViewPay {
 
-    public @Inject GetLiveDataForrecyreView() {
+    public @Inject GetLiveDataForrecyreViewPay() {
     }
 
      public void setObservableLiveDataRecyreViewPays(@NonNull  LifecycleOwner lifecycleOwner ,
                                                      @NonNull Context context,
-                                                     @NonNull  MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView,
+                                                     @NonNull  MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreViewPays,
                                                      @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay,
                                                      @NonNull Bl_CommintigPay bl_commintigPay,
                                                      @NonNull JsonNode jsonNode1сСогласования,
@@ -48,9 +48,9 @@ public class GetLiveDataForrecyreView {
                                                      @NonNull int position,
                                                      @NonNull RecyclerView recycleviewcommitpays) {
         try{
-            if (!getHiltMutableLiveDataPayForRecyreView.hasObservers()) {
+            if (!getHiltMutableLiveDataPayForRecyreViewPays.hasObservers()) {
                 // TODO: 16.01.2024
-                getHiltMutableLiveDataPayForRecyreView.observe(lifecycleOwner, new Observer<Intent>() {
+                getHiltMutableLiveDataPayForRecyreViewPays.observe(lifecycleOwner, new Observer<Intent>() {
                     @Override
                     public void onChanged(Intent intent) {
                         try{

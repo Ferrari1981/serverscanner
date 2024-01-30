@@ -1,6 +1,7 @@
 package com.dsy.dsu.CommitingPrices.View.Window;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,13 +15,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.BLFragmentCommintingPrices;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.EventsBackAndAsyncAndSearchCommintPrices;
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews.InizializayRecyreViews;
 import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
-import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEventBusItemCount;
+import com.dsy.dsu.CommitingPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
 import com.dsy.dsu.CommitingPrices.ViewModel.ModelComminingPrisesByte;
 import com.dsy.dsu.CommitingPrices.ViewModel.ModelComminingPrisesString;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
@@ -77,6 +79,12 @@ public class FragmentCommingPrices extends Fragment {
 
 
    private BLFragmentCommintingPrices bucesslogicFragmentCommintingPrices;
+
+    @Inject
+    GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
+    @Inject
+    MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView;
+
     public FragmentCommingPrices() {
         // Required empty public constructor
         Log.d(this.getClass().getName(),"\n"
@@ -214,7 +222,10 @@ public class FragmentCommingPrices extends Fragment {
              ,getHiltJaksonObjectMapper,modelComminingPrisesString,
              modelComminingPrisesByte ,recycleview_comminingpprices
              ,prograessbar_commintingprices,lifecycleOwner ,searchview_commintingprices,
-             eventsBackAndAsyncAndSearchCommintPrices,getHiltPublicId,getHiltCommintgPrices.toString());
+             eventsBackAndAsyncAndSearchCommintPrices,
+             getHiltPublicId,getHiltCommintgPrices.toString(),
+             getLiveDataForrecyreViewPrices,
+               getHiltMutableLiveDataPayForRecyreView);
 
 
      // TODO: 28.12.2023 инизилащитция recyreview

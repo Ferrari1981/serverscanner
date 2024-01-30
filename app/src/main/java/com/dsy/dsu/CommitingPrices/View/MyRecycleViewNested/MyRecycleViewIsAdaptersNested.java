@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dsy.dsu.CommitingPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
 import com.dsy.dsu.CommitingPrices.Model.NestedDataGetAll.GetArrayNodeForNestedChildern;
 import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreViewNesteds;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
@@ -49,13 +50,17 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
     private String getHiltCommintgPrices;
 
 
+
+    GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
+
     public MyRecycleViewIsAdaptersNested(@NonNull View itemView,
                                          @NotNull Context context,
                                          @NotNull JsonNode jsonNode,
                                          @NotNull int getAbsoluteAdapterPosition,
                                          @NotNull ObjectMapper objectMapper,
                                          @NotNull Integer getHiltPublicId,
-                                         @NotNull String getHiltCommintgPrices) {
+                                         @NotNull String getHiltCommintgPrices,
+                                         @NonNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices) {
         // super();
         try{
             this.itemView=itemView;
@@ -64,6 +69,7 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             this.objectMapper=objectMapper;
             this.getHiltPublicId=getHiltPublicId;
             this.getHiltCommintgPrices=getHiltCommintgPrices;
+            this.getLiveDataForrecyreViewPrices=getLiveDataForrecyreViewPrices;
 
             animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_row8);
 
@@ -251,11 +257,11 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
     @Override
     public void onBindViewHolder(@NonNull MyViewHoldersNested holder, int position) {
         try {
-            MaterialCardView materialCardView=holder.itemView.findViewById(R.id.cardview_commingprices_neasted);
+            MaterialCardView cardview_commingprices_neasted=holder.itemView.findViewById(R.id.cardview_commingprices_neasted);
 
             ComponentsForRecyreViewNesteds componentsForRecyreViewNesteds=
                     new ComponentsForRecyreViewNesteds(holder,context,
-                            position,materialCardView,animation,objectMapper,getHiltPublicId,
+                            position,cardview_commingprices_neasted,animation,objectMapper,getHiltPublicId,
                             this,ArrayNodeNested,getHiltCommintgPrices);
 // TODO: 30.12.2023  запуск метода Сверху Сумма согласования цены
             if (ArrayNodeNested.size()>0) {
