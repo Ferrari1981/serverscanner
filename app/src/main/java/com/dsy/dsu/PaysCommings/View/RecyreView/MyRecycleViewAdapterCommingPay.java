@@ -98,6 +98,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
             this.jsonNode1сСогласованияAll = jsonNode1сСогласованияAll;
 
             animationДляСогласовани = AnimationUtils.loadAnimation(context,  R.anim.slide_in_scrolls);//R.anim.layout_animal_commit
+           // Animation  animationvibr1 = AnimationUtils.loadAnimation(context, R.anim.slide_in_row9);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -620,10 +621,6 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                 defalultsetVisibleSecondTableRow(holder);
 
 
-
-
-                moveAnitationRecyrevirew(  holder);
-
                 // TODO: 26.01.2024 end
 
                 myViewHolderPayCommingPay.setIsRecyclable(false);
@@ -641,20 +638,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
-    private void moveAnitationRecyrevirew( @NonNull MyViewHolderPayCommingPay holder) {
-        try{
-            holder.itemView.startAnimation(animationДляСогласовани);
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
+
 
     // TODO: 03.11.2023  метод загрузки файлов с 1с
     void AddFileOt1c(@NonNull MyViewHolderPayCommingPay holder, @NotNull JsonNode jsonNode1сСогласованияSingleRow, @NonNull ObjectMapper objectMapper) {
@@ -1087,8 +1071,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
 
             // TODO: 23.01.2024 анимация
-            Animation  animationvibr1 = AnimationUtils.loadAnimation(context, R.anim.slide_in_row9);
-            holder.itemView.startAnimation(animationvibr1);
+            holder.itemView.startAnimation(animationДляСогласовани);
             cardview_commingpay.setChecked(true);
             holder.itemView.refreshDrawableState();
 
