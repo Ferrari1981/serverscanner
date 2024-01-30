@@ -28,17 +28,14 @@ Context context;
                                                 @NonNull String ОТветОт1СОперациисДанными) {
 
         try{
-            if (ОТветОт1СОперациисДанными.toString().trim().matches("(.*)Операция успешна(.*)")) {
                 myRecycleViewAdapterCommingPay.jsonNode1сСогласования=jsonNode1сСогласования;
                 myRecycleViewAdapterCommingPay.notifyDataSetChanged();
                 RecyclerView.Adapter recyclerViewОбновление=         recyclerViewPays.getAdapter();
                 recyclerViewPays.swapAdapter(recyclerViewОбновление,true);
                 recyclerViewPays.getAdapter().notifyDataSetChanged();
                 // TODO: 24.01.2024
-                recyclerViewPays.scrollToPosition(View.FOCUS_UP);
-
                 recyclerViewPays.requestLayout();
-            }
+               recyclerViewPays .refreshDrawableState();
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +

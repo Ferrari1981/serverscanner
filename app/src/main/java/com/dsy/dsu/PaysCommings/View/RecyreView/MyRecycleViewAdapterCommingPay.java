@@ -3,6 +3,7 @@ package com.dsy.dsu.PaysCommings.View.RecyreView;
 // TODO: 28.02.2022 ViewHolder
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -20,11 +21,14 @@ import android.widget.TableRow;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.Bl_CommintigPay;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.FileFrom1CCommitPay;
+import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.LiveData.GetLiveDataForrecyreView;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.ProccesingCancelOrOKPay;
 import com.dsy.dsu.PaysCommings.Model.Bl_Nested.ComponensForRecyreviewNestedPay;
 import com.dsy.dsu.R;
@@ -38,12 +42,15 @@ import com.jakewharton.rxbinding4.view.RxView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+
+import javax.inject.Inject;
 
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
@@ -73,6 +80,13 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     String getHiltCommintgPays;
     Animation animationДляСогласовани;
     JsonNode jsonNode1сСогласованияAll;
+
+    @Inject
+    MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView;
+
+    @Inject
+    GetLiveDataForrecyreView getLiveDataForrecyreView;
+    LifecycleOwner lifecycleOwner;
     public MyRecycleViewAdapterCommingPay(@NotNull JsonNode jsonNode1сСогласования,
                                           @NonNull Context context,
                                           @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
@@ -83,7 +97,8 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                           @NonNull RecyclerView recycleviewcommitpays,
                                           @NonNull String getHiltCommintgPays,
                                           @NonNull Bl_CommintigPay bl_commintigPay,
-                                           @NotNull JsonNode jsonNode1сСогласованияAll) {
+                                           @NotNull JsonNode jsonNode1сСогласованияAll,
+                                            @NonNull LifecycleOwner lifecycleOwner) {
         try {
             this.jsonNode1сСогласования = jsonNode1сСогласования;
             this.context = context;
@@ -96,6 +111,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
             this.getHiltCommintgPays = getHiltCommintgPays;
             this.bl_commintigPay = bl_commintigPay;
             this.jsonNode1сСогласованияAll = jsonNode1сСогласованияAll;
+            this.lifecycleOwner = lifecycleOwner;
 
             animationДляСогласовани = AnimationUtils.loadAnimation(context,  R.anim.slide_in_scrolls);//R.anim.layout_animal_commit
            // Animation  animationvibr1 = AnimationUtils.loadAnimation(context, R.anim.slide_in_row9);
@@ -1014,8 +1030,6 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
 
                         ///StringBuffer   ОТветОт1СОперациисДанными=new StringBuffer();
-
-                        ОТветОт1СОперациисДанными.append("Операция успешна");
 // TODO: 23.01.2024  удаление строчки
                         notifynotifyDataSetChanged(ОТветОт1СОперациисДанными,holder,cardview_commingpay,  position);
 
@@ -1061,10 +1075,10 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
         }
     }
 
-    private void notifynotifyDataSetChanged(StringBuffer ОТветОт1СОперациисДанными,
-                                            @NonNull MyViewHolderPayCommingPay holder,
-                                            @NonNull   MaterialCardView cardview_commingpay,
-                                            @NonNull int position) {
+    public void notifynotifyDataSetChanged(StringBuffer ОТветОт1СОперациисДанными,
+                                           @NonNull MyViewHolderPayCommingPay holder,
+                                           @NonNull MaterialCardView cardview_commingpay,
+                                           @NonNull int position) {
         try{
         if (ОТветОт1СОперациисДанными.toString().trim().matches("(.*)Операция успешна(.*)")) {
 
@@ -1242,10 +1256,12 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
     // TODO: 12.01.2024  Дейставия по кнопек ОТКАЗ
     private void procceringCancelButtonClick(@NonNull MyViewHolderPayCommingPay holder,
-                                             @NonNull  Handler handler, MaterialCardView cardview_commingpay,
+                                             @NonNull  Handler handler,
+                                            @NonNull MaterialCardView cardview_commingpay,
                                              @NonNull int position,
                                              @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay) {
         try {
+
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -1270,33 +1286,20 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         ///TODO выполнил ОТКАЗ
                         ProccesingCancelOrOKPay proccesingCancelOrOKPay = new ProccesingCancelOrOKPay(context,binderСогласования1C);
 
+                        
+                        // TODO: 30.01.2024  слушатель на дейстия
+                        getLiveDataForrecyreView.setObservableLiveDataRecyreViewPays(lifecycleOwner,
+                                context,
+                                getHiltMutableLiveDataPayForRecyreView,
+                                myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования,holder,cardview_commingpay,position,recycleviewcommitpays);
+
                         StringBuffer ОТветОт1СОперациисДанными=
                                 proccesingCancelOrOKPay.proccerCancelOrOKPay(context, intentзаданиеНаВыполениеCancel,getHiltCommintgPays );
 
+// TODO: 30.01.2024  отпраявеам событие в Mutable  
+                        sendLiveDataRecyreViewEventCallBacl1c(ОТветОт1СОперациисДанными);
 
-// TODO: 23.01.2024  удаление строчки
-
-                        // TODO: 23.01.2024  удаление строчки
-                        notifynotifyDataSetChanged(ОТветОт1СОперациисДанными,holder,cardview_commingpay ,position);
-
-                        // TODO: 24.01.2024   после удаление перегуражаем экран PAY
-                        ComponensForRecyreviewNestedPay componensForRecyreviewNestedPay=new ComponensForRecyreviewNestedPay(context);
-
-
-                        // TODO: 24.01.2024  ;
-                        if (jsonNode1сСогласования.size()>0) {
-                            componensForRecyreviewNestedPay.методRebootRecyreViewCommingPays(jsonNode1сСогласования,
-                                    myRecycleViewAdapterCommingPay,recycleviewcommitpays,ОТветОт1СОперациисДанными.toString());
-                        } else {
-                            componensForRecyreviewNestedPay.методRebootRecyreViewCommingPaysDontRow(jsonNode1сСогласования,
-                                    recycleviewcommitpays,ОТветОт1СОперациисДанными.toString());
-                        }
-
-
-                        // TODO: 24.01.2024
-
-                        bl_commintigPay.МетодКпопкаСоЗачкомКраснымДополнительныйСтатус( jsonNode1сСогласования);
-
+                        
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -1309,6 +1312,28 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                     }
                 }
             }, 100);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
+    private void sendLiveDataRecyreViewEventCallBacl1c(@NonNull StringBuffer ОТветОт1СОперациисДанными) {
+
+        try{
+            Intent intentCallBackRcyreCiew1cPayEvent=new Intent("CallBackRecyreViewPays");
+            Bundle bundle=new Bundle();
+            bundle.putSerializable("recyreViewPays", ОТветОт1СОперациисДанными);
+            intentCallBackRcyreCiew1cPayEvent.putExtras(bundle);
+            getHiltMutableLiveDataPayForRecyreView.postValue(intentCallBackRcyreCiew1cPayEvent);
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " jsonNode1сСогласования " +jsonNode1сСогласования);
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

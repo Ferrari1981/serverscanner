@@ -585,12 +585,12 @@ public class Bl_CommintigPay {
     // TODO: 04.03.2022 прозвомжность Заполения RecycleView
   public   void InitMyAdapterRecyreViewWorker(@NonNull JsonNode jsonNode1сСогласованияAllRows,
                                               @NonNull   Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
-                                              @NonNull  String getHiltCommintgPays) {
+                                              @NonNull  String getHiltCommintgPays,@NonNull LifecycleOwner lifecycleOwner) {
         try {
             if (myRecycleViewAdapter==null) {
                 myRecycleViewAdapter = new MyRecycleViewAdapterCommingPay(jsonNode1сСогласованияAllRows,context
                         ,binderСогласования1C,animation,ПубличныйidPay,objectMapper,bottomNavigationViewParentCommitingPay,recycleviewcommitpays,
-                        getHiltCommintgPays,this,jsonNode1сСогласованияAllRows);
+                        getHiltCommintgPays,this,jsonNode1сСогласованияAllRows,lifecycleOwner);
                 // TODO: 24.01.2024
                 myRecycleViewAdapter.notifyDataSetChanged();
                 recycleviewcommitpays.setAdapter(myRecycleViewAdapter);
