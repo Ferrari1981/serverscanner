@@ -1,11 +1,13 @@
 package com.dsy.dsu.CommitingPrices.View.Window;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.ProcceerClickArrow;
@@ -45,13 +47,15 @@ public class ComponentsForRecyreView {
 
     Animation    animationДляСогласованияЦены;
     GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
+    MutableLiveData<Intent> getHiltMutableLiveDataPay;
     public ComponentsForRecyreView(@NotNull MyViewHoldersCommintPrices holder,
                                    @NotNull  Context context,
                                    @NotNull  int position,
                                    @NotNull ObjectMapper objectMapper,
                                    @NotNull Integer getHiltPublicId,
                                    @NotNull String getHiltCommintgPrices,
-                                   @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices) {
+                                   @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
+                                   @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay) {
         try{
         this.holder = holder;
         this.context = context;
@@ -60,6 +64,7 @@ public class ComponentsForRecyreView {
         this.getHiltPublicId = getHiltPublicId;
         this.getHiltCommintgPrices = getHiltCommintgPrices;
         this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
+        this.getHiltMutableLiveDataPay = getHiltMutableLiveDataPay;
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -200,7 +205,8 @@ public class ComponentsForRecyreView {
                     materialButton,
                     progressbar_comminingprices,
                     holder,
-                    context,position,objectMapper,getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices) ;
+                    context,position,objectMapper,getHiltPublicId,getHiltCommintgPrices,
+                    getLiveDataForrecyreViewPrices,getHiltMutableLiveDataPay) ;
 
 // TODO: 30.12.2023 запускам при нажатии на Кнопку Arrow  внутрнеий
 

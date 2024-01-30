@@ -30,7 +30,7 @@ import dagger.Module;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 
-@QualifierGetLiveDataForrecyreViewPay
+@QualifierGetLiveDataForrecyreViewPrices
 @Module
 @InstallIn(SingletonComponent.class)
 public class GetLiveDataForrecyreViewPrices {
@@ -57,10 +57,10 @@ public class GetLiveDataForrecyreViewPrices {
                     public void onChanged(Intent intent) {
                         try{
                             switch (intent.getAction())  {
-                                case           "CallBackRecyreViewPays":
+                                case           "CallBackRecyreViewPrices":
                                     // TODO: 16.01.2024  пришли данные
                                     Bundle bundleFirst =      intent.getExtras();
-                                    String   ОТветОт1СОперациисДанными=     (String )      bundleFirst.getString("recyreViewPays");
+                                    String   ОТветОт1СОперациисДанными=     (String )      bundleFirst.getString("recyreViewPrices");
                                     StringBuffer stringBufferОт1СОперациисДанными=new StringBuffer(ОТветОт1СОперациисДанными);
 
 

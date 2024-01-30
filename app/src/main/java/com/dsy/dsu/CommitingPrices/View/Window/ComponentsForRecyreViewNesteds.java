@@ -1,6 +1,7 @@
 package com.dsy.dsu.CommitingPrices.View.Window;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.VibrationEffect;
@@ -9,6 +10,9 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.widget.Toast;
 
+import androidx.lifecycle.MutableLiveData;
+
+import com.dsy.dsu.CommitingPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
 import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.CommintPricesSendJsonTo1C;
 import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.ProcceroingResultatOtveta1CPost;
 import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.StartSendJsonToCOmmintPrices;
@@ -68,7 +72,8 @@ public class ComponentsForRecyreViewNesteds {
 
     private   String getHiltCommintgPrices;
 
-
+    GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
+   MutableLiveData<Intent> getHiltMutableLiveDataPay;
 
     public ComponentsForRecyreViewNesteds(@NotNull MyViewHoldersNested holder,
                                           @NotNull  Context context,
@@ -79,7 +84,9 @@ public class ComponentsForRecyreViewNesteds {
                                           @NotNull Integer getHiltPublicId,
                                           @NotNull MyRecycleViewIsAdaptersNested myRecycleViewIsAdaptersNested,
                                           @NotNull ArrayNode ArrayNodeNested,
-                                          @NotNull String getHiltCommintgPrices) {
+                                          @NotNull String getHiltCommintgPrices,
+                                          @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
+                                          @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay) {
         this.holder = holder;
         this.context = context;
         this.getAbsoluteAdapterPosition = getAbsoluteAdapterPosition;
@@ -90,6 +97,8 @@ public class ComponentsForRecyreViewNesteds {
         this.myRecycleViewIsAdaptersNested = myRecycleViewIsAdaptersNested;
         this.ArrayNodeNested = ArrayNodeNested;
         this.getHiltCommintgPrices = getHiltCommintgPrices;
+        this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
+        this.getHiltMutableLiveDataPay = getHiltMutableLiveDataPay;
     }
 
 
@@ -176,7 +185,7 @@ public class ComponentsForRecyreViewNesteds {
 
 
                         ///todo revboot нажимаем для подтвердить
-                      //  eventButtonArrow(MaterialButtonNested);
+                       eventButtonArrow(MaterialButtonNested);
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -215,11 +224,14 @@ public class ComponentsForRecyreViewNesteds {
                     String UUID=   bundleДанныеДляPost.getString("UUID").trim();
                     CommintPricesSendJsonTo1C generatorJsonForPostComminhgPrices=new CommintPricesSendJsonTo1C();
 
-                    // TODO: 10.01.2024 RELUS
+               /*     // TODO: 10.01.2024 Отправка данных Price на сервер 1с
                     StringBuffer  BufferOt1cCommintPricePost=   generatorJsonForPostComminhgPrices.SendJsonForPostComminhgPrices(context,
-                            ByteFor1CCommintPrices,getHiltPublicId,getHiltCommintgPrices, UUID);
+                            ByteFor1CCommintPrices,getHiltPublicId,getHiltCommintgPrices, UUID);*/
 
 
+
+
+                    StringBuffer  BufferOt1cCommintPricePost=new StringBuffer("Согласование внесено в базу!");
 
 
                     // TODO: 10.01.2024 Скрываем Текущий Платеж По Которому был Клик http://192.168.254.218/dds_copy/hs/jsonto1ccena/listofdocuments

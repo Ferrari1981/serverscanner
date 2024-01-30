@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.LiveData.CallBacksLiveDataNested;
@@ -50,6 +51,8 @@ public  class ProcceerClickArrow {
 
     GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
 
+    MutableLiveData<Intent> getHiltMutableLiveDataPay;
+
     public ProcceerClickArrow( @NonNull  RecyclerView recycleview_nesters_comminingpprices,
                                @NonNull MaterialButton materialButton,
                                @NonNull  ProgressBar progressbar_comminingprices,
@@ -59,7 +62,8 @@ public  class ProcceerClickArrow {
                                @NotNull ObjectMapper objectMapper,
                                @NotNull Integer getHiltPublicId,
                                @NotNull String getHiltCommintgPrices,
-                               @NonNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices) {
+                               @NonNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
+                               @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay) {
 
 
         this.recycleview_nesters_comminingpprices = recycleview_nesters_comminingpprices;
@@ -72,6 +76,10 @@ public  class ProcceerClickArrow {
         this.getHiltPublicId = getHiltPublicId;
         this.getHiltCommintgPrices = getHiltCommintgPrices;
         this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
+        this.getHiltMutableLiveDataPay = getHiltMutableLiveDataPay;
+
+
+
         // TODO: 10.01.2024
         handlerBut=  materialButton.getHandler();
         handlerProgbar=  progressbar_comminingprices.getHandler();
@@ -184,7 +192,7 @@ public  class ProcceerClickArrow {
             CallBacksLiveDataNested callBacksLiveDataNested =
                     new CallBacksLiveDataNested(holder, context, recycleview_nesters_comminingpprices,
                             holder.jsonNode, position,objectMapper,
-                            getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices);
+                            getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices,getHiltMutableLiveDataPay);
 
             // TODO: 30.12.2023 запукскаем
             callBacksLiveDataNested.callbackLiveData();

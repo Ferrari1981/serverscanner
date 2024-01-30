@@ -1,11 +1,13 @@
 package com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.LiveData;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.EventsBackAndAsyncAndSearchCommintPrices;
@@ -42,6 +44,7 @@ public class CallBacksLiveData {
     private Integer getHiltPublicId;
     private  String getHiltCommintgPrices;
     GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
+    MutableLiveData<Intent> getHiltMutableLiveDataPay;
     public CallBacksLiveData( @NotNull  Context context,
                               @NotNull   ProgressBar prograessbar_commintingprices,
                               @NotNull   RecyclerView  recycleview_comminingpprices,
@@ -50,7 +53,8 @@ public class CallBacksLiveData {
                               @NotNull      EventsBackAndAsyncAndSearchCommintPrices eventsBackAndAsyncAndSearchCommintPrices,
                               @NotNull Integer getHiltPublicId,
                               @NotNull String getHiltCommintgPrices,
-                              @NotNull GetLiveDataForrecyreViewPrices  getLiveDataForrecyreViewPrices) {
+                              @NotNull GetLiveDataForrecyreViewPrices  getLiveDataForrecyreViewPrices,
+                              @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay ) {
 
         this.context = context;
         this.prograessbar_commintingprices = prograessbar_commintingprices;
@@ -61,6 +65,7 @@ public class CallBacksLiveData {
         this.getHiltPublicId = getHiltPublicId;
         this.getHiltCommintgPrices = getHiltCommintgPrices;
         this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
+        this.getHiltMutableLiveDataPay = getHiltMutableLiveDataPay;
     }
 
     public  void callbackLiveData(Bundle bundle) {
@@ -212,7 +217,7 @@ public class CallBacksLiveData {
                         new MyRecycleViewIsAdaptersCommintPrices(jsonNode1сСогласованиеЦен, 
                                 context,objectMapper 
                                 ,getHiltPublicId,
-                                getHiltCommintgPrices,getLiveDataForrecyreViewPrices );
+                                getHiltCommintgPrices,getLiveDataForrecyreViewPrices,getHiltMutableLiveDataPay );
                 // TODO: 30.01.2024
                 myRecycleViewIsAdaptersCommintPrices.notifyDataSetChanged();
                 recycleview_comminingpprices.setAdapter(myRecycleViewIsAdaptersCommintPrices);

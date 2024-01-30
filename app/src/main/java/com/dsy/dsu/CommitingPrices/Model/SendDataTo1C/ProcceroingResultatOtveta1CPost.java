@@ -53,7 +53,9 @@ Context context;
 
             String ОтветОтСервера1сCommitnPricesPost=BufferOt1cCommintPricePost.toString().replaceAll("\"","\"\"");
             ОтветОтСервера1сCommitnPricesPost=ОтветОтСервера1сCommitnPricesPost.replaceAll("\"", "");
-            if ( ОтветОтСервера1сCommitnPricesPost.length()>0 &&  ОтветОтСервера1сCommitnPricesPost.equalsIgnoreCase("Согласование внесено в базу!")) {
+            // TODO: 30.01.2024  
+            if ( ОтветОтСервера1сCommitnPricesPost.length()>0 &&
+                    ОтветОтСервера1сCommitnPricesPost.trim().equalsIgnoreCase("Согласование внесено в базу!")) {
 
 
 

@@ -82,8 +82,9 @@ public class FragmentCommingPrices extends Fragment {
 
     @Inject
     GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
+
     @Inject
-    MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView;
+    MutableLiveData<Intent> getHiltMutableLiveDataPrices;
 
     public FragmentCommingPrices() {
         // Required empty public constructor
@@ -225,7 +226,7 @@ public class FragmentCommingPrices extends Fragment {
              eventsBackAndAsyncAndSearchCommintPrices,
              getHiltPublicId,getHiltCommintgPrices.toString(),
              getLiveDataForrecyreViewPrices,
-               getHiltMutableLiveDataPayForRecyreView);
+             getHiltMutableLiveDataPrices);
 
 
      // TODO: 28.12.2023 инизилащитция recyreview

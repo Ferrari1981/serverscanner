@@ -1,8 +1,10 @@
 package com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.LiveData;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews.InizializayRecyreViewsNested;
@@ -38,6 +40,8 @@ public class CallBacksLiveDataNested {
     private    String getHiltCommintgPrices;
 
     GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
+
+    MutableLiveData<Intent> getHiltMutableLiveDataPay;
     public CallBacksLiveDataNested(@NotNull MyViewHoldersCommintPrices holder,
                                    @NotNull  Context context,
                                    @NotNull   RecyclerView  recycleview_comminingpricesNested,
@@ -46,7 +50,8 @@ public class CallBacksLiveDataNested {
                                    @NotNull ObjectMapper objectMapper,
                                    @NotNull Integer getHiltPublicId,
                                    @NotNull   String getHiltCommintgPrices,
-                                   @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices) {
+                                   @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
+                                   @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay) {
         this.context = context;
         this.recycleview_comminingppricesNesteds = recycleview_comminingpricesNested;
         this.jsonNodeNested = jsonNodeNested;
@@ -56,6 +61,7 @@ public class CallBacksLiveDataNested {
         this.getHiltPublicId = getHiltPublicId;
         this.getHiltCommintgPrices = getHiltCommintgPrices;
         this. getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
+        this. getHiltMutableLiveDataPay = getHiltMutableLiveDataPay;
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -77,7 +83,9 @@ public class CallBacksLiveDataNested {
 
                     // TODO: 28.12.2023 Запускам настрощий recyreview при получение ииз байт обьект JsonNode
                     if (myRecycleViewIsAdaptersNested==null) {
+
                         startGetRecyreViewNested(   );
+
                     }else{
                         // TODO: 26.12.2023 нет  байты
                         completeRecyreViewNested(jsonNodeNested);
@@ -121,7 +129,7 @@ public class CallBacksLiveDataNested {
 
 
                 myRecycleViewIsAdaptersNested = new MyRecycleViewIsAdaptersNested(holder.itemView, context
-                        ,jsonNodeNested, postion,objectMapper,getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices);
+                        ,jsonNodeNested, postion,objectMapper,getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices,  getHiltMutableLiveDataPay);
                 myRecycleViewIsAdaptersNested.notifyDataSetChanged();
                 recycleview_comminingppricesNesteds.setAdapter(myRecycleViewIsAdaptersNested);
                 recycleview_comminingppricesNesteds.getAdapter().notifyDataSetChanged();

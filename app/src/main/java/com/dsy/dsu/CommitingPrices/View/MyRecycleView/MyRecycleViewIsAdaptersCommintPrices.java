@@ -2,6 +2,7 @@ package com.dsy.dsu.CommitingPrices.View.MyRecycleView;// TODO: 27.12.2023 Recyr
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
@@ -38,12 +40,13 @@ public  class MyRecycleViewIsAdaptersCommintPrices extends RecyclerView.Adapter<
     private Animation animationДляСогласованияЦены;
 
     GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
-
+    MutableLiveData<Intent> getHiltMutableLiveDataPay;
     public MyRecycleViewIsAdaptersCommintPrices(@NotNull JsonNode jsonNodeParent,
                                                 @NotNull Context context, @NotNull ObjectMapper objectMapper,
                                                 @NotNull Integer getHiltPublicId,
                                                 @NotNull String getHiltCommintgPrices,
-                                                @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices ) {
+                                                @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
+                                                @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay) {
         // super();
         try{
         this.jsonNodeParent = jsonNodeParent;
@@ -52,6 +55,7 @@ public  class MyRecycleViewIsAdaptersCommintPrices extends RecyclerView.Adapter<
         this.getHiltPublicId = getHiltPublicId;
         this.getHiltCommintgPrices = getHiltCommintgPrices;
         this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
+        this.getHiltMutableLiveDataPay = getHiltMutableLiveDataPay;
 
             // TODO: 30.01.2024
             animationДляСогласованияЦены = AnimationUtils.loadAnimation(context,  R.anim.slide_in_scrolls);//R.anim.layout_animal_commit
@@ -220,7 +224,7 @@ public  class MyRecycleViewIsAdaptersCommintPrices extends RecyclerView.Adapter<
             // TODO: 02.03.2022 Запускаем Обработку Parent Конмоненты
             ComponentsForRecyreView componentsForRecyreView=
                     new ComponentsForRecyreView(holder,context,position,objectMapper,
-                            getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices);
+                            getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices, getHiltMutableLiveDataPay);
 
             // TODO: 29.12.2023 Кнопка Стрелочка которая показывает и скрывает Дочериний recyreview
             componentsForRecyreView.getArrow_nested_receriview();

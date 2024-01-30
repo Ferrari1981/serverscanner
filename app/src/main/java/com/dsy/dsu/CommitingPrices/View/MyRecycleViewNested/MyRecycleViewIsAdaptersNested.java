@@ -1,6 +1,7 @@
 package com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested;// TODO: 27.12.2023 Recyreview is null
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,28 +10,22 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
 import com.dsy.dsu.CommitingPrices.Model.NestedDataGetAll.GetArrayNodeForNestedChildern;
 import com.dsy.dsu.CommitingPrices.View.Window.ComponentsForRecyreViewNesteds;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.dsy.dsu.Hilt.Jakson.HiltInterfaceJakson;
-import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.android.material.card.MaterialCardView;
-import com.jakewharton.rxbinding4.view.RxView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-
-import javax.inject.Inject;
-
-import dagger.hilt.EntryPoints;
 
 // TODO: 09.11.2023 ВТОРОЯ Rereview
 
@@ -49,9 +44,10 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
     private Integer getHiltPublicId;
     private String getHiltCommintgPrices;
 
+    private GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
 
 
-    GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
+    private MutableLiveData<Intent> getHiltMutableLiveDataPrices;
 
     public MyRecycleViewIsAdaptersNested(@NonNull View itemView,
                                          @NotNull Context context,
@@ -60,7 +56,8 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
                                          @NotNull ObjectMapper objectMapper,
                                          @NotNull Integer getHiltPublicId,
                                          @NotNull String getHiltCommintgPrices,
-                                         @NonNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices) {
+                                         @NonNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
+                                         @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPrices) {
         // super();
         try{
             this.itemView=itemView;
@@ -70,6 +67,7 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             this.getHiltPublicId=getHiltPublicId;
             this.getHiltCommintgPrices=getHiltCommintgPrices;
             this.getLiveDataForrecyreViewPrices=getLiveDataForrecyreViewPrices;
+            this.getHiltMutableLiveDataPrices = getHiltMutableLiveDataPrices;
 
             animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_row8);
 
@@ -262,7 +260,7 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             ComponentsForRecyreViewNesteds componentsForRecyreViewNesteds=
                     new ComponentsForRecyreViewNesteds(holder,context,
                             position,cardview_commingprices_neasted,animation,objectMapper,getHiltPublicId,
-                            this,ArrayNodeNested,getHiltCommintgPrices);
+                            this,ArrayNodeNested,getHiltCommintgPrices,getLiveDataForrecyreViewPrices, getHiltMutableLiveDataPrices);
 // TODO: 30.12.2023  запуск метода Сверху Сумма согласования цены
             if (ArrayNodeNested.size()>0) {
 
@@ -301,7 +299,7 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             Log.d(this.getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
