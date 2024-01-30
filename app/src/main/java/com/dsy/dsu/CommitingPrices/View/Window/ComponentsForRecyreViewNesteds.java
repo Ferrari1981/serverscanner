@@ -229,7 +229,7 @@ public class ComponentsForRecyreViewNesteds {
                             ByteFor1CCommintPrices,getHiltPublicId,getHiltCommintgPrices, UUID);*/
 
 
-
+                    //getHiltMutableLiveDataPay
 
                     StringBuffer  BufferOt1cCommintPricePost=new StringBuffer("Согласование внесено в базу!");
 

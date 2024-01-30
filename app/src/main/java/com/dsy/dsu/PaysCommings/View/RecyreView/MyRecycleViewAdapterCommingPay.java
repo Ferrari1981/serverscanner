@@ -933,6 +933,11 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                     .map(new Function<Unit, Object>() {
                         @Override
                         public Object apply(Unit unit) throws Throwable {
+
+                            // TODO: 30.12.2023 вибрация
+                            Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                            v2.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -1031,16 +1036,15 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         getLiveDataForrecyreViewPay.setObservableLiveDataRecyreViewPays(lifecycleOwner,
                                 context,
                                 getHiltMutableLiveDataPayForRecyreView,
-                                myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования,holder,cardview_commingpay,position,recycleviewcommitpays);
+                                myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования
+                                ,holder,cardview_commingpay,position,recycleviewcommitpays,
+                                intentзаданиеНаВыполениеSuccess,getHiltCommintgPays,binderСогласования1C);
 
 
-                      StringBuffer ОТветОт1СОперациисДаннымиSuccees=
-                                proccesingCancelOrOKPay.proccerCancelOrOKPay(context,  intentзаданиеНаВыполениеSuccess,getHiltCommintgPays);
 
-                    ///////////    StringBuffer ОТветОт1СОперациисДанными=new StringBuffer("Операция успешна");
 
 // TODO: 30.01.2024  отпраявеам событие в Mutable
-                        sendLiveDataRecyreViewEventCallBacl1c(ОТветОт1СОперациисДаннымиSuccees);
+                        sendLiveDataRecyreViewEventCallBacl1c( );
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1189,6 +1193,10 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                     .map(new Function<Unit, Object>() {
                         @Override
                         public Object apply(Unit unit) throws Throwable {
+                            // TODO: 30.12.2023 вибрация
+                            Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                            v2.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -1274,28 +1282,28 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         bundleДляПередачиВСлужбуCancel.putInt("ПубличныйidPay", ПубличныйidPay);
 
                         intentзаданиеНаВыполениеCancel.putExtras(bundleДляПередачиВСлужбуCancel);
-
-                        intentзаданиеНаВыполениеCancel.putExtras(bundleДляПередачиВСлужбуCancel);
                         ///TODO выполнил ОТКАЗ
+
+
+
+                        ///TODO выполнил Согласования
                         ProccesingCancelOrOKPay proccesingCancelOrOKPay = new ProccesingCancelOrOKPay(context,binderСогласования1C);
 
-                        
-                        // TODO: 30.01.2024  слушатель на дейстия при ОТКАЗЕ
+                        // TODO: 24.01.2024 сама операиция подтверждения отправляем ее
+
+                        // TODO: 30.01.2024  слушатель на дейстия при СУПЕШНО
                         getLiveDataForrecyreViewPay.setObservableLiveDataRecyreViewPays(lifecycleOwner,
                                 context,
                                 getHiltMutableLiveDataPayForRecyreView,
-                                myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования,holder,cardview_commingpay,position,recycleviewcommitpays);
-
-                        StringBuffer ОТветОт1СОперациисДаннымиancel=
-                                proccesingCancelOrOKPay.proccerCancelOrOKPay(context, intentзаданиеНаВыполениеCancel,getHiltCommintgPays ) ;
-
+                                myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования
+                                ,holder,cardview_commingpay,position,recycleviewcommitpays,
+                                intentзаданиеНаВыполениеCancel,getHiltCommintgPays,binderСогласования1C);
 
 
-                        //////StringBuffer ОТветОт1СОперациисДанными=new StringBuffer("Операция успешна");
 
-// TODO: 30.01.2024  отпраявеам событие в Mutable  
-                        sendLiveDataRecyreViewEventCallBacl1c(ОТветОт1СОперациисДаннымиancel);
 
+// TODO: 30.01.2024  отпраявеам событие в Mutable
+                        sendLiveDataRecyreViewEventCallBacl1c( );
                         
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1318,13 +1326,10 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
         }
     }
 
-    private void sendLiveDataRecyreViewEventCallBacl1c(@NonNull StringBuffer ОТветОт1СОперациисДанными) {
+    private void sendLiveDataRecyreViewEventCallBacl1c(  ) {
 
         try{
             Intent intentCallBackRcyreCiew1cPayEvent=new Intent("CallBackRecyreViewPays");
-            Bundle bundle=new Bundle();
-            bundle.putString("recyreViewPays", ОТветОт1СОперациисДанными.toString());
-            intentCallBackRcyreCiew1cPayEvent.putExtras(bundle);
             getHiltMutableLiveDataPayForRecyreView.postValue(intentCallBackRcyreCiew1cPayEvent);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

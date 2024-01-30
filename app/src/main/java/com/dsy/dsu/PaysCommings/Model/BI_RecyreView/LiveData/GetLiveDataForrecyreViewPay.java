@@ -17,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.Bl_CommintigPay;
+import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.ProccesingCancelOrOKPay;
 import com.dsy.dsu.PaysCommings.Model.Bl_Nested.ComponensForRecyreviewNestedPay;
 import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterCommingPay;
 import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPayCommingPay;
+import com.dsy.dsu.Services.Service_Notificatios_Для_Согласования;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.material.card.MaterialCardView;
 
@@ -46,7 +48,10 @@ public class GetLiveDataForrecyreViewPay {
                                                     @NonNull MyViewHolderPayCommingPay holder,
                                                      @NonNull MaterialCardView cardview_commingpay,
                                                      @NonNull int position,
-                                                     @NonNull RecyclerView recycleviewcommitpays) {
+                                                     @NonNull RecyclerView recycleviewcommitpays,
+                                                     @NonNull  Intent intentзаданиеНаВыполениеSuccess,
+                                                     @NonNull String getHiltCommintgPays,
+                                                     @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C) {
         try{
             if (!getHiltMutableLiveDataPayForRecyreViewPays.hasObservers()) {
                 // TODO: 16.01.2024
@@ -57,13 +62,18 @@ public class GetLiveDataForrecyreViewPay {
                             switch (intent.getAction())  {
                                 case           "CallBackRecyreViewPays":
                                     // TODO: 16.01.2024  пришли данные
-                                    Bundle bundleFirst =      intent.getExtras();
-                                    String   ОТветОт1СОперациисДанными=     (String )      bundleFirst.getString("recyreViewPays");
-                                    StringBuffer stringBufferОт1СОперациисДанными=new StringBuffer(ОТветОт1СОперациисДанными);
+
+
+                                    ProccesingCancelOrOKPay proccesingCancelOrOKPay = new ProccesingCancelOrOKPay(context,binderСогласования1C);
+
+                                    StringBuffer ОТветОт1СОперациисДаннымиSuccees=
+                                            proccesingCancelOrOKPay.proccerCancelOrOKPay(context,  intentзаданиеНаВыполениеSuccess,getHiltCommintgPays);
+
+                                    ////StringBuffer ОТветОт1СОперациисДаннымиSuccees=new StringBuffer("Операция успешна");
 
 
 // TODO: 30.01.2024  метод ответа от 1с pay согласовано или нет
-                                    procesingCallBackOt1cPays( stringBufferОт1СОперациисДанными,
+                                    procesingCallBackOt1cPays( ОТветОт1СОперациисДаннымиSuccees,
                                             myRecycleViewAdapterCommingPay, holder, cardview_commingpay, position,
                                             context, jsonNode1сСогласования, recycleviewcommitpays, bl_commintigPay);
 
