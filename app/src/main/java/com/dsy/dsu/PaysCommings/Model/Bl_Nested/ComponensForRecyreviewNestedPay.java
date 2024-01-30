@@ -67,9 +67,10 @@ Context context;
                 recyclerViewPays.setAdapter(myRecycleViewIsNullAdapters);
                 recyclerViewPays.getAdapter().notifyDataSetChanged();
 
-                recyclerViewPays.scrollToPosition(View.FOCUS_UP);
+
 
                 recyclerViewPays.requestLayout();
+                recyclerViewPays.refreshDrawableState();
             }
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()

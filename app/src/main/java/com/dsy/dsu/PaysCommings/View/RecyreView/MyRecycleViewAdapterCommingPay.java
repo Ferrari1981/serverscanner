@@ -81,12 +81,14 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     Animation animationДляСогласовани;
     JsonNode jsonNode1сСогласованияAll;
 
-    @Inject
-    MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView;
 
-    @Inject
-    GetLiveDataForrecyreView getLiveDataForrecyreView;
+
+
     LifecycleOwner lifecycleOwner;
+
+    GetLiveDataForrecyreView getLiveDataForrecyreView;
+
+    MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView;
     public MyRecycleViewAdapterCommingPay(@NotNull JsonNode jsonNode1сСогласования,
                                           @NonNull Context context,
                                           @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
@@ -98,7 +100,9 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                           @NonNull String getHiltCommintgPays,
                                           @NonNull Bl_CommintigPay bl_commintigPay,
                                            @NotNull JsonNode jsonNode1сСогласованияAll,
-                                            @NonNull LifecycleOwner lifecycleOwner) {
+                                            @NonNull LifecycleOwner lifecycleOwner,
+                                          @NonNull  GetLiveDataForrecyreView getLiveDataForrecyreView,
+                                          @NonNull MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView) {
         try {
             this.jsonNode1сСогласования = jsonNode1сСогласования;
             this.context = context;
@@ -112,6 +116,8 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
             this.bl_commintigPay = bl_commintigPay;
             this.jsonNode1сСогласованияAll = jsonNode1сСогласованияAll;
             this.lifecycleOwner = lifecycleOwner;
+            this.getLiveDataForrecyreView = getLiveDataForrecyreView;
+            this.getHiltMutableLiveDataPayForRecyreView = getHiltMutableLiveDataPayForRecyreView;
 
             animationДляСогласовани = AnimationUtils.loadAnimation(context,  R.anim.slide_in_scrolls);//R.anim.layout_animal_commit
            // Animation  animationvibr1 = AnimationUtils.loadAnimation(context, R.anim.slide_in_row9);
@@ -936,6 +942,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                             handler[0] = holder.butt_successcommit.getHandler();
+                            holder.cardview_commingpay.animate().rotationXBy(5);
                             return holder.butt_successcommit;
                         }
                     })
@@ -1025,30 +1032,20 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
                         // TODO: 24.01.2024 сама операиция подтверждения отправляем ее
 
-               StringBuffer ОТветОт1СОперациисДанными=
-                           proccesingCancelOrOKPay.proccerCancelOrOKPay(context,  intentзаданиеНаВыполениеSuccess,getHiltCommintgPays);
+                        // TODO: 30.01.2024  слушатель на дейстия при СУПЕШНО
+                        getLiveDataForrecyreView.setObservableLiveDataRecyreViewPays(lifecycleOwner,
+                                context,
+                                getHiltMutableLiveDataPayForRecyreView,
+                                myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования,holder,cardview_commingpay,position,recycleviewcommitpays);
 
 
-                        ///StringBuffer   ОТветОт1СОперациисДанными=new StringBuffer();
-// TODO: 23.01.2024  удаление строчки
-                        notifynotifyDataSetChanged(ОТветОт1СОперациисДанными,holder,cardview_commingpay,  position);
+                      StringBuffer ОТветОт1СОперациисДаннымиSuccees=
+                                proccesingCancelOrOKPay.proccerCancelOrOKPay(context,  intentзаданиеНаВыполениеSuccess,getHiltCommintgPays);
 
-                        // TODO: 24.01.2024   после удаление перегуражаем экран PAY
-                        ComponensForRecyreviewNestedPay componensForRecyreviewNestedPay=new ComponensForRecyreviewNestedPay(context);
+                    ///////////    StringBuffer ОТветОт1СОперациисДанными=new StringBuffer("Операция успешна");
 
-
-                        if (jsonNode1сСогласования.size()>0) {
-                            componensForRecyreviewNestedPay.методRebootRecyreViewCommingPays(jsonNode1сСогласования,
-                                    myRecycleViewAdapterCommingPay,recycleviewcommitpays,ОТветОт1СОперациисДанными.toString());
-                        } else {
-                            componensForRecyreviewNestedPay.методRebootRecyreViewCommingPaysDontRow(jsonNode1сСогласования,
-                                    recycleviewcommitpays,ОТветОт1СОперациисДанными.toString());
-                        }
-
-
-                        // TODO: 24.01.2024
-
-                        bl_commintigPay.МетодКпопкаСоЗачкомКраснымДополнительныйСтатус( jsonNode1сСогласования);
+// TODO: 30.01.2024  отпраявеам событие в Mutable
+                        sendLiveDataRecyreViewEventCallBacl1c(ОТветОт1СОперациисДаннымиSuccees);
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1201,6 +1198,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                             handler[0] = holder.butt_cancel.getHandler();
+                            holder.cardview_commingpay.animate().rotationXBy(5);
                             return holder.butt_cancel;
                         }
                     })
@@ -1287,17 +1285,21 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         ProccesingCancelOrOKPay proccesingCancelOrOKPay = new ProccesingCancelOrOKPay(context,binderСогласования1C);
 
                         
-                        // TODO: 30.01.2024  слушатель на дейстия
+                        // TODO: 30.01.2024  слушатель на дейстия при ОТКАЗЕ
                         getLiveDataForrecyreView.setObservableLiveDataRecyreViewPays(lifecycleOwner,
                                 context,
                                 getHiltMutableLiveDataPayForRecyreView,
                                 myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования,holder,cardview_commingpay,position,recycleviewcommitpays);
 
-                        StringBuffer ОТветОт1СОперациисДанными=
-                                proccesingCancelOrOKPay.proccerCancelOrOKPay(context, intentзаданиеНаВыполениеCancel,getHiltCommintgPays );
+                        StringBuffer ОТветОт1СОперациисДаннымиancel=
+                                proccesingCancelOrOKPay.proccerCancelOrOKPay(context, intentзаданиеНаВыполениеCancel,getHiltCommintgPays ) ;
+
+
+
+                        //////StringBuffer ОТветОт1СОперациисДанными=new StringBuffer("Операция успешна");
 
 // TODO: 30.01.2024  отпраявеам событие в Mutable  
-                        sendLiveDataRecyreViewEventCallBacl1c(ОТветОт1СОперациисДанными);
+                        sendLiveDataRecyreViewEventCallBacl1c(ОТветОт1СОперациисДаннымиancel);
 
                         
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1326,7 +1328,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
         try{
             Intent intentCallBackRcyreCiew1cPayEvent=new Intent("CallBackRecyreViewPays");
             Bundle bundle=new Bundle();
-            bundle.putSerializable("recyreViewPays", ОТветОт1СОперациисДанными);
+            bundle.putString("recyreViewPays", ОТветОт1СОперациисДанными.toString());
             intentCallBackRcyreCiew1cPayEvent.putExtras(bundle);
             getHiltMutableLiveDataPayForRecyreView.postValue(intentCallBackRcyreCiew1cPayEvent);
 
