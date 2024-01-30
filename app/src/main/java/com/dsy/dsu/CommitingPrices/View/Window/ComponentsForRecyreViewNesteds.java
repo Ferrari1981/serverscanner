@@ -128,7 +128,7 @@ public class ComponentsForRecyreViewNesteds {
             arrow_nested_receriview=    holder.itemView.findViewById(R.id.arrow_nested_receriview) ;
 
             RxView.clicks(  arrow_nested_receriview)
-                    .throttleFirst(2, TimeUnit.SECONDS)
+                    .throttleFirst(10, TimeUnit.SECONDS)
                     .filter(s -> !s.toString().isEmpty())
                     .map(new Function<Unit, MaterialButton>() {
                         @Override

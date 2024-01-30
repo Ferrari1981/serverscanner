@@ -911,7 +911,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
             // TODO: 10.11.2023 клик по файлов
             RxView.clicks(holder.butt_successcommit)
-                    .throttleFirst(2, TimeUnit.SECONDS)
+                    .throttleFirst(10, TimeUnit.SECONDS)
                     .filter(s -> !s.toString().isEmpty())
                     .map(new Function<Unit, Object>() {
                         @Override
@@ -1178,7 +1178,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
             MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay =this;
 
             RxView.clicks(holder.butt_cancel)
-                    .throttleFirst(2, TimeUnit.SECONDS)
+                    .throttleFirst(10, TimeUnit.SECONDS)
                     .filter(s -> !s.toString().isEmpty())
                     .map(new Function<Unit, Object>() {
                         @Override
