@@ -28,7 +28,8 @@ public class ModuleCommintgPrices {
         try {
              АдресСеврера1сДляgetFilePrices.append("http://uat.dsu1.ru:55080/dds/hs/jsonto1ccena/listofdocuments".trim());// TODO: 18.01.2024  RELEZ
 
-          // АдресСеврера1сДляgetFilePrices.append("http://192.168.3.10/dds_copy/hs/jsonto1ccena/listofdocuments".trim());// TODO: 18.01.2024  DEBUG
+
+            //АдресСеврера1сДляgetFilePrices.append("http://192.168.3.10/dds_copy/hs/jsonto1ccena/listofdocuments".trim());// TODO: 18.01.2024  DEBUG
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

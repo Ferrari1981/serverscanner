@@ -26,7 +26,9 @@ import com.google.android.material.card.MaterialCardView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 // TODO: 09.11.2023 ВТОРОЯ Rereview
 
@@ -34,7 +36,8 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
 
     public Context context;
     public View itemView;
-    public  ArrayNode ArrayNodeNested;
+     public  JsonNode jsonNodeNested;
+     public  JsonNode jsonNodeNestedRow;
     public  int getAbsoluteAdapterPosition;
     private MyViewHoldersNested viewHoldersNested;
 
@@ -51,16 +54,19 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
     private MutableLiveData<Intent> getHiltMutableLiveDataPrices;
     private LifecycleOwner lifecycleOwner;
 
+    private RecyclerView recycleview_comminingppricesNesteds;
+
     public MyRecycleViewIsAdaptersNested(@NonNull View itemView,
                                          @NotNull Context context,
-                                         @NotNull JsonNode jsonNode,
+                                         @NotNull JsonNode jsonNodeNested,
                                          @NotNull int getAbsoluteAdapterPosition,
                                          @NotNull ObjectMapper objectMapper,
                                          @NotNull Integer getHiltPublicId,
                                          @NotNull String getHiltCommintgPrices,
                                          @NonNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
                                          @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPrices,
-                                         @NonNull LifecycleOwner lifecycleOwner) {
+                                         @NonNull LifecycleOwner lifecycleOwner,
+                                         @NonNull RecyclerView recycleview_comminingppricesNesteds) {
         // super();
         try{
             this.itemView=itemView;
@@ -72,26 +78,17 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             this.getLiveDataForrecyreViewPrices=getLiveDataForrecyreViewPrices;
             this.getHiltMutableLiveDataPrices = getHiltMutableLiveDataPrices;
             this.lifecycleOwner = lifecycleOwner;
+            this.recycleview_comminingppricesNesteds = recycleview_comminingppricesNesteds;
+            this.jsonNodeNested = jsonNodeNested;
 
             animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_row8);
 
-            // TODO: 09.01.2024  класс получаем все дочерние элементы ArrayNoide
-            GetArrayNodeForNestedChildern getArrayNodeForNestedChildern=new GetArrayNodeForNestedChildern(context,  jsonNode );
 
-            ArrayNodeNested=   getArrayNodeForNestedChildern.arrayNodeNested();
-
-
-
-            // TODO: 02.03.2022
-            Log.d(this.getClass().getName(),"\n"
-                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+ "  ArrayNodeNested " + ArrayNodeNested.size());
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+
-                " jsonNode.size() " + jsonNode.size());
+                " jsonNodeNested.size() " + jsonNodeNested.size());
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -107,18 +104,19 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
     @Override
     public void onBindViewHolder(@NonNull MyViewHoldersNested holder, @NonNull int position, @NonNull List<Object> payloads) {
         try {
-
             // TODO: 28.12.2023 получаем позицию в recyreview
 
-            holder.ArrayNode=ArrayNodeNested.get(position);
+         Iterator<JsonNode> jsonNodeIterator= jsonNodeNested.elements();
+            JsonNode jsonNodeNested=    jsonNodeIterator.next();
+           jsonNodeNestedRow= (JsonNode) jsonNodeNested.get(position);
 
 
             super.onBindViewHolder(holder, position, payloads);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"jsonNode "
-                    + ArrayNodeNested+ " position " +position);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"jsonNodeNested "
+                    + jsonNodeNested+ " position " +position);
             // TODO: 30.03.2022
         } catch (Exception e) {
             e.printStackTrace();
@@ -204,7 +202,7 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
         View viewComminigPrices = null;
         try {
 
-            if (ArrayNodeNested.size()>0) {
+            if (jsonNodeNested.size()>0) {
        /*         viewComminigPrices = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.simple_for_commintgprices1, parent, false);*/
                 /*viewComminigPrices = LayoutInflater.from(parent.getContext())
@@ -218,13 +216,13 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             // TODO: 28.12.2023 получаем позицию в recyreview
             int  getPostionViewHolder=  getPostions();
             // TODO: 22.03.2022
-            viewHoldersNested = new MyViewHoldersNested(viewComminigPrices,context,getPostionViewHolder);
+            viewHoldersNested = new MyViewHoldersNested(viewComminigPrices,context,getPostionViewHolder,jsonNodeNested);
             // TODO: 27.12.2023
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + "   viewComminigPrices" + viewComminigPrices
-                    + " getPostionViewHolder " +getPostionViewHolder  + " ArrayNodeNested.size() " +ArrayNodeNested.size());
+                    + " getPostionViewHolder " +getPostionViewHolder+" jsonNodeNestedRow " +jsonNodeNestedRow);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -266,11 +264,11 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             ComponentsForRecyreViewNesteds componentsForRecyreViewNesteds=
                     new ComponentsForRecyreViewNesteds(holder,context,
                             position,cardview_commingprices_neasted,animation,objectMapper,getHiltPublicId,
-                            this,ArrayNodeNested,getHiltCommintgPrices,
+                            this,jsonNodeNested,getHiltCommintgPrices,
                             getLiveDataForrecyreViewPrices,
-                            getHiltMutableLiveDataPrices,lifecycleOwner);
+                            getHiltMutableLiveDataPrices,lifecycleOwner,recycleview_comminingppricesNesteds);
 // TODO: 30.12.2023  запуск метода Сверху Сумма согласования цены
-            if (ArrayNodeNested.size()>0) {
+            if (jsonNodeNestedRow.size()>0) {
 
                 componentsForRecyreViewNesteds.getmTV_commitingprices_count();
 
@@ -368,15 +366,15 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
         // TODO: 02.03.2022
         int КоличесвоСтрок = 0;
         try{
-        if (ArrayNodeNested!=null && ArrayNodeNested.size()>0) {
-           КоличесвоСтрок = ArrayNodeNested.size();
-            Log.d(this.getClass().getName(), "jsonNodeNested.size() " + ArrayNodeNested.size() + " КоличесвоСтрок " +КоличесвоСтрок);
+        if (jsonNodeNested!=null && jsonNodeNested.size()>0) {
+           КоличесвоСтрок = jsonNodeNested.size();
+            Log.d(this.getClass().getName(), "jsonNodeNested.size() " + jsonNodeNested.size() + " КоличесвоСтрок " +КоличесвоСтрок);
         }
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+
-                " ArrayNodeNested.size() " + ArrayNodeNested.size());
+                " jsonNodeNested.size() " + jsonNodeNested.size());
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

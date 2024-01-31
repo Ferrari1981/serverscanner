@@ -56,8 +56,9 @@ public class GetLiveDataForrecyreViewPrices {
                                                       @NonNull MyRecycleViewIsAdaptersNested myRecycleViewIsAdaptersNested,
                                                       @NonNull  int position,
                                                       @NonNull MaterialCardView cardview_commingprices_neasted,
-                                                      @NonNull ArrayNode ArrayNodeNested,
-                                                      @NonNull MyViewHoldersNested holder) {
+                                                      @NonNull JsonNode jsonNodeNested,
+                                                      @NonNull MyViewHoldersNested holder,
+                                                      @NonNull RecyclerView   recycleview_comminingppricesNesteds) {
         try{
             if (!getHiltMutableLiveDataPayForRecyreView.hasObservers()) {
                 // TODO: 16.01.2024
@@ -77,8 +78,7 @@ public class GetLiveDataForrecyreViewPrices {
                                     StringBuffer  BufferOt1cCommintPricePost=   generatorJsonForPostComminhgPrices.SendJsonForPostComminhgPrices(context,
                                             ByteFor1CCommintPrices,getHiltPublicId,getHiltCommintgPrices, UUID);
 
-
-                                ///////  StringBuffer  BufferOt1cCommintPricePost=new StringBuffer("Согласование внесено в базу!");
+                          /*   StringBuffer  BufferOt1cCommintPricePost=new StringBuffer("Согласование внесено в базу!");*/
 
 
                                     // TODO: 10.01.2024 Скрываем Текущий Платеж По Которому был Клик http://192.168.254.218/dds_copy/hs/jsonto1ccena/listofdocuments
@@ -88,7 +88,7 @@ public class GetLiveDataForrecyreViewPrices {
                                             mTV_commitingprices_count,
                                             myRecycleViewIsAdaptersNested,
                                             position
-                                            ,cardview_commingprices_neasted,ArrayNodeNested,holder);
+                                            ,cardview_commingprices_neasted,jsonNodeNested,holder,recycleview_comminingppricesNesteds);
 
 
 

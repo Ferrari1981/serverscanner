@@ -2,34 +2,29 @@ package com.dsy.dsu.CommitingPrices.Model.SendDataTo1C;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewParent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.TableLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
+import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.RebootRecyreViewNested;
 import com.dsy.dsu.CommitingPrices.Model.EvenBusPrices.MessageEvensBusPrices;
+import com.dsy.dsu.CommitingPrices.Model.NestedDataGetAll.GetArrayNodeForNestedChildern;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyRecycleViewIsAdaptersNested;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyViewHoldersNested;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.Serializable;
 
 
 // TODO: 11.01.2024  класс финально после получение ответ  переропределяем внезний вид  recyreview удаля теьбкущю плитку
@@ -46,22 +41,22 @@ Context context;
                                             @NotNull MyRecycleViewIsAdaptersNested myRecycleViewIsAdaptersNested,
                                             @NotNull int position,
                                             @NotNull MaterialCardView cardview_commingprices_neasted,
-                                            @NotNull ArrayNode ArrayNodeNested,
-                                            @NotNull MyViewHoldersNested holder){
+                                            @NotNull JsonNode jsonNodeNested,
+                                            @NotNull MyViewHoldersNested holder,
+                                            @NotNull RecyclerView recycleview_comminingppricesNesteds){
         try{
 // TODO: 11.01.2024
 
-            String ОтветОтСервера1сCommitnPricesPost=BufferOt1cCommintPricePost.toString().replaceAll("\"","\"\"").replaceAll("\"", "").trim();
+            String ОтветОтСервера1сCommitnPricesPost=BufferOt1cCommintPricePost.toString()
+                    .replaceAll("\"","\"\"")
+                    .replaceAll("\"", "").trim();
             // TODO: 30.01.2024  
             if ( ОтветОтСервера1сCommitnPricesPost.length()>0 &&
                     ОтветОтСервера1сCommitnPricesPost.trim().equalsIgnoreCase("Согласование внесено в базу!")) {
 
-
-
                 // TODO: 23.01.2024 анимация
                 Animation  animationvibr1 = AnimationUtils.loadAnimation(context, R.anim.slide_in_row9);
                 holder.itemView.startAnimation(animationvibr1);
-                cardview_commingprices_neasted.setChecked(true);
                 holder.itemView.refreshDrawableState();
 
                 // TODO: 11.01.2024 перегрузка данных
@@ -69,15 +64,16 @@ Context context;
 
                 myRecycleViewIsAdaptersNested.notifyItemChanged(position );
 
+// TODO: 09.01.2024  класс получаем все дочерние элементы ArrayNoide
+                GetArrayNodeForNestedChildern getArrayNodeForNestedChildern=new GetArrayNodeForNestedChildern(context,  jsonNodeNested,position );
+
+                jsonNodeNested=    getArrayNodeForNestedChildern.remoteRowJsonPrices( );
 
 
-             // TODO: 23.01.2024  удаление
-                ArrayNodeNested.remove(position);
+                // TODO: 26.12.2023 нет  байты
+                RebootRecyreViewNested rebootRecyreViewNested=new RebootRecyreViewNested(context);
 
-
-
-                    myRecycleViewIsAdaptersNested.notifyDataSetChanged();
-
+                rebootRecyreViewNested.методRebootRecyreViewComminPrices(jsonNodeNested,myRecycleViewIsAdaptersNested,recycleview_comminingppricesNesteds);
 
 
 
@@ -87,7 +83,7 @@ Context context;
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
 
 // TODO: 24.01.2024 собыьтие Отправляем что данные меньще 1  и родительсное ЦФО надо закрыть
-                eventBusReactionSize(ArrayNodeNested);
+                eventBusReactionSize(jsonNodeNested);
 
 
                 Log.d(this.getClass().getName(), "\n"
@@ -112,7 +108,8 @@ Context context;
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+"Не прошла операция !!!");
             }
-
+// TODO: 31.01.2024
+            cardmatrialrotacidefault(cardview_commingprices_neasted);
 
             Log.d(this.getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -127,14 +124,19 @@ Context context;
         }
     }
 
-    private   void eventBusReactionSize(@NonNull ArrayNode ArrayNodeNested) {
+    private   void cardmatrialrotacidefault(@NonNull MaterialCardView cardview_commingprices_neasted) {
+        cardview_commingprices_neasted.animate().rotationXBy(-5);
+    }
+
+
+    private   void eventBusReactionSize(@NonNull JsonNode jsonNodeNested) {
         try{
-            switch (ArrayNodeNested.size()){
+            switch (jsonNodeNested.size()){
                 case 0:
                         Intent intentPriceEventBud=new Intent();
                         Bundle Event=new Bundle();
                         intentPriceEventBud.setAction("ArrayNodeNested.size()");
-                        Event.putInt("ArrayNodeNested.size()" , ArrayNodeNested.size());
+                        Event.putInt("ArrayNodeNested.size()" , jsonNodeNested.size());
                         intentPriceEventBud.putExtras(Event);
 
                         EventBus.getDefault().post(new MessageEvensBusPrices(intentPriceEventBud));
@@ -146,7 +148,7 @@ Context context;
         Log.d(this.getClass().getName(), "\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+" ArrayNodeNested.size() " +ArrayNodeNested.size());
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+" jsonNodeNested.size() " +jsonNodeNested.size());
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

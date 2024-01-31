@@ -941,8 +941,11 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
                             handler[0] = holder.butt_successcommit.getHandler();
+
                             holder.cardview_commingpay.animate().rotationXBy(5);
+
                             return holder.butt_successcommit;
                         }
                     })
@@ -1047,6 +1050,8 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         sendLiveDataRecyreViewEventCallBacl1c( );
 
 
+                        cardmaterialrotafedefualt();
+
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -1060,6 +1065,10 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
+                }
+
+                private void cardmaterialrotafedefualt() {
+                    holder.cardview_commingpay.animate().rotationXBy(-5);
                 }
             }, 100);
         } catch (Exception e) {

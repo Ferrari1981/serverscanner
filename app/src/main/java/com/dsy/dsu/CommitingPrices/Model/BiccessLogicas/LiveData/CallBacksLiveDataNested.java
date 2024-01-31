@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.InitRecyreviews.InizializayRecyreViewsNested;
+import com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.RebootRecyreViewNested;
 import com.dsy.dsu.CommitingPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
 import com.dsy.dsu.CommitingPrices.Model.NestedDataGetAll.GetArrayNodeForNestedChildern;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleView.MyViewHoldersCommintPrices;
@@ -94,7 +95,9 @@ public class CallBacksLiveDataNested {
 
                     }else{
                         // TODO: 26.12.2023 нет  байты
-                        completeRecyreViewNested(jsonNodeNested);
+                        RebootRecyreViewNested rebootRecyreViewNested=new RebootRecyreViewNested(context);
+
+                        rebootRecyreViewNested.методRebootRecyreViewComminPrices(jsonNodeNested,myRecycleViewIsAdaptersNested,recycleview_comminingppricesNesteds);
                     }
 
 
@@ -136,7 +139,7 @@ public class CallBacksLiveDataNested {
 
                 myRecycleViewIsAdaptersNested = new MyRecycleViewIsAdaptersNested(holder.itemView, context
                         ,jsonNodeNested, postion,objectMapper,getHiltPublicId,getHiltCommintgPrices
-                        ,getLiveDataForrecyreViewPrices,  getHiltMutableLiveDataPay,lifecycleOwner);
+                        ,getLiveDataForrecyreViewPrices,  getHiltMutableLiveDataPay,lifecycleOwner,recycleview_comminingppricesNesteds);
             // TODO: 30.01.2024
                 myRecycleViewIsAdaptersNested.notifyDataSetChanged();
                 recycleview_comminingppricesNesteds.setAdapter(myRecycleViewIsAdaptersNested);
@@ -167,45 +170,7 @@ public class CallBacksLiveDataNested {
 
 
 
-    public void completeRecyreViewNested(@NotNull  JsonNode     jsonNodeNested) {
-        try{
 
-
-                // TODO: 09.01.2024  класс получаем все дочерние элементы ArrayNoide
-                GetArrayNodeForNestedChildern getArrayNodeForNestedChildern=new GetArrayNodeForNestedChildern(context,  jsonNodeNested );
-               ArrayNode arrayNodeNested=   getArrayNodeForNestedChildern.arrayNodeNested();
-
-
-
-                // TODO: 09.01.2024
-                myRecycleViewIsAdaptersNested.ArrayNodeNested=arrayNodeNested;
-                myRecycleViewIsAdaptersNested.notifyDataSetChanged();
-                RecyclerView.Adapter recyclerViewAdapter=         recycleview_comminingppricesNesteds.getAdapter();
-                recycleview_comminingppricesNesteds.swapAdapter(recyclerViewAdapter,true);
-                recycleview_comminingppricesNesteds.getAdapter().notifyDataSetChanged();
-
-                // TODO: 10.01.2024  reebott dizayn recyreview nested
-
-                rebbotdizaynRecyreViewNested();
-
-
-            Log.d(this.getClass().getName(), "\n" + " class " +
-                    Thread.currentThread().getStackTrace()[2].getClassName()
-                    + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " jsonNodeNested " +jsonNodeNested);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(context.getClass().getName(),
-                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-    }
 
     private void rebbotdizaynRecyreViewNested() {
         recycleview_comminingppricesNesteds.requestLayout();
