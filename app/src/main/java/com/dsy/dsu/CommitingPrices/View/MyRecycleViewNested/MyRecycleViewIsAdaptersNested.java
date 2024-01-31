@@ -207,8 +207,10 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
                         .inflate(R.layout.simple_for_commintgprices1, parent, false);*/
                 /*viewComminigPrices = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.simple_for_complitingprices_grid1, parent, false);*/
+          /*      viewComminigPrices = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.simple_for_complitingprices_grid3, parent, false);*/
                 viewComminigPrices = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.simple_for_complitingprices_grid3, parent, false);
+                        .inflate(R.layout.simple_for_complitingprices_grid5, parent, false);
             } else {
                 viewComminigPrices = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.simple_for_dont_commingprices, parent, false);

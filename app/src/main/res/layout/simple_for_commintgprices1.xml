@@ -10,9 +10,9 @@
     app:cardCornerRadius="15dp"
     app:cardElevation="10dp"
     app:strokeColor="#F2F6F6"
-    app:cardMaxElevation="10dp"
+    app:cardMaxElevation="20dp"
     app:strokeWidth="1dp"
-    android:translationZ="50dp"
+    android:translationZ="100dp"
     android:animateLayoutChanges="true"
     android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
     tools:context=".CommitingPrices.View.Window.MainActivityCommitingPrices">
