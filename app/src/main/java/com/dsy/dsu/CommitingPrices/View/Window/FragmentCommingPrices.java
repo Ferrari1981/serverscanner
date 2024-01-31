@@ -172,6 +172,8 @@ public class FragmentCommingPrices extends Fragment {
             bottomNavigationSearch = bottomnavigationw_commintingprices.findViewById(R.id.bottomNavigationSearch);
             bottomNavigationSearch.setTitle("Поиск");
 
+            bottomNavigationSearch.setEnabled(false);
+            bottomNavigationSearch.setClickable(false);
 
 
 
@@ -226,7 +228,7 @@ public class FragmentCommingPrices extends Fragment {
              eventsBackAndAsyncAndSearchCommintPrices,
              getHiltPublicId,getHiltCommintgPrices.toString(),
              getLiveDataForrecyreViewPrices,
-             getHiltMutableLiveDataPrices);
+             getHiltMutableLiveDataPrices,bottomNavigationSearch);
 
 
      // TODO: 28.12.2023 инизилащитция recyreview

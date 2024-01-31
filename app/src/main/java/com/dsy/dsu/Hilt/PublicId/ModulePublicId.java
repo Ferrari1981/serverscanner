@@ -1,6 +1,7 @@
 package com.dsy.dsu.Hilt.PublicId;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
@@ -31,6 +32,7 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 public class ModulePublicId {
+    @SuppressLint("SuspiciousIndentation")
     @Singleton
     @Provides
     public Integer getHiltPublicId(@ApplicationContext Context context) {
@@ -39,7 +41,7 @@ public class ModulePublicId {
             ПубличныйID =
                     new Class_Generations_PUBLIC_CURRENT_ID().ПолучениеПубличногоТекущегоПользователяID(context);
             // TODO: 29.01.2024
-       //////////////////ПубличныйID=96;
+     /////ПубличныйID=96;
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"

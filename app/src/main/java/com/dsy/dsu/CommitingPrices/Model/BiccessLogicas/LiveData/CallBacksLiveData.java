@@ -1,5 +1,6 @@
 package com.dsy.dsu.CommitingPrices.Model.BiccessLogicas.LiveData;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.dsy.dsu.CommitingPrices.View.MyRecycleViewIsNull.MyRecycleViewIsNullA
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -47,6 +49,7 @@ public class CallBacksLiveData {
     GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
     MutableLiveData<Intent> getHiltMutableLiveDataPay;
     private LifecycleOwner lifecycleOwner;
+   public BottomNavigationItemView bottomNavigationSearch;
     public CallBacksLiveData( @NotNull  Context context,
                               @NotNull   ProgressBar prograessbar_commintingprices,
                               @NotNull   RecyclerView  recycleview_comminingpprices,
@@ -57,7 +60,8 @@ public class CallBacksLiveData {
                               @NotNull String getHiltCommintgPrices,
                               @NotNull GetLiveDataForrecyreViewPrices  getLiveDataForrecyreViewPrices,
                               @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay ,
-                              @NotNull  LifecycleOwner lifecycleOwner) {
+                              @NotNull  LifecycleOwner lifecycleOwner,
+                              @NotNull  BottomNavigationItemView bottomNavigationSearch) {
 
         this.context = context;
         this.prograessbar_commintingprices = prograessbar_commintingprices;
@@ -70,10 +74,12 @@ public class CallBacksLiveData {
         this.getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
         this.getHiltMutableLiveDataPay = getHiltMutableLiveDataPay;
         this.lifecycleOwner = lifecycleOwner;
+        this.bottomNavigationSearch = bottomNavigationSearch;
     }
 
     public  void callbackLiveData(Bundle bundle) {
         Completable.complete().subscribe(new CompletableObserver() {
+            @SuppressLint("RestrictedApi")
             @Override
             public void onSubscribe(@NonNull Disposable d) {
                 // TODO: 25.12.2023
@@ -91,6 +97,7 @@ public class CallBacksLiveData {
                     // TODO: 26.12.2023 пришли байты  из байт в обьект  json node
 
                     if (jsonNode1сСогласованиеЦен.isArray()&& jsonNode1сСогласованиеЦен.size()>0) {
+
                         // TODO: 28.12.2023 Запускам настрощий recyreview при получение ииз байт обьект JsonNode
                      startGetRecyreView( jsonNode1сСогласованиеЦен );
 
@@ -102,8 +109,8 @@ public class CallBacksLiveData {
 // TODO: 30.12.2023 запускаем первоночальную оценку количество записей
                         eventsBackAndAsyncAndSearchCommintPrices.new EventsAsync().eventsSearchsetNumber(jsonNode1сСогласованиеЦен);
 
-
-
+                      // TODO: 31.01.2024 делаем SearchView активиным
+                         changeVisibleEnableSeachView();
 
                         // TODO: 26.12.2023 На текущего пользователя нет данных  !!!!!
                     } else {
@@ -155,6 +162,29 @@ public class CallBacksLiveData {
             }
         });
     }
+
+
+    // TODO: 31.01.2024 длаем SearchView botton активным
+    @SuppressLint("RestrictedApi")
+    private void changeVisibleEnableSeachView() {
+        try {
+        bottomNavigationSearch.setEnabled(true);
+        bottomNavigationSearch.setClickable(true);
+        Log.d(this.getClass().getName(),"\n"
+                + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(context.getClass().getName(),
+                "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+    }
+
     public void completeIsNullRecyreView() {
         try{
             if (myRecycleViewIsNullAdapters!=null) {

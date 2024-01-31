@@ -22,6 +22,7 @@ import com.dsy.dsu.CommitingPrices.ViewModel.ModelComminingPrisesString;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -56,6 +57,8 @@ public class BLFragmentCommintingPrices {
     private Integer getHiltPublicId;
     private GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices;
     private MutableLiveData<Intent> getHiltMutableLiveDataPay;
+
+    BottomNavigationItemView bottomNavigationSearch;
     public @Inject BLFragmentCommintingPrices(@NotNull  Activity activity,
                                               @NotNull  Context context,
                                               @NotNull   ObjectMapper objectMapper,
@@ -69,7 +72,8 @@ public class BLFragmentCommintingPrices {
                                               @NotNull Integer getHiltPublicId,
                                               @NotNull String getHiltCommintgPrices,
                                               @NotNull GetLiveDataForrecyreViewPrices getLiveDataForrecyreViewPrices,
-                                              @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay) {
+                                              @NotNull MutableLiveData<Intent> getHiltMutableLiveDataPay,
+                                              @NotNull BottomNavigationItemView bottomNavigationSearch) {
         this.activity = activity;
         this.context = context;
         this.objectMapper = objectMapper;
@@ -84,6 +88,7 @@ public class BLFragmentCommintingPrices {
         this. getHiltCommintgPrices = getHiltCommintgPrices;
         this. getLiveDataForrecyreViewPrices = getLiveDataForrecyreViewPrices;
         this. getHiltMutableLiveDataPay = getHiltMutableLiveDataPay;
+        this. bottomNavigationSearch = bottomNavigationSearch;
     }
 
     // TODO: 26.12.2023 получение данных в виде String
@@ -144,7 +149,7 @@ public class BLFragmentCommintingPrices {
                                     recycleview_comminingpprices,myRecycleViewIsNullAdapters,
                                     objectMapper,   eventsBackAndAsyncAndSearchCommintPrices,
                                     getHiltPublicId,getHiltCommintgPrices,getLiveDataForrecyreViewPrices
-                                    ,getHiltMutableLiveDataPay,lifecycleOwner).callbackLiveData(bundle);
+                                    ,getHiltMutableLiveDataPay,lifecycleOwner,bottomNavigationSearch).callbackLiveData(bundle);
 
 
                             // TODO: 09.01.2024
@@ -211,7 +216,7 @@ public class BLFragmentCommintingPrices {
                                     recycleview_comminingpprices,myRecycleViewIsNullAdapters,
                                     objectMapper,   eventsBackAndAsyncAndSearchCommintPrices,getHiltPublicId,
                                     getHiltCommintgPrices,getLiveDataForrecyreViewPrices,getHiltMutableLiveDataPay
-                                    ,lifecycleOwner)
+                                    ,lifecycleOwner,bottomNavigationSearch)
                                     .completeRecyreView(jsonNode1сСогласованиеЦен);
 
 
