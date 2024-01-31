@@ -207,8 +207,10 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             if (ArrayNodeNested.size()>0) {
        /*         viewComminigPrices = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.simple_for_commintgprices1, parent, false);*/
+                /*viewComminigPrices = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.simple_for_complitingprices_grid1, parent, false);*/
                 viewComminigPrices = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.simple_for_complitingprices_grid1, parent, false);
+                        .inflate(R.layout.simple_for_complitingprices_grid3, parent, false);
             } else {
                 viewComminigPrices = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.simple_for_dont_commingprices, parent, false);
@@ -294,6 +296,33 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
                 componentsForRecyreViewNesteds.getmTV_CFORaskhoda_value();
 
 
+                // TODO: 31.01.2024 3 New Poly
+                componentsForRecyreViewNesteds. getmTV_Kontragent_value();
+
+                componentsForRecyreViewNesteds. getmTV_NumberDOc_value();
+
+                componentsForRecyreViewNesteds.  getmTV_NumberRow_value();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                // TODO: 31.01.2024 Last Metod  !!!!!
                 // TODO: 30.12.2023  rebbot Sxreen Recyreview
                 componentsForRecyreViewNesteds.setagMaterialCardViewNestad();
                 // TODO: 23.01.2024 кожа нет данных

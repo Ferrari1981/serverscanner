@@ -59,7 +59,7 @@ public class ComponentsForRecyreViewNesteds {
 
     private     MaterialTextView mTV_Nomenklatura,mTV_StatyaDDS_value
             ,mTV_EdIzm_value,mTV_Data_value,
-            mTV_Kolichestvo_value,mTV_CFORaskhoda_value;
+            mTV_Kolichestvo_value,mTV_CFORaskhoda_value,mTV_Kontragent_value,mTV_NumberDOc_value,mTV_NumberRow_value;
 
 
     private Animation animation;
@@ -462,6 +462,81 @@ public class ComponentsForRecyreViewNesteds {
         return mTV_CFORaskhoda_value;
     }
 
+    public MaterialTextView getmTV_Kontragent_value() {
+        try{
+            mTV_Kontragent_value=    holder.itemView.findViewById(R.id.mTV_Kontragent_value) ;
+            JsonNode jsonNode=    holder.ArrayNode.deepCopy();
+            TextNode textNodeKontragent=( TextNode)   jsonNode.findValue("Kontragent").deepCopy();
+            // TODO: 30.12.2023
+            if (! textNodeKontragent.asText().isEmpty()) {
+                mTV_Kontragent_value.setText(textNodeKontragent.asText().trim());
+            }
+
+            Log.d(this.getClass().getName(), "\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return mTV_Kontragent_value;
+    }
+
+    public MaterialTextView getmTV_NumberDOc_value() {
+        try{
+            mTV_NumberDOc_value=    holder.itemView.findViewById(R.id.mTV_NumberDOc_value) ;
+            JsonNode jsonNode=    holder.ArrayNode.deepCopy();
+            TextNode textNodeNDoc=( TextNode)   jsonNode.findValue("NDoc").deepCopy();
+            // TODO: 30.12.2023
+            if (! textNodeNDoc.asText().isEmpty()) {
+                mTV_NumberDOc_value.setText(textNodeNDoc.asText().trim());
+            }
+
+            Log.d(this.getClass().getName(), "\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return mTV_NumberDOc_value;
+    }
+
+
+    public MaterialTextView getmTV_NumberRow_value() {
+        try{
+            mTV_NumberRow_value=    holder.itemView.findViewById(R.id.mTV_NumberRow_value) ;
+            JsonNode jsonNode=    holder.ArrayNode.deepCopy();
+            TextNode textNodeNStr=( TextNode)   jsonNode.findValue("NStr").deepCopy();
+            // TODO: 30.12.2023
+            if (! textNodeNStr.asText().isEmpty()) {
+                mTV_NumberRow_value.setText(String.valueOf(textNodeNStr.asInt()));
+            }
+
+            Log.d(this.getClass().getName(), "\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return mTV_NumberRow_value;
+    }
 
     public MaterialCardView setagMaterialCardViewNestad() {
 
