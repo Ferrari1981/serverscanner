@@ -43,6 +43,8 @@ public class InizializayRecyreViews {
 
 
 
+
+            recycleview_comminingpprices.setHasFixedSize(true);
             recycleview_comminingpprices.addItemDecoration(new LeftDividerItemDecorator(context));
             LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context);
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

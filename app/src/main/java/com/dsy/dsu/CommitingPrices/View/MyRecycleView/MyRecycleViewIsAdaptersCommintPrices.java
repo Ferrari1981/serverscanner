@@ -238,7 +238,7 @@ public  class MyRecycleViewIsAdaptersCommintPrices extends RecyclerView.Adapter<
             componentsForRecyreView.getmTV_commitingprices_value();
 
 
-
+            holder.setIsRecyclable(false);
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"  jsonNodeParent.size() " +jsonNodeParent.size() );

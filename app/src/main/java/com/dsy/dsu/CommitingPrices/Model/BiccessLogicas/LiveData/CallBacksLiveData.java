@@ -98,12 +98,15 @@ public class CallBacksLiveData {
 
                     if (jsonNode1сСогласованиеЦен.isArray()&& jsonNode1сСогласованиеЦен.size()>0) {
 
-                        // TODO: 28.12.2023 Запускам настрощий recyreview при получение ииз байт обьект JsonNode
-                     startGetRecyreView( jsonNode1сСогласованиеЦен );
 
                         // TODO: 28.12.2023 инизилащитция recyreview
 
                         new InizializayRecyreViews(recycleview_comminingpprices,context).startInitRecyreview();
+
+
+                        // TODO: 28.12.2023 Запускам настрощий recyreview при получение ииз байт обьект JsonNode
+                        startGetRecyreView( jsonNode1сСогласованиеЦен );
+
 
 
 // TODO: 30.12.2023 запускаем первоночальную оценку количество записей

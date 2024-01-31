@@ -107,8 +107,8 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
             // TODO: 28.12.2023 получаем позицию в recyreview
 
          Iterator<JsonNode> jsonNodeIterator= jsonNodeNested.elements();
-            JsonNode jsonNodeNested=    jsonNodeIterator.next();
-           jsonNodeNestedRow= (JsonNode) jsonNodeNested.get(position);
+            JsonNode jsonNodeNestedAfterIterator=    jsonNodeIterator.next();
+           jsonNodeNestedRow= (JsonNode) jsonNodeNestedAfterIterator.get(position);
 
 
             super.onBindViewHolder(holder, position, payloads);
@@ -270,36 +270,36 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
 // TODO: 30.12.2023  запуск метода Сверху Сумма согласования цены
             if (jsonNodeNestedRow.size()>0) {
 
-                componentsForRecyreViewNesteds.getmTV_commitingprices_count();
+                componentsForRecyreViewNesteds.getmTV_commitingprices_count(jsonNodeNestedRow);
 
                 // TODO: 30.12.2023 кнопка подтверждения  согласования цены указонной
-                componentsForRecyreViewNesteds.getArrow_nested_receriview(position);
+                componentsForRecyreViewNesteds.getArrow_nested_receriview(position,jsonNodeNestedRow);
 
                 // TODO: 30.12.2023 кнопка Номелклатура
-                componentsForRecyreViewNesteds.getmTV_Nomenklatura();
+                componentsForRecyreViewNesteds.getmTV_Nomenklatura(jsonNodeNestedRow);
 
                 // TODO: 30.12.2023 кнопка ДДС
-                componentsForRecyreViewNesteds.getmTV_StatyaDDS_value();
+                componentsForRecyreViewNesteds.getmTV_StatyaDDS_value(jsonNodeNestedRow);
 
                 // TODO: 30.12.2023 кнопка Единица измериния
-                componentsForRecyreViewNesteds.getmTV_EdIzm_value();
+                componentsForRecyreViewNesteds.getmTV_EdIzm_value(jsonNodeNestedRow);
 
                 // TODO: 30.12.2023 кнопка Дата
-                componentsForRecyreViewNesteds.getmTV_Data_value();
+                componentsForRecyreViewNesteds.getmTV_Data_value(jsonNodeNestedRow);
 
                 // TODO: 30.12.2023 кнопка Количество
-                componentsForRecyreViewNesteds.getmTV_Kolichestvo_value();
+                componentsForRecyreViewNesteds.getmTV_Kolichestvo_value(jsonNodeNestedRow);
 
                 // TODO: 30.12.2023 кнопка ЦФО Расчет
-                componentsForRecyreViewNesteds.getmTV_CFORaskhoda_value();
+                componentsForRecyreViewNesteds.getmTV_CFORaskhoda_value(jsonNodeNestedRow);
 
 
                 // TODO: 31.01.2024 3 New Poly
-                componentsForRecyreViewNesteds. getmTV_Kontragent_value();
+                componentsForRecyreViewNesteds. getmTV_Kontragent_value(jsonNodeNestedRow);
 
-                componentsForRecyreViewNesteds. getmTV_NumberDOc_value();
+                componentsForRecyreViewNesteds. getmTV_NumberDOc_value(jsonNodeNestedRow);
 
-                componentsForRecyreViewNesteds.  getmTV_NumberRow_value();
+                componentsForRecyreViewNesteds.  getmTV_NumberRow_value(jsonNodeNestedRow);
 
 
 
@@ -322,11 +322,13 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
 
                 // TODO: 31.01.2024 Last Metod  !!!!!
                 // TODO: 30.12.2023  rebbot Sxreen Recyreview
-                componentsForRecyreViewNesteds.setagMaterialCardViewNestad();
+                componentsForRecyreViewNesteds.setagMaterialCardViewNestad(jsonNodeNestedRow);
                 // TODO: 23.01.2024 кожа нет данных
 
                 // TODO: 29.01.2024 мсобытие вент басс
+                // TODO: 26.01.2024 end
 
+                holder.setIsRecyclable(false);
             }
 
             Log.d(this.getClass().getName(), "\n"
@@ -367,7 +369,9 @@ public  class MyRecycleViewIsAdaptersNested extends RecyclerView.Adapter<MyViewH
         int КоличесвоСтрок = 0;
         try{
         if (jsonNodeNested!=null && jsonNodeNested.size()>0) {
-           КоличесвоСтрок = jsonNodeNested.size();
+            Iterator<JsonNode> jsonNodeIterator= jsonNodeNested.elements();
+            JsonNode jsonNodeNestedAfterIterator=    jsonNodeIterator.next();
+           КоличесвоСтрок = jsonNodeNestedAfterIterator.size();
             Log.d(this.getClass().getName(), "jsonNodeNested.size() " + jsonNodeNested.size() + " КоличесвоСтрок " +КоличесвоСтрок);
         }
         Log.d(this.getClass().getName(),"\n"

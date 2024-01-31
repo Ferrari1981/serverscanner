@@ -111,17 +111,17 @@ public class ComponentsForRecyreViewNesteds {
 
 
 
-    public MaterialTextView getmTV_commitingprices_count() {
+    public MaterialTextView getmTV_commitingprices_count(@NotNull JsonNode jsonNodeNestedRow) {
   try{
       mTV_commitingprices_count=    holder.itemView.findViewById(R.id.mTV_commitingprices_count) ;
-      JsonNode jsonNode=    holder.jsonNodeNestedRow.deepCopy();
+      JsonNode jsonNode=   jsonNodeNestedRow.deepCopy();
       TextNode textNodeCena=( TextNode)   jsonNode.findValue("Cena").deepCopy();
       String cena=  textNodeCena.asText().trim();
       if (! cena.isEmpty()) {
           mTV_commitingprices_count.setText(cena+" (руб)");
           mTV_commitingprices_count.startAnimation(animation);
       }
-
+      mTV_commitingprices_count.requestLayout();
 
       Log.d(this.getClass().getName(), "\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -139,7 +139,7 @@ public class ComponentsForRecyreViewNesteds {
         return mTV_commitingprices_count;
     }
 
-    public MaterialButton getArrow_nested_receriview(@NotNull  int position) {
+    public MaterialButton getArrow_nested_receriview(@NotNull  int position,@NotNull JsonNode jsonNodeNestedRow) {
         try{
             arrow_nested_receriview=    holder.itemView.findViewById(R.id.arrow_nested_receriview) ;
 
@@ -300,16 +300,17 @@ public class ComponentsForRecyreViewNesteds {
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
-    public MaterialTextView getmTV_Nomenklatura() {
+    public MaterialTextView getmTV_Nomenklatura(@NotNull JsonNode jsonNodeNestedRow) {
         try{
             mTV_Nomenklatura=    holder.itemView.findViewById(R.id.mTV_Nomenklatura) ;
-            JsonNode jsonNode=    holder.jsonNodeNestedRow.deepCopy();
+            JsonNode jsonNode=    jsonNodeNestedRow.deepCopy();
             TextNode textNodeNomenklatura=( TextNode)   jsonNode.findValue("Nomenklatura").deepCopy();
             // TODO: 30.12.2023  
             if ( !textNodeNomenklatura.asText().isEmpty()) {
                 // TODO: 30.12.2023  set
                 mTV_Nomenklatura.setText(textNodeNomenklatura.asText().trim());
             }
+            mTV_Nomenklatura.requestLayout();
             Log.d(this.getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -325,18 +326,18 @@ public class ComponentsForRecyreViewNesteds {
         return mTV_Nomenklatura;
     }
 
-    public MaterialTextView getmTV_StatyaDDS_value() {
+    public MaterialTextView getmTV_StatyaDDS_value(@NotNull JsonNode jsonNodeNestedRow) {
         try{
             mTV_StatyaDDS_value=    holder.itemView.findViewById(R.id.mTV_StatyaDDS_value) ;
-            JsonNode jsonNode=    holder.jsonNodeNestedRow.deepCopy();
+            JsonNode jsonNode=   jsonNodeNestedRow.deepCopy();
             TextNode textNodeStatyaDDS=( TextNode)   jsonNode.findValue("StatyaDDS").deepCopy();
                 // TODO: 30.12.2023  
             if (!textNodeStatyaDDS.asText().isEmpty()) {
                 // TODO: 30.12.2023 set
                 mTV_StatyaDDS_value.setText(textNodeStatyaDDS.asText().trim());
             }
-          
 
+            mTV_StatyaDDS_value.requestLayout();
             Log.d(this.getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -352,18 +353,18 @@ public class ComponentsForRecyreViewNesteds {
         return mTV_StatyaDDS_value;
     }
 
-    public MaterialTextView getmTV_EdIzm_value() {
+    public MaterialTextView getmTV_EdIzm_value(@NotNull JsonNode jsonNodeNestedRow) {
         try{
             mTV_EdIzm_value=    holder.itemView.findViewById(R.id.mTV_EdIzm_value) ;
-            JsonNode jsonNode=    holder.jsonNodeNestedRow.deepCopy();
+            JsonNode jsonNode=     jsonNodeNestedRow.deepCopy();
             TextNode textNodeEdIzm=( TextNode)   jsonNode.findValue("EdIzm").deepCopy();
             // TODO: 30.12.2023  
             if ( !textNodeEdIzm.asText().isEmpty()) {
                 // TODO: 30.12.2023  set
                 mTV_EdIzm_value.setText(textNodeEdIzm.asText().trim());
             }
-          
 
+            mTV_EdIzm_value.requestLayout();
             Log.d(this.getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -381,10 +382,10 @@ public class ComponentsForRecyreViewNesteds {
 
 
 
-    public MaterialTextView getmTV_Data_value() {
+    public MaterialTextView getmTV_Data_value(@NotNull JsonNode jsonNodeNestedRow) {
         try{
             mTV_Data_value=    holder.itemView.findViewById(R.id.mTV_Data_value) ;
-            JsonNode jsonNode=    holder.jsonNodeNestedRow.deepCopy();
+            JsonNode jsonNode=     jsonNodeNestedRow.deepCopy();
             TextNode textNodeData=( TextNode)   jsonNode.findValue("Data").deepCopy();
             if ( !textNodeData.asText().isEmpty()) {
                 String data=  textNodeData.asText().trim();
@@ -401,7 +402,7 @@ public class ComponentsForRecyreViewNesteds {
                 // TODO: 30.12.2023 set
                 mTV_Data_value.setText(ДатаEdIzm);
             }
-
+            mTV_Data_value.requestLayout();
             Log.d(this.getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -417,16 +418,18 @@ public class ComponentsForRecyreViewNesteds {
         return mTV_Data_value;
     }
 
-    public MaterialTextView getmTV_Kolichestvo_value() {
+    public MaterialTextView getmTV_Kolichestvo_value(@NotNull JsonNode jsonNodeNestedRow) {
         try{
             mTV_Kolichestvo_value=    holder.itemView.findViewById(R.id.mTV_Kolichestvo_value) ;
-            JsonNode jsonNode=    holder.jsonNodeNestedRow.deepCopy();
+            JsonNode jsonNode=    jsonNodeNestedRow.deepCopy();
             TextNode textNodeKolichestvo=( TextNode)   jsonNode.findValue("Kolichestvo").deepCopy();
 
             if ( !textNodeKolichestvo.asText().isEmpty()) {
                 // TODO: 30.12.2023 set
                 mTV_Kolichestvo_value.setText(textNodeKolichestvo.asText().trim());
             }
+            mTV_Kolichestvo_value.requestLayout();
+
             Log.d(this.getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -442,16 +445,16 @@ public class ComponentsForRecyreViewNesteds {
         return mTV_Kolichestvo_value;
     }
 
-    public MaterialTextView getmTV_CFORaskhoda_value() {
+    public MaterialTextView getmTV_CFORaskhoda_value(@NotNull JsonNode jsonNodeNestedRow) {
         try{
             mTV_CFORaskhoda_value=    holder.itemView.findViewById(R.id.mTV_CFORaskhoda_value) ;
-            JsonNode jsonNode=    holder.jsonNodeNestedRow.deepCopy();
+            JsonNode jsonNode=     jsonNodeNestedRow.deepCopy();
             TextNode textNodeCFORaskhoda=( TextNode)   jsonNode.findValue("CFORaskhoda").deepCopy();
             // TODO: 30.12.2023
             if (! textNodeCFORaskhoda.asText().isEmpty()) {
                 mTV_CFORaskhoda_value.setText(textNodeCFORaskhoda.asText().trim());
             }
-
+            mTV_CFORaskhoda_value.requestLayout();
             Log.d(this.getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -467,10 +470,10 @@ public class ComponentsForRecyreViewNesteds {
         return mTV_CFORaskhoda_value;
     }
 
-    public MaterialTextView getmTV_Kontragent_value() {
+    public MaterialTextView getmTV_Kontragent_value(@NotNull JsonNode jsonNodeNestedRow) {
         try{
             mTV_Kontragent_value=    holder.itemView.findViewById(R.id.mTV_Kontragent_value) ;
-            JsonNode jsonNode=    holder.jsonNodeNestedRow.deepCopy();
+            JsonNode jsonNode=     jsonNodeNestedRow.deepCopy();
             if (jsonNode.has("Kontragent")) {
                 TextNode textNodeKontragent=( TextNode)   jsonNode.findValue("Kontragent").deepCopy();
                 // TODO: 30.12.2023
@@ -478,7 +481,7 @@ public class ComponentsForRecyreViewNesteds {
                     mTV_Kontragent_value.setText(textNodeKontragent.asText().trim());
                 }
             }
-
+            mTV_Kontragent_value.requestLayout();
             Log.d(this.getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -494,10 +497,10 @@ public class ComponentsForRecyreViewNesteds {
         return mTV_Kontragent_value;
     }
 
-    public MaterialTextView getmTV_NumberDOc_value() {
+    public MaterialTextView getmTV_NumberDOc_value(@NotNull JsonNode jsonNodeNestedRow) {
         try{
             mTV_NumberDOc_value=    holder.itemView.findViewById(R.id.mTV_NumberDOc_value) ;
-            JsonNode jsonNode=    holder.jsonNodeNestedRow.deepCopy();
+            JsonNode jsonNode=    jsonNodeNestedRow.deepCopy();
             if (jsonNode.has("NDoc")) {
                 TextNode textNodeNDoc=( TextNode)   jsonNode.findValue("NDoc").deepCopy();
                 // TODO: 30.12.2023
@@ -505,7 +508,7 @@ public class ComponentsForRecyreViewNesteds {
                     mTV_NumberDOc_value.setText(textNodeNDoc.asText().trim());
                 }
             }
-
+            mTV_NumberDOc_value.requestLayout();
             Log.d(this.getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -522,10 +525,10 @@ public class ComponentsForRecyreViewNesteds {
     }
 
 
-    public MaterialTextView getmTV_NumberRow_value() {
+    public MaterialTextView getmTV_NumberRow_value(@NotNull JsonNode jsonNodeNestedRow) {
         try{
             mTV_NumberRow_value=    holder.itemView.findViewById(R.id.mTV_NumberRow_value) ;
-            JsonNode jsonNode=    holder.jsonNodeNestedRow.deepCopy();
+            JsonNode jsonNode=    jsonNodeNestedRow.deepCopy();
             if (jsonNode.has("NStr")) {
                 TextNode textNodeNStr=( TextNode)   jsonNode.findValue("NStr").deepCopy();
                 // TODO: 30.12.2023
@@ -533,7 +536,7 @@ public class ComponentsForRecyreViewNesteds {
                     mTV_NumberRow_value.setText(String.valueOf(textNodeNStr.asInt()));
                 }
             }
-
+            mTV_NumberRow_value.requestLayout();
             Log.d(this.getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -549,10 +552,10 @@ public class ComponentsForRecyreViewNesteds {
         return mTV_NumberRow_value;
     }
 
-    public MaterialCardView setagMaterialCardViewNestad() {
+    public MaterialCardView setagMaterialCardViewNestad(@NotNull JsonNode jsonNodeNestedRow) {
 
         try{
-            JsonNode jsonNode=    holder.jsonNodeNestedRow.deepCopy();
+            JsonNode jsonNode=     jsonNodeNestedRow.deepCopy();
             TextNode textNodeUUID=( TextNode)   jsonNode.findValue("UUID").deepCopy();
             TextNode textNodeCena=( TextNode)   jsonNode.findValue("Cena").deepCopy();
             if(!textNodeUUID.asText().isEmpty()){

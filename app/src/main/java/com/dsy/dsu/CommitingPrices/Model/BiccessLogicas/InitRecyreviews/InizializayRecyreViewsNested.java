@@ -39,6 +39,7 @@ public class InizializayRecyreViewsNested {
 
 
 
+            recycleview_comminingppricesNesteds.setHasFixedSize(true);
            // LinearLayoutManager  layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
             layoutManager.setItemPrefetchEnabled(true);
             layoutManager.setSmoothScrollbarEnabled(true);
