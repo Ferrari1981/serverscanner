@@ -1,15 +1,9 @@
 package com.dsy.dsu.TestsBusinessLogic.TestInterfaces;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
 import com.dsy.dsu.TestsBusinessLogic.TestInterfaces.Interface.IFunc1;
 
-import org.junit.Before;
-import org.junit.Test;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +23,7 @@ public class StartingProcceInterface {
      LOGGER.warn("  public  void  ProcceInterface( IFunc1  iFunc1 )");
     }
 
-  @Before
+
   public    void  ProcceInterfaceEnd() {
         System.out.printf("ProcceInterfaceEnd()");
       LOGGER.trace(" public    void  ProcceInterfaceEnd() ");
@@ -41,7 +35,7 @@ public class StartingProcceInterface {
 
 
 
-@Test
+
 public void startingtest() throws  Exception{
 
 
