@@ -33,7 +33,6 @@ import dagger.hilt.components.SingletonComponent;
 @InstallIn(SingletonComponent.class)
 public class ModulePublicId {
     @SuppressLint("SuspiciousIndentation")
-    @Singleton
     @Provides
     public Integer getHiltPublicId(@ApplicationContext Context context) {
         Integer ПубличныйID = 0;
