@@ -3,7 +3,6 @@ package com.dsy.dsu.CommitingPrices.Model.LiveDataPrices;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
@@ -21,12 +20,10 @@ import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyRecycleViewIsAdapt
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyViewHoldersNested;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.Bl_CommintigPay;
-import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.LiveData.QualifierGetLiveDataForrecyreViewPay;
 import com.dsy.dsu.PaysCommings.Model.Bl_Nested.ComponensForRecyreviewNestedPay;
 import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterCommingPay;
 import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPayCommingPay;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -165,7 +162,7 @@ public class GetLiveDataForrecyreViewPrices {
                             recycleviewcommitpays, ОТветОт1СОперациисДанными.toString());
                 }
                 // TODO: 24.01.2024
-                bl_commintigPay.МетодКпопкаСоЗачкомКраснымДополнительныйСтатус(jsonNode1сСогласования);
+                bl_commintigPay.navigatorbuttonIconRow(jsonNode1сСогласования);
             }else {
                 Toast.makeText(context, "Операция  не прошла !!! ", Toast.LENGTH_SHORT).show();
                 Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);

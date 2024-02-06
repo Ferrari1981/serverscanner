@@ -3,6 +3,7 @@ package com.dsy.dsu.PaysCommings.View.RecyreView;
 // TODO: 28.02.2022 ViewHolder
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -84,6 +85,8 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     GetLiveDataForrecyreViewPay getLiveDataForrecyreViewPay;
 
     MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView;
+    androidx.appcompat.widget.SearchView searchview_commitpay;
+    Activity activity;
     public MyRecycleViewAdapterCommingPay(@NotNull JsonNode jsonNode1сСогласования,
                                           @NonNull Context context,
                                           @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
@@ -94,10 +97,12 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                           @NonNull RecyclerView recycleviewcommitpays,
                                           @NonNull String getHiltCommintgPays,
                                           @NonNull Bl_CommintigPay bl_commintigPay,
-                                           @NotNull JsonNode jsonNode1сСогласованияAll,
-                                            @NonNull LifecycleOwner lifecycleOwner,
+                                          @NotNull JsonNode jsonNode1сСогласованияAll,
+                                          @NonNull LifecycleOwner lifecycleOwner,
                                           @NonNull GetLiveDataForrecyreViewPay getLiveDataForrecyreViewPay,
-                                          @NonNull MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView) {
+                                          @NonNull MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView,
+                                          @NonNull androidx.appcompat.widget.SearchView searchview_commitpay,
+                                          @NonNull Activity activity) {
         try {
             this.jsonNode1сСогласования = jsonNode1сСогласования;
             this.context = context;
@@ -113,6 +118,8 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
             this.lifecycleOwner = lifecycleOwner;
             this.getLiveDataForrecyreViewPay = getLiveDataForrecyreViewPay;
             this.getHiltMutableLiveDataPayForRecyreView = getHiltMutableLiveDataPayForRecyreView;
+            this.searchview_commitpay = searchview_commitpay;
+            this.activity = activity;
 
             animationДляСогласовани = AnimationUtils.loadAnimation(context,  R.anim.slide_in_scrolls);//R.anim.layout_animal_commit
            // Animation  animationvibr1 = AnimationUtils.loadAnimation(context, R.anim.slide_in_row9);
@@ -1030,8 +1037,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         bundleДляПередачиВСлужбуСогласования.putInt("ПубличныйidPay", ПубличныйidPay);///TODO выполнил Согласования
                         intentзаданиеНаВыполениеSuccess.putExtras(bundleДляПередачиВСлужбуСогласования);
 
-                        ///TODO выполнил Согласования
-                        ProccesingCancelOrOKPay proccesingCancelOrOKPay = new ProccesingCancelOrOKPay(context,binderСогласования1C);
+
 
                         // TODO: 24.01.2024 сама операиция подтверждения отправляем ее
 
@@ -1041,7 +1047,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                 getHiltMutableLiveDataPayForRecyreView,
                                 myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования
                                 ,holder,cardview_commingpay,position,recycleviewcommitpays,
-                                intentзаданиеНаВыполениеSuccess,getHiltCommintgPays,binderСогласования1C);
+                                intentзаданиеНаВыполениеSuccess,getHiltCommintgPays,binderСогласования1C,searchview_commitpay,activity);
 
 
 
@@ -1085,27 +1091,15 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                            @NonNull MaterialCardView cardview_commingpay,
                                            @NonNull int position) {
         try{
-        if (ОТветОт1СОперациисДанными.toString().trim().matches("(.*)Операция успешна(.*)")) {
-
-
-
             // TODO: 23.01.2024 анимация
             holder.itemView.startAnimation(animationДляСогласовани);
-            cardview_commingpay.setChecked(true);
-            holder.itemView.refreshDrawableState();
-
             // TODO: 11.01.2024 перегрузка данных
            notifyItemRemoved(position );
-
-             notifyItemChanged(position );
-
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласования " +jsonNode1сСогласования);
-
-
 
             // TODO: 23.01.2024  удаление
             jsonNode1сСогласования=       remoteSingleJson(  jsonNode1сСогласованияAll,   position);
@@ -1117,11 +1111,6 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласования " +jsonNode1сСогласования+
                     " jsonNode1сСогласованияAll "+jsonNode1сСогласованияAll);
 
-        }else{
-            Toast.makeText(context, "Операция  не прошла !!! "    , Toast.LENGTH_SHORT).show();
-            Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-            v2.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
-        }
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -1294,10 +1283,6 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         ///TODO выполнил ОТКАЗ
 
 
-
-                        ///TODO выполнил Согласования
-                        ProccesingCancelOrOKPay proccesingCancelOrOKPay = new ProccesingCancelOrOKPay(context,binderСогласования1C);
-
                         // TODO: 24.01.2024 сама операиция подтверждения отправляем ее
 
                         // TODO: 30.01.2024  слушатель на дейстия при СУПЕШНО
@@ -1306,7 +1291,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                 getHiltMutableLiveDataPayForRecyreView,
                                 myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования
                                 ,holder,cardview_commingpay,position,recycleviewcommitpays,
-                                intentзаданиеНаВыполениеCancel,getHiltCommintgPays,binderСогласования1C);
+                                intentзаданиеНаВыполениеCancel,getHiltCommintgPays,binderСогласования1C,searchview_commitpay,activity);
 
 
 
@@ -1863,6 +1848,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     public int getItemCount() {
         // TODO: 02.03.2022
         int КоличесвоСтрок = jsonNode1сСогласования.size();
+        // TODO: 06.02.2024
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date()+"\n+" +
                 " Класс в процессе... " +  this.getClass().getName()+"\n"+

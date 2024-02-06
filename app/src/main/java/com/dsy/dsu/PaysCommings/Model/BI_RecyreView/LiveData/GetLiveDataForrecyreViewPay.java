@@ -1,8 +1,8 @@
 package com.dsy.dsu.PaysCommings.Model.BI_RecyreView.LiveData;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.Bl_CommintigPay;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.ProccesingCancelOrOKPay;
 import com.dsy.dsu.PaysCommings.Model.Bl_Nested.ComponensForRecyreviewNestedPay;
@@ -45,13 +44,15 @@ public class GetLiveDataForrecyreViewPay {
                                                      @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay,
                                                      @NonNull Bl_CommintigPay bl_commintigPay,
                                                      @NonNull JsonNode jsonNode1сСогласования,
-                                                    @NonNull MyViewHolderPayCommingPay holder,
+                                                     @NonNull MyViewHolderPayCommingPay holder,
                                                      @NonNull MaterialCardView cardview_commingpay,
                                                      @NonNull int position,
                                                      @NonNull RecyclerView recycleviewcommitpays,
                                                      @NonNull  Intent intentзаданиеНаВыполениеSuccess,
                                                      @NonNull String getHiltCommintgPays,
-                                                     @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C) {
+                                                     @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
+                                                     @NonNull    androidx.appcompat.widget.SearchView searchview_commitpay,
+                                                     @NonNull Activity activity) {
         try{
             if (!getHiltMutableLiveDataPayForRecyreViewPays.hasObservers()) {
                 // TODO: 16.01.2024
@@ -75,7 +76,7 @@ public class GetLiveDataForrecyreViewPay {
 // TODO: 30.01.2024  метод ответа от 1с pay согласовано или нет
                                     procesingCallBackOt1cPays( ОТветОт1СОперациисДаннымиSuccees,
                                             myRecycleViewAdapterCommingPay, holder, cardview_commingpay, position,
-                                            context, jsonNode1сСогласования, recycleviewcommitpays, bl_commintigPay);
+                                            context, jsonNode1сСогласования, recycleviewcommitpays, bl_commintigPay,searchview_commitpay,activity);
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -129,7 +130,9 @@ public class GetLiveDataForrecyreViewPay {
                                                   @NonNull Context context,
                                                   @NonNull JsonNode jsonNode1сСогласования,
                                                   @NonNull RecyclerView recycleviewcommitpays,
-                                                  @NonNull Bl_CommintigPay bl_commintigPay) {
+                                                  @NonNull Bl_CommintigPay bl_commintigPay,
+                                                  @NonNull    androidx.appcompat.widget.SearchView searchview_commitpay,
+                                                 @NonNull Activity activity) {
 
         try {
         if (ОТветОт1СОперациисДанными.toString().trim().matches("(.*)Операция успешна(.*)")) {
@@ -141,6 +144,8 @@ public class GetLiveDataForrecyreViewPay {
             // TODO: 24.01.2024   после удаление перегуражаем экран PAY
             ComponensForRecyreviewNestedPay componensForRecyreviewNestedPay=new ComponensForRecyreviewNestedPay(context);
 
+            bl_commintigPay.методЗакрываемКлавитатуру(searchview_commitpay,activity);
+
 
             // TODO: 24.01.2024  ;
             if (jsonNode1сСогласования.size()>0) {
@@ -150,8 +155,11 @@ public class GetLiveDataForrecyreViewPay {
                 componensForRecyreviewNestedPay.методRebootRecyreViewCommingPaysDontRow(jsonNode1сСогласования,
                         recycleviewcommitpays, ОТветОт1СОперациисДанными.toString());
             }
+
+
             // TODO: 24.01.2024
-            bl_commintigPay.МетодКпопкаСоЗачкомКраснымДополнительныйСтатус(jsonNode1сСогласования);
+            bl_commintigPay.navigatorbuttonIconRow(jsonNode1сСогласования);
+
         }else {
             Toast.makeText(context, "Операция  не прошла !!! ", Toast.LENGTH_SHORT).show();
             Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);

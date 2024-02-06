@@ -88,6 +88,7 @@ public class Bl_CommintigPay {
     GetLiveDataForrecyreViewPay getLiveDataForrecyreViewPay;
 
     MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView;
+    @SuppressLint("SuspiciousIndentation")
     public    Bl_CommintigPay(@NonNull  Activity activity,
                               @NonNull  Context context ,
                               @NotNull View viewCore,
@@ -104,7 +105,7 @@ public class Bl_CommintigPay {
                               @NonNull BottomNavigationItemView bottomNavigationBackCommitingPay,
                               @NonNull BottomNavigationItemView bottomNavigationAsyncCommitingPay,
                               @NonNull BottomNavigationItemView bottomNavigationSearchCommitingPay,
-                             @NonNull MutableLiveData<Intent> jsonNodeMutableLiveDataPayCommintg,
+                              @NonNull MutableLiveData<Intent> jsonNodeMutableLiveDataPayCommintg,
                               @NonNull androidx.appcompat.widget.SearchView searchview_commitpay,
                               @NonNull String getHiltCommintgPays,
                               @NonNull GetLiveDataForrecyreViewPay getLiveDataForrecyreViewPay,
@@ -598,8 +599,10 @@ public class Bl_CommintigPay {
         try {
             if (myRecycleViewAdapter==null) {
                 myRecycleViewAdapter = new MyRecycleViewAdapterCommingPay(jsonNode1сСогласованияAllRows,context
-                        ,binderСогласования1C,animation,ПубличныйidPay,objectMapper,bottomNavigationViewParentCommitingPay,recycleviewcommitpays,
-                        getHiltCommintgPays,this,jsonNode1сСогласованияAllRows,lifecycleOwner, getLiveDataForrecyreViewPay,getHiltMutableLiveDataPayForRecyreView);
+                        ,binderСогласования1C,animation,ПубличныйidPay,objectMapper,
+                        bottomNavigationViewParentCommitingPay,recycleviewcommitpays,
+                        getHiltCommintgPays,this,jsonNode1сСогласованияAllRows,lifecycleOwner,
+                        getLiveDataForrecyreViewPay,getHiltMutableLiveDataPayForRecyreView,searchview_commitpay,activity);
                 // TODO: 24.01.2024
                 myRecycleViewAdapter.notifyDataSetChanged();
                 recycleviewcommitpays.setAdapter(myRecycleViewAdapter);
@@ -696,7 +699,7 @@ public class Bl_CommintigPay {
 
     // TODO: 14.03.2022
 
-    public void МетодКпопкаСоЗачкомКраснымДополнительныйСтатус(@NonNull JsonNode jsonNode1сСогласованияRow )
+    public void navigatorbuttonIconRow(@NonNull JsonNode jsonNode1сСогласованияRow )
     {
         try {
             // TODO: 09.03.2022
@@ -965,15 +968,6 @@ public class Bl_CommintigPay {
                     JsonNode jsonNode1сСогласования = null;
                     try{
 
-                        //TODO получаем данные для соглачования
-
-
-                  /*      //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С DEBUG
-                        jsonNode1сСогласования =
-                                new Class_Get_Json_1C(context ,)
-                                        .МетодПингаИПОлучениеДанныхОт1сДляСогласования(context,ПубличныйidPay,objectMapper);
-*/
-
                         //TODO ПЫТИАЕМСЯ ПОПОЛУЧИТЬ ДАННЫЕ С 1С RELIS
                         jsonNode1сСогласования =
                                 new Class_Get_Json_1C(context ,getHiltCommintgPays)
@@ -981,7 +975,6 @@ public class Bl_CommintigPay {
 /*
 [{"Ndoc":"000021992","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"СИТИЛИНК ООО","sum":6,"articleDDS":"2.2.04. Оргтехника","nomenclature":[{"nomen":"Тест 1"},{"nomen":"Тест 2"},{"nomen":"Тест 3"}],"filenames":[{"ВinNameFile":"Текстовый документ","expansion":"txt"}]},
                             {"Ndoc":"000021993","CFO":"База (Управление ул. Проездная, 18/27)","organization":"СОЮЗ АВТОДОР ООО","counterparty":"ИП Пряслов Алексей Александрович","sum":50,"articleDDS":"2.2.05. Прочие (инвестиционная деятельность)","nomenclature":[{"nomen":"Тест картридж"}],"filenames":[{"ВinNameFile":"Справочник","expansion":"xlsx"}]}]*/
-
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1026,6 +1019,7 @@ public class Bl_CommintigPay {
                             resultatSecondPrinyditelnayПолучениеДанных((Serializable) jsonNode1сСогласования);
                         }
 
+                       navigatorbuttonIconRow(jsonNode1сСогласования );
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1078,7 +1072,7 @@ public class Bl_CommintigPay {
                                           @NonNull Activity activity) {
         try{
 
-           // searchview_commitpay.clearFocus();
+           searchview_commitpay.clearFocus();
 
        Window w =activity.getWindow();
 
