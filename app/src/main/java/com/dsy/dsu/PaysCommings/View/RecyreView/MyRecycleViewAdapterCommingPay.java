@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.Bl_CommintigPay;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.FileFrom1CCommitPay;
+import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.FindJson.FindFromJsonNode;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.LiveData.GetLiveDataForrecyreViewPay;
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.ProccesingCancelOrOKPay;
 import com.dsy.dsu.R;
@@ -1035,66 +1036,21 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         // TODO: 06.02.2024
 
 
-                        List<JsonNode> jsonNodeForDeleteSearchParentList=      jsonNode1сСогласованияAll.findParents("Ndoc");
+                        Integer intStreamFindPosiontion=  new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAll,NumberDoc);
 
 
-                        IntStream streamForFindDelete =     IntStream.iterate(position, n -> n + 1);
-
-
-                        streamForFindDelete.parallel()      .limit(jsonNode1сСогласованияAll.size())
-                                .filter(new IntPredicate() {
-                                    @Override
-                                    public boolean test(int value) {
-
-                                            JsonNode  jsonNodeSearch=      jsonNode1сСогласованияAll.get(value) ;
-                                            JsonNode  jsonNodeForDeleteSearchParentPath=      jsonNodeSearch.findPath("Ndoc") ;
-                                           String IntegerNdoc=   jsonNodeForDeleteSearchParentPath.asText().trim();
-                                        if (IntegerNdoc.equalsIgnoreCase(NumberDoc)) {
-
-                                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                            return true;
-                                        }else {
-
-                                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                            return false;
-                                        }
-                                    }
-                                })
-                                .forEach(new IntStream.Builder() {
-                                    @Override
-                                    public void accept(int t) {
-
-                                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                    }
-
-                                    @Override
-                                    public IntStream build() {
-
-                                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                        return null;
-                                    }
-                                });
-
+              JsonNode jsonNodeDeleteFindRow=          jsonNode1сСогласованияAll.get(intStreamFindPosiontion);
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
-/*
-                        Iterator<JsonNode> elements = jsonNodeForDeleteSearchView.elements();
+                        Iterator<JsonNode> elements = jsonNodeDeleteFindRow.elements();
                         while (elements.hasNext()) {
                             JsonNode element = elements.next();
                                 elements.remove();
-                        }*/
+                        }
 
 
 
