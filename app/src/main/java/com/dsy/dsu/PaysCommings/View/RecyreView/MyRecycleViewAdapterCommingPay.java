@@ -32,6 +32,7 @@ import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.LiveData.GetLiveDataForrecyr
 import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.ProccesingCancelOrOKPay;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Services.Service_Notificatios_Для_Согласования;
+import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.TextNode;
@@ -47,6 +48,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.function.IntPredicate;
+import java.util.stream.IntStream;
 
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
@@ -183,21 +186,23 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     // TODO: 18.01.2024  заполенеия Bungle
     private void setBungleCardView(@NonNull MyViewHolderPayCommingPay holder, @NonNull JsonNode jsonNode1сСогласованияSingleRow,@NonNull int position) {
         try{
-            Bundle bundleCacdView=new Bundle();
+            if ( holder.cardview_commingpay.getTag()==null) {
+                Bundle bundleCacdView=new Bundle();
 
-            bundleCacdView.putString("Ndoc",jsonNode1сСогласованияSingleRow.get("Ndoc").asText());
-            bundleCacdView.putString("Ddoc",jsonNode1сСогласованияSingleRow.get("Ddoc").asText());
-            bundleCacdView.putString("CFO",jsonNode1сСогласованияSingleRow.get("CFO").asText());
-            bundleCacdView.putString("NomerScheta",String.valueOf(jsonNode1сСогласованияSingleRow.get("NomerScheta").asInt()));
-            bundleCacdView.putString("Otvetstvenniy",jsonNode1сСогласованияSingleRow.get("Otvetstvenniy").asText());
-            bundleCacdView.putString("articleDDS",jsonNode1сСогласованияSingleRow.get("articleDDS").asText());
-            bundleCacdView.putInt("position",position);
+                bundleCacdView.putString("Ndoc",jsonNode1сСогласованияSingleRow.get("Ndoc").asText());
+                bundleCacdView.putString("Ddoc",jsonNode1сСогласованияSingleRow.get("Ddoc").asText());
+                bundleCacdView.putString("CFO",jsonNode1сСогласованияSingleRow.get("CFO").asText());
+                bundleCacdView.putString("NomerScheta",String.valueOf(jsonNode1сСогласованияSingleRow.get("NomerScheta").asInt()));
+                bundleCacdView.putString("Otvetstvenniy",jsonNode1сСогласованияSingleRow.get("Otvetstvenniy").asText());
+                bundleCacdView.putString("articleDDS",jsonNode1сСогласованияSingleRow.get("articleDDS").asText());
+                bundleCacdView.putInt("position",position);
 
-            holder.cardview_commingpay.setTag(bundleCacdView);
-            holder.cardview_commingpay.forceLayout();
+                holder.cardview_commingpay.setTag(bundleCacdView);
+                holder.cardview_commingpay.forceLayout();
+            }
 
 
-        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "jsonNode1сСогласования "
                 + jsonNode1сСогласования );
@@ -1026,6 +1031,69 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
                       String  NumberDoc =bundlegetCardViewPay.getString("Ndoc");
                       String  DataDoc =bundlegetCardViewPay.getString("Ddoc");
+
+                        // TODO: 06.02.2024
+
+
+                        List<JsonNode> jsonNodeForDeleteSearchParentList=      jsonNode1сСогласованияAll.findParents("Ndoc");
+
+
+                        IntStream.iterate(0, n -> n + 1)
+                                .limit(jsonNode1сСогласованияAll.size())
+                                .filter(new IntPredicate() {
+                                    @Override
+                                    public boolean test(int value) {
+
+                                            JsonNode  jsonNodeSearch=      jsonNode1сСогласованияAll.get(value) ;
+                                            JsonNode  jsonNodeForDeleteSearchParentPath=      jsonNodeSearch.findPath("Ndoc") ;
+                                           Integer IntegerNdoc=   jsonNodeForDeleteSearchParentPath.asInt();
+                                        if (IntegerNdoc==Integer.valueOf(NumberDoc)) {
+
+                                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                            return false;
+                                        }else {
+
+                                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                            return true;
+                                        }
+                                    }
+                                })
+                                .forEach(new IntStream.Builder() {
+                                    @Override
+                                    public void accept(int t) {
+
+                                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                    }
+
+                                    @Override
+                                    public IntStream build() {
+
+                                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                        return null;
+                                    }
+                                });
+
+
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
+/*
+                        Iterator<JsonNode> elements = jsonNodeForDeleteSearchView.elements();
+                        while (elements.hasNext()) {
+                            JsonNode element = elements.next();
+                                elements.remove();
+                        }*/
+
                         int  position =bundlegetCardViewPay.getInt("position");
 
 
