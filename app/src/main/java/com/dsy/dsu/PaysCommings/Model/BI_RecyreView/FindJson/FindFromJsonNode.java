@@ -28,7 +28,7 @@ public class FindFromJsonNode  implements  InFindPostion {
     public Integer startPostionJsonNode(@NonNull JsonNode jsonNode1сСогласованияAll, @NonNull String NumberDoc) {
         Integer intStreamFindPosiontion=0;
 try{
-         intStreamFindPosiontion=    IntStream.iterate(0, n -> n + 1)
+    IntStream intStreamFind=    IntStream.range(0,jsonNode1сСогласованияAll.size())
                 .limit(jsonNode1сСогласованияAll.size())
                  .parallel()
                 .filter(new IntPredicate() {
@@ -52,8 +52,8 @@ try{
                             return false;
                         }
                     }
-                }).sequential().findFirst().getAsInt();
-
+                });
+    intStreamFindPosiontion=intStreamFind.parallel().findFirst().getAsInt();
     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"

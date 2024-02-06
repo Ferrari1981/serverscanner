@@ -1034,23 +1034,13 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                       String  DataDoc =bundlegetCardViewPay.getString("Ddoc").trim();
                       int  position =bundlegetCardViewPay.getInt("position");
                         // TODO: 06.02.2024
-
-
-                        Integer intStreamFindPosiontion=  new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAll,NumberDoc);
-
-
-              JsonNode jsonNodeDeleteFindRow=          jsonNode1сСогласованияAll.get(intStreamFindPosiontion);
+                        Integer positionDeleteJsonNodeAll=  new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAll,NumberDoc);
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +" positionDeleteJsonNodeAll " +positionDeleteJsonNodeAll);
 
 
-                        Iterator<JsonNode> elements = jsonNodeDeleteFindRow.elements();
-                        while (elements.hasNext()) {
-                            JsonNode element = elements.next();
-                                elements.remove();
-                        }
 
 
 
@@ -1075,7 +1065,12 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                 getHiltMutableLiveDataPayForRecyreView,
                                 myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования
                                 ,holder,cardview_commingpay,position,recycleviewcommitpays,
-                                intentзаданиеНаВыполениеSuccess,getHiltCommintgPays,binderСогласования1C,searchview_commitpay,activity);
+                                intentзаданиеНаВыполениеSuccess,
+                                getHiltCommintgPays,
+                                binderСогласования1C,
+                                searchview_commitpay,
+                                activity,
+                                positionDeleteJsonNodeAll);
 
 
 
@@ -1114,9 +1109,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
         }
     }
 
-    public void notifynotifyDataSetChanged(StringBuffer ОТветОт1СОперациисДанными,
-                                           @NonNull MyViewHolderPayCommingPay holder,
-                                           @NonNull MaterialCardView cardview_commingpay,
+    public void notifynotifyDataSetChanged(@NonNull MyViewHolderPayCommingPay holder,
                                            @NonNull int position) {
         try{
             // TODO: 23.01.2024 анимация
@@ -1128,17 +1121,6 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласования " +jsonNode1сСогласования);
-
-            // TODO: 23.01.2024  удаление
-            jsonNode1сСогласования=       remoteSingleJson(  jsonNode1сСогласованияAll,   position);
-
-            Log.d(this.getClass().getName(), "\n" + " class " +
-                    Thread.currentThread().getStackTrace()[2].getClassName()
-                    + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласования " +jsonNode1сСогласования+
-                    " jsonNode1сСогласованияAll "+jsonNode1сСогласованияAll);
-
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -1148,27 +1130,26 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     }
     }
 
-
-    public JsonNode remoteSingleJson(@NonNull JsonNode jsonNode1сСогласования, @NonNull int position) {
-        try {
+    public JsonNode remoteSingleJson(@NonNull int intStreamFindPosiontion) {
+        try{
+            // TODO: 23.01.2024 анимация
             Iterator<JsonNode> elements = jsonNode1сСогласования.iterator();
             Integer sum = 0;
 
             while (elements.hasNext()) {
                 elements.next();
-                if (sum == position) {
+                if (sum == intStreamFindPosiontion) {
                     elements.remove();
                     break;
                 }
                 sum++;
 
             }
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " jsonNode1сСогласования.size() " + jsonNode1сСогласования.size());
-
-
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласования " +jsonNode1сСогласования);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -1176,8 +1157,15 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
             new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return jsonNode1сСогласования;
+        return  jsonNode1сСогласования;
     }
+
+
+    
+    
+    
+    
+
     // TODO: 12.01.2024 Кнопка РАскрытие Скрытого recyreview
 
 
@@ -1298,6 +1286,16 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         String  DataDoc =bundlegetCardViewPay.getString("Ddoc");
                         int  position =bundlegetCardViewPay.getInt("position");
 
+
+                        // TODO: 06.02.2024
+                        Integer positionDeleteJsonNodeAll=  new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAll,NumberDoc);
+
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +" positionDeleteJsonNodeAll " +positionDeleteJsonNodeAll);
+
+
+
                         Intent intentзаданиеНаВыполениеCancel = new Intent();
                         intentзаданиеНаВыполениеCancel.setAction("ЗапускаемСогласованиеОтказИлилУспешное");
                         Bundle bundleДляПередачиВСлужбуCancel = new Bundle();
@@ -1319,7 +1317,12 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                 getHiltMutableLiveDataPayForRecyreView,
                                 myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования
                                 ,holder,cardview_commingpay,position,recycleviewcommitpays,
-                                intentзаданиеНаВыполениеCancel,getHiltCommintgPays,binderСогласования1C,searchview_commitpay,activity);
+                                intentзаданиеНаВыполениеCancel,
+                                getHiltCommintgPays,
+                                binderСогласования1C,
+                                searchview_commitpay,
+                                activity,
+                                positionDeleteJsonNodeAll);
 
 
 

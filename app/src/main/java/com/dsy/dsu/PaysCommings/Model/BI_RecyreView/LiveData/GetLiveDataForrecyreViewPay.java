@@ -52,7 +52,8 @@ public class GetLiveDataForrecyreViewPay {
                                                      @NonNull String getHiltCommintgPays,
                                                      @NonNull Service_Notificatios_Для_Согласования.LocalBinderДляСогласования binderСогласования1C,
                                                      @NonNull    androidx.appcompat.widget.SearchView searchview_commitpay,
-                                                     @NonNull Activity activity) {
+                                                     @NonNull Activity activity,
+                                                     @NonNull   Integer positionDeleteJsonNodeAll) {
         try{
             if (!getHiltMutableLiveDataPayForRecyreViewPays.hasObservers()) {
                 // TODO: 16.01.2024
@@ -75,8 +76,16 @@ public class GetLiveDataForrecyreViewPay {
 
 // TODO: 30.01.2024  метод ответа от 1с pay согласовано или нет
                                     procesingCallBackOt1cPays( ОТветОт1СОперациисДаннымиSuccees,
-                                            myRecycleViewAdapterCommingPay, holder, cardview_commingpay, position,
-                                            context, jsonNode1сСогласования, recycleviewcommitpays, bl_commintigPay,searchview_commitpay,activity);
+                                            myRecycleViewAdapterCommingPay,
+                                            holder,
+                                            cardview_commingpay,
+                                            position,
+                                            context,
+                                            jsonNode1сСогласования,
+                                            bl_commintigPay,
+                                            searchview_commitpay,
+                                            activity,
+                                            positionDeleteJsonNodeAll);
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -129,20 +138,27 @@ public class GetLiveDataForrecyreViewPay {
                                                   @NonNull int position,
                                                   @NonNull Context context,
                                                   @NonNull JsonNode jsonNode1сСогласования,
-                                                  @NonNull RecyclerView recycleviewcommitpays,
                                                   @NonNull Bl_CommintigPay bl_commintigPay,
                                                   @NonNull    androidx.appcompat.widget.SearchView searchview_commitpay,
-                                                 @NonNull Activity activity) {
+                                                 @NonNull Activity activity,
+                                                 @NonNull Integer positionDeleteJsonNodeAll) {
 
         try {
         if (ОТветОт1СОперациисДанными.toString().trim().matches("(.*)Операция успешна(.*)")) {
             // TODO: 23.01.2024  удаление строчки
 
-            // TODO: 23.01.2024  удаление строчки
-            myRecycleViewAdapterCommingPay. notifynotifyDataSetChanged(ОТветОт1СОперациисДанными, holder, cardview_commingpay, position);
+            // TODO: 23.01.2024  notify переоплеедения даных
+            myRecycleViewAdapterCommingPay. notifynotifyDataSetChanged(  holder,position );
 
-            // TODO: 24.01.2024   после удаление перегуражаем экран PAY
-            ComponensForRecyreviewNestedPay componensForRecyreviewNestedPay=new ComponensForRecyreviewNestedPay(context);
+            // TODO: 23.01.2024  удаление строки из Json Row
+            jsonNode1сСогласования=  myRecycleViewAdapterCommingPay. remoteSingleJson(   positionDeleteJsonNodeAll );
+
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" jsonNode1сСогласования " +jsonNode1сСогласования);
+
+
 
             bl_commintigPay.методЗакрываемКлавитатуру(searchview_commitpay,activity);
 
