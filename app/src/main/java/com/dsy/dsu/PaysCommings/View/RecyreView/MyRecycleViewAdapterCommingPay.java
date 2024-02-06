@@ -1029,36 +1029,38 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                      Bundle bundlegetCardViewPay=(Bundle)   cardview_commingpay.getTag();
 
 
-                      String  NumberDoc =bundlegetCardViewPay.getString("Ndoc");
-                      String  DataDoc =bundlegetCardViewPay.getString("Ddoc");
-
+                      String  NumberDoc =bundlegetCardViewPay.getString("Ndoc").trim();
+                      String  DataDoc =bundlegetCardViewPay.getString("Ddoc").trim();
+                      int  position =bundlegetCardViewPay.getInt("position");
                         // TODO: 06.02.2024
 
 
                         List<JsonNode> jsonNodeForDeleteSearchParentList=      jsonNode1сСогласованияAll.findParents("Ndoc");
 
 
-                        IntStream.iterate(0, n -> n + 1)
-                                .limit(jsonNode1сСогласованияAll.size())
+                        IntStream streamForFindDelete =     IntStream.iterate(position, n -> n + 1);
+
+
+                        streamForFindDelete.parallel()      .limit(jsonNode1сСогласованияAll.size())
                                 .filter(new IntPredicate() {
                                     @Override
                                     public boolean test(int value) {
 
                                             JsonNode  jsonNodeSearch=      jsonNode1сСогласованияAll.get(value) ;
                                             JsonNode  jsonNodeForDeleteSearchParentPath=      jsonNodeSearch.findPath("Ndoc") ;
-                                           Integer IntegerNdoc=   jsonNodeForDeleteSearchParentPath.asInt();
-                                        if (IntegerNdoc==Integer.valueOf(NumberDoc)) {
-
-                                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                            return false;
-                                        }else {
+                                           String IntegerNdoc=   jsonNodeForDeleteSearchParentPath.asText().trim();
+                                        if (IntegerNdoc.equalsIgnoreCase(NumberDoc)) {
 
                                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                                             return true;
+                                        }else {
+
+                                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                            return false;
                                         }
                                     }
                                 })
@@ -1094,7 +1096,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                 elements.remove();
                         }*/
 
-                        int  position =bundlegetCardViewPay.getInt("position");
+
 
 
                         Intent intentзаданиеНаВыполениеSuccess = new Intent();
