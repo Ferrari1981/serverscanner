@@ -60,7 +60,7 @@ import kotlin.Unit;
 public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewHolderPayCommingPay> {
 
 
-  public   JsonNode jsonNode1сСогласования;
+  public   JsonNode jsonNode1сСогласованияAfterSearchView;
     JsonNode  arrayNodeJsonRow;
 
     Context context;
@@ -108,7 +108,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                           @NonNull androidx.appcompat.widget.SearchView searchview_commitpay,
                                           @NonNull Activity activity) {
         try {
-            this.jsonNode1сСогласования = jsonNode1сСогласования;
+            this.jsonNode1сСогласованияAfterSearchView = jsonNode1сСогласования;
             this.context = context;
             this.binderСогласования1C = binderСогласования1C;
             this.animation1 = animation1;
@@ -162,14 +162,14 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "jsonNode1сСогласования "
-                        + jsonNode1сСогласования + " position " + position);
+                        + jsonNode1сСогласованияAfterSearchView + " position " + position);
 
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "jsonNode1сСогласования "
-                    + jsonNode1сСогласования + " position " + position);
+                    + jsonNode1сСогласованияAfterSearchView + " position " + position);
             // TODO: 30.03.2022
         } catch (Exception e) {
             e.printStackTrace();
@@ -206,7 +206,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "jsonNode1сСогласования "
-                + jsonNode1сСогласования );
+                + jsonNode1сСогласованияAfterSearchView );
         // TODO: 30.03.2022
     } catch (Exception e) {
         e.printStackTrace();
@@ -559,7 +559,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                        /*         viewГлавныйВидДляRecyclleViewДляСогласования = LayoutInflater.from(parent.context)
                                         .inflate(R.layout.simple_for_commitpay_cardview_grid_file, parent, false);//todo old simple_for_takst_cardview1*/
 
-            if (jsonNode1сСогласования.size()>0) {
+            if (jsonNode1сСогласованияAfterSearchView.size()>0) {
                 viewГлавныйВидДляRecyclleViewДляСогласования = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.simple_for_commitpay_cardview_withnested3, parent, false);//todo old simple_for_takst_cardview1
             }else {
@@ -570,7 +570,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
 
             // TODO: 22.03.2022
-            myViewHolderPayCommingPay = new MyViewHolderPayCommingPay(viewГлавныйВидДляRecyclleViewДляСогласования, context, jsonNode1сСогласования);
+            myViewHolderPayCommingPay = new MyViewHolderPayCommingPay(viewГлавныйВидДляRecyclleViewДляСогласования, context, jsonNode1сСогласованияAfterSearchView);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" );
@@ -1063,7 +1063,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         getLiveDataForrecyreViewPay.setObservableLiveDataRecyreViewPays(lifecycleOwner,
                                 context,
                                 getHiltMutableLiveDataPayForRecyreView,
-                                myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования
+                                myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласованияAfterSearchView
                                 ,holder,cardview_commingpay,position,recycleviewcommitpays,
                                 intentзаданиеНаВыполениеSuccess,
                                 getHiltCommintgPays,
@@ -1120,7 +1120,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласования " +jsonNode1сСогласования);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласования " +jsonNode1сСогласованияAfterSearchView);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -1133,7 +1133,12 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     public JsonNode remoteSingleJson(@NonNull int intStreamFindPosiontion) {
         try{
             // TODO: 23.01.2024 анимация
-            Iterator<JsonNode> elements = jsonNode1сСогласованияAll.iterator();
+            Iterator<JsonNode> elements;
+            if (searchview_commitpay.getVisibility()==View.VISIBLE) {
+                elements = jsonNode1сСогласованияAfterSearchView.iterator();
+            } else {
+                elements = jsonNode1сСогласованияAll.iterator();
+            }
             Integer sum = 0;
 
             while (elements.hasNext()) {
@@ -1149,7 +1154,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласования " +jsonNode1сСогласования);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласования " +jsonNode1сСогласованияAfterSearchView);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -1157,7 +1162,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
             new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return  jsonNode1сСогласования;
+        return  jsonNode1сСогласованияAfterSearchView;
     }
 
 
@@ -1315,7 +1320,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         getLiveDataForrecyreViewPay.setObservableLiveDataRecyreViewPays(lifecycleOwner,
                                 context,
                                 getHiltMutableLiveDataPayForRecyreView,
-                                myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласования
+                                myRecycleViewAdapterCommingPay,bl_commintigPay,jsonNode1сСогласованияAfterSearchView
                                 ,holder,cardview_commingpay,position,recycleviewcommitpays,
                                 intentзаданиеНаВыполениеCancel,
                                 getHiltCommintgPays,
@@ -1359,7 +1364,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " jsonNode1сСогласования " +jsonNode1сСогласования);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " jsonNode1сСогласования " +jsonNode1сСогласованияAfterSearchView);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1878,13 +1883,13 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     @Override
     public int getItemCount() {
         // TODO: 02.03.2022
-        int КоличесвоСтрок = jsonNode1сСогласования.size();
+        int КоличесвоСтрок = jsonNode1сСогласованияAfterSearchView.size();
         // TODO: 06.02.2024
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date()+"\n+" +
                 " Класс в процессе... " +  this.getClass().getName()+"\n"+
                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                +"jsonNode1сСогласования.size() " + jsonNode1сСогласования.size() + " КоличесвоСтрок " + КоличесвоСтрок);
+                +"jsonNode1сСогласования.size() " + jsonNode1сСогласованияAfterSearchView.size() + " КоличесвоСтрок " + КоличесвоСтрок);
         // TODO: 28.02.2022
         return КоличесвоСтрок;
     }

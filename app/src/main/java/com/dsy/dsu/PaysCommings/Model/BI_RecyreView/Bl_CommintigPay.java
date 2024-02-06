@@ -628,7 +628,7 @@ public class Bl_CommintigPay {
 
 
     public   void InitMyAdapterRecyreViewIsNull( ) {
-        try {// TODO: 06.02.2024 TRUE это показыаем кран что идт зашгрузка данных 
+        try {// TODO: 06.02.2024 TRUE это показыаем кран что идт зашгрузка данных
                 ArrayList<Boolean> arrayListIsNull1cData=new ArrayList<>();
                 arrayListIsNull1cData.add(true);
                 myRecycleViewIsNullAdapter = new MyRecycleViewIsNullAdapterPay(arrayListIsNull1cData,activity  );
@@ -1102,7 +1102,7 @@ public class Bl_CommintigPay {
         try{
             if (jsonNode1сСогласованияAllRows!=null) {
                 if (myRecycleViewAdapter!=null) {
-                    myRecycleViewAdapter.jsonNode1сСогласования=jsonNode1сСогласованияAllRows;
+                    myRecycleViewAdapter.jsonNode1сСогласованияAfterSearchView=jsonNode1сСогласованияAllRows;
                     myRecycleViewAdapter.notifyDataSetChanged();
                     RecyclerView.Adapter recyclerViewAdapter=         recycleviewcommitpays.getAdapter();
                     recycleviewcommitpays.swapAdapter(recyclerViewAdapter,true);
