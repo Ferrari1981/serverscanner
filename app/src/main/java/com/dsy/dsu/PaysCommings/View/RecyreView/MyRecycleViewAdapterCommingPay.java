@@ -1133,7 +1133,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     public JsonNode remoteSingleJson(@NonNull int intStreamFindPosiontion) {
         try{
             // TODO: 23.01.2024 анимация
-            Iterator<JsonNode> elements = jsonNode1сСогласования.iterator();
+            Iterator<JsonNode> elements = jsonNode1сСогласованияAll.iterator();
             Integer sum = 0;
 
             while (elements.hasNext()) {

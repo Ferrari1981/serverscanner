@@ -628,7 +628,7 @@ public class Bl_CommintigPay {
 
 
     public   void InitMyAdapterRecyreViewIsNull( ) {
-        try {
+        try {// TODO: 06.02.2024 TRUE это показыаем кран что идт зашгрузка данных 
                 ArrayList<Boolean> arrayListIsNull1cData=new ArrayList<>();
                 arrayListIsNull1cData.add(true);
                 myRecycleViewIsNullAdapter = new MyRecycleViewIsNullAdapterPay(arrayListIsNull1cData,activity  );

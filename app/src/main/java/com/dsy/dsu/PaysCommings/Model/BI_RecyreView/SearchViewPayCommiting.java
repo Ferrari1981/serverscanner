@@ -118,7 +118,8 @@ public class SearchViewPayCommiting {
 
                      /*       // TODO: 24.11.2023
                             bl_commintigPay.   методЗакрываемКлавитатуру( );*/
-
+                        // TODO: 06.02.2024
+                        bl_commintigPay.navigatorbuttonIconRow(jsonNode1сСогласованияCallBackService );
 
                         Log.d(this.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -141,6 +142,8 @@ public class SearchViewPayCommiting {
 
                     // TODO: 24.11.2023 закрывам Служба
                     metodCloseLocalBroastCast(intent  );
+
+                    // TODO: 06.02.2024
                     // TODO: 26.12.2022  конец основгого кода
                     Log.d(context.getClass().getName(), "\n" + " class "
                             + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

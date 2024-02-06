@@ -78,10 +78,8 @@ public class GetLiveDataForrecyreViewPay {
                                     procesingCallBackOt1cPays( ОТветОт1СОперациисДаннымиSuccees,
                                             myRecycleViewAdapterCommingPay,
                                             holder,
-                                            cardview_commingpay,
                                             position,
                                             context,
-                                            jsonNode1сСогласования,
                                             bl_commintigPay,
                                             searchview_commitpay,
                                             activity,
@@ -134,10 +132,8 @@ public class GetLiveDataForrecyreViewPay {
     void procesingCallBackOt1cPays(     @NonNull StringBuffer ОТветОт1СОперациисДанными,
                                                   @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay,
                                                   @NonNull MyViewHolderPayCommingPay holder,
-                                                  @NonNull MaterialCardView cardview_commingpay,
                                                   @NonNull int position,
                                                   @NonNull Context context,
-                                                  @NonNull JsonNode jsonNode1сСогласования,
                                                   @NonNull Bl_CommintigPay bl_commintigPay,
                                                   @NonNull    androidx.appcompat.widget.SearchView searchview_commitpay,
                                                  @NonNull Activity activity,
@@ -151,23 +147,24 @@ public class GetLiveDataForrecyreViewPay {
             myRecycleViewAdapterCommingPay. notifynotifyDataSetChanged(  holder,position );
 
             // TODO: 23.01.2024  удаление строки из Json Row
-            jsonNode1сСогласования=  myRecycleViewAdapterCommingPay. remoteSingleJson(   positionDeleteJsonNodeAll );
+          JsonNode  jsonNode1сСогласованияПослеУдалениеиПосика=  myRecycleViewAdapterCommingPay. remoteSingleJson(   positionDeleteJsonNodeAll );
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" jsonNode1сСогласования " +jsonNode1сСогласования);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    +" jsonNode1сСогласованияПослеУдалениеиПосика " +jsonNode1сСогласованияПослеУдалениеиПосика);
 
 
 
             bl_commintigPay.методЗакрываемКлавитатуру(searchview_commitpay,activity);
 
             // TODO: 24.01.2024
-            bl_commintigPay.navigatorbuttonIconRow(jsonNode1сСогласования);
+            bl_commintigPay.navigatorbuttonIconRow(jsonNode1сСогласованияПослеУдалениеиПосика);
 
             // TODO: 24.01.2024  ;
-            if (jsonNode1сСогласования.size()>0) {
-                bl_commintigPay.myRecycleViewAdapterReebotgetAdapter(jsonNode1сСогласования);
+            if (jsonNode1сСогласованияПослеУдалениеиПосика.size()>0) {
+                bl_commintigPay.myRecycleViewAdapterReebotgetAdapter(jsonNode1сСогласованияПослеУдалениеиПосика);
             } else {
                 bl_commintigPay.  методRebootRecyreviewDontJsonNULL();
             }

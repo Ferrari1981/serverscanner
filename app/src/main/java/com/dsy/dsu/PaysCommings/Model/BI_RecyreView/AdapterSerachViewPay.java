@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterCommingPay;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.common.util.concurrent.AtomicDouble;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -100,6 +101,8 @@ class AdapterSerachViewPay{
 
                             searchViewPayCommiting.startrunningSearchView();
 
+
+
                             // TODO: 26.12.2022  конец основгого кода
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -134,6 +137,9 @@ class AdapterSerachViewPay{
                               bl_commintigPay.myRecycleViewAdapterReebotgetAdapter(jsonNode1сСогласованияAllRows );
 
                                 bl_commintigPay.  методЗакрываемКлавитатуру( searchview_commitpay,activity);
+
+                                // TODO: 06.02.2024
+                                bl_commintigPay.navigatorbuttonIconRow(jsonNode1сСогласованияAllRows );
 
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
