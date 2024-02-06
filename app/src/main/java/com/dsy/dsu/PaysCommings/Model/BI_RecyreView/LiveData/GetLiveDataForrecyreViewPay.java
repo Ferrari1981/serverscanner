@@ -146,19 +146,18 @@ public class GetLiveDataForrecyreViewPay {
 
             bl_commintigPay.методЗакрываемКлавитатуру(searchview_commitpay,activity);
 
+            // TODO: 24.01.2024
+            bl_commintigPay.navigatorbuttonIconRow(jsonNode1сСогласования);
 
             // TODO: 24.01.2024  ;
             if (jsonNode1сСогласования.size()>0) {
-                componensForRecyreviewNestedPay.методRebootRecyreViewCommingPays(jsonNode1сСогласования,
-                        myRecycleViewAdapterCommingPay, recycleviewcommitpays, ОТветОт1СОперациисДанными.toString());
+                bl_commintigPay.myRecycleViewAdapterReebotgetAdapter(jsonNode1сСогласования);
             } else {
-                componensForRecyreviewNestedPay.методRebootRecyreViewCommingPaysDontRow(jsonNode1сСогласования,
-                        recycleviewcommitpays, ОТветОт1СОперациисДанными.toString());
+                bl_commintigPay.  методRebootRecyreviewDontJsonNULL();
             }
 
 
-            // TODO: 24.01.2024
-            bl_commintigPay.navigatorbuttonIconRow(jsonNode1сСогласования);
+
 
         }else {
             Toast.makeText(context, "Операция  не прошла !!! ", Toast.LENGTH_SHORT).show();

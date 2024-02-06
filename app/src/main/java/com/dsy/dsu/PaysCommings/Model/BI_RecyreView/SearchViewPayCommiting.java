@@ -249,7 +249,7 @@ public class SearchViewPayCommiting {
 
                 bl_commintigPay.   методClearRecyreView(recyclerViewСогласование1С);
 
-                bl_commintigPay.методRebootDisaynRecyreViewonStopOrAsync(jsonNode1сСогласованияCallBackService );
+                bl_commintigPay.myRecycleViewAdapterReebotgetAdapter(jsonNode1сСогласованияCallBackService );
             }
             // TODO: 26.12.2022  конец основгого кода
             Log.d(this.getClass().getName(), "\n" + " class " +

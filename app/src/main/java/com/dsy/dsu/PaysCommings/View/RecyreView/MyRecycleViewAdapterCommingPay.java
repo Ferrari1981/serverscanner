@@ -181,7 +181,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
 
     // TODO: 18.01.2024  заполенеия Bungle
-    private void setBungleCardView(@NonNull MyViewHolderPayCommingPay holder, @NonNull JsonNode jsonNode1сСогласованияSingleRow) {
+    private void setBungleCardView(@NonNull MyViewHolderPayCommingPay holder, @NonNull JsonNode jsonNode1сСогласованияSingleRow,@NonNull int position) {
         try{
             Bundle bundleCacdView=new Bundle();
 
@@ -191,8 +191,10 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
             bundleCacdView.putString("NomerScheta",String.valueOf(jsonNode1сСогласованияSingleRow.get("NomerScheta").asInt()));
             bundleCacdView.putString("Otvetstvenniy",jsonNode1сСогласованияSingleRow.get("Otvetstvenniy").asText());
             bundleCacdView.putString("articleDDS",jsonNode1сСогласованияSingleRow.get("articleDDS").asText());
+            bundleCacdView.putInt("position",position);
 
-        holder.cardview_commingpay.setTag(bundleCacdView);
+            holder.cardview_commingpay.setTag(bundleCacdView);
+            holder.cardview_commingpay.forceLayout();
 
 
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -603,9 +605,9 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
 
                 // TODO: 12.01.2024 кнопки
-                МетодКпопкаОтказаСогласования(holder,position);
+                МетодКпопкаОтказаСогласования(holder );
 
-                МетодКпопкаСогласованияУспешное(holder, ПубличныйidPay, getHiltCommintgPays,position);
+                МетодКпопкаСогласованияУспешное(holder, ПубличныйidPay, getHiltCommintgPays );
 
                 // TODO: 12.01.2024 обработка видимости Prograssbar
                 МетодForPrograBarInner(holder);
@@ -632,10 +634,9 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                 metodNestdCommentariy(holder  );
 
 
-                // TODO: 17.01.2024
+                // TODO: 17.01.2024 вставляем данные
 
-
-                setBungleCardView(holder, arrayNodeJsonRow);
+                setBungleCardView(holder, arrayNodeJsonRow,position);
 
 
                 // TODO: 17.01.2024 показать или скрыть
@@ -649,7 +650,8 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
                 myViewHolderPayCommingPay.setIsRecyclable(false);
 
-          
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"+"position " + position );
 
             }
 
@@ -923,8 +925,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
     private void МетодКпопкаСогласованияУспешное(@NonNull MyViewHolderPayCommingPay holder,
                                                  @NonNull Integer ПубличныйidPay,
-                                                 @NonNull  String getHiltCommintgPays,
-                                                 @NonNull int position)
+                                                 @NonNull  String getHiltCommintgPays)
             throws ExecutionException, InterruptedException {
         try {
             Log.d(this.getClass().getName(), "   КнопкаУспешноеСогласования    Успехх Согласования 2 ");
@@ -985,7 +986,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
                         // TODO: 18.01.2024  метод успешного соглавования
                                     proccerClickSucceesPay(holder, handler, holder.cardview_commingpay,
-                                            ПубличныйidPay,getHiltCommintgPays,  position, myRecycleViewAdapterCommingPay);
+                                            ПубличныйidPay,getHiltCommintgPays,   myRecycleViewAdapterCommingPay);
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1014,7 +1015,6 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                         MaterialCardView cardview_commingpay,
                                         @NonNull Integer ПубличныйidPay,
                                         @NonNull  String getHiltCommintgPays,
-                                        @NonNull int position,
                                         @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay) {
         try {
             handler[0].postDelayed(new Runnable() {
@@ -1026,6 +1026,8 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
                       String  NumberDoc =bundlegetCardViewPay.getString("Ndoc");
                       String  DataDoc =bundlegetCardViewPay.getString("Ddoc");
+                        int  position =bundlegetCardViewPay.getInt("position");
+
 
                         Intent intentзаданиеНаВыполениеSuccess = new Intent();
                         intentзаданиеНаВыполениеSuccess.setAction("ЗапускаемСогласованиеОтказИлилУспешное");
@@ -1174,7 +1176,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
     //TODO вторая кнопка
     // TODO: 14.03.2022  отказа Согласования
-    private void МетодКпопкаОтказаСогласования(@NonNull MyViewHolderPayCommingPay holder, @NonNull int position)
+    private void МетодКпопкаОтказаСогласования(@NonNull MyViewHolderPayCommingPay holder )
             throws ExecutionException, InterruptedException {
         try {
             // TODO: 02.03.2022
@@ -1234,7 +1236,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
-                        procceringCancelButtonClick(holder, handler[0], holder.cardview_commingpay,position, myRecycleViewAdapterCommingPay);
+                        procceringCancelButtonClick(holder, handler[0], holder.cardview_commingpay,  myRecycleViewAdapterCommingPay);
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1257,7 +1259,6 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     private void procceringCancelButtonClick(@NonNull MyViewHolderPayCommingPay holder,
                                              @NonNull  Handler handler,
                                             @NonNull MaterialCardView cardview_commingpay,
-                                             @NonNull int position,
                                              @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay) {
         try {
 
@@ -1269,6 +1270,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
                         String  NumberDoc =bundlegetCardViewPay.getString("Ndoc");
                         String  DataDoc =bundlegetCardViewPay.getString("Ddoc");
+                        int  position =bundlegetCardViewPay.getInt("position");
 
                         Intent intentзаданиеНаВыполениеCancel = new Intent();
                         intentзаданиеНаВыполениеCancel.setAction("ЗапускаемСогласованиеОтказИлилУспешное");

@@ -132,58 +132,7 @@ public class GetLiveDataForrecyreViewPrices {
 
     }
 
-    void procesingCallBackOt1cPays(     @NonNull StringBuffer ОТветОт1СОперациисДанными,
-                                        @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay,
-                                        @NonNull MyViewHolderPayCommingPay holder,
-                                        @NonNull MaterialCardView cardview_commingpay,
-                                        @NonNull int position,
-                                        @NonNull Context context,
-                                        @NonNull JsonNode jsonNode1сСогласования,
-                                        @NonNull RecyclerView recycleviewcommitpays,
-                                        @NonNull Bl_CommintigPay bl_commintigPay) {
 
-        try {
-            if (ОТветОт1СОперациисДанными.toString().trim().matches("(.*)Операция успешна(.*)")) {
-                // TODO: 23.01.2024  удаление строчки
-
-                // TODO: 23.01.2024  удаление строчки
-                myRecycleViewAdapterCommingPay. notifynotifyDataSetChanged(ОТветОт1СОперациисДанными, holder, cardview_commingpay, position);
-
-                // TODO: 24.01.2024   после удаление перегуражаем экран PAY
-                ComponensForRecyreviewNestedPay componensForRecyreviewNestedPay=new ComponensForRecyreviewNestedPay(context);
-
-
-                // TODO: 24.01.2024  ;
-                if (jsonNode1сСогласования.size()>0) {
-                    componensForRecyreviewNestedPay.методRebootRecyreViewCommingPays(jsonNode1сСогласования,
-                            myRecycleViewAdapterCommingPay, recycleviewcommitpays, ОТветОт1СОперациисДанными.toString());
-                } else {
-                    componensForRecyreviewNestedPay.методRebootRecyreViewCommingPaysDontRow(jsonNode1сСогласования,
-                            recycleviewcommitpays, ОТветОт1СОперациисДанными.toString());
-                }
-                // TODO: 24.01.2024
-                bl_commintigPay.navigatorbuttonIconRow(jsonNode1сСогласования);
-            }else {
-                Toast.makeText(context, "Операция  не прошла !!! ", Toast.LENGTH_SHORT).show();
-                Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                v2.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
-
-            }
-
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" ОТветОт1СОперациисДанными " +ОТветОт1СОперациисДанными);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(context.getClass().getName(),
-                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
 
 }

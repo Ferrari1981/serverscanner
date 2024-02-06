@@ -131,7 +131,7 @@ class AdapterSerachViewPay{
                                 return true;
                             }else {
                                 // TODO: 26.12.2022  конец основгого кода
-                              bl_commintigPay.методRebootDisaynRecyreViewFromSearchView(jsonNode1сСогласованияAllRows );
+                              bl_commintigPay.myRecycleViewAdapterReebotgetAdapter(jsonNode1сСогласованияAllRows );
 
                                 bl_commintigPay.  методЗакрываемКлавитатуру( searchview_commitpay,activity);
 

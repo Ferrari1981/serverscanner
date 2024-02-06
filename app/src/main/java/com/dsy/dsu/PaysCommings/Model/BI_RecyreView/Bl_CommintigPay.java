@@ -1098,7 +1098,7 @@ public class Bl_CommintigPay {
 
 
 
-    public void методRebootDisaynRecyreViewonStopOrAsync(@NonNull JsonNode jsonNode1сСогласованияAllRows) {
+    public void myRecycleViewAdapterReebotgetAdapter(@NonNull JsonNode jsonNode1сСогласованияAllRows) {
         try{
             if (jsonNode1сСогласованияAllRows!=null) {
                 if (myRecycleViewAdapter!=null) {
@@ -1109,39 +1109,9 @@ public class Bl_CommintigPay {
                     recycleviewcommitpays.getAdapter().notifyDataSetChanged();
 
 
-                }
-            }
-            Log.d(this.getClass().getName(), "\n" + " class " +
-                    Thread.currentThread().getStackTrace()[2].getClassName()
-                    + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласованияAllRows " +jsonNode1сСогласованияAllRows);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(context.getClass().getName(),
-                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-    }
-
-
-
-
-    public void методRebootDisaynRecyreViewFromSearchView(@NonNull JsonNode jsonNode1сСогласованияAllRows) {
-        try{
-            if (jsonNode1сСогласованияAllRows!=null) {
-                if (myRecycleViewAdapter!=null) {
-                    myRecycleViewAdapter.jsonNode1сСогласования=jsonNode1сСогласованияAllRows;
-                    myRecycleViewAdapter.notifyDataSetChanged();
-                    RecyclerView.Adapter recyclerViewAdapter=         recycleviewcommitpays.getAdapter();
-                    recycleviewcommitpays.swapAdapter(recyclerViewAdapter,false);
-                    recycleviewcommitpays.getAdapter().notifyDataSetChanged();
-
-
+                    // TODO: 24.01.2024
+                    recycleviewcommitpays.requestLayout();
+                    recycleviewcommitpays .refreshDrawableState();
                 }
             }
             Log.d(this.getClass().getName(), "\n" + " class " +
