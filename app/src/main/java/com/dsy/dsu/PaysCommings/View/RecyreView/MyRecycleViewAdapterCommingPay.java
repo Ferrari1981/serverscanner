@@ -1034,7 +1034,12 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                       String  DataDoc =bundlegetCardViewPay.getString("Ddoc").trim();
                       int  position =bundlegetCardViewPay.getInt("position");
                         // TODO: 06.02.2024
-                        Integer positionDeleteJsonNodeAll=  new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAll,NumberDoc);
+                        Integer positionDeleteJsonNodeAll;
+                        if (searchview_commitpay.getVisibility()==View.VISIBLE) {
+                            positionDeleteJsonNodeAll = new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAfterSearchView,NumberDoc);
+                        } else {
+                            positionDeleteJsonNodeAll = new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAll,NumberDoc);
+                        }
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
