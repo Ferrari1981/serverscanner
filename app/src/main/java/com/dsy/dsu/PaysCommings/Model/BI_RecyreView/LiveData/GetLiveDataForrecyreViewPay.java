@@ -156,10 +156,13 @@ public class GetLiveDataForrecyreViewPay {
                     +" jsonNode1сСогласованияПослеУдалениеиПосика " +jsonNode1сСогласованияПослеУдалениеиПосика);
 
 
+// TODO: 07.02.2024  закрываем клавиатуру
+            bl_commintigPay.методЗакрываемКлавитатуру(activity);
+// TODO: 07.02.2024  закрываем SerchView
+            bl_commintigPay. методЗакрываемSearchView(searchview_commitpay);
 
-            bl_commintigPay.методЗакрываемКлавитатуру(searchview_commitpay,activity);
 
-            // TODO: 24.01.2024
+            // TODO: 24.01.2024 переодредляем количество строчек внизу в идиаторе
             bl_commintigPay.navigatorbuttonIconRow(jsonNode1сСогласованияПослеУдалениеиПосика);
 
             // TODO: 24.01.2024  ;

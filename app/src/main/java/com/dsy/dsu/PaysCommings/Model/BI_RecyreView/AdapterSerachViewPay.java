@@ -62,7 +62,7 @@ class AdapterSerachViewPay{
                             ((androidx.appcompat.widget.SearchView) v).setQueryHint(null);
 
                          // TODO: 24.11.2023
-                            bl_commintigPay.  методЗакрываемКлавитатуру( searchview_commitpay,activity);
+                            bl_commintigPay.  методЗакрываемКлавитатуру(   activity);
 
                            // bl_commintigPay.методRebootDisaynRecyreViewFromSearchView(jsonNode1сСогласованияAllRows );
 
@@ -136,7 +136,7 @@ class AdapterSerachViewPay{
                                 // TODO: 26.12.2022  конец основгого кода
                               bl_commintigPay.myRecycleViewAdapterReebotgetAdapter(jsonNode1сСогласованияAllRows );
 
-                                bl_commintigPay.  методЗакрываемКлавитатуру( searchview_commitpay,activity);
+                                bl_commintigPay.  методЗакрываемКлавитатуру(  activity);
 
                                 // TODO: 06.02.2024
                                 bl_commintigPay.navigatorbuttonIconRow(jsonNode1сСогласованияAllRows );

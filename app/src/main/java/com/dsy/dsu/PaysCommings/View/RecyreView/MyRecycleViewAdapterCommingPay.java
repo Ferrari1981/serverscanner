@@ -1035,7 +1035,9 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                       int  position =bundlegetCardViewPay.getInt("position");
                         // TODO: 06.02.2024
                         Integer positionDeleteJsonNodeAll;
-                        if (searchview_commitpay.getVisibility()==View.VISIBLE) {
+
+
+                        if (searchview_commitpay.getVisibility()==View.VISIBLE && searchview_commitpay.getQuery().toString().length()>0 ) {
                             positionDeleteJsonNodeAll = new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAfterSearchView,NumberDoc);
                         } else {
                             positionDeleteJsonNodeAll = new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAll,NumberDoc);
@@ -1084,7 +1086,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                         sendLiveDataRecyreViewEventCallBacl1c( );
 
 
-                        cardmaterialrotafedefualt();
+                        cardmaterialrotafedefualt(holder);
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1101,9 +1103,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                     }
                 }
 
-                private void cardmaterialrotafedefualt() {
-                    holder.cardview_commingpay.animate().rotationXBy(-5);
-                }
+
             }, 100);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1113,7 +1113,9 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
-
+    private void cardmaterialrotafedefualt(@NonNull MyViewHolderPayCommingPay holder) {
+        holder.cardview_commingpay.animate().rotationXBy(-5);
+    }
     public void notifynotifyDataSetChanged(@NonNull MyViewHolderPayCommingPay holder,
                                            @NonNull int position) {
         try{
@@ -1139,7 +1141,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
         try{
             // TODO: 23.01.2024 анимация
             Iterator<JsonNode> elements;
-            if (searchview_commitpay.getVisibility()==View.VISIBLE) {
+            if (searchview_commitpay.getVisibility()==View.VISIBLE && searchview_commitpay.getQuery().toString().length()>0 ) {
                 elements = jsonNode1сСогласованияAfterSearchView.iterator();
             } else {
                 elements = jsonNode1сСогласованияAll.iterator();

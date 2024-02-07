@@ -1068,16 +1068,38 @@ public class Bl_CommintigPay {
     }
 
 
-    public void методЗакрываемКлавитатуру(@NonNull androidx.appcompat.widget.SearchView searchview_commitpay,
-                                          @NonNull Activity activity) {
+    public void методЗакрываемКлавитатуру(@NonNull Activity activity) {
         try{
-
-           searchview_commitpay.clearFocus();
-
        Window w =activity.getWindow();
 
             if (w!=null) {
                 w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            }
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(context.getClass().getName(),
+                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
+    public void методЗакрываемSearchView(@NonNull androidx.appcompat.widget.SearchView searchview_commitpay) {
+        try{
+
+            if (searchview_commitpay.getVisibility()==View.VISIBLE) {
+                searchview_commitpay.clearFocus();
+                searchview_commitpay.setQuery("",true);
+                searchview_commitpay.cancelLongPress();
+
+                searchview_commitpay.requestLayout();
+                searchview_commitpay.refreshDrawableState();
             }
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
