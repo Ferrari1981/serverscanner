@@ -1128,7 +1128,7 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                     notifyItemRemoved(position );
                     notifyItemMoved(position,holder.jsonNode1сСогласования.size());
                 }
-            }).setDuration(100).start();
+            }).setDuration(50).start();
 
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()

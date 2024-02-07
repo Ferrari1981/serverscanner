@@ -133,14 +133,10 @@ class AdapterSerachViewPay{
                                         " searchview_commitpay " + searchview_commitpay);
                                 return true;
                             }else {
-                                // TODO: 26.12.2022  конец основгого кода
-                              bl_commintigPay.myRecycleViewAdapterReebotgetAdapter(jsonNode1сСогласованияAllRows );
 
-                                bl_commintigPay.  методЗакрываемКлавитатуру(  activity);
 
-                                // TODO: 06.02.2024
-                                bl_commintigPay.navigatorbuttonIconRow(jsonNode1сСогласованияAllRows );
-
+                                // TODO: 26.12.2022 когда выходим изSerchView  и переопледеем Recyreview
+                                AfterSerachingOverridRecyreView();
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
@@ -181,6 +177,33 @@ class AdapterSerachViewPay{
 
 
     }//TODO end onSubscribe
+
+    private void AfterSerachingOverridRecyreView() {
+        try{
+        if (jsonNode1сСогласованияAllRows.size()>0) {
+            bl_commintigPay.myRecycleViewAdapterReebotgetAdapter(jsonNode1сСогласованияAllRows );
+        } else {
+            bl_commintigPay.методRebootRecyreviewDontJsonNULL();
+        }
+
+        bl_commintigPay.  методЗакрываемКлавитатуру(  activity);
+        // TODO: 06.02.2024
+        bl_commintigPay.navigatorbuttonIconRow(jsonNode1сСогласованияAllRows );
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " searchview_commitpay " + searchview_commitpay);
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(context.getClass().getName(),
+                "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+    }
 
 
 }
