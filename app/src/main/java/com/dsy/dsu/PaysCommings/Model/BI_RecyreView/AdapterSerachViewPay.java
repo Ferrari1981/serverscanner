@@ -94,12 +94,12 @@ class AdapterSerachViewPay{
                             v2.vibrate(VibrationEffect.createOneShot(60, VibrationEffect.EFFECT_HEAVY_CLICK));
 
                            SearchViewPayCommiting searchViewPayCommiting =
-                                   new SearchViewPayCommiting( jsonNode1сСогласованияAllRows,query,context,searchview_commitpay
+                                   new SearchViewPayCommiting( query,context,searchview_commitpay
                                            ,myRecycleViewAdapter,recyclerViewСогласование1С,bl_commintigPay);
 
                             searchViewPayCommiting.   registerBroadCastRexiver ( );
 
-                            searchViewPayCommiting.startrunningSearchView();
+                            searchViewPayCommiting.startrunningSearchView(jsonNode1сСогласованияAllRows);
 
 
 

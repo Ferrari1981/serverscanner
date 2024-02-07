@@ -447,7 +447,7 @@ public class Bl_CommintigPay {
                     .subscribe( GetAsyncCommitPays-> {
                         ///todo revboot
 
-                        metodSecondGetDataOt1cCommitPay( );
+                        startingAsyncAdvansed( );
 
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -941,7 +941,7 @@ public class Bl_CommintigPay {
 
 
     // TODO: 12.07.2022  метод получение данных от 1С для согласования
-    public void metodSecondGetDataOt1cCommitPay() {
+    public void startingAsyncAdvansed() {
         try {
             AsyncTaskLoader <JsonNode>    asyncTaskLoader=new AsyncTaskLoader<JsonNode>(context) {
                 @Override
@@ -1098,6 +1098,7 @@ public class Bl_CommintigPay {
                 searchview_commitpay.setQuery("",true);
                 searchview_commitpay.cancelLongPress();
 
+                searchview_commitpay.setVisibility(View.GONE);
                 searchview_commitpay.requestLayout();
                 searchview_commitpay.refreshDrawableState();
             }

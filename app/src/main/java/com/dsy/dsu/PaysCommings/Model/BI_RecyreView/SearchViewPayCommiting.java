@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 
 public class SearchViewPayCommiting {
-    JsonNode jsonNode1сСогласованияAllRows;
+
     String query;
 
     Context context;
@@ -41,14 +41,12 @@ public class SearchViewPayCommiting {
 
     Bl_CommintigPay bl_commintigPay;
 
-    public SearchViewPayCommiting(@NonNull JsonNode jsonNode1сСогласованияAllRows,
-                                  @NonNull    String query,
+    public SearchViewPayCommiting(@NonNull    String query,
                                   @NonNull    Context context,
                                   @NonNull   SearchView searchview_commitpay,
                                   @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapter,
                                   @NonNull RecyclerView recyclerViewСогласование1С,
                                   @NonNull Bl_CommintigPay bl_commintigPay) {
-        this.jsonNode1сСогласованияAllRows = jsonNode1сСогласованияAllRows;
         this.query = query;
         this.context = context;
         this.searchview_commitpay = searchview_commitpay;
@@ -59,7 +57,7 @@ public class SearchViewPayCommiting {
 
 
     @SuppressLint("SuspiciousIndentation")
-    public void   startrunningSearchView (){
+    public void   startrunningSearchView (JsonNode jsonNode1сСогласованияAllRows){
         Intent   intentsendJsonNodeToService=null;
         try{
         if (jsonNode1сСогласованияAllRows!=null) {
@@ -245,8 +243,7 @@ public class SearchViewPayCommiting {
     // TODO: 24.11.2023 callback
     public void metodCallBackRebootRecyreView(@NonNull    JsonNode  jsonNode1сСогласованияCallBackService) {
         try{
-            if(jsonNode1сСогласованияCallBackService.size()>0 &&
-                    jsonNode1сСогласованияCallBackService.size()<jsonNode1сСогласованияAllRows.size()){
+            if(jsonNode1сСогласованияCallBackService.size()>0 ){
                 // TODO: 24.11.2023
 
 

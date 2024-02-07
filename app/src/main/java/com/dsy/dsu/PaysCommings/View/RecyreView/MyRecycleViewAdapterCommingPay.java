@@ -1034,14 +1034,14 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                       String  DataDoc =bundlegetCardViewPay.getString("Ddoc").trim();
                       int  position =bundlegetCardViewPay.getInt("position");
                         // TODO: 06.02.2024
-                        Integer positionDeleteJsonNodeAll;
 
 
-                        if (searchview_commitpay.getVisibility()==View.VISIBLE && searchview_commitpay.getQuery().toString().length()>0 ) {
-                            positionDeleteJsonNodeAll = new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAfterSearchView,NumberDoc);
-                        } else {
-                            positionDeleteJsonNodeAll = new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAll,NumberDoc);
-                        }
+
+                 /*       if (searchview_commitpay.getVisibility()==View.VISIBLE && searchview_commitpay.getQuery().toString().length()>0 ) {*/
+                        Integer    positionDeleteJsonNodeSeachView = new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAfterSearchView,NumberDoc);
+
+                        Integer     positionDeleteJsonNodeAll = new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAll,NumberDoc);
+
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1077,7 +1077,8 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                 binderСогласования1C,
                                 searchview_commitpay,
                                 activity,
-                                positionDeleteJsonNodeAll);
+                                positionDeleteJsonNodeAll,
+                                positionDeleteJsonNodeSeachView);
 
 
 
@@ -1120,9 +1121,15 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                            @NonNull int position) {
         try{
             // TODO: 23.01.2024 анимация
-            holder.itemView.startAnimation(animationДляСогласовани);
-            // TODO: 11.01.2024 перегрузка данных
-           notifyItemRemoved(position );
+            holder.itemView.animate().withStartAction(new Runnable() {
+                @Override
+                public void run() {
+                    // TODO: 11.01.2024 перегрузка данных
+                    notifyItemRemoved(position );
+                    notifyItemMoved(position,holder.jsonNode1сСогласования.size());
+                }
+            }).setDuration(100).start();
+
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
@@ -1137,26 +1144,22 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     }
     }
 
-    public JsonNode remoteSingleJson(@NonNull int intStreamFindPosiontion) {
+    public JsonNode remoteSingleJsonSeravhView(@NonNull int intStreamFindPosiontion) {
         try{
+            int sum=0;
             // TODO: 23.01.2024 анимация
-            Iterator<JsonNode> elements;
-            if (searchview_commitpay.getVisibility()==View.VISIBLE && searchview_commitpay.getQuery().toString().length()>0 ) {
-                elements = jsonNode1сСогласованияAfterSearchView.iterator();
-            } else {
-                elements = jsonNode1сСогласованияAll.iterator();
-            }
-            Integer sum = 0;
+            Iterator<JsonNode> elementsSearchView;
+                elementsSearchView = jsonNode1сСогласованияAfterSearchView.iterator();
+                while (elementsSearchView.hasNext()) {
+                    elementsSearchView.next();
+                    if (sum == intStreamFindPosiontion) {
+                        elementsSearchView.remove();
+                        break;
+                    }
+                    sum++;
 
-            while (elements.hasNext()) {
-                elements.next();
-                if (sum == intStreamFindPosiontion) {
-                    elements.remove();
-                    break;
                 }
-                sum++;
 
-            }
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
@@ -1173,10 +1176,39 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     }
 
 
-    
-    
-    
-    
+    public JsonNode remoteSingleJsonFromAll(@NonNull int intStreamFindPosiontion) {
+        try{
+            int sum=0;
+            // TODO: 23.01.2024 анимация
+            Iterator<JsonNode> elementsAll;
+            elementsAll = jsonNode1сСогласованияAll.iterator();
+            while (elementsAll.hasNext()) {
+                elementsAll.next();
+                if (sum == intStreamFindPosiontion) {
+                    elementsAll.remove();
+                    break;
+                }
+                sum++;
+            }
+
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " jsonNode1сСогласованияAll " +jsonNode1сСогласованияAll);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return  jsonNode1сСогласованияAll;
+    }
+
+
+
+
 
     // TODO: 12.01.2024 Кнопка РАскрытие Скрытого recyreview
 
@@ -1300,7 +1332,11 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
 
                         // TODO: 06.02.2024
-                        Integer positionDeleteJsonNodeAll=  new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAll,NumberDoc);
+                        /*       if (searchview_commitpay.getVisibility()==View.VISIBLE && searchview_commitpay.getQuery().toString().length()>0 ) {*/
+                        Integer    positionDeleteJsonNodeSeachView = new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAfterSearchView,NumberDoc);
+
+                        Integer     positionDeleteJsonNodeAll = new FindFromJsonNode(context).startPostionJsonNode(jsonNode1сСогласованияAll,NumberDoc);
+
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1334,7 +1370,8 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
                                 binderСогласования1C,
                                 searchview_commitpay,
                                 activity,
-                                positionDeleteJsonNodeAll);
+                                positionDeleteJsonNodeAll,
+                                positionDeleteJsonNodeSeachView);
 
 
 
