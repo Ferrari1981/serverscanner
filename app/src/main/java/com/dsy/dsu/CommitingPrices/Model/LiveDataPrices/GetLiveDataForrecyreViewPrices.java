@@ -88,6 +88,8 @@ public class GetLiveDataForrecyreViewPrices {
                                             ,cardview_commingprices_neasted,jsonNodeNested,holder,recycleview_comminingppricesNesteds);
 
 
+                                    // TODO: 07.02.2024 выключаем обзервер
+                                    getHiltMutableLiveDataPayForRecyreView.removeObservers(lifecycleOwner);
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
