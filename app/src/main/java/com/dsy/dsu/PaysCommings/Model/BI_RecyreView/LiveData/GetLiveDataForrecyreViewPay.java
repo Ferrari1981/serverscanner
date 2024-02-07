@@ -24,6 +24,7 @@ import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPayCommingPay;
 import com.dsy.dsu.Services.Service_Notificatios_Для_Согласования;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.material.card.MaterialCardView;
+import com.google.common.util.concurrent.AtomicDouble;
 
 import javax.inject.Inject;
 
@@ -87,6 +88,9 @@ public class GetLiveDataForrecyreViewPay {
                                             activity,
                                             positionDeleteJsonNodeAll,
                                             positionDeleteJsonNodeSeachView);
+
+                                    // TODO: 07.02.2024  выключаем
+                                    getHiltMutableLiveDataPayForRecyreViewPays.removeObservers(lifecycleOwner);
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

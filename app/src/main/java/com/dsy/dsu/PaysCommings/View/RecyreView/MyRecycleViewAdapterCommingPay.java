@@ -1017,8 +1017,8 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
 
     // TODO: 12.01.2024  метод срабоатывает когда нажали Согласовать Succeeess
     private void proccerClickSucceesPay(@NonNull MyViewHolderPayCommingPay holder,
-                                        Handler[] handler,
-                                        MaterialCardView cardview_commingpay,
+                                        @NonNull  Handler[] handler,
+                                        @NonNull MaterialCardView cardview_commingpay,
                                         @NonNull Integer ПубличныйidPay,
                                         @NonNull  String getHiltCommintgPays,
                                         @NonNull MyRecycleViewAdapterCommingPay myRecycleViewAdapterCommingPay) {
@@ -1117,6 +1117,23 @@ public class MyRecycleViewAdapterCommingPay extends RecyclerView.Adapter<MyViewH
     private void cardmaterialrotafedefualt(@NonNull MyViewHolderPayCommingPay holder) {
         holder.cardview_commingpay.animate().rotationXBy(-5);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void notifynotifyDataSetChanged(@NonNull MyViewHolderPayCommingPay holder,
                                            @NonNull int position) {
         try{
