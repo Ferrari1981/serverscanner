@@ -231,7 +231,7 @@ public class ComponentsForRecyreViewNesteds {
                     String UUID=   bundleДанныеДляPost.getString("UUID").trim();
                     
 
-                    getLiveDataForrecyreViewPrices.setObservableLiveDataRecyreViewPrices(lifecycleOwner,
+                    getLiveDataForrecyreViewPrices.setObservableLiveDataRecyreViewCommitPrices(lifecycleOwner,
                             context,
                             getHiltMutableLiveDataPay
                             ,ByteFor1CCommintPrices,getHiltPublicId,getHiltCommintgPrices,UUID,mTV_commitingprices_count,

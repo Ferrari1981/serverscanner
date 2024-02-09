@@ -3,10 +3,7 @@ package com.dsy.dsu.CommitingPrices.Model.LiveDataPrices;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
@@ -19,10 +16,6 @@ import com.dsy.dsu.CommitingPrices.Model.SendDataTo1C.ProcceroingResultatOtveta1
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyRecycleViewIsAdaptersNested;
 import com.dsy.dsu.CommitingPrices.View.MyRecycleViewNested.MyViewHoldersNested;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.dsy.dsu.PaysCommings.Model.BI_RecyreView.Bl_CommintigPay;
-import com.dsy.dsu.PaysCommings.Model.Bl_Nested.ComponensForRecyreviewNestedPay;
-import com.dsy.dsu.PaysCommings.View.RecyreView.MyRecycleViewAdapterCommingPay;
-import com.dsy.dsu.PaysCommings.View.RecyreView.MyViewHolderPayCommingPay;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
@@ -42,24 +35,24 @@ public class GetLiveDataForrecyreViewPrices {
         System.out.println("GetLiveDataForrecyreViewPrices");
     }
 
-    public void setObservableLiveDataRecyreViewPrices(@NonNull  LifecycleOwner lifecycleOwner ,
-                                                      @NonNull Context context,
-                                                      @NonNull  MutableLiveData<Intent> getHiltMutableLiveDataPayForRecyreView,
-                                                      @NonNull     byte[] ByteFor1CCommintPrices,
-                                                      @NonNull Integer getHiltPublicId,
-                                                      @NonNull String getHiltCommintgPrices,
-                                                      @NonNull    String UUID,
-                                                      @NonNull MaterialTextView mTV_commitingprices_count,
-                                                      @NonNull MyRecycleViewIsAdaptersNested myRecycleViewIsAdaptersNested,
-                                                      @NonNull  int position,
-                                                      @NonNull MaterialCardView cardview_commingprices_neasted,
-                                                      @NonNull JsonNode jsonNodeNested,
-                                                      @NonNull MyViewHoldersNested holder,
-                                                      @NonNull RecyclerView   recycleview_comminingppricesNesteds) {
+    public void setObservableLiveDataRecyreViewCommitPrices(@NonNull  LifecycleOwner lifecycleOwner ,
+                                                            @NonNull Context context,
+                                                            @NonNull  MutableLiveData<Intent> getHilLiveDataRecyreVirewCommitPrices,
+                                                            @NonNull     byte[] ByteFor1CCommintPrices,
+                                                            @NonNull Integer getHiltPublicId,
+                                                            @NonNull String getHiltCommintgPrices,
+                                                            @NonNull    String UUID,
+                                                            @NonNull MaterialTextView mTV_commitingprices_count,
+                                                            @NonNull MyRecycleViewIsAdaptersNested myRecycleViewIsAdaptersNested,
+                                                            @NonNull  int position,
+                                                            @NonNull MaterialCardView cardview_commingprices_neasted,
+                                                            @NonNull JsonNode jsonNodeNested,
+                                                            @NonNull MyViewHoldersNested holder,
+                                                            @NonNull RecyclerView   recycleview_comminingppricesNesteds) {
         try{
-            if (!getHiltMutableLiveDataPayForRecyreView.hasObservers()) {
+            if (!getHilLiveDataRecyreVirewCommitPrices.hasObservers()) {
                 // TODO: 16.01.2024
-                getHiltMutableLiveDataPayForRecyreView.observe(lifecycleOwner, new Observer<Intent>() {
+                getHilLiveDataRecyreVirewCommitPrices.observe(lifecycleOwner, new Observer<Intent>() {
                     @Override
                     public void onChanged(Intent intent) {
                         try{
@@ -89,7 +82,7 @@ public class GetLiveDataForrecyreViewPrices {
 
 
                                     // TODO: 07.02.2024 выключаем обзервер
-                                    getHiltMutableLiveDataPayForRecyreView.removeObservers(lifecycleOwner);
+                                    getHilLiveDataRecyreVirewCommitPrices.removeObservers(lifecycleOwner);
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
