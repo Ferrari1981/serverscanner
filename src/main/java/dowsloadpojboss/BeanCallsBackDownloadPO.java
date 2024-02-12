@@ -103,6 +103,9 @@ public class BeanCallsBackDownloadPO   {
                                          @NotNull SessionFactory getsessionHibernate) throws InterruptedException, ExecutionException {
         try {
             if (getsessionHibernate.isOpen()) {
+                // TODO: 01.11.2023 Получаем Сессию
+                session = transationCompleteSession.startingSession(  getsessionHibernate);
+
                 Object ЗаданиеДляСервераЗагрузкиНовогоПо = request.getHeaders("task_downlonupdatepo").nextElement();
                 // TODO: 01.11.2023 Получаем Сессию
             // TODO: 01.11.2023 Аунтификайия Имя И Пароль

@@ -68,7 +68,8 @@ public class DSU1ScannerServlet extends HttpServlet {
         ЛОГ = getServletContext();
                 try {
                     if (getsessionHibernate.isOpen()) {
-
+                        // TODO: 01.11.2023 Получаем Сессию
+                        session = transationCompleteSession.startingSession(  getsessionHibernate);
                  /*       transationCompleteSession.startingTransastion(ЛОГ, session);
                         // TODO: 01.11.2023 Аунтификайия Имя И Пароль
                         Boolean СтатусаАунтификацииПользователя =
@@ -113,6 +114,8 @@ public class DSU1ScannerServlet extends HttpServlet {
                 //TODO ПОТОК ДЛЯ МЕТОДА POST
                 try {
                     if (getsessionHibernate.isOpen()) {
+                        // TODO: 01.11.2023 Получаем Сессию
+                        session = transationCompleteSession.startingSession(  getsessionHibernate);
                         // TODO: 01.11.2023 Аунтификайия Имя И Пароль
                         Boolean СтатусаАунтификацииПользователя =
                                 ayntificationDontPasswordAndLogin.successAyntificationUserForServlets( req, resp , session, ЛОГ);

@@ -79,7 +79,6 @@ public class BeanPOST   {
 
             if (getsessionHibernate.isOpen()) {
                 // TODO: 01.11.2023 Получаем Сессию
-                // TODO: 01.11.2023 Получаем Сессию
                 session = transationCompleteSession.startingSession(  getsessionHibernate);
             // TODO: 01.11.2023 Аунтификайия Имя И Пароль
             Boolean СтатусаАунтификацииПользователя =

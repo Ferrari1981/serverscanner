@@ -97,7 +97,8 @@ public class SessionBeanGETRuntimeJboss   {// extends WITH
         try {
 
             if (getsessionHibernate.isOpen()) {
-
+                // TODO: 01.11.2023 Получаем Сессию
+                session = transationCompleteSession.startingSession(  getsessionHibernate);
             ///Todo  получаем данные от клиента
             byte[] БуферРезультатRuntime= 	 МетодЗапускаRuntime(request,ЛОГ,response,session);
 
