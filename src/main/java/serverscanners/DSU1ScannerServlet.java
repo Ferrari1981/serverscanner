@@ -8,6 +8,8 @@ import dsu1glassfishatomic.workinterfaces.InSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -43,12 +45,22 @@ public class DSU1ScannerServlet extends HttpServlet {
 
 
 
-    DSU1ScannerServlet(){
+    DSU1ScannerServlet() {
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
 
+    @PreDestroy
+    public void commitingTransastion() {
+        transationCompleteSession.commitingTransastion( session);
+        // TODO: 01.11.2023
+        System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                + " session  "  +session.isOpen()+ "    transaction.getTimeout() "  );
+
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,8 +68,6 @@ public class DSU1ScannerServlet extends HttpServlet {
         ЛОГ = getServletContext();
                 try {
                     if (getsessionHibernate.isOpen()) {
-                        // TODO: 01.11.2023 Получаем Сессию
-                          session = transationCompleteSession.startingSession(ЛОГ, getsessionHibernate);
 
                  /*       transationCompleteSession.startingTransastion(ЛОГ, session);
                         // TODO: 01.11.2023 Аунтификайия Имя И Пароль
@@ -103,12 +113,6 @@ public class DSU1ScannerServlet extends HttpServlet {
                 //TODO ПОТОК ДЛЯ МЕТОДА POST
                 try {
                     if (getsessionHibernate.isOpen()) {
-                        // TODO: 01.11.2023 Получаем Сессию
-                        final Session session = transationCompleteSession.startingSession(ЛОГ, getsessionHibernate);
-
-                        transationCompleteSession.startingTransastion(ЛОГ, session);
-
-
                         // TODO: 01.11.2023 Аунтификайия Имя И Пароль
                         Boolean СтатусаАунтификацииПользователя =
                                 ayntificationDontPasswordAndLogin.successAyntificationUserForServlets( req, resp , session, ЛОГ);

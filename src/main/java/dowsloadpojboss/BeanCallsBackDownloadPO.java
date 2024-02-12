@@ -10,11 +10,14 @@ import businesslogic.SubClassWriterErros;
 import businesslogic.CallBaksSend.SuccessSendAndroidBinatyStream;
 import businesslogic.TransationCompleteSession;
 import com.sun.istack.NotNull;
+import dsu1glassfishatomic.workinterfaces.InSessionFactory;
 import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.jboss.ejb3.annotation.TransactionTimeout;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.*;
 import javax.inject.Inject;
 import javax.servlet.*;
@@ -39,7 +42,7 @@ import java.util.zip.GZIPOutputStream;
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 @Transactional
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class BeanCallsBackDownloadPO  implements   SessionSynchronization{
+public class BeanCallsBackDownloadPO   {
 
    @Inject
    private   SubClassWriterErros subClassWriterErros;
@@ -62,6 +65,8 @@ public class BeanCallsBackDownloadPO  implements   SessionSynchronization{
    private Session session;
 
 
+
+
     public BeanCallsBackDownloadPO() {
         // TODO Auto-generated constructor stub
         try {
@@ -79,25 +84,27 @@ public class BeanCallsBackDownloadPO  implements   SessionSynchronization{
 
 
 
+
+    @PreDestroy
+    public void commitingTransastion() {
+        transationCompleteSession.commitingTransastion(  session);
+        // TODO: 01.11.2023
+        System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                + " session  "  +session.isOpen()+ "    transaction.getTimeout() "  );
+    }
+
+
     @Asynchronous
     public void МетодЗапускаОбновлениеПО(@NotNull ServletContext ЛОГ,
                                          @NotNull HttpServletRequest request,
                                          @NotNull HttpServletResponse response,
                                          @NotNull SessionFactory getsessionHibernate) throws InterruptedException, ExecutionException {
         try {
-            Object ЗаданиеДляСервераЗагрузкиНовогоПо = request.getHeaders("task_downlonupdatepo").nextElement();
-            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    "  ЛогинОтAndroid    ЗаданиеДляСервераЗагрузкиНовогоПо " + ЗаданиеДляСервераЗагрузкиНовогоПо
-                    + " req.isAsyncStarted() " + request.isAsyncStarted()+"  POOL  THREAD "+Thread.currentThread().getName());
-
             if (getsessionHibernate.isOpen()) {
+                Object ЗаданиеДляСервераЗагрузкиНовогоПо = request.getHeaders("task_downlonupdatepo").nextElement();
                 // TODO: 01.11.2023 Получаем Сессию
-               session = transationCompleteSession.startingSession(ЛОГ, getsessionHibernate);
-
-            transationCompleteSession.startingTransastion(ЛОГ, session);
-
             // TODO: 01.11.2023 Аунтификайия Имя И Пароль
             Boolean СтатусаАунтификацииПользователя =
                     ayntificationDontPasswordAndLogin.successAyntificationUserForServlets(  request, response, session, ЛОГ);
@@ -151,10 +158,6 @@ public class BeanCallsBackDownloadPO  implements   SessionSynchronization{
             // TODO: 10.03.2023  данные от JSON ANALIZE
           File ПолучаемJSONФайл= 	 МетодДляJSONФайла(ЛОГ,request,response);
 
-
-            // TODO: 17.11.2023 commit transaction
-            transationCompleteSession.commitingTransastion(ЛОГ,session);
-
             // TODO: 01.12.2023 Send File Cliknt
 
             МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемJSONФайл,ЛОГ   );
@@ -183,9 +186,6 @@ public class BeanCallsBackDownloadPO  implements   SessionSynchronization{
             // TODO: 10.03.2023  данные от .APK Download
            File ПолучаемAPKФайл= 	 МетодДляAPKФайла(ЛОГ,request,response);
 
-
-            // TODO: 17.11.2023 commit transaction
-            transationCompleteSession.commitingTransastion(ЛОГ,session);
 
             // TODO: 29.11.2023 ответ клиенту
             МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемAPKФайл,ЛОГ );
@@ -312,29 +312,7 @@ public class BeanCallsBackDownloadPO  implements   SessionSynchronization{
 }
 
 
-    @Override
-    public void afterBegin() throws EJBException, RemoteException {
-        System.out.println(Thread.currentThread().getStackTrace()[2].getClassName()
-                +"\n"+
-                " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
 
-    @Override
-    public void beforeCompletion() throws EJBException, RemoteException {
-        System.out.println(Thread.currentThread().getStackTrace()[2].getClassName()
-                +"\n"+
-                " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-
-    @Override
-    public void afterCompletion(boolean b) throws EJBException, RemoteException {
-        System.out.println(Thread.currentThread().getStackTrace()[2].getClassName()
-                +"\n"+
-                " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()+" afterCompletion  b " +b);
-    }
 }
 
 

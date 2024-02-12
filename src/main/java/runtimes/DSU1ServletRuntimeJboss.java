@@ -30,6 +30,9 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
 
 
 
+    @Inject
+    @InSessionFactory
+    private SessionFactory getsessionHibernate;
 
 
 
@@ -54,7 +57,7 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
                 try {
 
                             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                            sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ, req,  resp );
+                            sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ, req,  resp,getsessionHibernate );
 
 
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

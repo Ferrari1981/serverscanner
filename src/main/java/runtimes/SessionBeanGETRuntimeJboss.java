@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 @LocalBean
 @Transactional
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class SessionBeanGETRuntimeJboss implements   SessionSynchronization {// extends WITH
+public class SessionBeanGETRuntimeJboss   {// extends WITH
 
     private ServletContext ЛОГ;
     //private	Connection conn; ////// общий коннект для всего севлтера
@@ -66,9 +66,7 @@ public class SessionBeanGETRuntimeJboss implements   SessionSynchronization {// 
 
     private  Session session;
 
-    @Inject
-    @InSessionFactory
-    private SessionFactory getsessionHibernate;
+
 
 
 
@@ -79,40 +77,30 @@ public class SessionBeanGETRuntimeJboss implements   SessionSynchronization {// 
     }
 
 
-    @PostConstruct
-    private void startingTransastion() {
-        // TODO: 01.11.2023 Получаем Сессию
-        session = transationCompleteSession.startingSession(ЛОГ, getsessionHibernate);
-        // TODO: 01.11.2023
-        ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатRuntime  ");
-    }
 
     @PreDestroy
-    public void preDestroy() {
-        transationCompleteSession.commitingTransastion(ЛОГ, session);
+    public void commitingTransastion() {
+        transationCompleteSession.commitingTransastion(  session);
         // TODO: 01.11.2023
-        ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатRuntime  ");
+        System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                + " session  "  +session.isOpen()+ "    transaction.getTimeout() "  );
 
     }
 
 @Asynchronous
     public void МетодГлавныйRuntimeJboss(@NotNull ServletContext ЛОГ,
                                                  @NotNull HttpServletRequest request,
-                                                 @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
+                                                 @NotNull  HttpServletResponse response,
+                                         @NotNull SessionFactory getsessionHibernate) throws InterruptedException, ExecutionException {;
         try {
 
             if (getsessionHibernate.isOpen()) {
 
-                transationCompleteSession.startingTransastion(ЛОГ, session);
-
             ///Todo  получаем данные от клиента
             byte[] БуферРезультатRuntime= 	 МетодЗапускаRuntime(request,ЛОГ,response,session);
-            // TODO: 17.11.2023 commit transaction
-            transationCompleteSession.commitingTransastion(ЛОГ,session);
+
 
             ///Todo получаем данные от Клиента на Сервер
             bEANCallsBack.МетодBackДанныеКлиентуByte(response, БуферРезультатRuntime, ЛОГ  );
@@ -251,29 +239,7 @@ public class SessionBeanGETRuntimeJboss implements   SessionSynchronization {// 
         return ЛистДанныеОтHibenide;
     }
 
-    @Override
-    public void afterBegin() throws EJBException, RemoteException {
-        System.out.println(Thread.currentThread().getStackTrace()[2].getClassName()
-                +"\n"+
-                " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
 
-    @Override
-    public void beforeCompletion() throws EJBException, RemoteException {
-        System.out.println(Thread.currentThread().getStackTrace()[2].getClassName()
-                +"\n"+
-                " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-
-    @Override
-    public void afterCompletion(boolean b) throws EJBException, RemoteException {
-        System.out.println(Thread.currentThread().getStackTrace()[2].getClassName()
-                +"\n"+
-                " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()+" afterCompletion b " +b);
-    }
 
 
     // TODO: 23.04.2023 end test code

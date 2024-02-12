@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 @LocalBean
 @Transactional
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class BeanPOST implements   SessionSynchronization {
+public class BeanPOST   {
     @Inject
     private SubClassSessionBeanPOST subClassSessionBeanPOST;
     @Inject
@@ -46,9 +46,7 @@ public class BeanPOST implements   SessionSynchronization {
 
     private  Session session;
 
-    @Inject
-    @InSessionFactory
-    private SessionFactory getsessionHibernate;
+
 
     /**
      * Default constructor.
@@ -59,32 +57,30 @@ public class BeanPOST implements   SessionSynchronization {
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
     }
-    @PostConstruct
-    private void startingTransastion() {
-        // TODO: 01.11.2023 Получаем Сессию
-        session = transationCompleteSession.startingSession(ЛОГ, getsessionHibernate);
-        // TODO: 01.11.2023
 
-    }
 
     @PreDestroy
-    public void preDestroy() {
-        transationCompleteSession.commitingTransastion(ЛОГ, session);
+    public void commitingTransastion() {
+        transationCompleteSession.commitingTransastion(  session);
         // TODO: 01.11.2023
+        System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                + " session  "  +session.isOpen()+ "    transaction.getTimeout() "  );
     }
 
 
     @Asynchronous
     public void МетодБинаPOST(@NotNull ServletContext ЛОГ,
                                       @NotNull HttpServletRequest request,
-                                      @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
+                                      @NotNull  HttpServletResponse response,
+                                       @NotNull  SessionFactory getsessionHibernate) throws InterruptedException, ExecutionException {;
         try {
 
             if (getsessionHibernate.isOpen()) {
                 // TODO: 01.11.2023 Получаем Сессию
-                session = transationCompleteSession.startingSession(ЛОГ, getsessionHibernate);
-
-            transationCompleteSession.startingTransastion(ЛОГ, session);
+                // TODO: 01.11.2023 Получаем Сессию
+                session = transationCompleteSession.startingSession(  getsessionHibernate);
             // TODO: 01.11.2023 Аунтификайия Имя И Пароль
             Boolean СтатусаАунтификацииПользователя =
                     ayntificationDontPasswordAndLogin.successAyntificationUserForServlets(request, response, session, ЛОГ);
@@ -92,14 +88,10 @@ public class BeanPOST implements   SessionSynchronization {
 
             if (СтатусаАунтификацииПользователя == true) {
 
-
-
             ///Todo  получаем данные от клиента
           byte[]  БуферРезультатPOST=		subClassSessionBeanPOST.МетодЗапускаPOST(request, response, ЛОГ,session);
 
 
-            // TODO: 17.11.2023 commit transaction
-            transationCompleteSession.commitingTransastion(ЛОГ,session);
             ///Todo получаем данные от Клиента на Сервер
                 bEANCallsBack.МетодBackДанныеКлиентуByte(response, БуферРезультатPOST, ЛОГ  );
 
@@ -125,28 +117,6 @@ public class BeanPOST implements   SessionSynchronization {
     }
 
 
-    @Override
-    public void afterBegin() throws EJBException, RemoteException {
-        System.out.println(Thread.currentThread().getStackTrace()[2].getClassName()
-                +"\n"+
-                " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
 
-    @Override
-    public void beforeCompletion() throws EJBException, RemoteException {
-        System.out.println(Thread.currentThread().getStackTrace()[2].getClassName()
-                +"\n"+
-                " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-
-    @Override
-    public void afterCompletion(boolean b) throws EJBException, RemoteException {
-        System.out.println(Thread.currentThread().getStackTrace()[2].getClassName()
-                +"\n"+
-                " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()+" afterCompletion b  " +b);
-    }
 }
 
