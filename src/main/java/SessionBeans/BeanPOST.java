@@ -16,10 +16,13 @@ import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.inject.Inject;
+import javax.servlet.AsyncEvent;
+import javax.servlet.AsyncListener;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.TransactionManager;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -31,7 +34,6 @@ import java.util.concurrent.TimeUnit;
 @LocalBean
 @Transactional
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-@TransactionManagement(TransactionManagementType.BEAN)
 public class BeanPOST   {
     @Inject
     private SubClassSessionBeanPOST subClassSessionBeanPOST;
@@ -50,10 +52,6 @@ public class BeanPOST   {
     private AyntificationDontPasswordAndLogin ayntificationDontPasswordAndLogin;
 
     private  Session session;
-
-
-    @Resource
-      SessionContext sessionContext;
 
     /**
      * Default constructor.
@@ -75,7 +73,6 @@ public class BeanPOST   {
                                       @NotNull  HttpServletResponse response,
                                        @NotNull  SessionFactory getsessionHibernate) throws InterruptedException, ExecutionException {;
         try {
-           sessionContext.getUserTransaction().begin();
 
             if (getsessionHibernate.isOpen()) {
                 // TODO: 01.11.2023 Получаем Сессию
@@ -102,12 +99,9 @@ public class BeanPOST   {
 
             }
             }
-
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
-            sessionContext.getUserTransaction().commit();;
-
         } catch (Exception e) {
             // TODO: 02.11.2023 ROLLBACK
             // TODO: 17.11.2023 ERROR transaction

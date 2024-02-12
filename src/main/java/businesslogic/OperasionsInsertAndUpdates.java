@@ -2,6 +2,9 @@ package businesslogic;
 
 
 import WebSocets.PointServer.WebsocketListener;
+import antlr.TokenBuffer;
+import antlr.TokenStream;
+import antlr.TokenStreamException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mchange.v2.c3p0.ConnectionTester;
@@ -121,14 +124,14 @@ public class OperasionsInsertAndUpdates {
 
                 jsonNodeParent.elements().forEachRemaining(new Consumer<JsonNode>() {
                     @Override
-                    public void accept(JsonNode jsonNode) {
+                    public void accept(JsonNode jsonNodeInner) {
                         // TODO: 17.11.2023 set procedure
                         // TODO: 16.11.2023 УСТАНАВЛИВАЕМ КАКАЯ ПРОЦЕДУРА БУДЕТ ВЫПОЛЯТЬСЯ НА SQL SERVER
                       final  StoredProcedureQuery   queryprocedure=        metodSelectingProcedureSQlServer(ЛОГ, ТаблицаPOST);
                         // TODO: 17.11.2023 get key
-                      final  long Key =jsonNode.get("uuid").asLong();
+                      final  long Key =jsonNodeInner.get("uuid").asLong();
                         // TODO: 17.11.2023 ROW
-                        jsonNode.fields().forEachRemaining(new Consumer<Entry<String, JsonNode>>() {
+                        jsonNodeInner.fields().forEachRemaining(new Consumer<Entry<String, JsonNode>>() {
                             @Override
                             public void accept(Entry<String, JsonNode> stringJsonNodeEntryTwo) {
                                 // TODO: 22.04.2023  Парсинг Rows JSON
