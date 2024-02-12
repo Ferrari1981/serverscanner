@@ -46,18 +46,7 @@ public class BeanGET   {
 
     private    Session session;
 
-
-
-
-    @PreDestroy
-    public void commitingTransastion() {
-        transationCompleteSession.commitingTransastion(  session);
-        // TODO: 01.11.2023
-        System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                + " session  "  +session.isOpen()+ "    transaction.getTimeout() "  );
-    }
+ 
 
 
 
@@ -112,6 +101,10 @@ public class BeanGET   {
 
 
 
+
+                // TODO: 29.11.2023 закрывам Сесиою HIbernate
+                transationCompleteSession.commitingTransastion(  session);
+
                 // TODO: 11.03.2023  нет не имени не пароля
                 ayntificationDontPasswordAndLogin.ayntificationDontPasswordAndLogin(request, response, ЛОГ);
 
@@ -151,7 +144,8 @@ public class BeanGET   {
 
     private byte[] CallBackSucceessAuntificazions(ServletContext ЛОГ, HttpServletRequest request, HttpServletResponse response,
                                                   Session session, Boolean СтатусаАунтификацииПользователя, String JobForServer) throws SQLException {
-        byte[] БуферРезультатGETByte;
+        byte[] БуферРезультатGETByte = new byte[0];
+        try{
         if (JobForServer.trim().equalsIgnoreCase("Хотим Получить  JSON")) {
 
             БуферРезультатGETByte = generatorDataFromAndroid.ГлавныйМетод_МетодаGETByte(request, ЛОГ, response, session);
@@ -176,8 +170,26 @@ public class BeanGET   {
         ///TODO ОТВЕТ КЛИЕНТУ ОТ СЕРВЕРА
         bEANCallsBack.МетодBackДанныеКлиентуByte(response, БуферРезультатGETByte, ЛОГ);
 
-        // TODO: 29.11.2023 закрывам Async
+
+
+
+            // TODO: 29.11.2023 закрывам Сесиою HIbernate
+            transationCompleteSession.commitingTransastion(  session);
+        // TODO: 29.11.2023 закрывам Сесиою Бызова
         asyncContextComplete.endingContextComplete(request, ЛОГ);
+
+
+    } catch (Exception e) {
+        // TODO: 17.11.2023 ERROR transaction
+        transationCompleteSession.erroringTransastion(ЛОГ,session);
+        subClassWriterErros.
+                МетодаЗаписиОшибкиВЛог(e,
+                        Thread.currentThread().
+                                getStackTrace(),
+                        ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+    }
+        
+        
         return БуферРезультатGETByte;
     }
 

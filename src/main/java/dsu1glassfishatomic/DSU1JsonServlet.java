@@ -9,7 +9,10 @@ import businesslogic.TransationCompleteSession;
 import dsu1glassfishatomic.workinterfaces.InSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.engine.transaction.jta.platform.internal.JBossAppServerJtaPlatform;
+import org.hibernate.engine.transaction.jta.platform.spi.JtaPlatform;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -19,6 +22,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.TransactionManager;
+import javax.transaction.UserTransaction;
 import java.io.IOException;
 
 
@@ -45,15 +50,12 @@ public class DSU1JsonServlet extends HttpServlet {
 
 
 
-
-
             DSU1JsonServlet(){
         // TODO: 10.10.2023 ihit
         //sessionSousJboss.openSession();
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-
 
     }
 
@@ -65,7 +67,7 @@ public class DSU1JsonServlet extends HttpServlet {
        ЛОГ = getServletContext();
        try{
                             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                            СессионыйБинGET.МетодБинаGET(ЛОГ, (HttpServletRequest) req, (HttpServletResponse) resp ,getsessionHibernate );
+                            СессионыйБинGET.МетодБинаGET(ЛОГ,  req, resp ,getsessionHibernate );
 
 
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

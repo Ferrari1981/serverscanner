@@ -45,11 +45,13 @@ System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClas
             Transaction transaction=null;
                 // TODO: 31.10.2023
                 if (session.isOpen()) {
+                    // TODO: 12.02.2024 jion
+                    session.joinTransaction();
                      transaction= session.getTransaction() ;
                     if ( ! session.isJoinedToTransaction() ) {
                         transaction.setTimeout(1000000);
                         transaction.begin();
-                        session.joinTransaction();
+
                         // TODO: 17.11.2023
                     }
                 }

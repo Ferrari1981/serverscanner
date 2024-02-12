@@ -166,8 +166,11 @@ public class BeanCallsBackDownloadPO   {
             МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемJSONФайл,ЛОГ   );
             // TODO: 29.11.2023
 
-            // TODO: 29.11.2023 закрывам Async
-            asyncContextComplete.endingContextComplete(request,ЛОГ);
+
+            // TODO: 29.11.2023 закрывам Сесиою HIbernate
+            transationCompleteSession.commitingTransastion(  session);
+            // TODO: 29.11.2023 закрывам Сесиою Бызова
+            asyncContextComplete.endingContextComplete(request, ЛОГ);
 
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
@@ -194,8 +197,11 @@ public class BeanCallsBackDownloadPO   {
             МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемAPKФайл,ЛОГ );
 
 
-            // TODO: 29.11.2023 закрывам Async
-            asyncContextComplete.endingContextComplete(request,ЛОГ);
+
+            // TODO: 29.11.2023 закрывам Сесиою HIbernate
+            transationCompleteSession.commitingTransastion(  session);
+            // TODO: 29.11.2023 закрывам Сесиою Бызова
+            asyncContextComplete.endingContextComplete(request, ЛОГ);
 
 
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

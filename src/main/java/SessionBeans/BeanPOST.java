@@ -94,8 +94,11 @@ public class BeanPOST   {
             ///Todo получаем данные от Клиента на Сервер
                 bEANCallsBack.МетодBackДанныеКлиентуByte(response, БуферРезультатPOST, ЛОГ  );
 
-// TODO: 29.11.2023 закрывам Async
-            asyncContextComplete.endingContextComplete(request,ЛОГ);
+
+                // TODO: 29.11.2023 закрывам Сесиою HIbernate
+                transationCompleteSession.commitingTransastion(  session);
+                // TODO: 29.11.2023 закрывам Сесиою Бызова
+                asyncContextComplete.endingContextComplete(request, ЛОГ);
 
             }
             }

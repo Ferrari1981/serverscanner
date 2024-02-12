@@ -32,7 +32,7 @@ public class AyntificationDontPasswordAndLogin {
     private AsyncContextComplete asyncContextComplete;
 
     // TODO: 01.11.2023  метод ответ что не прошел Аунтификацию 
-    public void ayntificationDontPasswordAndLogin( @NotNull HttpServletRequest asyrequest, @NotNull HttpServletResponse asyresponse,
+    public void ayntificationDontPasswordAndLogin( @NotNull HttpServletRequest request, @NotNull HttpServletResponse asyresponse,
                                                    @NotNull ServletContext ЛОГ)
             throws IOException, ServletException {
         try {
@@ -41,8 +41,8 @@ public class AyntificationDontPasswordAndLogin {
             bEANCallsBack.МетодBackДанныеКлиентуByte(asyresponse, СерверРаботаетБезПараметров.getBytes(StandardCharsets.UTF_8), ЛОГ  );
 
 
-            // TODO: 29.11.2023 закрывам Async
-            asyncContextComplete.endingContextComplete(asyrequest,ЛОГ);
+            // TODO: 29.11.2023 закрывам Сесиою Бызова
+            asyncContextComplete.endingContextComplete(request, ЛОГ);
 
 
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

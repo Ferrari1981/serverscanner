@@ -54,8 +54,7 @@ public class OperasionsInsertAndUpdates {
     @Inject
     TransationCompleteSession transationCompleteSession;
 
-@Resource
-    JBossAppServerJtaPlatform jBossAppServerJtaPlatform;
+
 
     // TODO: 09.03.2023
     StringBuffer методCompleteInsertorUpdateData(
@@ -188,7 +187,6 @@ public class OperasionsInsertAndUpdates {
                                         + " arrayListMaxBackOperation" + arrayListMaxBackOperation.size());
 
 
-                              TransactionManager transactionManager= jBossAppServerJtaPlatform.getTransactionManager();
 
 
                             }
@@ -206,6 +204,11 @@ public class OperasionsInsertAndUpdates {
 
             @Override
             public void onComplete() {
+
+                // TODO: 12.02.2024
+
+                // TODO: 29.11.2023 закрывам Сесиою HIbernate
+                transationCompleteSession.commitingTransastion(  session);
                 // TODO: 22.04.2023
                 Long  MaxВсеОперации = arrayListMaxBackOperation
                         .stream()
