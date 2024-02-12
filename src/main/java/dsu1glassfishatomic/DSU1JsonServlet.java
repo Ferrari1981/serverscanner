@@ -12,10 +12,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.engine.transaction.jta.platform.internal.JBossAppServerJtaPlatform;
 import org.hibernate.engine.transaction.jta.platform.spi.JtaPlatform;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
+import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,13 +54,35 @@ public class DSU1JsonServlet extends HttpServlet {
 
 
             DSU1JsonServlet(){
-        // TODO: 10.10.2023 ihit
-        //sessionSousJboss.openSession();
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
 
     }
+
+
+
+
+        @PostConstruct
+        private void startup() {
+            System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                    "   getsessionHibernate.getCache();"+  getsessionHibernate.getCache());
+        }
+
+        @PreDestroy
+        private void shutdown() {
+            System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                    "   getsessionHibernate.getCache();"+  getsessionHibernate.getCache());
+        }
+
+
+
+
+
 
 
 
