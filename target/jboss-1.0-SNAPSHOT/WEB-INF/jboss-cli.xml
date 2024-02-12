@@ -1,0 +1,9 @@
+<ssl>
+    <alias>client</alias>
+    <key-store>../certific/keystore31.jks</key-store>
+    <key-store-password>secret</key-store-password>
+    <key-password>secret</key-password>
+    <trust-store>../certific/keystore31.jks</trust-store>
+    <trust-store-password>secret</trust-store-password>
+    <modify-trust-store>false</modify-trust-store>
+</ssl>
