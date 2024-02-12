@@ -37,14 +37,10 @@ public class DSU1JsonServlet extends HttpServlet {
 
     private  ServletContext   ЛОГ;
 
-    @Inject
-    @InSessionFactory
-    private SessionFactory getsessionHibernate;
 
 
 
-    @Inject
-    private TransationCompleteSession transationCompleteSession;
+
 
 
 
@@ -66,7 +62,7 @@ public class DSU1JsonServlet extends HttpServlet {
        ЛОГ = getServletContext();
        try{
                             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                            СессионыйБинGET.МетодБинаGET(ЛОГ, (HttpServletRequest) req, (HttpServletResponse) resp,getsessionHibernate );
+                            СессионыйБинGET.МетодБинаGET(ЛОГ, (HttpServletRequest) req, (HttpServletResponse) resp  );
 
 
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -108,7 +104,7 @@ public class DSU1JsonServlet extends HttpServlet {
                 try {
 
                             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
-                            СессионыйБинPOST.МетодБинаPOST(ЛОГ, req,  resp, getsessionHibernate );
+                            СессионыйБинPOST.МетодБинаPOST(ЛОГ, req,  resp );
 
 
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -3,11 +3,14 @@ package SessionBeans;
 
 import businesslogic.*;
 import com.sun.istack.NotNull;
+import dsu1glassfishatomic.workinterfaces.InSessionFactory;
 import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.jboss.ejb3.annotation.TransactionTimeout;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.*;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
@@ -42,6 +45,11 @@ public class BeanPOST implements   SessionSynchronization {
     private AyntificationDontPasswordAndLogin ayntificationDontPasswordAndLogin;
 
     private  Session session;
+
+    @Inject
+    @InSessionFactory
+    private SessionFactory getsessionHibernate;
+
     /**
      * Default constructor.
      */
@@ -51,14 +59,25 @@ public class BeanPOST implements   SessionSynchronization {
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
     }
+    @PostConstruct
+    private void startingTransastion() {
+        // TODO: 01.11.2023 Получаем Сессию
+        session = transationCompleteSession.startingSession(ЛОГ, getsessionHibernate);
+        // TODO: 01.11.2023
 
+    }
+
+    @PreDestroy
+    public void preDestroy() {
+        transationCompleteSession.commitingTransastion(ЛОГ, session);
+        // TODO: 01.11.2023
+    }
 
 
     @Asynchronous
     public void МетодБинаPOST(@NotNull ServletContext ЛОГ,
                                       @NotNull HttpServletRequest request,
-                                      @NotNull  HttpServletResponse response,
-                                      @NotNull SessionFactory getsessionHibernate) throws InterruptedException, ExecutionException {;
+                                      @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
         try {
 
             if (getsessionHibernate.isOpen()) {

@@ -29,16 +29,7 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
     private  ServletContext   ЛОГ;
 
 
-    @Inject
-    @InSessionFactory
-    private SessionFactory getsessionHibernate;
 
-    @Inject
-    private  AyntificationDontPasswordAndLogin ayntificationDontPasswordAndLogin;
-
-
-    @Inject
-    private TransationCompleteSession transationCompleteSession;
 
 
 
@@ -63,7 +54,7 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
                 try {
 
                             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                            sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ, req,  resp, getsessionHibernate);
+                            sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ, req,  resp );
 
 
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

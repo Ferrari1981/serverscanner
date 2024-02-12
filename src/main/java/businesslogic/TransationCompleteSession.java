@@ -24,12 +24,12 @@ public class TransationCompleteSession {
             if (getsessionHibernate.isOpen()) {
                 session=   getsessionHibernate.openSession();
                 // TODO: 31.10.2023
+                session.joinTransaction();
             }
-
-            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                + "session  "  +session +" sessionFactory.isOpen() "+getsessionHibernate.isOpen() );
+System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+        + "session  "  +session +" sessionFactory.isOpen() "+getsessionHibernate.isOpen());
     } catch (Exception e) {
             subClassWriterErros.
                 МетодаЗаписиОшибкиВЛог(e,
@@ -50,7 +50,7 @@ public class TransationCompleteSession {
                      transaction= session.getTransaction() ;
                     if ( ! session.isJoinedToTransaction() ) {
                         transaction.setTimeout(1000000);
-                        //transaction.begin();
+                        transaction.begin();
                         session.joinTransaction();
                         // TODO: 17.11.2023
                     }

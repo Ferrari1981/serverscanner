@@ -4,16 +4,19 @@ package businesslogic;
 import WebSocets.PointServer.WebsocketListener;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mchange.v2.c3p0.ConnectionTester;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedEndPoint;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.*;
 import io.reactivex.rxjava3.disposables.Disposable;
 
+import org.hibernate.engine.transaction.jta.platform.internal.JBossAppServerJtaPlatform;
 import org.hibernate.procedure.ProcedureCall;
 import org.hibernate.procedure.ProcedureOutputs;
 import org.hibernate.procedure.internal.ProcedureOutputsImpl;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.*;
@@ -27,9 +30,12 @@ import java.sql.SQLException;
 import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
+import javax.transaction.TransactionManager;
 import javax.websocket.*;
 import org.hibernate.Session;
-
+import org.hibernate.resource.transaction.backend.jta.internal.*;
+import org.hibernate.resource.transaction.spi.DdlTransactionIsolator;
+import org.hibernate.resource.transaction.spi.TransactionCoordinatorBuilder;
 
 
 //TODO
@@ -48,8 +54,8 @@ public class OperasionsInsertAndUpdates {
     @Inject
     TransationCompleteSession transationCompleteSession;
 
-
-
+@Resource
+    JBossAppServerJtaPlatform jBossAppServerJtaPlatform;
 
     // TODO: 09.03.2023
     StringBuffer методCompleteInsertorUpdateData(
@@ -176,13 +182,13 @@ public class OperasionsInsertAndUpdates {
                                // queryprocedure.unwrap(ProcedureOutputsImpl.class).release();
                                 queryprocedure.unwrap(ProcedureOutputs.class).release();
 
-
-
                                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"
                                         + " arrayListMaxBackOperation" + arrayListMaxBackOperation.size());
 
+
+                              TransactionManager transactionManager= jBossAppServerJtaPlatform.getTransactionManager();
 
 
                             }

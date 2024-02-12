@@ -2,6 +2,7 @@ package runtimes;
 
 import businesslogic.*;
 import com.sun.istack.NotNull;
+import dsu1glassfishatomic.workinterfaces.InSessionFactory;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.UserTransaction;
 import org.hibernate.*;
@@ -9,6 +10,8 @@ import org.hibernate.engine.transaction.jta.platform.internal.JBossAppServerJtaP
 import org.hibernate.resource.transaction.backend.jta.internal.synchronization.SynchronizationCallbackCoordinator;
 import org.jboss.ejb3.annotation.TransactionTimeout;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.inject.Inject;
@@ -63,6 +66,11 @@ public class SessionBeanGETRuntimeJboss implements   SessionSynchronization {// 
 
     private  Session session;
 
+    @Inject
+    @InSessionFactory
+    private SessionFactory getsessionHibernate;
+
+
 
     public SessionBeanGETRuntimeJboss() {
 
@@ -70,20 +78,36 @@ public class SessionBeanGETRuntimeJboss implements   SessionSynchronization {// 
 
     }
 
+
+    @PostConstruct
+    private void startingTransastion() {
+        // TODO: 01.11.2023 Получаем Сессию
+        session = transationCompleteSession.startingSession(ЛОГ, getsessionHibernate);
+        // TODO: 01.11.2023
+        ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатRuntime  ");
+    }
+
+    @PreDestroy
+    public void preDestroy() {
+        transationCompleteSession.commitingTransastion(ЛОГ, session);
+        // TODO: 01.11.2023
+        ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатRuntime  ");
+
+    }
+
 @Asynchronous
     public void МетодГлавныйRuntimeJboss(@NotNull ServletContext ЛОГ,
                                                  @NotNull HttpServletRequest request,
-                                                 @NotNull  HttpServletResponse response,
-                                         @NotNull  SessionFactory getsessionHibernate) throws InterruptedException, ExecutionException {;
+                                                 @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
         try {
 
             if (getsessionHibernate.isOpen()) {
-                // TODO: 01.11.2023 Получаем Сессию
-                session = transationCompleteSession.startingSession(ЛОГ, getsessionHibernate);
 
                 transationCompleteSession.startingTransastion(ЛОГ, session);
-
-
 
             ///Todo  получаем данные от клиента
             byte[] БуферРезультатRuntime= 	 МетодЗапускаRuntime(request,ЛОГ,response,session);

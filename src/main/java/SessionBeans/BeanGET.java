@@ -2,6 +2,7 @@ package SessionBeans;
 
 import businesslogic.*;
 import com.sun.istack.NotNull;
+import dsu1glassfishatomic.workinterfaces.InSessionFactory;
 import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -42,13 +43,16 @@ public class BeanGET implements   SessionSynchronization {
     private AyntificationDontPasswordAndLogin ayntificationDontPasswordAndLogin;
 
     private    Session session;
+    @Inject
+    @InSessionFactory
+    private SessionFactory getsessionHibernate;
+
 
 
     @Asynchronous
     public void   МетодБинаGET(@NotNull ServletContext ЛОГ,
                               @NotNull HttpServletRequest request,
-                              @NotNull  HttpServletResponse response,
-                               @NotNull SessionFactory getsessionHibernate) throws InterruptedException, ExecutionException {
+                              @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {
         try {
             // TODO: 10.03.2023  данные от GET метода
             byte[]    БуферРезультатGETByte=null;
