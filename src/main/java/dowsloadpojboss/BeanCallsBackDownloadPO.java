@@ -85,15 +85,6 @@ public class BeanCallsBackDownloadPO   {
 
 
 
-    @PreDestroy
-    public void commitingTransastion() {
-        transationCompleteSession.commitingTransastion(  session);
-        // TODO: 01.11.2023
-        System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                + " session  "  +session.isOpen()+ "    transaction.getTimeout() "  );
-    }
 
 
     @Asynchronous
