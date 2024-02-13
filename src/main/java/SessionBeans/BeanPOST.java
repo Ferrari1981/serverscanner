@@ -5,10 +5,10 @@ import businesslogic.*;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.InSessionFactory;
 import jakarta.transaction.Transactional;
-import jakarta.transaction.UserTransaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.engine.transaction.jta.platform.spi.JtaPlatformResolver;
+import org.hibernate.resource.transaction.spi.TransactionCoordinatorBuilder;
 import org.jboss.ejb3.annotation.TransactionTimeout;
 
 import javax.annotation.PostConstruct;
@@ -22,6 +22,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.TransactionManager;
+import javax.transaction.UserTransaction;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.concurrent.ExecutionException;
@@ -34,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 @LocalBean
 @Transactional
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class BeanPOST   {
+public class BeanPOST  {
     @Inject
     private SubClassSessionBeanPOST subClassSessionBeanPOST;
     @Inject
@@ -53,9 +54,13 @@ public class BeanPOST   {
 
     private  Session session;
 
+
+
     /**
      * Default constructor.
      */
+
+
     public BeanPOST() {
         // TODO Auto-generated constructor stub
         System.out.print("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -73,7 +78,6 @@ public class BeanPOST   {
                                       @NotNull  HttpServletResponse response,
                                        @NotNull  SessionFactory getsessionHibernate) throws InterruptedException, ExecutionException {;
         try {
-
             if (getsessionHibernate.isOpen()) {
                 // TODO: 01.11.2023 Получаем Сессию
                 session = transationCompleteSession.startingSession(  getsessionHibernate);
@@ -81,17 +85,11 @@ public class BeanPOST   {
             Boolean СтатусаАунтификацииПользователя =
                     ayntificationDontPasswordAndLogin.successAyntificationUserForServlets(request, response, session, ЛОГ);
 
-
             if (СтатусаАунтификацииПользователя == true) {
-
             ///Todo  получаем данные от клиента
           byte[]  БуферРезультатPOST=		subClassSessionBeanPOST.МетодЗапускаPOST(request, response, ЛОГ,session);
-
-
             ///Todo получаем данные от Клиента на Сервер
                 bEANCallsBack.МетодBackДанныеКлиентуByte(response, БуферРезультатPOST, ЛОГ  );
-
-
                 // TODO: 29.11.2023 закрывам Сесиою HIbernate
                 transationCompleteSession.commitingTransastion(  session);
                 // TODO: 29.11.2023 закрывам Сесиою Бызова

@@ -48,13 +48,13 @@ System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClas
             Transaction transaction=null;
                 // TODO: 31.10.2023
                 if (session.isOpen()) {
-                    // TODO: 12.02.2024 jion
-                    session.joinTransaction();
+
                      transaction= session.getTransaction() ;
                     if ( ! session.isJoinedToTransaction() ) {
-                       // transaction.setTimeout(1000000);
-                       // transaction.begin();
-
+                        transaction.setTimeout(1000000);
+                        transaction.begin();
+                        // TODO: 12.02.2024 jion
+                        session.joinTransaction();
                         // TODO: 17.11.2023
                     }
                 }
@@ -87,8 +87,7 @@ System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClas
             }
             System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " session  "  +session.isOpen()+ "    transaction.getTimeout() " +   transaction.getTimeout());
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
     } catch (Exception e) {
             System.err.println("error  class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

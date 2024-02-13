@@ -32,7 +32,6 @@ import java.util.concurrent.TimeUnit;
 @LocalBean
 @Transactional
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-@TransactionManagement(TransactionManagementType.BEAN)
 public class SessionBeanGETRuntimeJboss   {// extends WITH
 
     private ServletContext ЛОГ;
@@ -69,18 +68,11 @@ public class SessionBeanGETRuntimeJboss   {// extends WITH
 
     private  Session session;
 
-@Resource
-javax.transaction.UserTransaction userTransaction;
-    @Resource
-    javax.transaction.TransactionManager utm;
 
-    @Resource
-    javax.transaction.xa.XAResource xaResource;
+
 
     public SessionBeanGETRuntimeJboss() {
-
         System.out.println("Конструктор  SessionBeanGETRuntimeJboss");
-
     }
 
 
@@ -92,10 +84,6 @@ javax.transaction.UserTransaction userTransaction;
                                                  @NotNull  HttpServletResponse response,
                                          @NotNull SessionFactory getsessionHibernate) throws InterruptedException, ExecutionException {;
         try {
-
-            userTransaction= ( javax.transaction.UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
-            utm = ( javax.transaction.TransactionManager) new InitialContext().lookup("java:/TransactionManager");
-
             if (getsessionHibernate.isOpen()) {
                 // TODO: 01.11.2023 Получаем Сессию
                 session = transationCompleteSession.startingSession(  getsessionHibernate);

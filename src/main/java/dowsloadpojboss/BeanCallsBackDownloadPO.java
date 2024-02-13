@@ -39,7 +39,6 @@ import java.util.zip.GZIPOutputStream;
 @Singleton(mappedName = "beanCallsBackDownloadPO")
 @LocalBean
 @Lock(LockType.READ)
-@ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 @Transactional
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class BeanCallsBackDownloadPO   {
