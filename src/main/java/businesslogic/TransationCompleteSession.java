@@ -1,5 +1,7 @@
 package businesslogic;
 
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.UserTransaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -8,13 +10,14 @@ import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 
 @Named("transationCompleteSession")
 public class TransationCompleteSession {
-
 
 
     public   Session startingSession( @NotNull SessionFactory getsessionHibernate){

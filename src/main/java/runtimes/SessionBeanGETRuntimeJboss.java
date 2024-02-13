@@ -3,10 +3,12 @@ package runtimes;
 import businesslogic.*;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.InSessionFactory;
+import jakarta.transaction.TransactionManager;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.UserTransaction;
 import org.hibernate.*;
 import org.hibernate.engine.transaction.jta.platform.internal.JBossAppServerJtaPlatform;
+import org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorImpl;
 import org.hibernate.resource.transaction.backend.jta.internal.synchronization.SynchronizationCallbackCoordinator;
 import org.jboss.ejb3.annotation.TransactionTimeout;
 
@@ -15,10 +17,10 @@ import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.inject.Inject;
+import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.TransactionManager;
 import java.rmi.RemoteException;
 import java.sql.*;
 import java.util.Date;
@@ -30,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 @LocalBean
 @Transactional
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@TransactionManagement(TransactionManagementType.BEAN)
 public class SessionBeanGETRuntimeJboss   {// extends WITH
 
     private ServletContext ЛОГ;
@@ -66,9 +69,13 @@ public class SessionBeanGETRuntimeJboss   {// extends WITH
 
     private  Session session;
 
+@Resource
+javax.transaction.UserTransaction userTransaction;
+    @Resource
+    javax.transaction.TransactionManager utm;
 
-
-
+    @Resource
+    javax.transaction.xa.XAResource xaResource;
 
     public SessionBeanGETRuntimeJboss() {
 
@@ -85,6 +92,9 @@ public class SessionBeanGETRuntimeJboss   {// extends WITH
                                                  @NotNull  HttpServletResponse response,
                                          @NotNull SessionFactory getsessionHibernate) throws InterruptedException, ExecutionException {;
         try {
+
+            userTransaction= ( javax.transaction.UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
+            utm = ( javax.transaction.TransactionManager) new InitialContext().lookup("java:/TransactionManager");
 
             if (getsessionHibernate.isOpen()) {
                 // TODO: 01.11.2023 Получаем Сессию

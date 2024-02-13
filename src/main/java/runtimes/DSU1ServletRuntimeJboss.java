@@ -4,17 +4,22 @@ package runtimes;
 
 import businesslogic.*;
 import dsu1glassfishatomic.workinterfaces.InSessionFactory;
+import jakarta.transaction.TransactionManager;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorBuilderImpl;
+import org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorImpl;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.UserTransaction;
 import java.io.IOException;
 
 @WebServlet( value="/sous.jboss.runtimejboss",asyncSupported = true)
@@ -55,7 +60,6 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
            ЛОГ = getServletContext();
                 // TODO: 29.11.2023 async
                 try {
-
                             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                             sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ, req,  resp,getsessionHibernate );
 
