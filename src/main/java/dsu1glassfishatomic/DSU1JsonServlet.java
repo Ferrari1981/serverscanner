@@ -102,14 +102,6 @@ public class DSU1JsonServlet extends HttpServlet {
                                 " POOL CURRENT  " + Thread.currentThread().getName() + " req.isAsyncStarted() " + req.isAsyncStarted()
                                 + "  POOL  THREAD " + Thread.currentThread().getName());
 
-
-
-                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " ((HttpServletRequest) req).getPathInfo() " + ((HttpServletRequest) req).getPathInfo() +
-                            " POOL CURRENT  " + Thread.currentThread().getName() + " req.isAsyncStarted() " + req.isAsyncStarted()
-                            + "  POOL  THREAD " + Thread.currentThread().getName());
                 } catch (Exception e) {
                     // TODO: 02.11.2023 запись ошибку
                     subClassWriterErros.

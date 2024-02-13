@@ -104,11 +104,17 @@
 
 
 
-
     <property name = "hibernate.transaction.factory_class">org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorBuilderImpl</property>
     <property name="hibernate.current_session_context_class">thread</property>
-    <property name="hibernate.transaction.jta.platform">org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl</property>
+    <property name="hibernate.transaction.jta.platform">org.hibernate.engine.transaction.jta.platform.internal.JBossAppServerJtaPlatform</property>
 
+
+
+
+    <!--   <property name = "hibernate.transaction.manager_lookup_class" >org.hibernate.engine.transaction.jta.platform.spi.JtaPlatform</property>
+       <property name="hibernate.current_session_context_class">jta</property>
+       <property name="hibernate.transaction.jta.platform">org.hibernate.engine.transaction.jta.platform.internal.JBossAppServerJtaPlatform</property>
+   -->
 
     <!--/   //TODO например jta | thread | managed | custom.Class-->
 

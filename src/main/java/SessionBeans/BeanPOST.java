@@ -55,7 +55,6 @@ public class BeanPOST  {
     private  Session session;
 
 
-
     /**
      * Default constructor.
      */

@@ -24,6 +24,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 import org.hibernate.Session;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 
 //TODO
@@ -40,87 +42,49 @@ public class OperasionsInsertAndUpdates {
     private  StringBuffer bufferCallsBackToAndroid=new StringBuffer();
     private  JsonNode  jsonNodeParent;
 
-    @Resource
-   javax.transaction.UserTransaction userTransaction;
-
-
     // TODO: 09.03.2023
     StringBuffer методCompleteInsertorUpdateData(
             @NotNull ServletContext ЛОГ,
             @NotNull InputStream requestInputStream
             , @NotNull String ТаблицаPOST,
             @NotNull Session session) throws SQLException {
+
         try {
             this.ЛОГ=ЛОГ;
             this.session=session;
-            // TODO: 13.02.2024 операции вставки и обновление данными клиента тоесть Андродай
-            Maybe.just("ProccesingOperUpdateOrInsert").blockingSubscribe(new MaybeObserver<Object>() {
-                @Override
-                public void onSubscribe(@NonNull Disposable d) {
-                    // TODO: 16.11.2023 ПолУЧАЕМ ДАННЫЕ ИЗ ПОТОКА ОТ КЛИЕНТА
-                    try {
-                      jsonNodeParent = metodGetDataFromSreamByte(ЛОГ, requestInputStream);
+            // TODO: 13.02.2024 Update or INsert
+            Maybe.just(    ProccesingOpersionUpdateOrInsert(ЛОГ, ТаблицаPOST,  requestInputStream ))
+                    .doOnSuccess(new io.reactivex.rxjava3.functions.Consumer<CopyOnWriteArrayList<Long>>() {
+                        @Override
+                        public void accept(CopyOnWriteArrayList<Long> arrayListMaxBackOperation) throws Throwable {
+                            // TODO: 13.02.2024
+                            clossingImputSreatm(requestInputStream);
 
-                        ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" + " jsonNodeParent " +jsonNodeParent);
-                    } catch (IOException e) {
-                        ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-                        subClassWriterErros.МетодаЗаписиОшибкиВЛог(e,
-                                Thread.currentThread().
-                                        getStackTrace(),
-                                ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-                    }
-                }
+                            bufferCallsBackToAndroid=    resultatcomplitenigfromAndroid(arrayListMaxBackOperation );
 
-                @Override
-                public void onSuccess(@NonNull Object o) {
+                            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                                    " arrayListMaxBackOperation "+ arrayListMaxBackOperation);
 
-// TODO: 13.02.2024  результат получаем опеарций Post
-                    CopyOnWriteArrayList<Long> arrayListMaxBackOperation= (CopyOnWriteArrayList<Long>) o;
-
-                    clossingImputSreatm(requestInputStream);
-
-// TODO: 29.11.2023 закрывам Сесиою HIbernate
-                    transationCompleteSession.commitingTransastion(  session);
-
-                    bufferCallsBackToAndroid=    resultatcomplitenigfromAndroid(arrayListMaxBackOperation );
-
-
-                    ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                            " bufferCallsBackToAndroid "+ bufferCallsBackToAndroid);
-                }
-
-                @Override
-                public void onError(@NonNull Throwable e) {
-                    // TODO: 17.11.2023 ERROR transaction
-                    transationCompleteSession.erroringTransastion(ЛОГ,session);
-                    ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-                    Exception ex = new Exception(e);
-                    subClassWriterErros.МетодаЗаписиОшибкиВЛог(ex,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-                }
-
-                @Override
-                public void onComplete() {
-                    // TODO: 16.11.2023 ГЛАЫНЫЙ МЕТОД ВСТАВКИ И ОБНОВЛЕНИЯ SQL SERVER
-                    CopyOnWriteArrayList<Long> arrayListMaxBackOperation=   ProccesingOpersionUpdateOrInsert(ЛОГ, ТаблицаPOST,  jsonNodeParent );
-                    // TODO: 13.02.2024
-                    onSuccess(arrayListMaxBackOperation);
-                    ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                            " arrayListMaxBackOperation "+ arrayListMaxBackOperation);
-                }
-            });
+                        }
+                    })
+                    .doOnError(new io.reactivex.rxjava3.functions.Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Throwable {
+// TODO: 17.11.2023 ERROR transaction
+                            transationCompleteSession.erroringTransastion(ЛОГ,session);
+                            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +throwable.getMessage() );
+                            Exception ex = new Exception(throwable);
+                            subClassWriterErros.МетодаЗаписиОшибкиВЛог(ex,
+                                    Thread.currentThread().
+                                            getStackTrace(),
+                                    ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+                        }
+                    })
+                    .blockingSubscribe();
 
 
         } catch (Exception   e) {
@@ -193,10 +157,18 @@ public class OperasionsInsertAndUpdates {
     // TODO: 16.11.2023 ГЛАВНЫЙ МЕТОД ВСТАВКИ И ОБНОВЛНИЕ ДАННЫХ от КЛИЕНТА
     private CopyOnWriteArrayList<Long> ProccesingOpersionUpdateOrInsert(@NotNull ServletContext ЛОГ,
                                                                         @NotNull String ТаблицаPOST,
-                                                                        @NotNull   JsonNode jsonNodeParent) {
+                                                                        @NotNull   InputStream requestInputStream) {
 
         CopyOnWriteArrayList<Long> arrayListMaxBackOperation = new CopyOnWriteArrayList<>();
         try{
+
+            jsonNodeParent = metodGetDataFromSreamByte(ЛОГ, requestInputStream);
+
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " jsonNodeParent " +jsonNodeParent);
+
         jsonNodeParent.elements().forEachRemaining(new Consumer<JsonNode>() {
             @Override
             public void accept(JsonNode jsonNodeInner) {
