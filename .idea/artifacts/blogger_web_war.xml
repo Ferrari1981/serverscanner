@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="blogger-web:war">
+    <output-path>$PROJECT_DIR$/blogger-web/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>blogger-web</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="blogger-web-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="blogger-web:war exploded" />
+    </root>
+  </artifact>
+</component>

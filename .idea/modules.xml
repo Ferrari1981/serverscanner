@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Worker1/Worker1.iml" filepath="$PROJECT_DIR$/Worker1/Worker1.iml" />
       <module fileurl="file://$PROJECT_DIR$/sous.jboss.idea.iml" filepath="$PROJECT_DIR$/sous.jboss.idea.iml" />
     </modules>
   </component>

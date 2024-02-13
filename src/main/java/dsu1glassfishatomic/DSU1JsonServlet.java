@@ -1,32 +1,24 @@
 package dsu1glassfishatomic;
 
 
+import BL.CDI.QualifierWorker1;
 import SessionBeans.BeanGET;
 import SessionBeans.BeanPOST;
-import businesslogic.ListerAsyncContext;
 import businesslogic.SubClassWriterErros;
-import businesslogic.TransationCompleteSession;
+import com.workers1.Worker2;
 import dsu1glassfishatomic.workinterfaces.InSessionFactory;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.engine.transaction.jta.platform.internal.JBossAppServerJtaPlatform;
-import org.hibernate.engine.transaction.jta.platform.spi.JtaPlatform;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.TransactionManager;
-import javax.transaction.UserTransaction;
 import java.io.IOException;
 
 
@@ -50,6 +42,12 @@ public class DSU1JsonServlet extends HttpServlet {
     @Inject
     @InSessionFactory
     private SessionFactory getsessionHibernate;
+
+
+    @Inject
+    @QualifierWorker1
+    Worker2 worker2;
+
 
 
 
@@ -91,6 +89,9 @@ public class DSU1JsonServlet extends HttpServlet {
      // super.doGet(req, resp);
        ЛОГ = getServletContext();
        try{
+
+           worker2.getWorker2();
+
                             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                             СессионыйБинGET.МетодБинаGET(ЛОГ,  req, resp ,getsessionHibernate );
 

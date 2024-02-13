@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="sous.jboss.idea" />
+        <module name="Worker1" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="sous.jboss.idea" target="11" />
+      <module name="Worker1" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
