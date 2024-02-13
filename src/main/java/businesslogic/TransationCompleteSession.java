@@ -49,8 +49,8 @@ System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClas
                     session.joinTransaction();
                      transaction= session.getTransaction() ;
                     if ( ! session.isJoinedToTransaction() ) {
-                        transaction.setTimeout(1000000);
-                        transaction.begin();
+                       // transaction.setTimeout(1000000);
+                       // transaction.begin();
 
                         // TODO: 17.11.2023
                     }
