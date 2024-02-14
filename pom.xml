@@ -7,9 +7,17 @@
     <groupId>com.jboss</groupId>
     <artifactId>jboss</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+
     <modules>
         <module>Worker1</module>
+        <module>Worker2</module>
     </modules>
+
+
+
+
+
     <name>sous.jboss.idea</name>
     <packaging>pom</packaging>
 
@@ -271,16 +279,22 @@
 
 
 
-
+<!--TODO new Micro Modules-->
         <dependency>
             <groupId>com.jboss</groupId>
             <artifactId>Worker1</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+
         </dependency>
 
-
-
-
+        <!--TODO new Micro Modules2-->
+        <dependency>
+            <groupId>com.jboss</groupId>
+            <artifactId>Worker2</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 

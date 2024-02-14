@@ -1,7 +1,8 @@
 package businesslogic;
 
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations
+        .NotNull;
 
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -2,16 +2,18 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
+      <profile name="Maven default annotation processors profile">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Worker2" />
         <module name="Worker1" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="sous.jboss.idea" target="11" />
       <module name="Worker1" target="11" />
+      <module name="Worker2" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

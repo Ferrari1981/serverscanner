@@ -5,7 +5,9 @@ import BL.CDI.QualifierWorker1;
 import SessionBeans.BeanGET;
 import SessionBeans.BeanPOST;
 import businesslogic.SubClassWriterErros;
-import com.workers1.Worker2;
+import com.Worker2.BL.BL_Worker2;
+import com.Worker2.BL.CDI.QualifierWorker2;
+import com.workers1.BL_Worker;
 import dsu1glassfishatomic.workinterfaces.InSessionFactory;
 import org.hibernate.SessionFactory;
 
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 
 @WebServlet( value="/sous.jboss.tabel",asyncSupported = true)
@@ -46,7 +49,12 @@ public class DSU1JsonServlet extends HttpServlet {
 
     @Inject
     @QualifierWorker1
-    Worker2 worker2;
+    ConcurrentSkipListSet getWorkercon;
+
+
+    @Inject
+    @QualifierWorker2
+    ConcurrentSkipListSet getWorker2con;
 
 
 
@@ -90,7 +98,17 @@ public class DSU1JsonServlet extends HttpServlet {
        ЛОГ = getServletContext();
        try{
 
-           worker2.getWorker2();
+           getWorkercon.size();
+
+           ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                   " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                   + " ((HttpServletRequest) req).getPathInfo() " + ((HttpServletRequest) req).getPathInfo() +
+                   " POOL CURRENT  " + Thread.currentThread().getName() + " req.isAsyncStarted() " + req.isAsyncStarted()
+                   + "  POOL  THREAD " + Thread.currentThread().getName());
+
+           getWorker2con.size();
+
 
                             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                             СессионыйБинGET.МетодБинаGET(ЛОГ,  req, resp ,getsessionHibernate );

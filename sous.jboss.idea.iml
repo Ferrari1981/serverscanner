@@ -165,5 +165,6 @@
     <orderEntry type="library" name="Maven: org.picketbox:common-spi:5.0.3.Final-redhat-00005" level="project" />
     <orderEntry type="library" name="Maven: org.picketbox:identity-spi:5.0.3.Final-redhat-00005" level="project" />
     <orderEntry type="module" module-name="Worker1" />
+    <orderEntry type="module" module-name="Worker2" />
   </component>
 </module>
