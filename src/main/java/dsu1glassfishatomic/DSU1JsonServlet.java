@@ -1,13 +1,11 @@
 package dsu1glassfishatomic;
 
 
-import BL.CDI.QualifierWorker1;
+import businesslogic.CDI.QualifierWorker1;
 import SessionBeans.BeanGET;
 import SessionBeans.BeanPOST;
 import businesslogic.SubClassWriterErros;
-import com.Worker2.BL.BL_Worker2;
-import com.Worker2.BL.CDI.QualifierWorker2;
-import com.workers1.BL_Worker;
+import businesslogic.CDI.QualifierWorker2;
 import dsu1glassfishatomic.workinterfaces.InSessionFactory;
 import org.hibernate.SessionFactory;
 
@@ -48,12 +46,10 @@ public class DSU1JsonServlet extends HttpServlet {
 
 
     @Inject
-    @QualifierWorker1
     ConcurrentSkipListSet getWorkercon;
 
 
     @Inject
-    @QualifierWorker2
     ConcurrentSkipListSet getWorker2con;
 
 
@@ -99,6 +95,7 @@ public class DSU1JsonServlet extends HttpServlet {
        try{
 
            getWorkercon.size();
+           getWorker2con.size();
 
            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

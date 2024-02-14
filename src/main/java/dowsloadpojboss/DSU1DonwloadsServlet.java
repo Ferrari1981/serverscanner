@@ -2,10 +2,7 @@ package dowsloadpojboss;
 
 
 import businesslogic.*;
-import com.Worker2.BL.BL_Worker2;
-import com.Worker2.BL.CDI.QualifierWorker2;
 import dsu1glassfishatomic.workinterfaces.InSessionFactory;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import javax.ejb.EJB;

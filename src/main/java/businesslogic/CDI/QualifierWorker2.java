@@ -1,4 +1,4 @@
-package com.Worker2.BL.CDI;
+package businesslogic.CDI;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.ElementType;
