@@ -2,6 +2,7 @@ package Filters;
 
 import businesslogic.SubClassWriterErros;
 
+
 import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -23,7 +24,6 @@ public class FilterRuntime implements Filter {
 
 
 
-
     public void init(FilterConfig fConfig) throws ServletException {
         ЛОГ = fConfig.getServletContext();
         ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -35,6 +35,19 @@ public class FilterRuntime implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
         try {
+
+            //doWorkerEE.getDoWorkerEE();
+
+            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    " Success    doFilter doFilter doFilter IDДевайсаКлиентаRuntime ");
+
+
+
+
+
+
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+

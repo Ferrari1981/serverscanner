@@ -1,11 +1,9 @@
 package dsu1glassfishatomic;
 
 
-import businesslogic.CDI.QualifierWorker1;
 import SessionBeans.BeanGET;
 import SessionBeans.BeanPOST;
 import businesslogic.SubClassWriterErros;
-import businesslogic.CDI.QualifierWorker2;
 import dsu1glassfishatomic.workinterfaces.InSessionFactory;
 import org.hibernate.SessionFactory;
 
@@ -20,7 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 
 @WebServlet( value="/sous.jboss.tabel",asyncSupported = true)
@@ -44,13 +41,6 @@ public class DSU1JsonServlet extends HttpServlet {
     @InSessionFactory
     private SessionFactory getsessionHibernate;
 
-
-    @Inject
-    ConcurrentSkipListSet getWorkercon;
-
-
-    @Inject
-    ConcurrentSkipListSet getWorker2con;
 
 
 
@@ -93,19 +83,6 @@ public class DSU1JsonServlet extends HttpServlet {
      // super.doGet(req, resp);
        ЛОГ = getServletContext();
        try{
-
-           getWorkercon.size();
-           getWorker2con.size();
-
-           ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                   " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                   + " ((HttpServletRequest) req).getPathInfo() " + ((HttpServletRequest) req).getPathInfo() +
-                   " POOL CURRENT  " + Thread.currentThread().getName() + " req.isAsyncStarted() " + req.isAsyncStarted()
-                   + "  POOL  THREAD " + Thread.currentThread().getName());
-
-           getWorker2con.size();
-
 
                             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                             СессионыйБинGET.МетодБинаGET(ЛОГ,  req, resp ,getsessionHibernate );
@@ -166,6 +143,7 @@ public class DSU1JsonServlet extends HttpServlet {
 
     public void destroy() {
       try{
+          getsessionHibernate.close();
           System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                   " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());

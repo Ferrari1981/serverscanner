@@ -33,41 +33,46 @@ public class BusinessLogicFilterRuntime {
                                         @NotNull FilterChain chain,
                                         @NotNull ServletContext ЛОГ){
         try{
-          ///  if(request.isSecure()) {
-                HttpServletRequest asyrequest = (HttpServletRequest) request;
-                HttpServletResponse asyresponse = (HttpServletResponse) response;
+            // TODO: 11.01.2024 starting Async all Servers
+            final AsyncContext asyncContext = request.startAsync();
+
+
+            if (asyncContext.hasOriginalRequestAndResponse()) {
+
+                ///  if(request.isSecure()) {
+                HttpServletRequest asyrequest = (HttpServletRequest) asyncContext.getRequest();
+                HttpServletResponse asyresponse = (HttpServletResponse) asyncContext.getResponse();
                 asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                 asyresponse.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                 asyresponse.setBufferSize(2048);/////buffer 163840
-            // TODO: 11.01.2024 starting Async all Servers
-               final AsyncContext asyncContext = asyrequest.startAsync();
-            // TODO: 02.02.2024  слушатель
+                ///   }
+
+                // TODO: 02.02.2024  слушатель
                 listerAsyncContext.runnigAsyncContext(asyncContext,ЛОГ);
 
                 // TODO: 10.03.2023  ТОЛЬКО ID DEVICE
-                Object IDДевайсаКлиентаRuntime =
-                        Optional.ofNullable((asyrequest).getHeaders("id_device_androis").nextElement()).orElse("");
+                Object   IDДевайсаКлиентаRuntime = Optional.ofNullable((asyrequest).getHeaders("id_device_androis").nextElement()).orElse("");
+
+
+                completeFilterAuntification(chain, ЛОГ, asyrequest,asyresponse, IDДевайсаКлиентаRuntime);
+
+                // TODO: 15.02.2024
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                        "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаКлиентаRuntime " + IDДевайсаКлиентаRuntime);
-
-            completeFilterAuntification(chain, ЛОГ, asyncContext, IDДевайсаКлиентаRuntime);
-
+                        "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаКлиентаRuntime "
+                        + IDДевайсаКлиентаRuntime + "\n" +
+                        " asyncContext.hasOriginalRequestAndResponse() " + "\n" +
+                        asyncContext.hasOriginalRequestAndResponse()+ "\n" +
+                        " request.isSecure() " +request.isSecure());
+            }
 
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                        " Success    doFilter doFilter doFilter IDДевайсаКлиентаRuntime " + IDДевайсаКлиентаRuntime +
-                        " IDДевайсаКлиентаRuntime " + IDДевайсаКлиентаRuntime+ " request.isSecure() " +request.isSecure());
-
-
-           // Module5Class module5Class=new Module5Class();
-
-         ///   }
-        ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" );
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " asyncContext.hasOriginalRequestAndResponse() " + "\n" +
+                    asyncContext.hasOriginalRequestAndResponse()+ "\n" +
+                    " request.isSecure() " +request.isSecure());
     } catch (Exception e) {
         subClassWriterErros.
                 МетодаЗаписиОшибкиВЛог(e,
@@ -79,17 +84,16 @@ public class BusinessLogicFilterRuntime {
     }
 
     private void completeFilterAuntification(FilterChain chain, ServletContext ЛОГ,
-                                             AsyncContext asyncContext,
+                                             HttpServletRequest httpServletReques,
+                                             HttpServletResponse httpServletResponse,
                                              Object IDДевайсаКлиентаRuntime) throws IOException, ServletException {
 
       try{
-          HttpServletRequest httpServletRequest=(HttpServletRequest) asyncContext.getRequest();
-          HttpServletResponse httpServletResponse=(HttpServletResponse) asyncContext.getResponse();
 
       if (IDДевайсаКлиентаRuntime.toString().length() > 5) {
 
             // TODO: 11.03.2023 ГЛАВНАЯ СТРОЧКА ПЕРЕНАРАВЛЕНИЕ НА СЕВРЕЛТЫ НА ГЛАВНЫЙ КОД
-            chain.doFilter(     httpServletRequest, httpServletResponse);
+            chain.doFilter(     httpServletReques, httpServletResponse);
 
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -97,7 +101,7 @@ public class BusinessLogicFilterRuntime {
                     " Success    doFilter doFilter doFilter IDДевайсаКлиента " + IDДевайсаКлиентаRuntime);
         } else {
             // TODO: 11.03.2023  нет не имени не пароля
-            ayntificationDontPasswordAndLogin.ayntificationDontPasswordAndLogin( httpServletRequest, httpServletResponse, ЛОГ);
+            ayntificationDontPasswordAndLogin.ayntificationDontPasswordAndLogin( httpServletReques, httpServletResponse, ЛОГ);
 
 
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -115,7 +119,7 @@ public class BusinessLogicFilterRuntime {
         ///   }
         ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " request.isSecure() " +httpServletRequest.isSecure());
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " IDДевайсаКлиентаRuntime " +IDДевайсаКлиентаRuntime);
     } catch (Exception e) {
         subClassWriterErros.
                 МетодаЗаписиОшибкиВЛог(e,

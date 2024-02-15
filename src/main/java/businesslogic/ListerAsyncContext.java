@@ -43,7 +43,8 @@ try{
 
         @Override
         public void onError(AsyncEvent asyncEvent) throws IOException {
-// TODO: 29.11.2023
+            // TODO: 01.12.2023 clear
+            asyncEvent.getAsyncContext().complete();
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
