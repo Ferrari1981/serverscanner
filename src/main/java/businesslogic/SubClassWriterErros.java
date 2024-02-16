@@ -64,7 +64,7 @@ public class SubClassWriterErros {
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
                             + " IdUser " +IdUser+
              " IDДевайсаПолученныйОтКлиента "+ IDДевайсаПолученныйОтКлиента+" САМАОШИБКАДЛЯЗАПИСИ " +САМАОШИБКАДЛЯЗАПИСИ);
-        if (!САМАОШИБКАДЛЯЗАПИСИ.trim().matches("(.*)хост-компьютере разорвала установленное подключение(.*)")) {
+        if (!САМАОШИБКАДЛЯЗАПИСИ.trim().matches("(.*)разорвала(.*)") {
             try  (PrintWriter pw =
                           new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(ПутьНАхожденияФайлаЛогами),
                                   true), StandardCharsets.UTF_8));) {
