@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Maven: antlr:antlr:2.7.7">
+    <archive path="C:/Users/moraru_pi/.m2/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar" />
+  </library>
+  <library name="Maven: ch.qos.logback:logback-classic:1.4.6">
+    <archive path="C:/Users/moraru_pi/.m2/repository/ch/qos/logback/logback-classic/1.4.6/logback-classic-1.4.6.jar" />
+  </library>
+  <library name="Maven: ch.qos.logback:logback-core:1.4.6">
+    <archive path="C:/Users/moraru_pi/.m2/repository/ch/qos/logback/logback-core/1.4.6/logback-core-1.4.6.jar" />
+  </library>
+  <library name="Maven: commons-codec:commons-codec:1.3">
+    <archive path="C:/Users/moraru_pi/.m2/repository/commons-codec/commons-codec/1.3/commons-codec-1.3.jar" />
+  </library>
+  <library name="Maven: commons-logging:commons-logging:1.2">
+    <archive path="C:/Users/moraru_pi/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar" />
+  </library>
+  <library name="Maven: com.fasterxml:classmate:1.5.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/fasterxml/classmate/1.5.1/classmate-1.5.1.jar" />
+  </library>
+  <library name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.14.2">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.14.2/jackson-annotations-2.14.2.jar" />
+  </library>
+  <library name="Maven: com.fasterxml.jackson.core:jackson-core:2.14.2">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.14.2/jackson-core-2.14.2.jar" />
+  </library>
+  <library name="Maven: com.fasterxml.jackson.core:jackson-databind:2.14.2">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.14.2/jackson-databind-2.14.2.jar" />
+  </library>
+  <library name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.14.2">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.14.2/jackson-dataformat-cbor-2.14.2.jar" />
+  </library>
+  <library name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.12.2">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.12.2/jackson-module-jaxb-annotations-2.12.2.jar" />
+  </library>
+  <library name="Maven: com.googlecode.json-simple:json-simple:1.1.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar" />
+  </library>
+  <library name="Maven: com.google.api-client:google-api-client:1.21.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/google/api-client/google-api-client/1.21.0/google-api-client-1.21.0.jar" />
+  </library>
+  <library name="Maven: com.google.api-client:google-api-client-gson:1.21.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/google/api-client/google-api-client-gson/1.21.0/google-api-client-gson-1.21.0.jar" />
+  </library>
+  <library name="Maven: com.google.code.findbugs:jsr305:1.3.9">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar" />
+  </library>
+  <library name="Maven: com.google.code.gson:gson:2.6.2">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/google/code/gson/gson/2.6.2/gson-2.6.2.jar" />
+  </library>
+  <library name="Maven: com.google.firebase:firebase-server-sdk:3.0.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/google/firebase/firebase-server-sdk/3.0.0/firebase-server-sdk-3.0.0.jar" />
+  </library>
+  <library name="Maven: com.google.gcm:gcm-server:1.0.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/google/gcm/gcm-server/1.0.0/gcm-server-1.0.0.jar" />
+  </library>
+  <library name="Maven: com.google.guava:guava-jdk5:17.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/google/guava/guava-jdk5/17.0/guava-jdk5-17.0.jar" />
+  </library>
+  <library name="Maven: com.google.http-client:google-http-client:1.21.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/google/http-client/google-http-client/1.21.0/google-http-client-1.21.0.jar" />
+  </library>
+  <library name="Maven: com.google.http-client:google-http-client-gson:1.21.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/google/http-client/google-http-client-gson/1.21.0/google-http-client-gson-1.21.0.jar" />
+  </library>
+  <library name="Maven: com.google.http-client:google-http-client-jackson2:1.21.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/google/http-client/google-http-client-jackson2/1.21.0/google-http-client-jackson2-1.21.0.jar" />
+  </library>
+  <library name="Maven: com.google.oauth-client:google-oauth-client:1.21.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/google/oauth-client/google-oauth-client/1.21.0/google-oauth-client-1.21.0.jar" />
+  </library>
+  <library name="Maven: com.mchange:c3p0:0.9.5.5">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/mchange/c3p0/0.9.5.5/c3p0-0.9.5.5.jar" />
+  </library>
+  <library name="Maven: com.mchange:mchange-commons-java:0.2.19">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/mchange/mchange-commons-java/0.2.19/mchange-commons-java-0.2.19.jar" />
+  </library>
+  <library name="Maven: com.microsoft.sqlserver:mssql-jdbc:9.5.0.jre8-preview">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/microsoft/sqlserver/mssql-jdbc/9.5.0.jre8-preview/mssql-jdbc-9.5.0.jre8-preview.jar" />
+  </library>
+  <library name="Maven: com.sun.istack:istack-commons-runtime:3.0.7">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/sun/istack/istack-commons-runtime/3.0.7/istack-commons-runtime-3.0.7.jar" />
+  </library>
+  <library name="Maven: com.sun.mail:javax.mail:1.6.2">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/sun/mail/javax.mail/1.6.2/javax.mail-1.6.2.jar" />
+  </library>
+  <library name="Maven: com.sun.xml.fastinfoset:FastInfoset:1.2.15">
+    <archive path="C:/Users/moraru_pi/.m2/repository/com/sun/xml/fastinfoset/FastInfoset/1.2.15/FastInfoset-1.2.15.jar" />
+  </library>
+  <library name="Maven: io.reactivex.rxjava3:rxjava:3.1.3">
+    <archive path="C:/Users/moraru_pi/.m2/repository/io/reactivex/rxjava3/rxjava/3.1.3/rxjava-3.1.3.jar" />
+  </library>
+  <library name="Maven: io.smallrye:jandex:3.0.5">
+    <archive path="C:/Users/moraru_pi/.m2/repository/io/smallrye/jandex/3.0.5/jandex-3.0.5.jar" />
+  </library>
+  <library name="Maven: jakarta.activation:jakarta.activation-api:1.2.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/jakarta/activation/jakarta.activation-api/1.2.1/jakarta.activation-api-1.2.1.jar" />
+  </library>
+  <library name="Maven: jakarta.annotation:jakarta.annotation-api:1.3.5">
+    <archive path="C:/Users/moraru_pi/.m2/repository/jakarta/annotation/jakarta.annotation-api/1.3.5/jakarta.annotation-api-1.3.5.jar" />
+  </library>
+  <library name="Maven: jakarta.inject:jakarta.inject-api:2.0.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar" />
+  </library>
+  <library name="Maven: jakarta.persistence:jakarta.persistence-api:3.1.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar" />
+  </library>
+  <library name="Maven: jakarta.transaction:jakarta.transaction-api:2.0.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar" />
+  </library>
+  <library name="Maven: jakarta.validation:jakarta.validation-api:2.0.2">
+    <archive path="C:/Users/moraru_pi/.m2/repository/jakarta/validation/jakarta.validation-api/2.0.2/jakarta.validation-api-2.0.2.jar" />
+  </library>
+  <library name="Maven: jakarta.ws.rs:jakarta.ws.rs-api:2.1.6">
+    <archive path="C:/Users/moraru_pi/.m2/repository/jakarta/ws/rs/jakarta.ws.rs-api/2.1.6/jakarta.ws.rs-api-2.1.6.jar" />
+  </library>
+  <library name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:4.0.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.0/jakarta.xml.bind-api-4.0.0.jar" />
+  </library>
+  <library name="Maven: javax.activation:activation:1.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar" />
+  </library>
+  <library name="Maven: javax.activation:javax.activation-api:1.2.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/javax/activation/javax.activation-api/1.2.0/javax.activation-api-1.2.0.jar" />
+  </library>
+  <library name="Maven: javax:javaee-api:8.0.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/javax/javaee-api/8.0.1/javaee-api-8.0.1.jar" />
+  </library>
+  <library name="Maven: javax.persistence:javax.persistence-api:2.2">
+    <archive path="C:/Users/moraru_pi/.m2/repository/javax/persistence/javax.persistence-api/2.2/javax.persistence-api-2.2.jar" />
+  </library>
+  <library name="Maven: javax.validation:validation-api:1.1.0.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/javax/validation/validation-api/1.1.0.Final/validation-api-1.1.0.Final.jar" />
+  </library>
+  <library name="Maven: javax.websocket:javax.websocket-api:1.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/javax/websocket/javax.websocket-api/1.1/javax.websocket-api-1.1.jar" />
+  </library>
+  <library name="Maven: javax.xml.bind:jaxb-api:2.3.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/javax/xml/bind/jaxb-api/2.3.1/jaxb-api-2.3.1.jar" />
+  </library>
+  <library name="Maven: junit:junit:4.10">
+    <archive path="C:/Users/moraru_pi/.m2/repository/junit/junit/4.10/junit-4.10.jar" />
+  </library>
+  <library name="Maven: net.bytebuddy:byte-buddy:1.12.18">
+    <archive path="C:/Users/moraru_pi/.m2/repository/net/bytebuddy/byte-buddy/1.12.18/byte-buddy-1.12.18.jar" />
+  </library>
+  <library name="Maven: org.antlr:antlr4-runtime:4.10.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/antlr/antlr4-runtime/4.10.1/antlr4-runtime-4.10.1.jar" />
+  </library>
+  <library name="Maven: org.apache.commons:commons-dbcp2:2.9.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/apache/commons/commons-dbcp2/2.9.0/commons-dbcp2-2.9.0.jar" />
+  </library>
+  <library name="Maven: org.apache.commons:commons-pool2:2.10.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/apache/commons/commons-pool2/2.10.0/commons-pool2-2.10.0.jar" />
+  </library>
+  <library name="Maven: org.apache.httpcomponents:httpclient:4.0.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/apache/httpcomponents/httpclient/4.0.1/httpclient-4.0.1.jar" />
+  </library>
+  <library name="Maven: org.apache.httpcomponents:httpcore:4.0.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/apache/httpcomponents/httpcore/4.0.1/httpcore-4.0.1.jar" />
+  </library>
+  <library name="Maven: org.apiguardian:apiguardian-api:1.1.2">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar" />
+  </library>
+  <library name="Maven: org.eclipse.persistence:commonj.sdo:2.1.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/eclipse/persistence/commonj.sdo/2.1.1/commonj.sdo-2.1.1.jar" />
+  </library>
+  <library name="Maven: org.eclipse.persistence:eclipselink:2.7.9">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/eclipse/persistence/eclipselink/2.7.9/eclipselink-2.7.9.jar" />
+  </library>
+  <library name="Maven: org.eclipse.persistence:jakarta.persistence:2.2.3">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/eclipse/persistence/jakarta.persistence/2.2.3/jakarta.persistence-2.2.3.jar" />
+  </library>
+  <library name="Maven: org.glassfish.hk2.external:aopalliance-repackaged:2.6.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/hk2/external/aopalliance-repackaged/2.6.1/aopalliance-repackaged-2.6.1.jar" />
+  </library>
+  <library name="Maven: org.glassfish.hk2.external:jakarta.inject:2.6.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/hk2/external/jakarta.inject/2.6.1/jakarta.inject-2.6.1.jar" />
+  </library>
+  <library name="Maven: org.glassfish.hk2:hk2-api:2.6.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/hk2/hk2-api/2.6.1/hk2-api-2.6.1.jar" />
+  </library>
+  <library name="Maven: org.glassfish.hk2:hk2-locator:2.6.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/hk2/hk2-locator/2.6.1/hk2-locator-2.6.1.jar" />
+  </library>
+  <library name="Maven: org.glassfish.hk2:hk2-utils:2.6.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/hk2/hk2-utils/2.6.1/hk2-utils-2.6.1.jar" />
+  </library>
+  <library name="Maven: org.glassfish.hk2:osgi-resource-locator:1.0.3">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/hk2/osgi-resource-locator/1.0.3/osgi-resource-locator-1.0.3.jar" />
+  </library>
+  <library name="Maven: org.glassfish.jaxb:jaxb-runtime:2.3.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.1/jaxb-runtime-2.3.1.jar" />
+  </library>
+  <library name="Maven: org.glassfish.jaxb:txw2:2.3.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/jaxb/txw2/2.3.1/txw2-2.3.1.jar" />
+  </library>
+  <library name="Maven: org.glassfish.jersey.containers:jersey-container-servlet:2.34">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/jersey/containers/jersey-container-servlet/2.34/jersey-container-servlet-2.34.jar" />
+  </library>
+  <library name="Maven: org.glassfish.jersey.containers:jersey-container-servlet-core:2.34">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/jersey/containers/jersey-container-servlet-core/2.34/jersey-container-servlet-core-2.34.jar" />
+  </library>
+  <library name="Maven: org.glassfish.jersey.core:jersey-client:2.34">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/jersey/core/jersey-client/2.34/jersey-client-2.34.jar" />
+  </library>
+  <library name="Maven: org.glassfish.jersey.core:jersey-common:2.34">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/jersey/core/jersey-common/2.34/jersey-common-2.34.jar" />
+  </library>
+  <library name="Maven: org.glassfish.jersey.core:jersey-server:2.34">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/jersey/core/jersey-server/2.34/jersey-server-2.34.jar" />
+  </library>
+  <library name="Maven: org.glassfish.jersey.ext:jersey-entity-filtering:2.34">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/jersey/ext/jersey-entity-filtering/2.34/jersey-entity-filtering-2.34.jar" />
+  </library>
+  <library name="Maven: org.glassfish.jersey.inject:jersey-hk2:2.34">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/jersey/inject/jersey-hk2/2.34/jersey-hk2-2.34.jar" />
+  </library>
+  <library name="Maven: org.glassfish.jersey.media:jersey-media-json-jackson:2.34">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/glassfish/jersey/media/jersey-media-json-jackson/2.34/jersey-media-json-jackson-2.34.jar" />
+  </library>
+  <library name="Maven: org.hamcrest:hamcrest-core:1.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar" />
+  </library>
+  <library name="Maven: org.hibernate.common:hibernate-commons-annotations:5.1.2.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/hibernate/common/hibernate-commons-annotations/5.1.2.Final/hibernate-commons-annotations-5.1.2.Final.jar" />
+  </library>
+  <library name="Maven: org.hibernate:hibernate-annotations:3.5.6-Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/hibernate/hibernate-annotations/3.5.6-Final/hibernate-annotations-3.5.6-Final.jar" />
+  </library>
+  <library name="Maven: org.hibernate:hibernate-c3p0:5.6.15.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/hibernate/hibernate-c3p0/5.6.15.Final/hibernate-c3p0-5.6.15.Final.jar" />
+  </library>
+  <library name="Maven: org.hibernate:hibernate-commons-annotations:3.2.0.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/hibernate/hibernate-commons-annotations/3.2.0.Final/hibernate-commons-annotations-3.2.0.Final.jar" />
+  </library>
+  <library name="Maven: org.hibernate:hibernate-core:5.6.15.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/hibernate/hibernate-core/5.6.15.Final/hibernate-core-5.6.15.Final.jar" />
+  </library>
+  <library name="Maven: org.hibernate:hibernate-entitymanager:5.6.15.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/hibernate/hibernate-entitymanager/5.6.15.Final/hibernate-entitymanager-5.6.15.Final.jar" />
+  </library>
+  <library name="Maven: org.hibernate:hibernate-validator:5.4.3.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/hibernate/hibernate-validator/5.4.3.Final/hibernate-validator-5.4.3.Final.jar" />
+  </library>
+  <library name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.0.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.0.Final/hibernate-jpa-2.0-api-1.0.0.Final.jar" />
+  </library>
+  <library name="Maven: org.hibernate.orm:hibernate-core:6.2.0.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/hibernate/orm/hibernate-core/6.2.0.Final/hibernate-core-6.2.0.Final.jar" />
+  </library>
+  <library name="Maven: org.javassist:javassist:3.25.0-GA">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/javassist/javassist/3.25.0-GA/javassist-3.25.0-GA.jar" />
+  </library>
+  <library name="Maven: org.jboss.ejb3:jboss-ejb3-ext-api:2.4.0.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/jboss/ejb3/jboss-ejb3-ext-api/2.4.0.Final/jboss-ejb3-ext-api-2.4.0.Final.jar" />
+  </library>
+  <library name="Maven: org.jboss:jandex:2.4.2.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/jboss/jandex/2.4.2.Final/jandex-2.4.2.Final.jar" />
+  </library>
+  <library name="Maven: org.jboss.logging:jboss-logging:3.4.3.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/jboss/logging/jboss-logging/3.4.3.Final/jboss-logging-3.4.3.Final.jar" />
+  </library>
+  <library name="Maven: org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec:2.0.0.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/jboss/spec/javax/ejb/jboss-ejb-api_3.2_spec/2.0.0.Final/jboss-ejb-api_3.2_spec-2.0.0.Final.jar" />
+  </library>
+  <library name="Maven: org.jboss.spec.javax.security.auth.message:jboss-jaspi-api_1.1_spec:1.0.0.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/jboss/spec/javax/security/auth/message/jboss-jaspi-api_1.1_spec/1.0.0.Final/jboss-jaspi-api_1.1_spec-1.0.0.Final.jar" />
+  </library>
+  <library name="Maven: org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec:1.0.0.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/jboss/spec/javax/servlet/jboss-servlet-api_3.1_spec/1.0.0.Final/jboss-servlet-api_3.1_spec-1.0.0.Final.jar" />
+  </library>
+  <library name="Maven: org.jboss.spec.javax.servlet:jboss-servlet-api_4.0_spec:2.0.0.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/jboss/spec/javax/servlet/jboss-servlet-api_4.0_spec/2.0.0.Final/jboss-servlet-api_4.0_spec-2.0.0.Final.jar" />
+  </library>
+  <library name="Maven: org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:1.1.1.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/jboss/spec/javax/transaction/jboss-transaction-api_1.2_spec/1.1.1.Final/jboss-transaction-api_1.2_spec-1.1.1.Final.jar" />
+  </library>
+  <library name="Maven: org.jboss.spec.javax.transaction:jboss-transaction-api_1.3_spec:2.0.0.Final">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/jboss/spec/javax/transaction/jboss-transaction-api_1.3_spec/2.0.0.Final/jboss-transaction-api_1.3_spec-2.0.0.Final.jar" />
+  </library>
+  <library name="Maven: org.jetbrains:annotations:24.1.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/jetbrains/annotations/24.1.0/annotations-24.1.0.jar" />
+  </library>
+  <library name="Maven: org.json:json:20160212">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/json/json/20160212/json-20160212.jar" />
+  </library>
+  <library name="Maven: org.junit.jupiter:junit-jupiter-api:5.8.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.8.1/junit-jupiter-api-5.8.1.jar" />
+  </library>
+  <library name="Maven: org.junit.jupiter:junit-jupiter-engine:5.8.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.8.1/junit-jupiter-engine-5.8.1.jar" />
+  </library>
+  <library name="Maven: org.junit.platform:junit-platform-commons:1.8.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/junit/platform/junit-platform-commons/1.8.1/junit-platform-commons-1.8.1.jar" />
+  </library>
+  <library name="Maven: org.junit.platform:junit-platform-engine:1.8.1">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/junit/platform/junit-platform-engine/1.8.1/junit-platform-engine-1.8.1.jar" />
+  </library>
+  <library name="Maven: org.jvnet.staxex:stax-ex:1.8">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/jvnet/staxex/stax-ex/1.8/stax-ex-1.8.jar" />
+  </library>
+  <library name="Maven: org.opentest4j:opentest4j:1.2.0">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar" />
+  </library>
+  <library name="Maven: org.picketbox:authorization-spi:5.0.3.Final-redhat-00005">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/picketbox/authorization-spi/5.0.3.Final-redhat-00005/authorization-spi-5.0.3.Final-redhat-00005.jar" />
+  </library>
+  <library name="Maven: org.picketbox:common-spi:5.0.3.Final-redhat-00005">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/picketbox/common-spi/5.0.3.Final-redhat-00005/common-spi-5.0.3.Final-redhat-00005.jar" />
+  </library>
+  <library name="Maven: org.picketbox:identity-spi:5.0.3.Final-redhat-00005">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/picketbox/identity-spi/5.0.3.Final-redhat-00005/identity-spi-5.0.3.Final-redhat-00005.jar" />
+  </library>
+  <library name="Maven: org.picketbox:picketbox-spi-bare:5.0.3.Final-redhat-00005">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/picketbox/picketbox-spi-bare/5.0.3.Final-redhat-00005/picketbox-spi-bare-5.0.3.Final-redhat-00005.jar" />
+  </library>
+  <library name="Maven: org.reactivestreams:reactive-streams:1.0.3">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar" />
+  </library>
+  <library name="Maven: org.slf4j:slf4j-api:1.5.8">
+    <archive path="C:/Users/moraru_pi/.m2/repository/org/slf4j/slf4j-api/1.5.8/slf4j-api-1.5.8.jar" />
+  </library>
+</eclipse-userlibraries>
+

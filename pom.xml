@@ -7,13 +7,10 @@
     <groupId>com.jboss</groupId>
     <artifactId>jboss</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>modulemaven</module>
-        <module>getWorker2</module>
-    </modules>
+
 
     <name>sous.jboss.idea</name>
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
 
 
 
@@ -263,20 +260,6 @@
 
 
 
-        <dependency>
-            <groupId>com.jboss</groupId>
-            <artifactId>modulemaven</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.jboss</groupId>
-            <artifactId>getWorker2</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
 
 
 
