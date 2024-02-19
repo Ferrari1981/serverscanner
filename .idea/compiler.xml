@@ -11,8 +11,9 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="getWorker2" target="11" />
+      <module name="module4.main" target="11" />
+      <module name="module4.test" target="11" />
       <module name="modulemaven" target="11" />
-      <module name="sous.jboss.idea" target="11" />
       <module name="Worker1" target="11" />
       <module name="Worker2" target="11" />
       <module name="Worker3" target="11" />
