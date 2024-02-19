@@ -1,7 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="JBoss BackEnd" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss/WildFly 23.0.2.Final-redhat-00001" ALTERNATIVE_JRE_ENABLED="false">
     <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
-    <option name="COMMON_VM_ARGUMENTS" value=" -Djboss.socket.binding.port-offset=1" />
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
       <artifact name="Gradle : com.jboss : jbossbackend-1.0-SNAPSHOT.war">
