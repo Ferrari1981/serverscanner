@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ejb" name="sous.jboss.idea:EJB exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/sous_jboss_idea_EJB_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="sous.jboss.idea/ejb/EJB" />
+      <element id="module-output" name="sous.jboss.idea" />
+    </root>
+  </artifact>
+</component>

@@ -6,16 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="modul4" />
+        <module name="sous.jboss.idea" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="getWorker2" target="11" />
+      <module name="modul4" target="11" />
       <module name="module4.main" target="11" />
       <module name="module4.test" target="11" />
       <module name="modulemaven" target="11" />
+      <module name="worker" target="11" />
       <module name="Worker1" target="11" />
       <module name="Worker2" target="11" />
+      <module name="Worker233" target="11" />
       <module name="Worker3" target="11" />
       <module name="WorkerEE1" target="11" />
     </bytecodeTargetLevel>

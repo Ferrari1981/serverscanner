@@ -44,5 +44,13 @@
         </descriptors>
       </configuration>
     </facet>
+    <facet type="ejb" name="EJB">
+      <configuration>
+        <ejbRoots>
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/main/resources" />
+        </ejbRoots>
+      </configuration>
+    </facet>
   </component>
 </module>

@@ -7,13 +7,11 @@
     <groupId>com.jboss</groupId>
     <artifactId>jboss</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>modul4</module>
-    </modules>
+
 
 
     <name>sous.jboss.idea</name>
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
 
 
 
@@ -259,6 +257,8 @@
             <artifactId>picketbox-spi-bare</artifactId>
             <version>5.0.3.Final-redhat-00005</version>
         </dependency>
+
+
 
 
 
