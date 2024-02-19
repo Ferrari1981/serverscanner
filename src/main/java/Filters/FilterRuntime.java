@@ -19,7 +19,7 @@ public class FilterRuntime implements Filter {
     @Inject
     private BusinessLogicFilterRuntime businessLogicFilterRuntime;
 
-
+//TODO фильтр commit 19.02.2024--10.26
 
     public void init(FilterConfig fConfig) throws ServletException {
         ЛОГ = fConfig.getServletContext();
