@@ -67,9 +67,6 @@ public class CompleteRemoteSyncService {
     private ServiceConnection connectionAsync;
 
 
-    private Integer ФиналПолучаемРазницуМеждуДатами = 0;
-
-
 
     private SharedPreferences preferences;
 
@@ -174,7 +171,7 @@ public class CompleteRemoteSyncService {
 
 
                     // TODO: 14.08.2023  Запускаем Код До Сиинхрониазщции
-                    МетодОпределениеКогдаПоследнийРазЗаходилПользователь();
+                    Integer     ФиналПолучаемРазницуМеждуДатами=   МетодОпределениеКогдаПоследнийРазЗаходилПользователь();
 
                     СтатусРаботыСервера=  МетодПингаКСереруЗапущенЛиСерерИлиНет();
 
@@ -187,7 +184,7 @@ public class CompleteRemoteSyncService {
 
 
 
-                        metodВыполняетсяГлавнаяWork();//todo Main Code Sercice
+                        metodВыполняетсяГлавнаяWork(ФиналПолучаемРазницуМеждуДатами);//todo Main Code Sercice
 
 
 
@@ -196,7 +193,8 @@ public class CompleteRemoteSyncService {
                     Log.d(context.getClass().getName(), "\n" + " class "
                             + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации+
+                            "  ФиналПолучаемРазницуМеждуДатами " +ФиналПолучаемРазницуМеждуДатами);
                 }
 
                 @Override
@@ -302,10 +300,10 @@ public class CompleteRemoteSyncService {
     }
 
 
-    private void metodВыполняетсяГлавнаяWork() {
+    private void metodВыполняетсяГлавнаяWork(@NonNull Integer ФиналПолучаемРазницуМеждуДатами) {
         try{
         if (      date_update != null && success_users != null && success_login != null
-                && ФиналПолучаемРазницуМеждуДатами < 20  ) {
+                && ФиналПолучаемРазницуМеждуДатами < 40 ) {
 
             // TODO: 22.01.2024  запускаеми службу обновление ПО
             new SuccessAsynsStartingUpdatrPO().startingAsyncForUpSoft();
@@ -315,7 +313,8 @@ public class CompleteRemoteSyncService {
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                    + " localBinderОбновлениеПО.isBinderAlive() " + localBinderОбновлениеПО.isBinderAlive());
+                    + " localBinderОбновлениеПО.isBinderAlive() " + localBinderОбновлениеПО.isBinderAlive()+
+                    " ФиналПолучаемРазницуМеждуДатами " +ФиналПолучаемРазницуМеждуДатами);
 
         }else {
 
@@ -760,8 +759,9 @@ public class CompleteRemoteSyncService {
     // TODO: 19.01.2024   /////// МЕТОД КОГДА ЗАХОДИЛ ПОСЛЬДНИЙ РАЗ ПОЛЬЗОВАТЛЬ
 
 
-    public void МетодОпределениеКогдаПоследнийРазЗаходилПользователь() {
+    public Integer МетодОпределениеКогдаПоследнийРазЗаходилПользователь() {
         Cursor Курсор_7ДнейЗаходаПользователя = null;
+        Integer  ФиналПолучаемРазницуМеждуДатами=0;
         try {
             Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasecurrentoperations/" + "successlogin" + "");
             ContentResolver contentResolver=context. getContentResolver();
@@ -824,7 +824,7 @@ public class CompleteRemoteSyncService {
             new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-
+    return  ФиналПолучаемРазницуМеждуДатами;
 
     }
 
@@ -897,8 +897,7 @@ public class CompleteRemoteSyncService {
             Интент_ЗапускаетBootAndAsync.putExtras(bundleBinderUpdate);
            context. startActivity(Интент_ЗапускаетBootAndAsync);//tso
 
-            Log.d(this.getClass().getName(), "  ФиналПолучаемРазницуМеждуДатами  " + ФиналПолучаемРазницуМеждуДатами
-                    + " date_update " + date_update + " СтатусРаботыСервера " + СтатусРаботыСервера);
+            Log.d(this.getClass().getName(), " date_update " + date_update + " СтатусРаботыСервера " + СтатусРаботыСервера);
 
 
         } catch (Exception e) {
@@ -923,8 +922,7 @@ public class CompleteRemoteSyncService {
             editor.putInt("PublicId", getHiltPublicId);
             editor.apply();
 
-            Log.d(this.getClass().getName(), "  ФиналПолучаемРазницуМеждуДатами  " + ФиналПолучаемРазницуМеждуДатами
-                    + " date_update " + date_update + " СтатусРаботыСервера " + СтатусРаботыСервера);
+            Log.d(this.getClass().getName()," date_update " + date_update + " СтатусРаботыСервера " + СтатусРаботыСервера);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1209,8 +1207,7 @@ public class CompleteRemoteSyncService {
                 context.   unbindService(connectionAsync);
             }
 
-            Log.d(this.getClass().getName(), "  ФиналПолучаемРазницуМеждуДатами  " + ФиналПолучаемРазницуМеждуДатами
-                    + " date_update " + date_update + " СтатусРаботыСервера " + СтатусРаботыСервера);
+            Log.d(this.getClass().getName(),  " date_update " + date_update + " СтатусРаботыСервера " + СтатусРаботыСервера);
 
         } catch (Exception e) {
             e.printStackTrace();
