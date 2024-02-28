@@ -4,6 +4,7 @@ import businesslogic.AyntificationDontPasswordAndLogin;
 import businesslogic.ListerAsyncContext;
 import businesslogic.SubClassWriterErros;
 
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.*;
@@ -40,7 +41,6 @@ public class BusinessLogicFilterRuntime {
             final AsyncContext asyncContext = request.startAsync();
 
             if (asyncContext.hasOriginalRequestAndResponse()) {
-
                 ///  if(request.isSecure()) {
                 HttpServletRequest asyrequest = (HttpServletRequest) asyncContext.getRequest();
                 HttpServletResponse asyresponse = (HttpServletResponse) asyncContext.getResponse();

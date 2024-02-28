@@ -2,7 +2,6 @@ package Filters;
 
 import businesslogic.SubClassWriterErros;
 
-
 import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -26,6 +25,7 @@ public class FilterRuntime implements Filter {
 
 
 
+
 //TODO фильтр commit 19.02.2024--10.26
 
     public void init(FilterConfig fConfig) throws ServletException {
@@ -40,8 +40,11 @@ public class FilterRuntime implements Filter {
         // TODO Auto-generated method stub
         try {
 
+
+
             // TODO: 02.11.2023 ЗАпускаем Код Фиильра
             businessLogicFilterRuntime.startFilterRuntime(request,response,chain,ЛОГ);
+
 
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+

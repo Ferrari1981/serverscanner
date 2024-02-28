@@ -1,1 +1,5 @@
 rootProject.name = "jbossbackend"
+include 'module#back'
+include 'worker123'
+include 'modulebackend1'
+

@@ -1,8 +1,8 @@
 package dsu1glassfishatomic;
 
-
 import SessionBeans.BeanGET;
 import SessionBeans.BeanPOST;
+import businesslogic.JFrame.getFrqme;
 import businesslogic.SubClassWriterErros;
 import dsu1glassfishatomic.workinterfaces.InSessionFactory;
 import org.hibernate.SessionFactory;
@@ -41,8 +41,7 @@ public class DSU1JsonServlet extends HttpServlet {
     @InSessionFactory
     private SessionFactory getsessionHibernate;
 
-
-
+    getFrqme getFrq;
 
 
             DSU1JsonServlet(){
@@ -117,7 +116,6 @@ public class DSU1JsonServlet extends HttpServlet {
         ЛОГ = getServletContext();
         //TODO ПОТОК ДЛЯ МЕТОДА POST
                 try {
-
                             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
                             СессионыйБинPOST.МетодБинаPOST(ЛОГ, req,  resp,getsessionHibernate  );
 

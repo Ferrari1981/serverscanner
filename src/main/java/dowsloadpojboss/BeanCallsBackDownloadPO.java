@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
 
+
 /**
  * Session Bean implementation class BeanCallsBackDownloadPO
  */
@@ -54,7 +55,7 @@ public class BeanCallsBackDownloadPO   {
    private Session session;
 
 
-
+    businesslogic.JFrame.getFrqme getFrqme;
 
     public BeanCallsBackDownloadPO() {
         // TODO Auto-generated constructor stub

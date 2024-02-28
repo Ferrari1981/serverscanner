@@ -9,6 +9,18 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/module#back" />
+            <option value="$PROJECT_DIR$/modulebackend1" />
+            <option value="$PROJECT_DIR$/worker123" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/../module2024" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/../module2024" />
           </set>
         </option>
       </GradleProjectSettings>
