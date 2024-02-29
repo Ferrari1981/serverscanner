@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jbossbackend">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../jbossbackend.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
