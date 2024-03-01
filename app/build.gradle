@@ -43,13 +43,13 @@ apply plugin: 'org.jetbrains.kotlin.android'
 android {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\moraru_pi\\AndroidStudioProjects\\DSU\\dsu1\\dsu1_keys.jks')
+            storeFile file('C:\\Users\\moraru_pi\\AndroidStudioProjects\\DSU\\certificates\\dsu1_keys.jks')
             storePassword 'dsu1dsu1up'
             keyAlias 'tabels_releases'
             keyPassword 'dsu1dsu1down'
         }
         release {
-            storeFile file('C:\\Users\\moraru_pi\\AndroidStudioProjects\\DSU\\dsu1\\dsu1_keys.jks')
+            storeFile file('C:\\Users\\moraru_pi\\AndroidStudioProjects\\DSU\\certificates\\dsu1_keys.jks')
             storePassword 'dsu1dsu1up'
             keyAlias 'tabels_releases'
             keyPassword 'dsu1dsu1down'
