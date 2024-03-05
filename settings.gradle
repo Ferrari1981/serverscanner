@@ -1,4 +1,2 @@
 include ':app'
 rootProject.name='DSU'
-include ':mylibrary'
-include ':mylibrary2'
