@@ -99,7 +99,10 @@ public class DashboardGRANTorREVOKE implements InGRANTs {
     public void setGrantRemote(@NonNull Context context, MaterialButton КнопкаЗаявкаНаТранспорт,
                                   MaterialButton КнопкаСогласование,
                                   MaterialButton КнопкаСогласЦен,
-                                  MaterialButton КнопкаПоступлениеМатериалов, MaterialButton КнопкаТабель,Integer getGrantRemote) {
+                                  MaterialButton КнопкаПоступлениеМатериалов,
+                               MaterialButton КнопкаТабель,
+                               MaterialButton КнопкаДокументыСоглас,
+                               Integer getGrantRemote) {
         // TODO: 11.01.2024
         try{
 
@@ -108,47 +111,29 @@ public class DashboardGRANTorREVOKE implements InGRANTs {
                 // TODO: 11.01.2024  Согласование 6 7 режим только
                 case 6:
                 case 7:
-                    // TODO: 11.01.2024  
+                    // TODO: 11.01.2024    при выборе ограничкеных прав
 
                     КнопкаПоступлениеМатериалов.setVisibility(View.GONE);
-                    КнопкаТабель.setVisibility(View.GONE);
-                    КнопкаЗаявкаНаТранспорт.setVisibility(View.GONE);
-
-
+                    КнопкаПоступлениеМатериалов.refreshDrawableState();
                     КнопкаПоступлениеМатериалов.requestLayout();
+
+
+
+                    КнопкаТабель.setVisibility(View.GONE);
+                    КнопкаТабель.refreshDrawableState();
                     КнопкаТабель.requestLayout();
+
+
+                    КнопкаЗаявкаНаТранспорт.setVisibility(View.GONE);
+                    КнопкаЗаявкаНаТранспорт.refreshDrawableState();
                     КнопкаЗаявкаНаТранспорт.requestLayout();
 
-                    КнопкаПоступлениеМатериалов.refreshDrawableState();
-                    КнопкаТабель.refreshDrawableState();
-                    КнопкаЗаявкаНаТранспорт.refreshDrawableState();
 
-                    // TODO: 11.01.2024
 
-                    КнопкаСогласование.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                        @Override
-                        public void onGlobalLayout() {
-                            КнопкаСогласование.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                            КнопкаСогласование.setHeight( 300);
-                            КнопкаСогласование.requestLayout();
-                            КнопкаСогласование.forceLayout();
-                            КнопкаСогласование.refreshDrawableState();
-                        }
-                    });
+                    // TODO: 11.01.2024 Только Соглосвания
 
-                    КнопкаСогласЦен.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                        @Override
-                        public void onGlobalLayout() {
-                            КнопкаСогласЦен.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-                            КнопкаСогласЦен.setHeight( 300);
-                            КнопкаСогласЦен.requestLayout();
-                            КнопкаСогласЦен.forceLayout();
-                            КнопкаСогласЦен.refreshDrawableState();
-                        }
-                    });
-
+                    КнопкиЕслиОграниченыПраваТолькоСогласования(КнопкаСогласование, КнопкаСогласЦен, КнопкаДокументыСоглас,context);
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -183,6 +168,57 @@ public class DashboardGRANTorREVOKE implements InGRANTs {
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
 
+    }
+
+    private void КнопкиЕслиОграниченыПраваТолькоСогласования(MaterialButton КнопкаСогласование,
+                                                             MaterialButton КнопкаСогласЦен,
+                                                             MaterialButton КнопкаДокументыСоглас,
+                                                             Context context) {
+        try{
+        КнопкаСогласование.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                КнопкаСогласование.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                КнопкаСогласование.setHeight( 300);
+                КнопкаСогласование.requestLayout();
+                КнопкаСогласование.forceLayout();
+                КнопкаСогласование.refreshDrawableState();
+            }
+        });
+
+        КнопкаСогласЦен.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                КнопкаСогласЦен.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                КнопкаСогласЦен.setHeight( 300);
+                КнопкаСогласЦен.requestLayout();
+                КнопкаСогласЦен.forceLayout();
+                КнопкаСогласЦен.refreshDrawableState();
+            }
+        });
+
+        КнопкаДокументыСоглас.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                КнопкаДокументыСоглас.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                КнопкаДокументыСоглас.setHeight( 300);
+                КнопкаДокументыСоглас.requestLayout();
+                КнопкаДокументыСоглас.forceLayout();
+                КнопкаДокументыСоглас.refreshDrawableState();
+            }
+        });
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
     }
 
 
