@@ -3,7 +3,6 @@ package businesslogic;
 import businesslogic.genertoringjson.GeneratorJsonSequenceWriter;
 import businesslogic.genertoringjson.GeneratorJsonWriteValue;
 import com.sun.istack.NotNull;
-import com.sun.xml.bind.v2.TODO;
 import dsu1glassfishatomic.workinterfaces.ProducedGeneratorJson2;
 import dsu1glassfishatomic.workinterfaces.ProducedGeneratorJson3;
 import model.MateriBinary;
@@ -14,7 +13,11 @@ import org.hibernate.criterion.Order;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.OrderBy;
 import javax.persistence.StoredProcedureQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -731,11 +734,11 @@ public class GeneratorDataFromAndroid {// extends WITH
                 // TODO
                 criteriaquery =  session.createCriteria(OrderTc.class);
                 criteriaquery .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+                criteriaquery.setLockMode(LockMode.PESSIMISTIC_READ);
                 criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
                 criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));
                 criteriaquery.add(org.hibernate.criterion.Restrictions.ne("status", 5));
                 criteriaquery.addOrder(Order.asc("currentTable"));
-                criteriaquery.setLockMode(LockMode.PESSIMISTIC_READ);
                 ЛистДанныеОтHibenide = ( List<OrderTc>)   criteriaquery.setFirstResult(0).setMaxResults(1000).setCacheable(true).list();
                 ЛОГ.  log(" ЛистДанныеОтHibenide "+ ЛистДанныеОтHibenide + " ЛистДанныеОтHibenide.size() " + ЛистДанныеОтHibenide.size()+
                         "  queryДляHiberite  " + queryДляHiberite);//gson Gson
@@ -745,9 +748,9 @@ public class GeneratorDataFromAndroid {// extends WITH
                 // TODO
                 criteriaquery=  session.createCriteria(VidTc.class);
                 criteriaquery .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+                criteriaquery.setLockMode(LockMode.PESSIMISTIC_READ);
                 criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
                 criteriaquery.addOrder(Order.asc("currentTable"));
-                criteriaquery.setLockMode(LockMode.PESSIMISTIC_READ);
                 ЛистДанныеОтHibenide =  ( List<VidTc>)     criteriaquery.setFirstResult(0).setMaxResults(1000).setCacheable(true).list();
                 ЛОГ.  log(" ЛистДанныеОтHibenide "+ ЛистДанныеОтHibenide + " ЛистДанныеОтHibenide.size() " + ЛистДанныеОтHibenide.size()+
                         "  queryДляHiberite  " + queryДляHiberite);//gson Gson
@@ -756,10 +759,10 @@ public class GeneratorDataFromAndroid {// extends WITH
             case "materials_databinary":
                 // TODO  byte
                 criteriaquery =  session.createCriteria(MateriBinary.class);
-                criteriaquery .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); //criteriaquery.setProjection(Projections.distinct(Projections.property("id")));
+                criteriaquery .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+                criteriaquery.setLockMode(LockMode.PESSIMISTIC_READ);//criteriaquery.setProjection(Projections.distinct(Projections.property("id")));
                 criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
                 criteriaquery.addOrder(Order.asc("currentTable"));
-                criteriaquery.setLockMode(LockMode.PESSIMISTIC_READ);
                 criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));
                 ЛистДанныеОтHibenide = ( List<MateriBinary>)   criteriaquery.setFirstResult(0).setMaxResults(1).setCacheable(true).list();
                // ЛистДанныеОтHibenide = ( List<MateriBinary>)   criteriaquery .setCacheable(true).list();
