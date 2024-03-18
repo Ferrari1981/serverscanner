@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 
+
 @WebFilter(value={ "/sous.jboss.runtimejboss","/sous.jboss.download","/sous.jboss.scanner","/sous.jboss.tabel"},
         filterName="FilterRuntime",asyncSupported = true)
 public class FilterRuntime implements Filter {
@@ -39,7 +40,6 @@ public class FilterRuntime implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
         try {
-
 
 
             // TODO: 02.11.2023 ЗАпускаем Код Фиильра
